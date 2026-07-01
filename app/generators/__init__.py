@@ -1,0 +1,1 @@
+"""Generators for derived RDF assets."""
