@@ -1,0 +1,83 @@
+@prefix ex:   <https://dynamicontology.com/uad36/examples#> .
+@prefix uad:  <https://dynamicontology.com/uad36/ontology#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+#################################################################
+# OTDD Example
+#################################################################
+# Case ID:
+#     full-valid-appraisal
+#
+# Expected Result:
+#     VALID
+#
+# RDF Component:
+#     Complete Graph
+#
+# Defect Category:
+#     None
+#
+# Target Concept:
+#     Appraisal
+#
+# Shape Under Test:
+#     uad:AppraisalShape
+#
+# Constraint Under Test:
+#     Complete conformance
+#
+# Expected SHACL Result:
+#     Conforms
+#
+# Purpose:
+#     Demonstrates a complete appraisal that conforms to the
+#     ontology and SHACL shapes. Every referenced resource is
+#     explicitly typed.
+#
+# Related Examples:
+#     minimal-valid-appraisal.ttl
+#
+# Notes:
+#     This example serves as the canonical valid appraisal
+#     against which invalid examples are compared.
+#################################################################
+
+#################################################################
+# Appraisal
+#################################################################
+
+ex:appraisal-001
+    rdf:type uad:Appraisal ;
+    uad:appraisesProperty ex:subject-property-001 ;
+    uad:hasOpinionOfValue ex:opinion-001 ;
+    uad:usesValuationApproach ex:sales-comparison-approach-001 ;
+    uad:hasReconciliation ex:reconciliation-001 .
+
+#################################################################
+# Subject Property
+#################################################################
+
+ex:subject-property-001
+    rdf:type uad:SubjectProperty .
+
+#################################################################
+# Opinion of Value
+#################################################################
+
+ex:opinion-001
+    rdf:type uad:OpinionOfValue .
+
+#################################################################
+# Valuation Approach
+#################################################################
+
+ex:sales-comparison-approach-001
+    rdf:type uad:ValuationApproach ;
+    rdf:type uad:SalesComparisonApproach .
+
+#################################################################
+# Reconciliation
+#################################################################
+
+ex:reconciliation-001
+    rdf:type uad:Reconciliation .

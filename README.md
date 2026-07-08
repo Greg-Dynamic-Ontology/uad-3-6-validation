@@ -4,8 +4,8 @@ FastAPI scaffold for a graph-backed UAD 3.6 validation service.
 
 This is intentionally an MVP skeleton. It provides API contracts, in-memory adapters, models, and tests 
 aligned to the initial BDD feature file. GraphDB, SHACL/SPARQL execution, real GSE schema ingestion, 
-Appendix A mappings, Appendix H rules, and Ollama-backed review are represented by replaceable service/adaptor 
-boundaries.
+Appendix A mappings, Appendix H rules, and Ollama-backed review are represented by replaceable 
+service-adaptor boundaries.
 
 ## Run locally
 

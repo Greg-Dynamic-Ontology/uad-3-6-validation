@@ -1,0 +1,33 @@
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+@prefix uad:  <https://dynamicontology.com/uad36/ontology#> .
+
+uad:AppraisalShape
+    a sh:NodeShape ;
+    sh:targetClass uad:Appraisal ;
+
+    sh:property [
+        sh:path uad:appraisesProperty ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:class uad:SubjectProperty ;
+    ] ;
+
+    sh:property [
+        sh:path uad:hasOpinionOfValue ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:class uad:OpinionOfValue ;
+    ] ;
+
+    sh:property [
+        sh:path uad:usesValuationApproach ;
+        sh:minCount 1 ;
+        sh:class uad:ValuationApproach ;
+    ] ;
+
+    sh:property [
+        sh:path uad:hasReconciliation ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:class uad:Reconciliation ;
+    ] .
