@@ -44,3 +44,27 @@ uad:SchemaComponent
     rdfs:label "Schema Component" ;
     skos:definition
         "A component of a source schema or specification represented in the UAD ontology." .
+
+uad:PropertyConditionRating
+    a owl:Class ;
+    rdfs:label "Property Condition Rating" ;
+    skos:definition
+        "A rating expressing the condition of a property." .
+
+uad:PropertyQualityRating
+    a owl:Class ;
+    rdfs:label "Property Quality Rating" ;
+    skos:definition
+        "A rating expressing the quality of a property." .
+
+uad:hasPropertyConditionRating
+    a owl:ObjectProperty ;
+    rdfs:domain uad:SubjectProperty ;
+    rdfs:range uad:PropertyConditionRating ;
+    rdfs:label "has property condition rating" .
+
+uad:hasPropertyQualityRating
+    a owl:ObjectProperty ;
+    rdfs:domain uad:SubjectProperty ;
+    rdfs:range uad:PropertyQualityRating ;
+    rdfs:label "has property quality rating" .

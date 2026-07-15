@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Validation - UAD 3.6 Validation</title>
+
+    <link rel="icon" href="../assets/icons/favicon.ico">
+    <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+
+<body>
+
+<header class="site-banner">
+
+    <div class="site-brand">
+
+        <img
+                class="site-logo"
+                src="../assets/images/DKGA-logo.png"
+                alt="Dynamic Knowledge Growth Associates">
+
+        <div class="site-branding">
+
+            <p class="site-kicker">
+                Dynamic Knowledge Growth Associates
+            </p>
+
+            <h1>UAD 3.6 Validation</h1>
+
+            <p class="site-tagline">
+                First Reference Implementation of
+                <strong>Ontology Test-Driven Development (OTDD)</strong>
+            </p>
+
+        </div>
+
+    </div>
+
+    <nav class="site-navigation">
+
+        <a href="../index.html">Home</a>
+        <a href="index.html">Run Validation</a>
+        <a href="../index.html#features">Features</a>
+        <a href="../index.html#architecture">Architecture</a>
+        <a href="../index.html#otdd">OTDD</a>
+        <a href="../index.html#reports">Reports</a>
+        <a href="../index.html#status">Status</a>
+
+    </nav>
+
+</header>
+
+<main>
+
+<section class="content-section">
+
+    <div class="section-heading">
+        <p class="eyebrow">Validation</p>
+        <h2>Validate a UAD 3.6 Appraisal</h2>
+    </div>
+
+    <p>
+        Upload a UAD 3.6 appraisal XML instance document and select
+        the desired validation pipeline.
+    </p>
+
+</section>
+
+<section class="content-section content-section--alternate">
+
+    <h3>Validation Pipeline</h3>
+
+    <form>
+
+        <fieldset>
+
+            <legend>Select Validation</legend>
+
+            <label>
+                <input type="radio"
+                       name="pipeline"
+                       checked>
+                XML Schema Validation
+            </label>
+
+            <br><br>
+
+            <label>
+                <input type="radio"
+                       name="pipeline">
+                RDF Projection
+            </label>
+
+            <br><br>
+
+            <label>
+                <input type="radio"
+                       name="pipeline">
+                SHACL Validation
+            </label>
+
+            <br><br>
+
+            <label>
+                <input type="radio"
+                       name="pipeline">
+                Complete Validation Pipeline
+            </label>
+
+        </fieldset>
+
+        <br>
+
+        <fieldset>
+
+            <legend>Select Appraisal XML File</legend>
+
+            <input
+                    type="file"
+                    accept=".xml">
+
+        </fieldset>
+
+        <br>
+
+        <button type="button">
+            Validate
+        </button>
+
+    </form>
+
+</section>
+
+<section class="content-section">
+
+    <h3>Validation Status</h3>
+
+    <div class="card">
+
+        <p><strong>Status</strong></p>
+
+        <p>Waiting for validation request.</p>
+
+    </div>
+
+</section>
+
+<section class="content-section content-section--alternate">
+
+    <h3>Validation Results</h3>
+
+    <div class="card">
+
+        <p>
+            Validation results will appear here after execution.
+        </p>
+
+        <ul>
+            <li>XML Schema validation</li>
+            <li>RDF projection summary</li>
+            <li>SHACL validation summary</li>
+            <li>Semantic competency measurements</li>
+            <li>Generated reports</li>
+        </ul>
+
+    </div>
+
+</section>
+
+<section class="content-section">
+
+    <h3>Generated Artifacts</h3>
+
+    <div class="card">
+
+        <table>
+
+            <thead>
+            <tr>
+                <th>Artifact</th>
+                <th>Status</th>
+            </tr>
+            </thead>
+
+            <tbody>
+
+            <tr>
+                <td>RDF Projection</td>
+                <td>Pending</td>
+            </tr>
+
+            <tr>
+                <td>SHACL Report</td>
+                <td>Pending</td>
+            </tr>
+
+            <tr>
+                <td>Measurement Report</td>
+                <td>Pending</td>
+            </tr>
+
+            <tr>
+                <td>Validation Log</td>
+                <td>Pending</td>
+            </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+</main>
+
+<footer class="site-footer">
+
+    <p>
+        UAD 3.6 Validation • Dynamic Knowledge Growth Associates
+    </p>
+
+</footer>
+
+</body>
+</html>

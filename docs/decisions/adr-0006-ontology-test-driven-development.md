@@ -1,184 +1,76 @@
-# Architecture Decision Record 0006: Ontology Test-Driven Development
+# ADR-0006: Ontology Test-Driven Development (OTDD)
 
 **Status:** Accepted
 
-**Date:** 2026-07-03
-
 ## Context
 
-The UAD 3.6 Validation project is developing a conceptual ontology that serves
-as the semantic foundation for validation, measurement, reasoning, and future
-AI-assisted analysis.
+The UAD 3.6 Validation project is intended to produce more than a
+working ontology and validation environment. It also serves as the
+reference implementation for developing and evaluating Ontology
+Test-Driven Development (OTDD).
 
-Unlike traditional software projects, the primary deliverable is not executable
-code but a collection of semantic artifacts including:
+Traditional Test-Driven Development (TDD) demonstrated the value of
+executable verification in software engineering. OTDD extends those
+engineering principles to semantic engineering by emphasizing semantic
+competencies, ontology artifacts, SHACL validation, executable
+verification, and engineering traceability.
 
-- Meaning Models;
-- RDF/OWL ontologies;
-- generated semantic assets;
-- SHACL constraints;
-- SPARQL queries;
-- measurement definitions;
-- example instance documents.
+During implementation it became apparent that semantic engineering
+occurs in two distinct contexts:
 
-These artifacts collectively define the semantic behavior of the system.
+- **Greenfield Semantic Engineering**, where semantic competencies are
+  discovered and refined during system design.
+- **Harvest Semantic Engineering**, where semantic competencies are
+  systematically extracted from authoritative semantic assets such as
+  schemas, instance documents, implementation guides, controlled
+  vocabularies, and business rules.
 
-Consequently, ontology development should be subject to the same engineering
-discipline traditionally applied to software development.
+UAD 3.6 Validation is a Harvest Semantic Engineering project.
 
 ## Decision
 
-The project shall adopt **Ontology Test-Driven Development (OTDD).**
+The project adopts Ontology Test-Driven Development (OTDD) as its
+engineering methodology.
 
-Every significant addition to the conceptual model shall be accompanied by one
-or more automated regression tests before the ontology implementation is
-considered complete.
+For every semantic competency, the preferred engineering workflow is:
 
-Tests are considered first-class project artifacts.
+1. Identify the semantic competency.
+2. Create representative valid and invalid example instances.
+3. Execute the existing verification suite to detect regressions.
+4. Execute the new competency verification and observe a RED state.
+5. Implement or extend the ontology.
+6. Implement or extend SHACL validation.
+7. Execute the verification suite until GREEN.
+8. Refactor while preserving semantic traceability.
+9. Record methodology lessons when implementation reveals improvements
+   to OTDD itself.
 
-A concept is not considered complete until both its semantic representation and
-its corresponding tests have been implemented.
-
-## Development Workflow
-
-New concepts should normally be developed using the following workflow.
-
-1. Identify the business concept.
-2. Describe the concept in the Meaning Model.
-3. Write one or more failing ontology tests.
-4. Extend the ontology.
-5. Create or update example RDF instances.
-6. Add SHACL constraints where appropriate.
-7. Verify competency questions using SPARQL.
-8. Define measurements supported by the concept.
-9. Execute the complete regression test suite.
-
-The order may vary for small refactorings, but all completed concepts should
-satisfy this workflow.
-
-## Types of Tests
-
-The regression suite may include several categories of tests.
-
-### Documentation Tests
-
-Verify that required architectural and semantic documentation exists.
-
-Examples include:
-
-- Meaning Model sections;
-- ADRs;
-- architecture documents.
-
-### Ontology Structure Tests
-
-Verify the ontology itself.
-
-Examples include:
-
-- ontology parses successfully;
-- ontology declaration exists;
-- namespace bindings are correct;
-- required classes exist;
-- required properties exist;
-- labels exist;
-- definitions exist.
-
-### Semantic Integrity Tests
-
-Verify the conceptual model.
-
-Examples include:
-
-- domains and ranges;
-- subclass relationships;
-- property characteristics;
-- vocabulary alignment.
-
-### Example Instance Tests
-
-Verify that example RDF instance documents are valid representations of the
-ontology.
-
-### SHACL Validation Tests
-
-Verify that semantic constraints accept valid data and reject invalid data.
-
-### SPARQL Competency Tests
-
-Verify that competency questions can be answered using SPARQL.
-
-Competency questions demonstrate that the ontology supports its intended use.
-
-### Measurement Tests
-
-Verify that required quality measurements can be computed from RDF instance
-documents.
-
-## Philosophy
-
-Testing is not limited to executable Python code.
-
-Meaning Models, ontologies, RDF examples, SHACL constraints, SPARQL queries,
-and generated semantic assets are all software artifacts whose correctness can
-be verified automatically.
-
-The regression suite therefore validates both implementation and semantics.
+The purpose of this workflow is to preserve engineering traceability,
+not to enforce process ceremony.
 
 ## Consequences
 
-Every ontology enhancement should include corresponding regression tests.
+### Positive
 
-Changes to the conceptual model should cause regression failures whenever they
-introduce inconsistencies.
+- Establishes a repeatable engineering methodology for semantic
+  engineering.
+- Maintains traceability from semantic competencies through ontology,
+  SHACL, examples, verification, and documentation.
+- Encourages executable verification as semantic models evolve.
+- Supports both Greenfield and Harvest semantic engineering projects.
 
-The regression suite becomes an executable specification of the ontology.
+### Trade-offs
 
-A passing regression suite provides confidence that semantic evolution has not
-broken previously established meaning.
+- Requires additional engineering artifacts beyond the ontology itself.
+- Introduces up-front effort to define competencies and verification.
+- Requires discipline to maintain traceability as the implementation
+  evolves.
 
-## Current Practice
+## Relationship to UAD
 
-The project currently uses `pytest` as the primary regression framework.
+UAD serves as the reference implementation for OTDD.
 
-Current tests include verification of:
-
-- ontology existence;
-- Turtle syntax;
-- namespace policy;
-- ontology declarations;
-- required classes;
-- required object properties;
-- labels;
-- definitions;
-- ontology organization;
-- documentation consistency;
-- generated semantic assets.
-
-Additional test categories will be added as SHACL constraints, SPARQL
-competency questions, measurements, and ontology alignment layers are
-introduced.
-
-## Alternatives Considered
-
-### Documentation-Only Development
-
-Rejected.
-
-Documentation alone cannot guarantee that semantic artifacts remain internally
-consistent as the ontology evolves.
-
-### Code-Only Testing
-
-Rejected.
-
-The ontology itself is a primary software artifact and therefore requires direct
-regression testing independent of application code.
-
-## Related ADRs
-
-- ADR 0001 — Project Namespace
-- ADR 0002 — IRI Minting Policy
-- ADR 0003 — Generated Semantic Assets
-- ADR 0004 — Meaning-First Ontology Development
-- ADR 0005 — Single Logical Ontology
+Implementation experience gained during UAD development is recorded in
+the OTDD implementation notes and may be incorporated into the
+methodology after repeated engineering experience demonstrates that the
+practice is stable and broadly applicable.

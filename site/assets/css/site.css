@@ -1,0 +1,61 @@
+.site-logo {
+    width: 120px;
+    height: auto;
+    flex-shrink: 0;
+}
+/* ============================================================
+   Banner
+   ============================================================ */
+
+.site-banner {
+    border-bottom: 1px solid #d8d8d8;
+    padding: 1rem 2rem;
+    background: #fafafa;
+}
+
+.site-brand {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.site-logo {
+    width: 90px;
+    height: auto;
+}
+
+.site-branding h1 {
+    margin: 0;
+    font-size: 2rem;
+}
+
+.site-kicker {
+    margin: 0;
+    font-size: .85rem;
+    color: #666;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.site-tagline {
+    margin-top: .35rem;
+    color: #444;
+    font-size: 1rem;
+}
+
+.site-navigation {
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.site-navigation a {
+    text-decoration: none;
+    color: #1d4f91;
+    font-weight: 600;
+}
+
+.site-navigation a:hover {
+    text-decoration: underline;
+}

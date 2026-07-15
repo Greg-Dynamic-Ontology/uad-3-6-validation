@@ -31,3 +31,21 @@ uad:AppraisalShape
         sh:maxCount 1 ;
         sh:class uad:Reconciliation ;
     ] .
+
+uad:SubjectPropertyShape
+    a sh:NodeShape ;
+    sh:targetClass uad:SubjectProperty ;
+
+    sh:property [
+        sh:path uad:hasPropertyConditionRating ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:class uad:PropertyConditionRating ;
+    ] ;
+
+    sh:property [
+        sh:path uad:hasPropertyQualityRating ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:class uad:PropertyQualityRating ;
+    ] .

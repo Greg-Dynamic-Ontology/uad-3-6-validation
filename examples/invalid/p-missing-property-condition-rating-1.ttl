@@ -1,0 +1,56 @@
+@prefix ex:   <https://dynamicontology.com/uad36/examples#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix uad:  <https://dynamicontology.com/uad36/ontology#> .
+
+#################################################################
+# OTDD Example Header
+#
+# Example ID: p-missing-property-condition-rating-1
+# Status: Invalid
+#
+# Purpose:
+# Demonstrate that a SubjectProperty must have exactly one
+# hasPropertyConditionRating predicate.
+#
+# Expected Result:
+# SHACL validation SHALL FAIL.
+#
+# Defect Category:
+# Predicate (P)
+#
+# Defect:
+# Required predicate
+#     uad:hasPropertyConditionRating
+# is absent.
+#
+# Semantic Competency:
+# Every SubjectProperty shall have exactly one
+# PropertyConditionRating.
+#
+# Number of Intended Semantic Defects:
+# 1
+#################################################################
+
+ex:appraisal-001
+    a uad:Appraisal ;
+    uad:hasSubjectProperty ex:subject-property-001 ;
+    uad:hasOpinionOfValue ex:opinion-of-value-001 .
+
+ex:subject-property-001
+    a uad:SubjectProperty .
+
+ex:opinion-of-value-001
+    a uad:OpinionOfValue ;
+    uad:hasReconciliation ex:reconciliation-001 ;
+    uad:hasValuationApproach ex:valuation-approach-001 .
+
+ex:reconciliation-001
+    a uad:Reconciliation .
+
+ex:valuation-approach-001
+    a uad:ValuationApproach .
+
+# This resource exists, but the SubjectProperty does not reference it.
+
+ex:condition-rating-001
+    a uad:PropertyConditionRating .

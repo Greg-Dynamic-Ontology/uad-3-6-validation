@@ -1,0 +1,178 @@
+@prefix otdd: <https://dynamicontology.com/otdd#> .
+@prefix ex:   <https://dynamicontology.com/uad36/project#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+ex:S-001
+    a otdd:Sample ;
+    otdd:sampleId "S-001" ;
+    otdd:appraisalUseCase "Condo" ;
+    otdd:sourceFile "Condo1_Appraisal_v1.4.xml" ;
+    otdd:sourcePath "specs/samples/Condo1_Appraisal_v1.4.xml" ;
+    otdd:sourceVersion "v1.4" ;
+    otdd:validationSchema "GSE_UAD_3.6.0_v1.3.xsd" ;
+    otdd:schemaPath "specs/uad/GSE_UAD_3.6.0_v1.3.xsd" ;
+    otdd:expectedXmlValidationResult otdd:Valid ;
+    otdd:validationStatus otdd:NotValidated ;
+    otdd:rdfProjectionStatus otdd:NotStarted ;
+    otdd:exercisesCompetency ex:C-009,
+                             ex:C-010,
+                             ex:C-011,
+                             ex:C-012,
+                             ex:C-013,
+                             ex:C-014,
+                             ex:C-015,
+                             ex:C-016,
+                             ex:C-019,
+                             ex:C-022,
+                             ex:C-025 ;
+    otdd:projectStatus otdd:Active .
+
+ex:S-002
+    a otdd:Sample ;
+    otdd:sampleId "S-002" ;
+    otdd:appraisalUseCase "Condo" ;
+    otdd:sourceFile "Condo2_Appraisal_v1.4.xml" ;
+    otdd:sourcePath "specs/samples/Condo2_Appraisal_v1.4.xml" ;
+    otdd:sourceVersion "v1.4" ;
+    otdd:validationSchema "GSE_UAD_3.6.0_v1.3.xsd" ;
+    otdd:schemaPath "specs/uad/GSE_UAD_3.6.0_v1.3.xsd" ;
+    otdd:expectedXmlValidationResult otdd:Valid ;
+    otdd:validationStatus otdd:NotValidated ;
+    otdd:rdfProjectionStatus otdd:NotStarted ;
+    otdd:exercisesCompetency ex:TBD ;
+    otdd:projectStatus otdd:Planned .
+
+ex:S-003
+    a otdd:Sample ;
+    otdd:sampleId "S-003" ;
+    otdd:appraisalUseCase "Manufactured Housing" ;
+    otdd:sourceFile "MH1_Appraisal_v1.4.xml" ;
+    otdd:sourcePath "specs/samples/MH1_Appraisal_v1.4.xml" ;
+    otdd:sourceVersion "v1.4" ;
+    otdd:validationSchema "GSE_UAD_3.6.0_v1.3.xsd" ;
+    otdd:schemaPath "specs/uad/GSE_UAD_3.6.0_v1.3.xsd" ;
+    otdd:expectedXmlValidationResult otdd:Valid ;
+    otdd:validationStatus otdd:NotValidated ;
+    otdd:rdfProjectionStatus otdd:NotStarted ;
+    otdd:exercisesCompetency ex:TBD ;
+    otdd:projectStatus otdd:Planned .
+
+ex:S-004
+    a otdd:Sample ;
+    otdd:sampleId "S-004" ;
+    otdd:appraisalUseCase "Manufactured Housing" ;
+    otdd:sourceFile "MH2_Appraisal_v1.4.xml" ;
+    otdd:sourcePath "specs/samples/MH2_Appraisal_v1.4.xml" ;
+    otdd:sourceVersion "v1.4" ;
+    otdd:validationSchema "GSE_UAD_3.6.0_v1.3.xsd" ;
+    otdd:schemaPath "specs/uad/GSE_UAD_3.6.0_v1.3.xsd" ;
+    otdd:expectedXmlValidationResult otdd:Valid ;
+    otdd:validationStatus otdd:NotValidated ;
+    otdd:rdfProjectionStatus otdd:NotStarted ;
+    otdd:exercisesCompetency ex:TBD ;
+    otdd:projectStatus otdd:Planned .
+
+ex:S-005
+    a otdd:Sample ;
+    otdd:sampleId "S-005" ;
+    otdd:appraisalUseCase "Single Family" ;
+    otdd:sourceFile "SF1_Appraisal_v1.4.xml" ;
+    otdd:sourcePath "specs/samples/SF1_Appraisal_v1.4.xml" ;
+    otdd:sourceVersion "v1.4" ;
+    otdd:validationSchema "GSE_UAD_3.6.0_v1.3.xsd" ;
+    otdd:schemaPath "specs/uad/GSE_UAD_3.6.0_v1.3.xsd" ;
+    otdd:expectedXmlValidationResult otdd:Valid ;
+    otdd:validationStatus otdd:NotValidated ;
+    otdd:rdfProjectionStatus otdd:NotStarted ;
+    otdd:exercisesCompetency ex:TBD ;
+    otdd:projectStatus otdd:Planned .
+
+ex:S-006
+    a otdd:Sample ;
+    otdd:sampleId "S-006" ;
+    otdd:appraisalUseCase "Single Family" ;
+    otdd:sourceFile "SF2_Appraisal_v1.4.xml" ;
+    otdd:sourcePath "specs/samples/SF2_Appraisal_v1.4.xml" ;
+    otdd:sourceVersion "v1.4" ;
+    otdd:validationSchema "GSE_UAD_3.6.0_v1.3.xsd" ;
+    otdd:schemaPath "specs/uad/GSE_UAD_3.6.0_v1.3.xsd" ;
+    otdd:expectedXmlValidationResult otdd:Valid ;
+    otdd:validationStatus otdd:NotValidated ;
+    otdd:rdfProjectionStatus otdd:NotStarted ;
+    otdd:exercisesCompetency ex:TBD ;
+    otdd:projectStatus otdd:Planned .
+
+ex:S-007
+    a otdd:Sample ;
+    otdd:sampleId "S-007" ;
+    otdd:appraisalUseCase "Single Family" ;
+    otdd:sourceFile "SF3_Appraisal_v1.4.xml" ;
+    otdd:sourcePath "specs/samples/SF3_Appraisal_v1.4.xml" ;
+    otdd:sourceVersion "v1.4" ;
+    otdd:validationSchema "GSE_UAD_3.6.0_v1.3.xsd" ;
+    otdd:schemaPath "specs/uad/GSE_UAD_3.6.0_v1.3.xsd" ;
+    otdd:expectedXmlValidationResult otdd:Valid ;
+    otdd:validationStatus otdd:NotValidated ;
+    otdd:rdfProjectionStatus otdd:NotStarted ;
+    otdd:exercisesCompetency ex:TBD ;
+    otdd:projectStatus otdd:Planned .
+
+ex:S-008
+    a otdd:Sample ;
+    otdd:sampleId "S-008" ;
+    otdd:appraisalUseCase "Single Family" ;
+    otdd:sourceFile "SF4_Appraisal_v1.4.xml" ;
+    otdd:sourcePath "specs/samples/SF4_Appraisal_v1.4.xml" ;
+    otdd:sourceVersion "v1.4" ;
+    otdd:validationSchema "GSE_UAD_3.6.0_v1.3.xsd" ;
+    otdd:schemaPath "specs/uad/GSE_UAD_3.6.0_v1.3.xsd" ;
+    otdd:expectedXmlValidationResult otdd:Valid ;
+    otdd:validationStatus otdd:NotValidated ;
+    otdd:rdfProjectionStatus otdd:NotStarted ;
+    otdd:exercisesCompetency ex:TBD ;
+    otdd:projectStatus otdd:Planned .
+
+ex:S-009
+    a otdd:Sample ;
+    otdd:sampleId "S-009" ;
+    otdd:appraisalUseCase "Single Family" ;
+    otdd:sourceFile "SF5_Appraisal_v1.4.xml" ;
+    otdd:sourcePath "specs/samples/SF5_Appraisal_v1.4.xml" ;
+    otdd:sourceVersion "v1.4" ;
+    otdd:validationSchema "GSE_UAD_3.6.0_v1.3.xsd" ;
+    otdd:schemaPath "specs/uad/GSE_UAD_3.6.0_v1.3.xsd" ;
+    otdd:expectedXmlValidationResult otdd:Valid ;
+    otdd:validationStatus otdd:NotValidated ;
+    otdd:rdfProjectionStatus otdd:NotStarted ;
+    otdd:exercisesCompetency ex:TBD ;
+    otdd:projectStatus otdd:Planned .
+
+ex:S-010
+    a otdd:Sample ;
+    otdd:sampleId "S-010" ;
+    otdd:appraisalUseCase "2- to 4-unit" ;
+    otdd:sourceFile "2- to 4-unit_Appraisal_v1.4.xml" ;
+    otdd:sourcePath "specs/samples/2- to 4-unit_Appraisal_v1.4.xml" ;
+    otdd:sourceVersion "v1.4" ;
+    otdd:validationSchema "GSE_UAD_3.6.0_v1.3.xsd" ;
+    otdd:schemaPath "specs/uad/GSE_UAD_3.6.0_v1.3.xsd" ;
+    otdd:expectedXmlValidationResult otdd:Valid ;
+    otdd:validationStatus otdd:NotValidated ;
+    otdd:rdfProjectionStatus otdd:NotStarted ;
+    otdd:exercisesCompetency ex:TBD ;
+    otdd:projectStatus otdd:Planned .
+
+ex:S-011
+    a otdd:Sample ;
+    otdd:sampleId "S-011" ;
+    otdd:appraisalUseCase "2- to 4-unit" ;
+    otdd:sourceFile "2- to 4-unit_Scenario_2_Appraisal_v1.2.xml" ;
+    otdd:sourcePath "specs/samples/2- to 4-unit_Scenario_2_Appraisal_v1.2.xml" ;
+    otdd:sourceVersion "v1.4" ;
+    otdd:validationSchema "GSE_UAD_3.6.0_v1.3.xsd" ;
+    otdd:schemaPath "specs/uad/GSE_UAD_3.6.0_v1.3.xsd" ;
+    otdd:expectedXmlValidationResult otdd:Valid ;
+    otdd:validationStatus otdd:NotValidated ;
+    otdd:rdfProjectionStatus otdd:NotStarted ;
+    otdd:exercisesCompetency ex:TBD ;
+    otdd:projectStatus otdd:Planned .
