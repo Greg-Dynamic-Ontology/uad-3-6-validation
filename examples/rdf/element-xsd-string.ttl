@@ -1,0 +1,1 @@
+<xsd:element name="StreetName" type="xsd:string"/>

@@ -1,0 +1,12 @@
+<xsd:schema
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:tns="https://dynamicontology.com/otdd/examples"
+    targetNamespace="https://dynamicontology.com/otdd/examples">
+
+    <xsd:complexType name="AddressType"/>
+
+    <xsd:element
+        name="Address"
+        type="tns:AddressType"/>
+
+</xsd:schema>

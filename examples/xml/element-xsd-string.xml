@@ -1,0 +1,3 @@
+example:StreetName
+    a owl:DatatypeProperty ;
+    rdfs:range xsd:string .
