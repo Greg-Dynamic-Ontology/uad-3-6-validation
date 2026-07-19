@@ -1,0 +1,191 @@
+@prefix otk: <https://dynamicontology.com/otk/ontology#> .
+@prefix otk-xsd: <https://dynamicontology.com/otk/xsd-construct#> .
+@prefix profile: <https://dynamicontology.com/otk/translation-profile/basic-xsd-to-rdf#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+<https://dynamicontology.com/otk/translation-profile/basic-xsd-to-rdf/metadata> {
+    <https://dynamicontology.com/otk/translation-profile/basic-xsd-to-rdf>
+        a otk:TranslationProfile ;
+        rdfs:label "Basic XSD-to-RDF Translation" ;
+        dcterms:title "Basic XSD-to-RDF Translation" ;
+        dcterms:description
+            "A deterministic translation of what an XSD explicitly states into RDF without adding inferred business meaning." ;
+        otk:rulesGraph
+            <https://dynamicontology.com/otk/translation-profile/basic-xsd-to-rdf/rules> ;
+        otk:sourceRepresentation otk:XSD ;
+        otk:targetRepresentation otk:RDF ;
+        otk:profileStatus otk:Draft .
+}
+
+<https://dynamicontology.com/otk/translation-profile/basic-xsd-to-rdf/vocabulary> {
+    otk:TranslationProfile a owl:Class ;
+        rdfs:label "Translation profile" .
+
+    otk:TranslationRule a owl:Class ;
+        rdfs:label "Translation rule" .
+
+    otk:becomes a owl:ObjectProperty ;
+        rdfs:label "becomes" ;
+        rdfs:comment
+            "Identifies the RDF, RDFS, OWL, SHACL, SKOS, or OTK construct produced from an XSD construct." .
+
+    otk:sourceConstruct a owl:ObjectProperty ;
+        rdfs:label "source construct" .
+
+    otk:requiresContext a owl:DatatypeProperty ;
+        rdfs:range xsd:boolean ;
+        rdfs:label "requires context" .
+
+    otk:preservesSourceOrder a owl:DatatypeProperty ;
+        rdfs:range xsd:boolean ;
+        rdfs:label "preserves source order" .
+
+    otk:rulesGraph a owl:ObjectProperty .
+    otk:sourceRepresentation a owl:ObjectProperty .
+    otk:targetRepresentation a owl:ObjectProperty .
+    otk:profileStatus a owl:ObjectProperty .
+
+    otk:XSD a owl:NamedIndividual .
+    otk:RDF a owl:NamedIndividual .
+    otk:Draft a owl:NamedIndividual .
+
+    otk:AnnotationContainer a owl:Class .
+    otk:AttributeGroup a owl:Class .
+    otk:WildcardElementConstraint a owl:Class .
+    otk:WildcardAttributeConstraint a owl:Class .
+    otk:ChoiceConstraint a owl:Class .
+    otk:SequenceConstraint a owl:Class .
+    otk:DerivationRestriction a owl:Class .
+    otk:DerivationExtension a owl:Class .
+    otk:SimpleContentModel a owl:Class .
+    otk:SchemaImport a owl:Class .
+    otk:FractionDigitsConstraint a owl:Class .
+}
+
+<https://dynamicontology.com/otk/translation-profile/basic-xsd-to-rdf/rules> {
+    profile:annotation a otk:TranslationRule ;
+        otk:sourceConstruct otk-xsd:annotation ;
+        otk:becomes otk:AnnotationContainer ;
+        otk:requiresContext true .
+
+    profile:any a otk:TranslationRule ;
+        otk:sourceConstruct otk-xsd:any ;
+        otk:becomes otk:WildcardElementConstraint ;
+        otk:requiresContext true .
+
+    profile:anyAttribute a otk:TranslationRule ;
+        otk:sourceConstruct otk-xsd:anyAttribute ;
+        otk:becomes otk:WildcardAttributeConstraint ;
+        otk:requiresContext true .
+
+    profile:attribute a otk:TranslationRule ;
+        otk:sourceConstruct otk-xsd:attribute ;
+        otk:becomes owl:DatatypeProperty ;
+        otk:requiresContext true .
+
+    profile:attributeGroup a otk:TranslationRule ;
+        otk:sourceConstruct otk-xsd:attributeGroup ;
+        otk:becomes otk:AttributeGroup ;
+        otk:requiresContext true .
+
+    profile:choice a otk:TranslationRule ;
+        otk:sourceConstruct otk-xsd:choice ;
+        otk:becomes otk:ChoiceConstraint ;
+        otk:requiresContext true ;
+        otk:preservesSourceOrder true .
+
+    profile:complexType a otk:TranslationRule ;
+        otk:sourceConstruct otk-xsd:complexType ;
+        otk:becomes owl:Class ;
+        otk:requiresContext false .
+
+    profile:documentation a otk:TranslationRule ;
+        otk:sourceConstruct otk-xsd:documentation ;
+        otk:becomes rdfs:comment ;
+        otk:requiresContext true .
+
+    profile:element a otk:TranslationRule ;
+        otk:sourceConstruct otk-xsd:element ;
+        otk:becomes rdf:Property ;
+        otk:requiresContext true ;
+        rdfs:comment
+            "Refine rdf:Property to owl:ObjectProperty or owl:DatatypeProperty after examining the referenced or inline XSD type." .
+
+    profile:enumeration a otk:TranslationRule ;
+        otk:sourceConstruct otk-xsd:enumeration ;
+        otk:becomes skos:Concept ;
+        otk:requiresContext true .
+
+    profile:extension a otk:TranslationRule ;
+        otk:sourceConstruct otk-xsd:extension ;
+        otk:becomes otk:DerivationExtension ;
+        otk:requiresContext true ;
+        rdfs:comment
+            "Record XSD derivation explicitly; do not infer rdfs:subClassOf unless a separate meaning model justifies it." .
+
+    profile:fractionDigits a otk:TranslationRule ;
+        otk:sourceConstruct otk-xsd:fractionDigits ;
+        otk:becomes otk:FractionDigitsConstraint ;
+        otk:requiresContext true .
+
+    profile:import a otk:TranslationRule ;
+        otk:sourceConstruct otk-xsd:import ;
+        otk:becomes otk:SchemaImport ;
+        otk:requiresContext true ;
+        rdfs:comment
+            "Record an XSD schema dependency; do not automatically emit owl:imports." .
+
+    profile:maxInclusive a otk:TranslationRule ;
+        otk:sourceConstruct otk-xsd:maxInclusive ;
+        otk:becomes sh:maxInclusive ;
+        otk:requiresContext true .
+
+    profile:maxLength a otk:TranslationRule ;
+        otk:sourceConstruct otk-xsd:maxLength ;
+        otk:becomes sh:maxLength ;
+        otk:requiresContext true .
+
+    profile:minInclusive a otk:TranslationRule ;
+        otk:sourceConstruct otk-xsd:minInclusive ;
+        otk:becomes sh:minInclusive ;
+        otk:requiresContext true .
+
+    profile:pattern a otk:TranslationRule ;
+        otk:sourceConstruct otk-xsd:pattern ;
+        otk:becomes sh:pattern ;
+        otk:requiresContext true .
+
+    profile:restriction a otk:TranslationRule ;
+        otk:sourceConstruct otk-xsd:restriction ;
+        otk:becomes otk:DerivationRestriction ;
+        otk:requiresContext true ;
+        rdfs:comment
+            "Preserve XSD restriction as schema-derivation knowledge; individual facets may also produce SHACL constraints." .
+
+    profile:sequence a otk:TranslationRule ;
+        otk:sourceConstruct otk-xsd:sequence ;
+        otk:becomes otk:SequenceConstraint ;
+        otk:requiresContext true ;
+        otk:preservesSourceOrder true .
+
+    profile:simpleContent a otk:TranslationRule ;
+        otk:sourceConstruct otk-xsd:simpleContent ;
+        otk:becomes otk:SimpleContentModel ;
+        otk:requiresContext true .
+
+    profile:simpleType a otk:TranslationRule ;
+        otk:sourceConstruct otk-xsd:simpleType ;
+        otk:becomes rdfs:Datatype ;
+        otk:requiresContext false .
+
+    profile:union a otk:TranslationRule ;
+        otk:sourceConstruct otk-xsd:union ;
+        otk:becomes owl:unionOf ;
+        otk:requiresContext true .
+}

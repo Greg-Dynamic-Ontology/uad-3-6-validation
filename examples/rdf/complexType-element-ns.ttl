@@ -1,6 +1,6 @@
-@prefix examples: <https://dynamicontology.com/otdd/examples> .
-@prefix owl:     <http://www.w3.org/2002/07/owl#> .
-@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix examples: <https://dynamicontology.com/otdd/examples#> .
+@prefix owl:      <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs:     <http://www.w3.org/2000/01/rdf-schema#> .
 
 examples:AddressType
     a owl:Class .
@@ -8,3 +8,4 @@ examples:AddressType
 examples:Address
     a owl:ObjectProperty ;
     rdfs:range examples:AddressType .
+

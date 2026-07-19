@@ -1,3 +1,2 @@
-example:StreetName
-    a owl:DatatypeProperty ;
-    rdfs:range xsd:string .
+<?xml version="1.0" encoding="UTF-8"?>
+<StreetName>Main Street</StreetName>

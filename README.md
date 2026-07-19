@@ -2,10 +2,40 @@
 
 FastAPI scaffold for a graph-backed UAD 3.6 validation service.
 
-This is intentionally an MVP skeleton. It provides API contracts, in-memory adapters, models, and tests 
-aligned to the initial BDD feature file. GraphDB, SHACL/SPARQL execution, real GSE schema ingestion, 
-Appendix A mappings, Appendix H rules, and Ollama-backed review are represented by replaceable 
-service-adaptor boundaries.
+## Scope
+
+This project validates appraisal submissions against the **UAD 3.6 XML schemas** and the 
+**UAD 3.6 business rules** published by the Government-Sponsored Enterprises (GSEs).
+
+Although UAD 3.6 is derived from MISMO 3.6, **this project does not validate documents against 
+the original MISMO 3.6 XML schemas.**
+
+### Why not validate against MISMO 3.6?
+
+Validating a UAD 3.6 document against the original MISMO 3.6 schemas has no business value and 
+can produce misleading results.
+
+UAD 3.6 is **not validation-compatible** with the published MISMO 3.6 schemas for two 
+independent reasons:
+
+1. **UAD 3.6 is a trimmed profile of MISMO 3.6.**
+
+   Many structures present in the MISMO 3.6 XML vocabulary are intentionally excluded from UAD 
+   3.6. Consequently, an XML document may be valid according to the MISMO 3.6 schemas while 
+   failing UAD 3.6 validation because it contains structures that are outside the UAD profile.
+
+2. **UAD 3.6 incorporates later MISMO data points.**
+
+   During development of UAD 3.6, the GSEs incorporated additional MISMO elements and attributes 
+   that were introduced after the published MISMO 3.6 release. These additions remain in the 
+   MISMO namespace but are not defined in the original MISMO 3.6 XML schemas. Consequently, an 
+   XML document may be a valid UAD 3.6 submission while failing validation against the published 
+   MISMO 3.6 schemas.
+
+For these reasons, this project treats the UAD 3.6 schemas as the authoritative XML specification 
+for validation. The original MISMO 3.6 schemas are retained only as historical and architectural 
+reference material during development and are not used by the production validation pipeline.
+
 
 ## Run locally
 
