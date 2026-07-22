@@ -1,0 +1,4 @@
+@prefix otdd: <https://dynamicontology.com/otdd#> .
+@prefix ex:   <https://dynamicontology.com/uad36/project#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+

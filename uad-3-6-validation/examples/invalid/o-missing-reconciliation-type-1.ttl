@@ -1,0 +1,63 @@
+# ---------------------------------------------------------------------------
+# OTDD Example
+# ---------------------------------------------------------------------------
+# Case ID:
+#     o-missing-reconciliation-type-1
+#
+# Expected Result:
+#     INVALID
+#
+# RDF Component:
+#     Object
+#
+# Defect Category:
+#     Missing Object Type
+#
+# Target Concept:
+#     Reconciliation
+#
+# Shape Under Test:
+#     uad:AppraisalShape
+#
+# Constraint Under Test:
+#     sh:class uad:Reconciliation
+#
+# Expected SHACL Result:
+#     Violation
+#
+# Purpose:
+#     Demonstrates that an appraisal references a Reconciliation resource
+#     whose rdf:type declaration is missing.
+#
+# Related Examples:
+#     o-absent-reconciliation-1.ttl
+#     p-missing-reconciliation-1.ttl
+#     full-valid-appraisal.ttl
+#
+# Notes:
+#     The appraisal references ex:reconciliation-001, but that resource has
+#     no rdf:type uad:Reconciliation declaration. A different resource,
+#     ex:reconciliation-x, is correctly typed, but it is not the object
+#     referenced by the appraisal.
+# ---------------------------------------------------------------------------
+@prefix ex:   <https://dynamicontology.com/uad36/example#> .
+@prefix uad:  <https://dynamicontology.com/uad36/ontology#> .
+
+ex:appraisal-001
+    a uad:Appraisal ;
+    uad:appraisesProperty ex:subject-property-001 ;
+    uad:hasOpinionOfValue ex:opinion-001 ;
+    uad:usesValuationApproach ex:sales-comparison-approach-001 ;
+    uad:hasReconciliation ex:reconciliation-001 .
+
+ex:subject-property-001
+    a uad:SubjectProperty .
+
+ex:opinion-001
+    a uad:OpinionOfValue .
+
+ex:sales-comparison-approach-001
+    a uad:SalesComparisonApproach .
+
+ex:reconciliation-x
+    a uad:Reconciliation .

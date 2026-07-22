@@ -1,0 +1,70 @@
+@prefix rdf:      <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:     <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:      <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:      <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:     <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms:  <http://purl.org/dc/terms/> .
+
+@prefix uad:      <https://dynamicontology.com/uad36/ontology#> .
+@prefix uadpred:  <https://dynamicontology.com/uad36/predicate#> .
+@prefix uadvalue: <https://dynamicontology.com/uad36/value#> .
+
+#################################################################
+#
+# UAD 3.6 Core Ontology
+#
+# This file declares the UAD ontology and establishes the
+# namespace policy for all ontology terms.
+#
+# Additional Turtle source files contribute classes and
+# properties to this ontology by using the same namespace.
+#
+# Current contributing files include:
+#
+#   • urar-meaning.ttl
+#
+#################################################################
+
+<https://dynamicontology.com/uad36/ontology>
+    a owl:Ontology ;
+    dcterms:title "UAD 3.6 Ontology" ;
+    dcterms:creator "Dynamic Ontology" ;
+    dcterms:description
+        "Core ontology for the Uniform Appraisal Dataset (UAD) 3.6." ;
+    owl:versionInfo "0.1.0" .
+
+#################################################################
+#
+# Core Classes
+#
+#################################################################
+
+uad:SchemaComponent
+    a owl:Class ;
+    rdfs:label "Schema Component" ;
+    skos:definition
+        "A component of a source schema or specification represented in the UAD ontology." .
+
+uad:PropertyConditionRating
+    a owl:Class ;
+    rdfs:label "Property Condition Rating" ;
+    skos:definition
+        "A rating expressing the condition of a property." .
+
+uad:PropertyQualityRating
+    a owl:Class ;
+    rdfs:label "Property Quality Rating" ;
+    skos:definition
+        "A rating expressing the quality of a property." .
+
+uad:hasPropertyConditionRating
+    a owl:ObjectProperty ;
+    rdfs:domain uad:SubjectProperty ;
+    rdfs:range uad:PropertyConditionRating ;
+    rdfs:label "has property condition rating" .
+
+uad:hasPropertyQualityRating
+    a owl:ObjectProperty ;
+    rdfs:domain uad:SubjectProperty ;
+    rdfs:range uad:PropertyQualityRating ;
+    rdfs:label "has property quality rating" .

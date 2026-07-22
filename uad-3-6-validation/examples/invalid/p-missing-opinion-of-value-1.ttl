@@ -1,0 +1,61 @@
+# ---------------------------------------------------------------------------
+# OTDD Example
+# ---------------------------------------------------------------------------
+# Case ID:
+#     p-missing-opinion-of-value-1
+#
+# Expected Result:
+#     INVALID
+#
+# RDF Component:
+#     Predicate
+#
+# Defect Category:
+#     Missing Required Property
+#
+# Target Concept:
+#     Appraisal
+#
+# Shape Under Test:
+#     uad:AppraisalShape
+#
+# Constraint Under Test:
+#     uad:hasOpinionOfValue minCount 1
+#
+# Expected SHACL Result:
+#     Violation
+#
+# Purpose:
+#     Demonstrates that an appraisal must reference an OpinionOfValue using
+#     the required uad:hasOpinionOfValue property.
+#
+# Related Examples:
+#     o-absent-opinion-of-value-1.ttl
+#     o-missing-opinion-of-value-type-1.ttl
+#     full-valid-appraisal.ttl
+#
+# Notes:
+#     The OpinionOfValue resource exists and is correctly typed, but the
+#     appraisal omits the required uad:hasOpinionOfValue relationship to that
+#     resource.
+# ---------------------------------------------------------------------------
+@prefix ex:   <https://dynamicontology.com/uad36/example#> .
+@prefix uad:  <https://dynamicontology.com/uad36/ontology#> .
+
+ex:appraisal-001
+    a uad:Appraisal ;
+    uad:appraisesProperty ex:subject-property-001 ;
+    uad:usesValuationApproach ex:sales-comparison-approach-001 ;
+    uad:hasReconciliation ex:reconciliation-001 .
+
+ex:subject-property-001
+    a uad:SubjectProperty .
+
+ex:opinion-001
+    a uad:OpinionOfValue .
+
+ex:sales-comparison-approach-001
+    a uad:SalesComparisonApproach .
+
+ex:reconciliation-001
+    a uad:Reconciliation .

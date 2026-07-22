@@ -1,0 +1,62 @@
+# ---------------------------------------------------------------------------
+# OTDD Example
+# ---------------------------------------------------------------------------
+# Case ID:
+#     p-cardinality-subject-property-1
+#
+# Expected Result:
+#     INVALID
+#
+# RDF Component:
+#     Predicate
+#
+# Defect Category:
+#     Property Cardinality
+#
+# Target Concept:
+#     Appraisal
+#
+# Shape Under Test:
+#     uad:AppraisalShape
+#
+# Constraint Under Test:
+#     uad:appraisesProperty exactly 1
+#
+# Expected SHACL Result:
+#     Violation
+#
+# Purpose:
+#     Demonstrates that an appraisal must reference exactly one subject
+#     property.
+#
+# Related Examples:
+#     full-valid-appraisal.ttl
+#
+# Notes:
+#     The appraisal references two subject properties using
+#     uad:appraisesProperty, violating the required cardinality of exactly one.
+# ---------------------------------------------------------------------------
+@prefix ex:   <https://dynamicontology.com/uad36/example#> .
+@prefix uad:  <https://dynamicontology.com/uad36/ontology#> .
+
+ex:appraisal-001
+    a uad:Appraisal ;
+    uad:appraisesProperty (ex:subject-property-001 ex:subject-property-002) ;
+    uad:hasOpinionOfValue ex:opinion-001 ;
+    uad:usesValuationApproach ex:sales-comparison-approach-001 ;
+    uad:hasReconciliation ex:reconciliation-001 .
+
+ex:subject-property-001
+    a uad:SubjectProperty .
+
+ex:subject-property-002
+    a uad:SubjectProperty .
+
+ex:opinion-001
+    a uad:OpinionOfValue .
+
+ex:sales-comparison-approach-001
+    a uad:SalesComparisonApproach .
+
+ex:reconciliation-001
+    a uad:Reconciliation .

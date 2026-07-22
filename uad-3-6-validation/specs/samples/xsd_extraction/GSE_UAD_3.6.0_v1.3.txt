@@ -1,0 +1,36 @@
+Source file: GSE_UAD_3.6.0_v1.3.xsd
+Schema declaration line: 2
+Schema prefix: xsd
+
+Schema attributes:
+  xmlns = http://www.mismo.org/residential/2009/schemas
+  xmlns:mismo = http://www.mismo.org/residential/2009/schemas
+  xmlns:xlink = http://www.w3.org/1999/xlink
+  xmlns:xsd = http://www.w3.org/2001/XMLSchema
+  targetNamespace = http://www.mismo.org/residential/2009/schemas
+  elementFormDefault = qualified
+  attributeFormDefault = unqualified
+
+Unique XSD components:
+  annotation
+  any
+  anyAttribute
+  attribute
+  attributeGroup
+  choice
+  complexType
+  documentation
+  element
+  enumeration
+  extension
+  fractionDigits
+  import
+  maxInclusive
+  maxLength
+  minInclusive
+  pattern
+  restriction
+  sequence
+  simpleContent
+  simpleType
+  union

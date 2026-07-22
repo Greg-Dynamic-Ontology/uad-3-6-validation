@@ -1,0 +1,15 @@
+ Volume in drive C is Local Disk
+ Volume Serial Number is 0037-246E
+
+ Directory of C:\Users\grego\projects\pycharm\uad-3-6-validation\utilities\xsd-extraction
+
+07/15/2026  08:25 PM    <DIR>          .
+07/15/2026  07:54 PM    <DIR>          ..
+07/15/2026  08:25 PM                 0 int
+07/15/2026  07:48 PM               404 run.bat
+07/15/2026  07:49 PM               761 test.bat
+07/15/2026  07:10 PM    <DIR>          tests
+07/16/2026  09:17 AM    <DIR>          xsd_extraction
+06/25/2026  12:05 PM                 0 __init__.py
+               4 File(s)          1,165 bytes
+               4 Dir(s)  508,375,916,544 bytes free

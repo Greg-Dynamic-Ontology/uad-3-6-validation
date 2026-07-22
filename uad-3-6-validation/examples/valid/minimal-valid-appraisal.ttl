@@ -1,0 +1,37 @@
+@prefix ex:   <https://dynamicontology.com/uad36/example#> .
+@prefix uad:  <https://dynamicontology.com/uad36/ontology#> .
+
+ex:appraisal-001
+    a uad:Appraisal ;
+    uad:appraisesProperty ex:subject-property-001 ;
+    uad:hasOpinionOfValue ex:opinion-001 ;
+    uad:usesValuationApproach ex:sales-comparison-approach-001 ;
+    uad:hasReconciliation ex:reconciliation-001 .
+
+ex:subject-property-001
+    a uad:SubjectProperty .
+
+ex:opinion-001
+    a uad:OpinionOfValue .
+
+ex:sales-comparison-approach-001
+    a uad:SalesComparisonApproach .
+
+ex:reconciliation-001
+    a uad:Reconciliation .
+
+
+#################################################################
+# Subject Property has Condition Rating and Quality Rating
+#################################################################
+
+ex:subject-property-001
+    a uad:SubjectProperty ;
+    uad:hasPropertyConditionRating ex:condition-rating-001 ;
+    uad:hasPropertyQualityRating ex:quality-rating-001 .
+
+ex:condition-rating-001
+    a uad:PropertyConditionRating .
+
+ex:quality-rating-001
+    a uad:PropertyQualityRating .

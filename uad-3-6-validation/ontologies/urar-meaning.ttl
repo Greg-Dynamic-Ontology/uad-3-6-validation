@@ -1,0 +1,182 @@
+@prefix rdf:      <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:     <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:      <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:      <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:     <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms:  <http://purl.org/dc/terms/> .
+
+@prefix uad:      <https://dynamicontology.com/uad36/ontology#> .
+@prefix uadpred:  <https://dynamicontology.com/uad36/predicate#> .
+@prefix uadvalue: <https://dynamicontology.com/uad36/value#> .
+
+#################################################################
+#
+# URAR Meaning Vocabulary
+#
+# This file contributes vocabulary to the UAD ontology declared
+# in uad36-core.ttl.
+#
+# It intentionally does NOT declare an owl:Ontology.
+#
+# During development the ontology is treated as a single logical
+# ontology distributed across multiple Turtle source files.
+#
+#################################################################
+
+#################################################################
+#
+# EXPERIMENT (Deferred)
+#
+# One possible future architecture is to publish this file as a
+# separate ontology module using owl:imports.
+#
+# We are intentionally NOT doing this today because the ontology
+# is still evolving and is easier to maintain as a single logical
+# ontology.
+#
+#################################################################
+
+# <https://dynamicontology.com/uad36/urar-meaning>
+#     a owl:Ontology ;
+#     owl:imports <https://dynamicontology.com/uad36/ontology> ;
+#     dcterms:title "URAR Meaning Ontology" ;
+#     dcterms:description
+#         "Conceptual ontology reconstructed from the URAR
+#          Implementation Guide and accepted appraisal practice." .
+
+#################################################################
+#
+# Classes
+#
+#################################################################
+
+uad:Appraisal
+    a owl:Class ;
+    rdfs:label "Appraisal" ;
+    skos:definition
+        "A professional opinion of value supported by documented evidence." .
+
+uad:OpinionOfValue
+    a owl:Class ;
+    rdfs:label "Opinion of Value" ;
+    skos:definition
+        "A professional opinion regarding the value of a subject property supported by documented evidence." .
+
+uad:RealProperty
+    a owl:Class ;
+    rdfs:label "Real Property" .
+
+uad:SubjectProperty
+    a owl:Class ;
+    rdfs:subClassOf uad:RealProperty ;
+    rdfs:label "Subject Property" .
+
+uad:Evidence
+    a owl:Class ;
+    rdfs:label "Evidence" .
+
+uad:ValuationApproach
+    a owl:Class ;
+    rdfs:label "Valuation Approach" ;
+    skos:definition
+        "A method used to analyze evidence and develop an indication of value." .
+
+uad:SalesComparisonApproach
+    a owl:Class ;
+    rdfs:subClassOf uad:ValuationApproach ;
+    rdfs:label "Sales Comparison Approach" .
+
+uad:CostApproach
+    a owl:Class ;
+    rdfs:subClassOf uad:ValuationApproach ;
+    rdfs:label "Cost Approach" .
+
+uad:IncomeApproach
+    a owl:Class ;
+    rdfs:subClassOf uad:ValuationApproach ;
+    rdfs:label "Income Approach" .
+
+uad:IndicationOfValue
+    a owl:Class ;
+    rdfs:label "Indication of Value" ;
+    skos:definition
+        "A value conclusion produced by a valuation approach prior to reconciliation." .
+
+uad:Reconciliation
+    a owl:Class ;
+    rdfs:label "Reconciliation" ;
+    skos:definition
+        "The appraisal process that reconciles one or more indications of value into a final opinion of value." .
+
+uad:ComparableSale
+    a owl:Class ;
+    rdfs:subClassOf uad:Evidence ;
+    rdfs:label "Comparable Sale" .
+
+uad:MeasurementRun
+    a owl:Class ;
+    rdfs:label "Measurement Run" .
+
+uad:Measurement
+    a owl:Class ;
+    rdfs:label "Measurement" .
+
+#################################################################
+#
+# Object Properties
+#
+#################################################################
+
+uad:hasOpinionOfValue
+    a owl:ObjectProperty ;
+    rdfs:label "has opinion of value" ;
+    rdfs:domain uad:Appraisal ;
+    rdfs:range uad:OpinionOfValue .
+
+uad:appraisesProperty
+    a owl:ObjectProperty ;
+    rdfs:label "appraises property" ;
+    rdfs:domain uad:Appraisal ;
+    rdfs:range uad:SubjectProperty .
+
+uad:usesValuationApproach
+    a owl:ObjectProperty ;
+    rdfs:label "uses valuation approach" ;
+    rdfs:domain uad:Appraisal ;
+    rdfs:range uad:ValuationApproach .
+
+uad:producesIndicationOfValue
+    a owl:ObjectProperty ;
+    rdfs:label "produces indication of value" ;
+    rdfs:domain uad:ValuationApproach ;
+    rdfs:range uad:IndicationOfValue .
+
+uad:usesIndicationOfValue
+    a owl:ObjectProperty ;
+    rdfs:label "uses indication of value" ;
+    rdfs:domain uad:Reconciliation ;
+    rdfs:range uad:IndicationOfValue .
+
+uad:reconcilesToOpinionOfValue
+    a owl:ObjectProperty ;
+    rdfs:label "reconciles to opinion of value" ;
+    rdfs:domain uad:Reconciliation ;
+    rdfs:range uad:OpinionOfValue .
+
+uad:hasReconciliation
+    a owl:ObjectProperty ;
+    rdfs:label "has reconciliation" ;
+    rdfs:domain uad:Appraisal ;
+    rdfs:range uad:Reconciliation .
+
+uad:usesComparableSale
+    a owl:ObjectProperty ;
+    rdfs:label "uses comparable sale" ;
+    rdfs:domain uad:SalesComparisonApproach ;
+    rdfs:range uad:ComparableSale .
+
+uad:producedMeasurement
+    a owl:ObjectProperty ;
+    rdfs:label "produced measurement" ;
+    rdfs:domain uad:MeasurementRun ;
+    rdfs:range uad:Measurement .
