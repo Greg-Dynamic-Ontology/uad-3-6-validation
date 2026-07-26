@@ -1,5 +1,12 @@
+from pathlib import Path
+
 from fastapi.testclient import TestClient
+
 from app.main import app
+
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+VENDOR_XML_DIR = PROJECT_ROOT / "examples" / "xml"
 
 client = TestClient(app)
 
@@ -78,7 +85,10 @@ def test_explain_finding_is_advisory():
 def test_review_revision_history_is_advisory_not_deterministic_failure():
     response = client.post(
         "/review/revision-history",
-        json={"revision_history_detail": "Corrected condition rating narrative.", "related_finding_ids": ["F-123"]},
+        json={
+            "revision_history_detail": "Corrected condition rating narrative.",
+            "related_finding_ids": ["F-123"],
+        },
     )
     assert response.status_code == 200
     body = response.json()
@@ -118,6 +128,30 @@ def test_xml_schema_upload_reports_well_formed_non_uad_xml() -> None:
     assert response.status_code == 200
     body = response.json()
     assert body["package_name"] == "invoice.xml"
+    assert body["well_formed"] is True
+    assert body["schema_valid"] is False
+    assert body["status"] == "failed"
+    assert body["summary"]["error_count"] >= 1
+    assert body["findings"]
+
+
+def test_xml_schema_upload_processes_known_vendor_example() -> None:
+    xml_path = VENDOR_XML_DIR / "Condo1_Appraisal_v1.4.xml"
+
+    response = client.post(
+        "/validate/uad36/xml-schema",
+        files={
+            "file": (
+                xml_path.name,
+                xml_path.read_bytes(),
+                "application/xml",
+            )
+        },
+    )
+
+    assert response.status_code == 200
+    body = response.json()
+    assert body["package_name"] == xml_path.name
     assert body["well_formed"] is True
     assert body["schema_valid"] is False
     assert body["status"] == "failed"
