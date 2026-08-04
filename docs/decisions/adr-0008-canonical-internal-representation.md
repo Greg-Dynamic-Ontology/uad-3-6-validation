@@ -131,4 +131,3 @@ Semantic authority belongs exclusively to the canonical RDF+/OWL representation.
 This distinction preserves a single source of truth while allowing implementation flexibility.
 
 ---
-

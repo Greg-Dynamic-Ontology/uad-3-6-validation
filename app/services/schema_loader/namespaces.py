@@ -1,0 +1,1 @@
+"""Namespace handling for XML Schema loading."""

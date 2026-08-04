@@ -7,7 +7,7 @@ import pytest
 
 from app.core.namespaces import SCHEMA_MODEL_NAMESPACE_IRI
 from app.models.schema_model import QName, SchemaModel
-from app.services.schema_loader import SchemaLoader
+from app.services.schema_loader.schema_loader import SchemaLoader
 from app.services.schema_loader_context import SchemaLoaderContext
 
 

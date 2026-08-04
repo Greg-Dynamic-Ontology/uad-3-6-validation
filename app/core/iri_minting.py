@@ -10,7 +10,7 @@ from app.core.namespaces import UAD_NAMESPACE
 _LOCAL_NAME_PATTERN = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
 
 
-def is_valid_local_name(local_name: object) -> bool:
+def is_valid_local_name(local_name: str) -> bool:
     if not isinstance(local_name, str):
         return False
 

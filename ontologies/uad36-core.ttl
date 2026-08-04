@@ -4,6 +4,7 @@
 @prefix xsd:      <http://www.w3.org/2001/XMLSchema#> .
 @prefix skos:     <http://www.w3.org/2004/02/skos/core#> .
 @prefix dcterms:  <http://purl.org/dc/terms/> .
+@prefix prov:     <http://www.w3.org/ns/prov#> .
 
 @prefix uad:      <https://dynamicontology.com/uad36/ontology#> .
 @prefix uadpred:  <https://dynamicontology.com/uad36/predicate#> .
@@ -68,3 +69,90 @@ uad:hasPropertyQualityRating
     rdfs:domain uad:SubjectProperty ;
     rdfs:range uad:PropertyQualityRating ;
     rdfs:label "has property quality rating" .
+
+#################################################################
+#
+# Pipeline Execution Vocabulary
+#
+#################################################################
+
+uad:PipelineRun
+    a owl:Class ;
+    rdfs:subClassOf prov:Activity ;
+    rdfs:label "Pipeline Run" ;
+    skos:definition
+        "An execution of a configured processing pipeline for one loaded appraisal." .
+
+uad:StageExecution
+    a owl:Class ;
+    rdfs:subClassOf prov:Activity ;
+    rdfs:label "Stage Execution" ;
+    skos:definition
+        "An execution of one stage within a pipeline run." .
+
+uad:RdfProjectionExecution
+    a owl:Class ;
+    rdfs:subClassOf uad:StageExecution ;
+    rdfs:label "RDF Projection Execution" ;
+    skos:definition
+        "An execution of the stage that projects a loaded UAD XML appraisal into RDF." .
+
+uad:PipelineError
+    a owl:Class ;
+    rdfs:label "Pipeline Error" ;
+    skos:definition
+        "An error reported by a pipeline stage execution." .
+
+uad:ExecutionStatus
+    a owl:Class ;
+    rdfs:label "Execution Status" ;
+    skos:definition
+        "A status assigned to a pipeline run or stage execution." .
+
+uad:hasStageExecution
+    a owl:ObjectProperty ;
+    rdfs:domain uad:PipelineRun ;
+    rdfs:range uad:StageExecution ;
+    rdfs:label "has stage execution" .
+
+uad:hasError
+    a owl:ObjectProperty ;
+    rdfs:domain uad:StageExecution ;
+    rdfs:range uad:PipelineError ;
+    rdfs:label "has error" .
+
+uad:executionStatus
+    a owl:ObjectProperty ;
+    rdfs:domain prov:Activity ;
+    rdfs:range uad:ExecutionStatus ;
+    rdfs:label "execution status" .
+
+uad:errorCode
+    a owl:DatatypeProperty ;
+    rdfs:domain uad:PipelineError ;
+    rdfs:range xsd:string ;
+    rdfs:label "error code" .
+
+uad:businessMessage
+    a owl:DatatypeProperty ;
+    rdfs:domain uad:PipelineError ;
+    rdfs:range xsd:string ;
+    rdfs:label "business message" ;
+    skos:definition
+        "An error message suitable for a business user." .
+
+uad:technicalMessage
+    a owl:DatatypeProperty ;
+    rdfs:domain uad:PipelineError ;
+    rdfs:range xsd:string ;
+    rdfs:label "technical message" ;
+    skos:definition
+        "An error message containing technical diagnostic detail." .
+
+uad:Completed
+    a owl:NamedIndividual, uad:ExecutionStatus ;
+    rdfs:label "Completed" .
+
+uad:Failed
+    a owl:NamedIndividual, uad:ExecutionStatus ;
+    rdfs:label "Failed" .

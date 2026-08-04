@@ -1,6 +1,6 @@
 # Milestone 1 — Schema Loader
 
-**Status:** Completed
+**Status:** In Progress
 
 ---
 
@@ -27,6 +27,11 @@ schema was authored as a single document or as multiple documents.
 The purpose of this milestone is to separate the logical schema from its
 physical representation.
 
+In preparation for Milestone 2, it was recognized that the Logical Schema
+Model must also exist as a persistent RDF graph. This graph provides a stable,
+inspectable, versionable artifact for testing, regression analysis, and
+interchange.
+
 ---
 
 ## Inputs
@@ -39,7 +44,8 @@ physical representation.
 
 ## Outputs
 
-- Logical Schema Model
+- Logical Schema Model (runtime object)
+- Logical Schema Graph (RDF/Turtle serialization)
 
 ---
 
@@ -56,8 +62,14 @@ Combined Schema
                     │
                     ▼
          Logical Schema Model
-                    ▲
-                    │
+             │            │
+             │            ▼
+             │   Logical Schema Graph
+             │      (RDF/Turtle)
+             │
+             ▼
+        Runtime Consumers
+
 Distributed Schema
 (xs:include closure)
 ```
@@ -74,6 +86,7 @@ Distributed Schema
 - [x] Prevent circular include recursion.
 - [x] Correctly implement XML Schema chameleon namespace inheritance.
 - [x] Produce a single logical schema model.
+- [ ] Serialize the Logical Schema Model as an RDF/Turtle graph.
 
 ---
 
@@ -111,20 +124,35 @@ Distributed Schema
 
 ---
 
+## Remaining Work
+
+| Task                                          | Status |
+|-----------------------------------------------|--------|
+| Serialize Logical Schema Model to RDF/Turtle  | ⬜      |
+| Verify serialized graph against runtime model | ⬜      |
+| Add regression tests for serialized graph     | ⬜      |
+
+---
+
 ## Deliverables
 
 ### Software
 
 - Schema loader
-- Logical schema model
+- Logical Schema Model
+
+### Generated Artifacts
+
+- `artifacts/logical-schema.ttl` *(pending)*
 
 ### Tests
 
 - `tests/test_logical_schema_counts.py`
+- Serialization regression tests *(pending)*
 
 ### Documentation
 
-- *(To be completed.)*
+- `docs/milestones/milestone-1/milestone-1.md`
 
 ---
 
@@ -133,8 +161,12 @@ Distributed Schema
 > Given either a combined XML Schema or an equivalent distributed XML Schema,
 > the schema loader shall always produce the same logical schema model.
 
-Future milestones shall consume the logical schema model rather than the
+Future milestones shall consume the Logical Schema Model rather than the
 physical XML Schema documents.
+
+The Logical Schema Model may be represented in memory for runtime processing
+and as an RDF/Turtle graph for testing, regression verification, and
+interchange.
 
 ---
 
@@ -144,6 +176,9 @@ physical XML Schema documents.
 - Physical file boundaries are not part of the logical schema.
 - Regression tests proved equivalence rather than implementation details.
 - The logical schema model became the canonical output of schema loading.
+- A persistent RDF representation of the logical schema is required to provide
+  a durable milestone artifact and the input contract for subsequent
+  milestones.
 
 ---
 
@@ -153,4 +188,9 @@ This milestone was implemented before the milestone documentation format was
 established.
 
 The document has been retrofitted to preserve the architectural decisions,
-tests, and invariant established during implementation.
+tests, and invariants established during implementation.
+
+During planning for Milestone 2, it became clear that the Logical Schema Model
+must also be persisted as an RDF/Turtle graph. This requirement has been added
+to the milestone. Until the serialization artifact and its associated
+regression tests are implemented, this milestone remains **In Progress**.

@@ -1,6 +1,10 @@
-from fastapi import APIRouter, File, HTTPException, UploadFile
+from pathlib import Path
+
+from fastapi import APIRouter, File, Form, HTTPException, Request, UploadFile
+
 from app.adapters.graph_store import graph_store
 from app.adapters.llm import llm_client
+from app.models.appraisal import LoadedAppraisal
 from app.models.enums import Investor
 from app.models.ingestion import IngestResponse, MappingIngestRequest, RulesIngestRequest, SchemaIngestRequest
 from app.models.schema_validation import SchemaValidationReport
@@ -11,16 +15,39 @@ from app.models.validation import (
     ValidationRequest,
     ValidationRun,
 )
+from app.services.experience import ExperienceProfile, load_experience_profile
 from app.services.ingestion import ingestion_service
+from app.services.rdf_projection import RdfProjectionStage, RdfProjector
 from app.services.validation import validation_service
 from app.services.xml_schema_validator import validate_uad36_xml_bytes
 
+
 router = APIRouter()
+
+
+def active_experience(request: Request) -> ExperienceProfile:
+    configuration_file = getattr(
+        request.app.state,
+        "configuration_file",
+        None,
+    )
+    path = (
+        Path(configuration_file)
+        if configuration_file is not None
+        else None
+    )
+    return load_experience_profile(path)
 
 
 @router.get("/health")
 def health() -> dict[str, str]:
     return {"status": "ok", "uad_version": "3.6"}
+
+
+@router.get("/configuration/experience")
+def get_experience_configuration(request: Request) -> dict[str, bool]:
+    """Return only the presentation capabilities needed by the browser."""
+    return active_experience(request).as_response()
 
 
 @router.post("/ingest/schema", response_model=IngestResponse)
@@ -58,6 +85,120 @@ async def validate_uad36_xml_schema(
         package_name=file.filename or "uploaded-uad36-package.xml",
         xml_bytes=xml_bytes,
     )
+
+
+@router.post("/validate/uad36/rdf-projection")
+async def project_uad36_rdf(
+    file: UploadFile = File(...),
+) -> dict[str, str | int]:
+    """Project an uploaded UAD appraisal into RDF."""
+    loaded_appraisal = LoadedAppraisal(
+        source_name=file.filename or "uploaded-uad36-package.xml",
+        xml_bytes=await file.read(),
+    )
+    graph = RdfProjectionStage(
+        projector=RdfProjector(),
+    ).run(
+        loaded_appraisal=loaded_appraisal,
+    )
+
+    return {
+        "package_name": loaded_appraisal.source_name,
+        "status": "completed",
+        "triple_count": len(graph),
+    }
+
+
+@router.post("/validate/uad36/pipeline")
+async def run_uad36_pipeline(
+    request: Request,
+    pipeline: str = Form(...),
+    file: UploadFile = File(...),
+) -> dict[str, object]:
+    """Run the UI-selected validation pipeline for one upload."""
+    if pipeline != "rdf-projection":
+        raise HTTPException(
+            status_code=400,
+            detail=f"Unsupported validation pipeline: {pipeline}",
+        )
+
+    experience = active_experience(request)
+    loaded_appraisal = LoadedAppraisal(
+        source_name=file.filename or "uploaded-uad36-package.xml",
+        xml_bytes=await file.read(),
+    )
+
+    try:
+        graph = RdfProjectionStage(
+            projector=RdfProjector(),
+        ).run(
+            loaded_appraisal=loaded_appraisal,
+        )
+    except Exception as error:
+        error_code = "RDF_PROJECTION_FAILED"
+        business_message = (
+            "The appraisal could not be prepared for validation."
+        )
+        validation_run = validation_service.record_rdf_projection_failure(
+            technical_message=str(error),
+            error_code=error_code,
+            business_message=business_message,
+        )
+
+        if not experience.shows_pipeline_stages:
+            return {
+                "run_id": validation_run.run_id,
+                "package_name": loaded_appraisal.source_name,
+                "status": "failed",
+                "message": business_message,
+            }
+
+        return {
+            "run_id": validation_run.run_id,
+            "package_name": loaded_appraisal.source_name,
+            "pipeline": pipeline,
+            "status": "failed",
+            "stages": [
+                {
+                    "name": "rdf-projection",
+                    "status": "failed",
+                    "error": {
+                        "code": error_code,
+                        "business_message": business_message,
+                    },
+                }
+            ],
+        }
+
+    validation_run = validation_service.record_rdf_projection(
+        package_name=loaded_appraisal.source_name,
+        xml_bytes=loaded_appraisal.xml_bytes,
+        triple_count=len(graph),
+    )
+
+    if not experience.shows_pipeline_stages:
+        return {
+            "run_id": validation_run.run_id,
+            "package_name": loaded_appraisal.source_name,
+            "status": "completed",
+            "message": "The appraisal was processed successfully.",
+        }
+
+    return {
+        "run_id": validation_run.run_id,
+        "package_name": loaded_appraisal.source_name,
+        "pipeline": pipeline,
+        "status": "completed",
+        "stages": [
+            {
+                "name": "rdf-projection",
+                "status": "completed",
+                "artifacts": {
+                    "rdf_triple_count": len(graph),
+                },
+            }
+        ],
+    }
 
 
 @router.post("/validate/uad36", response_model=ValidationRun)

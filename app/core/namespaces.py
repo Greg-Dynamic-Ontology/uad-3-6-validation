@@ -1,5 +1,3 @@
-"""Shared namespace constants for the UAD 3.6 validation project."""
-
 from __future__ import annotations
 
 from rdflib import Namespace, URIRef
@@ -37,6 +35,7 @@ __all__ = [
     "UAD",
     "UAD_ONTOLOGY_IRI",
     "UAD_NAMESPACE_IRI",
+    "UAD_NAMESPACE",
     "ONTOLOGY_DOCUMENT_IRI",
 
     "SCHEMA_MODEL",

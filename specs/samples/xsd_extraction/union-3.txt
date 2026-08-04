@@ -1,0 +1,28 @@
+Unique XSD components:
+  annotation
+  attribute
+  attributeGroup
+  documentation
+  enumeration
+  restriction
+  simpleType
+  union
+
+  any
+  choice
+  complexType
+  element
+  group
+  import
+  minLength
+  sequence
+
+  anyAttribute
+  extension
+  fractionDigits
+  maxInclusive
+  maxLength
+  minInclusive
+  pattern
+  sequence
+  simpleContent

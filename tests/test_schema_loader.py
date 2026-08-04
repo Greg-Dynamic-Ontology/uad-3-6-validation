@@ -1,7 +1,7 @@
 from pathlib import Path
 
 from app.models.schema_model import SchemaModel
-from app.services.schema_loader import SchemaLoader
+from app.services.schema_loader.schema_loader import SchemaLoader
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]

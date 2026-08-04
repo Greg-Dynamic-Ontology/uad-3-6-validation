@@ -14,33 +14,23 @@
 <body>
 
 <header class="site-banner">
-
     <div class="site-brand">
-
         <img
                 class="site-logo"
                 src="../assets/images/DKGA-logo.png"
                 alt="Dynamic Knowledge Growth Associates">
 
         <div class="site-branding">
-
-            <p class="site-kicker">
-                Dynamic Knowledge Growth Associates
-            </p>
-
+            <p class="site-kicker">Dynamic Knowledge Growth Associates</p>
             <h1>UAD 3.6 Validation</h1>
-
             <p class="site-tagline">
                 First Reference Implementation of
                 <strong>Ontology Test-Driven Development (OTDD)</strong>
             </p>
-
         </div>
-
     </div>
 
     <nav class="site-navigation">
-
         <a href="../index.html">Home</a>
         <a href="index.html" aria-current="page">Run Validation</a>
         <a href="../index.html#features">Features</a>
@@ -48,35 +38,27 @@
         <a href="../index.html#otdd">OTDD</a>
         <a href="../index.html#reports">Reports</a>
         <a href="../index.html#status">Status</a>
-
     </nav>
-
 </header>
 
 <main>
 
 <section class="content-section">
-
     <div class="section-heading">
         <p class="eyebrow">Validation</p>
         <h2>Validate a UAD 3.6 Appraisal</h2>
     </div>
 
-    <p>
-        Upload a UAD 3.6 appraisal XML instance document and select
-        the desired validation pipeline.
+    <p id="validation-introduction">
+        Upload a UAD 3.6 appraisal and validate it.
     </p>
-
 </section>
 
 <section class="content-section content-section--alternate">
-
-    <h3>Validation Pipeline</h3>
+    <h3 id="validation-task-heading">Validate Appraisal</h3>
 
     <form id="validation-form">
-
-        <fieldset>
-
+        <fieldset id="technical-pipeline-selection" hidden>
             <legend>Select Validation</legend>
 
             <label>
@@ -90,14 +72,12 @@
 
             <br><br>
 
-            <label class="option-unavailable">
+            <label>
                 <input
                         type="radio"
                         name="pipeline"
-                        value="rdf-projection"
-                        disabled>
+                        value="rdf-projection">
                 RDF Projection
-                <span class="availability-note">Not yet available</span>
             </label>
 
             <br><br>
@@ -123,14 +103,12 @@
                 Complete Validation Pipeline
                 <span class="availability-note">Not yet available</span>
             </label>
-
         </fieldset>
 
-        <br>
+        <br id="technical-pipeline-spacing" hidden>
 
         <fieldset>
-
-            <legend>Select Appraisal XML File</legend>
+            <legend>Select Appraisal File</legend>
 
             <input
                     id="appraisal-file"
@@ -138,21 +116,17 @@
                     type="file"
                     accept=".xml,application/xml,text/xml"
                     required>
-
         </fieldset>
 
         <br>
 
         <button id="validate-button" type="submit">
-            Validate
+            Validate Appraisal
         </button>
-
     </form>
-
 </section>
 
 <section class="content-section">
-
     <h3>Validation Status</h3>
 
     <div
@@ -161,40 +135,31 @@
             role="status"
             aria-live="polite">
 
-        <p id="validation-status-heading"><strong>Waiting for validation request</strong></p>
-
-        <p id="validation-status-message">
-            Select a UAD 3.6 appraisal XML instance document and run XML Schema validation.
+        <p id="validation-status-heading">
+            <strong>Waiting for validation request</strong>
         </p>
 
+        <p id="validation-status-message">
+            Select a UAD 3.6 appraisal and validate it.
+        </p>
     </div>
-
 </section>
 
 <section class="content-section content-section--alternate">
-
     <h3>Validation Results</h3>
 
     <div id="validation-results-card" class="card" aria-live="polite">
-
         <div id="validation-results-content">
-            <p>
-                XML parsing and UAD 3.6 XML Schema validation results will appear here after execution.
-            </p>
+            <p>Validation results will appear here after execution.</p>
         </div>
-
     </div>
-
 </section>
 
-<section class="content-section">
-
+<section id="technical-artifacts-section" class="content-section" hidden>
     <h3>Pipeline Artifacts</h3>
 
     <div class="card">
-
         <table>
-
             <thead>
             <tr>
                 <th>Artifact</th>
@@ -203,7 +168,6 @@
             </thead>
 
             <tbody>
-
             <tr>
                 <td>RDF Projection</td>
                 <td>
@@ -239,23 +203,15 @@
                     </span>
                 </td>
             </tr>
-
             </tbody>
-
         </table>
-
     </div>
-
 </section>
 
 </main>
 
 <footer class="site-footer">
-
-    <p>
-        UAD 3.6 Validation • Dynamic Knowledge Growth Associates
-    </p>
-
+    <p>UAD 3.6 Validation • Dynamic Knowledge Growth Associates</p>
 </footer>
 
 </body>

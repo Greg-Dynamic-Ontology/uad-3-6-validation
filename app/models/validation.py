@@ -34,6 +34,18 @@ class ValidationSummary(BaseModel):
     critical: int = 0
 
 
+class RdfArtifactSource(BaseModel):
+    package_name: str
+    sha256: str
+
+
+class RdfProjectionArtifact(BaseModel):
+    artifact_type: str = "rdf-instance-graph"
+    produced_by: str = "rdf-projection"
+    source: RdfArtifactSource
+    triple_count: int = Field(ge=0)
+
+
 class ValidationRun(BaseModel):
     run_id: str
     uad_version: str = "3.6"
@@ -42,6 +54,7 @@ class ValidationRun(BaseModel):
     created_at: datetime = Field(default_factory=utc_now)
     summary: ValidationSummary
     findings: list[Finding] = Field(default_factory=list)
+    artifacts: list[RdfProjectionArtifact] = Field(default_factory=list)
 
 
 class ExplanationResponse(BaseModel):

@@ -104,8 +104,7 @@ This milestone is complete when:
 - [ ] All ontology projection tests pass.
 - [ ] Equivalent logical schema models produce equivalent ontology graphs.
 - [ ] RDF, OWL, and SKOS responsibilities are clearly separated.
-- [ ] Generated ontology artifacts become the canonical semantic
-      representation of the XML Schema.
+- [ ] The canonical semantic representation is produced as an RDF graph. Persistence of that graph as generated ontology artifacts is controlled by Configuration Knowledge.
 
 ---
 
