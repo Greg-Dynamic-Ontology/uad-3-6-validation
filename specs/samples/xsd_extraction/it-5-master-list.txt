@@ -1,0 +1,34 @@
+Source extraction reports:
+  GSE_UAD_3.6.0_v1.3.txt
+  GSE_UAD_3.6.0_xlink_v1.3.txt
+  union-3.txt
+  xml.txt
+
+Expected unique XSD component kinds: 24
+
+Unique XSD components:
+
+  annotation
+  any
+  anyAttribute
+  attribute
+  attributeGroup
+  choice
+  complexType
+  documentation
+  element
+  enumeration
+  extension
+  fractionDigits
+  group
+  import
+  maxInclusive
+  maxLength
+  minInclusive
+  minLength
+  pattern
+  restriction
+  sequence
+  simpleContent
+  simpleType
+  union

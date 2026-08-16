@@ -3,77 +3,153 @@
 from __future__ import annotations
 
 from pathlib import Path
-import xml.etree.ElementTree as ET
 
 from app.core.namespaces import SCHEMA_MODEL_NAMESPACE_IRI
 from app.models.schema_model import (
     ComplexTypeDefinition,
-    ElementDeclaration,
     Facet,
-    ModelGroup,
-    ModelGroupKind,
     QName,
     SchemaModel,
     SimpleTypeDefinition,
 )
+from app.services.schema_loader.declarations import (
+    load_attribute_group_definitions,
+    load_direct_attribute_declarations,
+    load_global_attribute_declarations,
+    load_global_element_declarations,
+)
+from app.services.schema_loader.documentation import extract_documentation
+from app.services.schema_loader.model_groups import (
+    load_complex_type_content,
+    load_model_group_definitions,
+)
+from app.services.schema_loader.schema_closure import (
+    SchemaDocument,
+    discover_schema_closure,
+)
 from app.services.schema_loader_context import SchemaLoaderContext
 
 
+XML_NAMESPACE = "http://www.w3.org/XML/1998/namespace"
+
+
 class SchemaLoader:
-    """Load an XML Schema document into a SchemaModel."""
+    """Load an XML Schema document and its imports into a SchemaModel."""
 
     def load(self, path: Path) -> SchemaModel:
-        """Load an XML Schema document."""
+        """Load an XML Schema document and its recursive local imports."""
 
-        namespace_bindings = self._read_namespace_bindings(path)
-        tree = ET.parse(path)
-        root = tree.getroot()
+        documents = discover_schema_closure(path)
+        document_models = tuple(
+            self._load_document(document)
+            for document in documents
+        )
+
+        return self._merge_document_models(document_models)
+
+    def _load_document(self, document: SchemaDocument) -> SchemaModel:
+        """Load one previously discovered XML Schema document."""
 
         schema = SchemaModel(
-            target_namespace=root.attrib.get("targetNamespace"),
-            namespace_bindings=namespace_bindings,
+            target_namespace=document.root.attrib.get("targetNamespace"),
+            namespace_bindings=dict(document.namespace_bindings),
         )
 
         context = SchemaLoaderContext(
-            path=path,
-            tree=tree,
-            root=root,
+            path=document.path,
+            tree=document.tree,
+            root=document.root,
             schema=schema,
         )
 
         self._load_namespaces(context)
+
+        object.__setattr__(
+            schema,
+            "elements",
+            load_global_element_declarations(
+                context,
+                self._resolve_schema_qname,
+            ),
+        )
+        object.__setattr__(
+            schema,
+            "attributes",
+            load_global_attribute_declarations(
+                context,
+                self._resolve_schema_qname,
+            ),
+        )
+        object.__setattr__(
+            schema,
+            "attribute_groups",
+            load_attribute_group_definitions(
+                context,
+                self._resolve_schema_qname,
+            ),
+        )
+        object.__setattr__(
+            schema,
+            "model_groups",
+            load_model_group_definitions(
+                context,
+                self._resolve_schema_qname,
+            ),
+        )
+
         self._load_simple_types(context)
         self._load_complex_types(context)
 
         return schema
 
     @staticmethod
-    def _read_namespace_bindings(path: Path) -> dict[str, str]:
-        """Read namespace prefix bindings declared in an XML document."""
+    def _merge_document_models(
+        document_models: tuple[SchemaModel, ...],
+    ) -> SchemaModel:
+        """Merge schema-document models into the entry-point model."""
 
-        namespace_bindings: dict[str, str] = {}
+        if not document_models:
+            raise ValueError("A schema closure must contain an entry point.")
 
-        for event, namespace_data in ET.iterparse(
-            path,
-            events=("start-ns",),
-        ):
-            if event != "start-ns":
-                continue
+        entry_model = document_models[0]
+        namespace_bindings = dict(entry_model.namespace_bindings)
+        namespaces: set[str] = set()
+        elements = {}
+        complex_types = {}
+        simple_types = {}
+        attributes = {}
+        attribute_groups = {}
+        model_groups = {}
 
-            if not isinstance(namespace_data, tuple):
-                continue
+        for document_model in document_models:
+            for prefix, namespace_iri in (
+                document_model.namespace_bindings.items()
+            ):
+                namespace_bindings.setdefault(prefix, namespace_iri)
 
-            prefix, namespace_iri = namespace_data
+            namespaces.update(document_model.namespaces)
 
-            if not isinstance(prefix, str):
-                continue
+            if document_model.target_namespace:
+                namespaces.add(document_model.target_namespace)
 
-            if not isinstance(namespace_iri, str):
-                continue
+            elements.update(document_model.elements)
+            complex_types.update(document_model.complex_types)
+            simple_types.update(document_model.simple_types)
+            attributes.update(document_model.attributes)
+            attribute_groups.update(document_model.attribute_groups)
+            model_groups.update(document_model.model_groups)
 
-            namespace_bindings[prefix] = namespace_iri
-
-        return namespace_bindings
+        return SchemaModel(
+            target_namespace=entry_model.target_namespace,
+            namespace_bindings=namespace_bindings,
+            elements=elements,
+            complex_types=complex_types,
+            simple_types=simple_types,
+            attributes=attributes,
+            attribute_groups=attribute_groups,
+            model_groups=model_groups,
+            namespaces=frozenset(namespaces),
+        )
 
     @staticmethod
     def _resolve_qname(
@@ -137,12 +213,15 @@ class SchemaLoader:
                     f"Malformed QName: {lexical_qname!r}."
                 )
 
-            try:
-                namespace = context.schema.namespace_bindings[prefix]
-            except KeyError as error:
-                raise ValueError(
-                    f"Unknown namespace prefix: {prefix!r}."
-                ) from error
+            if prefix == "xml":
+                namespace = XML_NAMESPACE
+            else:
+                try:
+                    namespace = context.schema.namespace_bindings[prefix]
+                except KeyError as error:
+                    raise ValueError(
+                        f"Unknown namespace prefix: {prefix!r}."
+                    ) from error
         else:
             local_name = lexical_qname
             namespace = context.schema.target_namespace
@@ -245,6 +324,7 @@ class SchemaLoader:
                 facets=tuple(facets),
                 enumeration_values=tuple(enumeration_values),
                 union_member_types=tuple(union_member_types),
+                documentation=extract_documentation(element, context),
             )
 
         object.__setattr__(
@@ -271,8 +351,6 @@ class SchemaLoader:
             f"{{{xml_schema_namespace}}}complexContent"
         )
         extension_tag = f"{{{xml_schema_namespace}}}extension"
-        sequence_tag = f"{{{xml_schema_namespace}}}sequence"
-        element_tag = f"{{{xml_schema_namespace}}}element"
 
         for element in context.root.findall(complex_type_tag):
             name = element.get("name")
@@ -285,7 +363,11 @@ class SchemaLoader:
             )
 
             base_type = None
-            content = None
+            content = load_complex_type_content(
+                element,
+                context,
+                SchemaLoader._resolve_schema_qname,
+            )
 
             complex_content = element.find(complex_content_tag)
             if complex_content is not None:
@@ -300,64 +382,18 @@ class SchemaLoader:
                             )
                         )
 
-            sequence = element.find(sequence_tag)
-            if sequence is not None:
-                element_declarations: list[ElementDeclaration] = []
-
-                for child_element in sequence.findall(element_tag):
-                    child_name = child_element.get("name")
-                    if not child_name:
-                        continue
-
-                    lexical_type_name = child_element.get("type")
-                    type_name = None
-
-                    if lexical_type_name:
-                        type_name = (
-                            SchemaLoader._resolve_schema_qname(
-                                lexical_type_name,
-                                context,
-                            )
-                        )
-
-                    lexical_min_occurs = child_element.get(
-                        "minOccurs",
-                        "1",
-                    )
-                    min_occurs = int(lexical_min_occurs)
-
-                    lexical_max_occurs = child_element.get(
-                        "maxOccurs"
-                    )
-
-                    if lexical_max_occurs is None:
-                        max_occurs = max(1, min_occurs)
-                    elif lexical_max_occurs == "unbounded":
-                        max_occurs = None
-                    else:
-                        max_occurs = int(lexical_max_occurs)
-
-                    element_declarations.append(
-                        ElementDeclaration(
-                            name=QName(
-                                namespace=context.schema.target_namespace,
-                                local_name=child_name,
-                            ),
-                            type_name=type_name,
-                            min_occurs=min_occurs,
-                            max_occurs=max_occurs,
-                        )
-                    )
-
-                content = ModelGroup(
-                    kind=ModelGroupKind.SEQUENCE,
-                    elements=tuple(element_declarations),
-                )
+            attributes = load_direct_attribute_declarations(
+                element,
+                context,
+                SchemaLoader._resolve_schema_qname,
+            )
 
             complex_types[qname] = ComplexTypeDefinition(
                 name=qname,
                 base_type=base_type,
                 content=content,
+                attributes=attributes,
+                documentation=extract_documentation(element, context),
             )
 
         object.__setattr__(

@@ -116,14 +116,82 @@ class AttributeDeclaration:
 
 
 @dataclass(frozen=True, slots=True)
-class ModelGroup:
-    """Sequence or choice within a complex-type content model."""
+class ModelGroupReference:
+    """Reference to a named reusable XML Schema model group."""
 
-    kind: ModelGroupKind
-    elements: tuple[ElementDeclaration, ...] = ()
-    groups: tuple["ModelGroup", ...] = ()
+    ref: QName
     min_occurs: int = 1
     max_occurs: int | None = 1
+
+    def __post_init__(self) -> None:
+        if self.min_occurs < 0:
+            raise ValueError("min_occurs must not be negative.")
+
+        if self.max_occurs is not None:
+            if self.max_occurs < 0:
+                raise ValueError("max_occurs must not be negative.")
+
+            if self.max_occurs < self.min_occurs:
+                raise ValueError(
+                    "max_occurs must be greater than or equal to min_occurs."
+                )
+
+
+@dataclass(frozen=True, slots=True, init=False)
+class ModelGroup:
+    """Ordered sequence or choice within a complex-type content model."""
+
+    kind: ModelGroupKind
+    particles: tuple[object, ...]
+    elements: tuple[ElementDeclaration, ...]
+    groups: tuple["ModelGroup | ModelGroupReference", ...]
+    min_occurs: int
+    max_occurs: int | None
+
+    def __init__(
+        self,
+        kind: ModelGroupKind,
+        elements: tuple[ElementDeclaration, ...] = (),
+        groups: tuple["ModelGroup | ModelGroupReference", ...] = (),
+        min_occurs: int = 1,
+        max_occurs: int | None = 1,
+        *,
+        particles: tuple[object, ...] | None = None,
+    ) -> None:
+        """Create a group, retaining legacy element/group construction."""
+
+        ordered_particles = (
+            elements + groups
+            if particles is None
+            else particles
+        )
+
+        object.__setattr__(self, "kind", kind)
+        object.__setattr__(self, "particles", ordered_particles)
+        object.__setattr__(
+            self,
+            "elements",
+            tuple(
+                particle
+                for particle in ordered_particles
+                if isinstance(particle, ElementDeclaration)
+            ),
+        )
+        object.__setattr__(
+            self,
+            "groups",
+            tuple(
+                particle
+                for particle in ordered_particles
+                if isinstance(
+                    particle,
+                    (ModelGroup, ModelGroupReference),
+                )
+            ),
+        )
+        object.__setattr__(self, "min_occurs", min_occurs)
+        object.__setattr__(self, "max_occurs", max_occurs)
+        self.__post_init__()
 
     def __post_init__(self) -> None:
         if self.min_occurs < 0:
@@ -157,7 +225,7 @@ class ComplexTypeDefinition:
 
     name: QName
     base_type: QName | None = None
-    content: ModelGroup | None = None
+    content: ModelGroup | ModelGroupReference | None = None
     attributes: tuple[AttributeDeclaration, ...] = ()
     mixed: bool = False
     documentation: str | None = None
@@ -189,6 +257,7 @@ class SchemaModel:
     simple_types: Mapping[QName, SimpleTypeDefinition] = field(default_factory=dict)
     attributes: Mapping[QName, AttributeDeclaration] = field(default_factory=dict)
     attribute_groups: Mapping[QName, AttributeGroupDefinition] = field(default_factory=dict)
+    model_groups: Mapping[QName, ModelGroup] = field(default_factory=dict)
 
     #
     # Convenience set of all namespace URIs encountered.
