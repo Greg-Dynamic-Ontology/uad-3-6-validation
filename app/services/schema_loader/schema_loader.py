@@ -6,6 +6,7 @@ from pathlib import Path
 
 from app.core.namespaces import SCHEMA_MODEL_NAMESPACE_IRI
 from app.models.schema_model import (
+    ComponentProcessingDisposition,
     ComplexTypeDefinition,
     QName,
     SchemaModel,
@@ -25,12 +26,16 @@ from app.services.schema_loader.model_groups import (
 from app.services.schema_loader.schema_closure import (
     SchemaDocument,
     discover_schema_closure,
+    inventory_schema_components,
 )
 from app.services.schema_loader.type_derivations import (
     inspect_complex_type_derivation,
     load_named_simple_type_definitions,
 )
 from app.services.schema_loader_context import SchemaLoaderContext
+from app.services.schema_loader.wildcard_policy import (
+    apply_wildcard_policy,
+)
 
 
 XML_NAMESPACE = "http://www.w3.org/XML/1998/namespace"
@@ -47,8 +52,13 @@ class SchemaLoader:
             self._load_document(document)
             for document in documents
         )
+        inventory = inventory_schema_components(documents)
+        processing_dispositions = apply_wildcard_policy(inventory)
 
-        return self._merge_document_models(document_models)
+        return self._merge_document_models(
+            document_models,
+            processing_dispositions=processing_dispositions,
+        )
 
     def _load_document(self, document: SchemaDocument) -> SchemaModel:
         """Load one previously discovered XML Schema document."""
@@ -116,6 +126,11 @@ class SchemaLoader:
     @staticmethod
     def _merge_document_models(
         document_models: tuple[SchemaModel, ...],
+        *,
+        processing_dispositions: tuple[
+            ComponentProcessingDisposition,
+            ...,
+        ] = (),
     ) -> SchemaModel:
         """Merge schema-document models into the entry-point model."""
 
@@ -156,6 +171,7 @@ class SchemaLoader:
             target_namespace=entry_model.target_namespace,
             namespace_bindings=namespace_bindings,
             schema_imports=tuple(schema_imports),
+            processing_dispositions=processing_dispositions,
             elements=elements,
             complex_types=complex_types,
             simple_types=simple_types,

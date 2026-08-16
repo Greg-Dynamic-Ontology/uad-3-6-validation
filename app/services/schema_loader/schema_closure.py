@@ -34,6 +34,7 @@ class SchemaComponentOccurrence:
 
     component_kind: str
     source_document: Path
+    source_index: int
 
 
 @dataclass(frozen=True, slots=True)
@@ -142,6 +143,7 @@ def inventory_schema_components(
 
     for document in documents:
         _validate_schema_root(document.path, document.root)
+        source_index = 0
 
         for element in document.root.iter():
             if element is document.root:
@@ -159,8 +161,10 @@ def inventory_schema_components(
                 SchemaComponentOccurrence(
                     component_kind=component_kind,
                     source_document=document.path,
+                    source_index=source_index,
                 )
             )
+            source_index += 1
 
     immutable_occurrences = tuple(occurrences)
     counts = Counter(

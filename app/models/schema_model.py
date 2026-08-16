@@ -42,6 +42,28 @@ class SchemaImport:
     resolved_document: Path | None
 
 
+@dataclass(frozen=True, slots=True)
+class ComponentProcessingDisposition:
+    """Deliberate processing result for one discovered XSD occurrence."""
+
+    component_kind: str
+    source_document: Path
+    source_index: int
+    action: str
+    governing_decision: str
+    processed: bool
+
+    def __post_init__(self) -> None:
+        if not self.component_kind:
+            raise ValueError("component_kind must not be empty.")
+        if self.source_index < 0:
+            raise ValueError("source_index must not be negative.")
+        if not self.action:
+            raise ValueError("action must not be empty.")
+        if not self.governing_decision:
+            raise ValueError("governing_decision must not be empty.")
+
+
 class ModelGroupKind(str, Enum):
     """Supported XML Schema model-group compositors."""
 
@@ -299,6 +321,10 @@ class SchemaModel:
     #
     namespace_bindings: Mapping[str, str] = field(default_factory=dict)
     schema_imports: tuple[SchemaImport, ...] = ()
+    processing_dispositions: tuple[
+        ComponentProcessingDisposition,
+        ...,
+    ] = ()
 
     elements: Mapping[QName, ElementDeclaration] = field(default_factory=dict)
     complex_types: Mapping[QName, ComplexTypeDefinition] = field(default_factory=dict)
