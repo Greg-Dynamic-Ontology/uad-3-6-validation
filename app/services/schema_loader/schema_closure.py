@@ -24,8 +24,10 @@ class SchemaDocument:
     path: Path
     tree: ET.ElementTree
     root: ET.Element
+    target_namespace: str | None
     namespace_bindings: Mapping[str, str]
     schema_imports: tuple[SchemaImport, ...]
+    schema_includes: tuple[Path, ...]
 
 
 @dataclass(frozen=True, slots=True)
@@ -54,30 +56,50 @@ def discover_schema_closure(entry_point: Path) -> tuple[SchemaDocument, ...]:
     """
 
     documents: list[SchemaDocument] = []
-    visited_paths: set[Path] = set()
+    visited_namespaces: dict[Path, str | None] = {}
 
-    def visit(path: Path) -> None:
+    def visit(
+        path: Path,
+        inherited_target_namespace: str | None = None,
+    ) -> None:
         resolved_path = path.resolve()
 
-        if resolved_path in visited_paths:
+        if resolved_path in visited_namespaces:
+            previous_namespace = visited_namespaces[resolved_path]
+            if (
+                inherited_target_namespace is not None
+                and previous_namespace != inherited_target_namespace
+            ):
+                raise ValueError(
+                    "Included XML Schema document was reached with "
+                    "incompatible target namespaces: "
+                    f"{resolved_path} ({previous_namespace!r} and "
+                    f"{inherited_target_namespace!r})."
+                )
             return
-
-        visited_paths.add(resolved_path)
 
         namespace_bindings = _read_namespace_bindings(resolved_path)
         tree = ET.parse(resolved_path)
         root = tree.getroot()
 
         _validate_schema_root(resolved_path, root)
+        target_namespace = (
+            root.attrib.get("targetNamespace")
+            or inherited_target_namespace
+        )
+        visited_namespaces[resolved_path] = target_namespace
         schema_imports = _read_schema_imports(resolved_path, root)
+        schema_includes = _read_schema_includes(resolved_path, root)
 
         documents.append(
             SchemaDocument(
                 path=resolved_path,
                 tree=tree,
                 root=root,
+                target_namespace=target_namespace,
                 namespace_bindings=namespace_bindings,
                 schema_imports=schema_imports,
+                schema_includes=schema_includes,
             )
         )
 
@@ -94,6 +116,18 @@ def discover_schema_closure(entry_point: Path) -> tuple[SchemaDocument, ...]:
                 )
 
             visit(imported_path)
+
+        for included_path in schema_includes:
+            if not included_path.is_file():
+                raise FileNotFoundError(
+                    "Included XML Schema document was not found: "
+                    f"{included_path}"
+                )
+
+            visit(
+                included_path,
+                inherited_target_namespace=target_namespace,
+            )
 
     visit(entry_point)
 
@@ -127,6 +161,30 @@ def _read_schema_imports(
         )
 
     return tuple(schema_imports)
+
+
+def _read_schema_includes(
+    source_document: Path,
+    root: ET.Element,
+) -> tuple[Path, ...]:
+    """Resolve every local include occurrence in one schema document."""
+
+    include_tag = f"{{{XML_SCHEMA_NAMESPACE}}}include"
+    included_paths: list[Path] = []
+
+    for element in root.findall(include_tag):
+        schema_location = element.get("schemaLocation")
+        if not schema_location:
+            raise ValueError(
+                "XML Schema include requires schemaLocation in "
+                f"{source_document}."
+            )
+
+        included_paths.append(
+            (source_document.parent / schema_location).resolve()
+        )
+
+    return tuple(included_paths)
 
 
 def inventory_schema_components(

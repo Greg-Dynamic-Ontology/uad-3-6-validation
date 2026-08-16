@@ -123,7 +123,7 @@ Feature: Complete processing of XSD components used by UAD
   Rule: Complete processing is reconcilable and deterministic
 
     @IT-5R7S1
-    Scenario: Every discovered occurrence has a processing disposition
+    Scenario: User experience hides schema implementation details
       When processing of the official UAD schema closure completes
       Then every discovered XSD component occurrence has exactly one processing disposition
       And the found and processed counts reconcile for every component kind
@@ -131,7 +131,7 @@ Feature: Complete processing of XSD components used by UAD
       And no UAD component kind is identified as incomplete
 
     @IT-5R7S2
-    Scenario: Combined and individual UAD schemas produce equivalent models
+    Scenario: User experience hides schema implementation details
       When the Combined and Individual UAD schema distributions are loaded
       Then they produce equivalent Logical Schema Models
       And their component-processing coverage reconciles to their respective schema closures

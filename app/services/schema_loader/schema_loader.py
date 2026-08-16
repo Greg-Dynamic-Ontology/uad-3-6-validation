@@ -24,6 +24,9 @@ from app.services.schema_loader.model_groups import (
     load_complex_type_content,
     load_model_group_definitions,
 )
+from app.services.schema_loader.processing_policy import (
+    apply_component_processing_policy,
+)
 from app.services.schema_loader.schema_closure import (
     SchemaDocument,
     discover_schema_closure,
@@ -34,9 +37,6 @@ from app.services.schema_loader.type_derivations import (
     load_named_simple_type_definitions,
 )
 from app.services.schema_loader_context import SchemaLoaderContext
-from app.services.schema_loader.wildcard_policy import (
-    apply_wildcard_policy,
-)
 
 
 XML_NAMESPACE = "http://www.w3.org/XML/1998/namespace"
@@ -54,7 +54,9 @@ class SchemaLoader:
             for document in documents
         )
         inventory = inventory_schema_components(documents)
-        processing_dispositions = apply_wildcard_policy(inventory)
+        processing_dispositions = apply_component_processing_policy(
+            inventory
+        )
 
         return self._merge_document_models(
             document_models,
@@ -66,7 +68,7 @@ class SchemaLoader:
         """Load one previously discovered XML Schema document."""
 
         schema = SchemaModel(
-            target_namespace=document.root.attrib.get("targetNamespace"),
+            target_namespace=document.target_namespace,
             namespace_bindings=dict(document.namespace_bindings),
             schema_imports=document.schema_imports,
         )
