@@ -11,6 +11,9 @@ from app.models.schema_model import (
     QName,
 )
 from app.services.schema_loader.documentation import extract_documentation
+from app.services.schema_loader.type_derivations import (
+    load_inline_simple_type,
+)
 from app.services.schema_loader_context import SchemaLoaderContext
 
 
@@ -142,6 +145,22 @@ def load_direct_attribute_declarations(
     )
 
 
+def load_direct_attribute_group_references(
+    parent: object,
+    context: SchemaLoaderContext,
+    resolve_schema_qname: SchemaQNameResolver,
+) -> tuple[QName, ...]:
+    """Load attribute-group references directly owned by a component."""
+
+    attribute_group_tag = _xsd_tag(context, "attributeGroup")
+
+    return tuple(
+        resolve_schema_qname(reference, context)
+        for child in parent.findall(attribute_group_tag)
+        if (reference := child.get("ref"))
+    )
+
+
 def load_element_declaration(
     element: object,
     context: SchemaLoaderContext,
@@ -238,6 +257,11 @@ def _load_attribute_declaration(
         default_value=element.get("default"),
         fixed_value=element.get("fixed"),
         documentation=extract_documentation(element, context),
+        inline_simple_type=load_inline_simple_type(
+            element,
+            context,
+            resolve_schema_qname,
+        ),
     )
 
 

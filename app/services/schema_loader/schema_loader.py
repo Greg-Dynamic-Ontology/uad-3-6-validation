@@ -7,14 +7,13 @@ from pathlib import Path
 from app.core.namespaces import SCHEMA_MODEL_NAMESPACE_IRI
 from app.models.schema_model import (
     ComplexTypeDefinition,
-    Facet,
     QName,
     SchemaModel,
-    SimpleTypeDefinition,
 )
 from app.services.schema_loader.declarations import (
     load_attribute_group_definitions,
     load_direct_attribute_declarations,
+    load_direct_attribute_group_references,
     load_global_attribute_declarations,
     load_global_element_declarations,
 )
@@ -26,6 +25,10 @@ from app.services.schema_loader.model_groups import (
 from app.services.schema_loader.schema_closure import (
     SchemaDocument,
     discover_schema_closure,
+)
+from app.services.schema_loader.type_derivations import (
+    inspect_complex_type_derivation,
+    load_named_simple_type_definitions,
 )
 from app.services.schema_loader_context import SchemaLoaderContext
 
@@ -97,7 +100,14 @@ class SchemaLoader:
             ),
         )
 
-        self._load_simple_types(context)
+        object.__setattr__(
+            schema,
+            "simple_types",
+            load_named_simple_type_definitions(
+                context,
+                self._resolve_schema_qname,
+            ),
+        )
         self._load_complex_types(context)
 
         return schema
@@ -244,96 +254,6 @@ class SchemaLoader:
         )
 
     @staticmethod
-    def _load_simple_types(
-        context: SchemaLoaderContext,
-    ) -> None:
-        """Load named simple types into the SchemaModel."""
-
-        simple_types: dict[QName, SimpleTypeDefinition] = {}
-
-        root_tag = context.root.tag
-        if not root_tag.startswith("{"):
-            return
-
-        xml_schema_namespace = root_tag[1:root_tag.index("}")]
-        simple_type_tag = f"{{{xml_schema_namespace}}}simpleType"
-        restriction_tag = f"{{{xml_schema_namespace}}}restriction"
-        union_tag = f"{{{xml_schema_namespace}}}union"
-
-        for element in context.root.findall(simple_type_tag):
-            name = element.get("name")
-            if not name:
-                continue
-
-            qname = QName(
-                namespace=context.schema.target_namespace,
-                local_name=name,
-            )
-
-            base_type = None
-            enumeration_values: list[str] = []
-            facets: list[Facet] = []
-            union_member_types: list[QName] = []
-
-            restriction = element.find(restriction_tag)
-
-            if restriction is not None:
-                lexical_base_type = restriction.get("base")
-
-                if lexical_base_type:
-                    base_type = SchemaLoader._resolve_schema_qname(
-                        lexical_base_type,
-                        context,
-                    )
-
-                for child in restriction:
-                    local_name = child.tag.split("}", 1)[1]
-
-                    if local_name == "enumeration":
-                        value = child.get("value")
-                        if value is not None:
-                            enumeration_values.append(value)
-
-                    elif local_name == "maxLength":
-                        value = child.get("value")
-                        if value is not None:
-                            facets.append(
-                                Facet(
-                                    name="maxLength",
-                                    value=value,
-                                )
-                            )
-
-            union = element.find(union_tag)
-
-            if union is not None:
-                lexical_member_types = union.get("memberTypes")
-
-                if lexical_member_types:
-                    for lexical_member_type in lexical_member_types.split():
-                        union_member_types.append(
-                            SchemaLoader._resolve_schema_qname(
-                                lexical_member_type,
-                                context,
-                            )
-                        )
-
-            simple_types[qname] = SimpleTypeDefinition(
-                name=qname,
-                base_type=base_type,
-                facets=tuple(facets),
-                enumeration_values=tuple(enumeration_values),
-                union_member_types=tuple(union_member_types),
-                documentation=extract_documentation(element, context),
-            )
-
-        object.__setattr__(
-            context.schema,
-            "simple_types",
-            simple_types,
-        )
-
-    @staticmethod
     def _load_complex_types(
         context: SchemaLoaderContext,
     ) -> None:
@@ -347,11 +267,6 @@ class SchemaLoader:
 
         xml_schema_namespace = root_tag[1:root_tag.index("}")]
         complex_type_tag = f"{{{xml_schema_namespace}}}complexType"
-        complex_content_tag = (
-            f"{{{xml_schema_namespace}}}complexContent"
-        )
-        extension_tag = f"{{{xml_schema_namespace}}}extension"
-
         for element in context.root.findall(complex_type_tag):
             name = element.get("name")
             if not name:
@@ -362,37 +277,43 @@ class SchemaLoader:
                 local_name=name,
             )
 
-            base_type = None
+            derivation = inspect_complex_type_derivation(
+                element,
+                context,
+                SchemaLoader._resolve_schema_qname,
+            )
             content = load_complex_type_content(
                 element,
                 context,
                 SchemaLoader._resolve_schema_qname,
             )
 
-            complex_content = element.find(complex_content_tag)
-            if complex_content is not None:
-                extension = complex_content.find(extension_tag)
-                if extension is not None:
-                    lexical_base = extension.get("base")
-                    if lexical_base:
-                        base_type = (
-                            SchemaLoader._resolve_schema_qname(
-                                lexical_base,
-                                context,
-                            )
-                        )
-
+            content_owner = (
+                derivation.content_owner
+                if derivation.content_owner is not None
+                else element
+            )
             attributes = load_direct_attribute_declarations(
-                element,
+                content_owner,
                 context,
                 SchemaLoader._resolve_schema_qname,
+            )
+            attribute_group_refs = (
+                load_direct_attribute_group_references(
+                    content_owner,
+                    context,
+                    SchemaLoader._resolve_schema_qname,
+                )
             )
 
             complex_types[qname] = ComplexTypeDefinition(
                 name=qname,
-                base_type=base_type,
+                base_type=derivation.base_type,
+                derivation_kind=derivation.kind,
+                simple_content=derivation.simple_content,
                 content=content,
                 attributes=attributes,
+                attribute_group_refs=attribute_group_refs,
                 documentation=extract_documentation(element, context),
             )
 

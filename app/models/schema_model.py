@@ -5,6 +5,8 @@ RDF, OWL, or SHACL concepts. The schema loader will populate this model,
 and downstream generators will consume it.
 """
 
+from __future__ import annotations
+
 from dataclasses import dataclass, field
 from enum import Enum
 from typing import Mapping
@@ -34,6 +36,14 @@ class ModelGroupKind(str, Enum):
 
     SEQUENCE = "sequence"
     CHOICE = "choice"
+
+
+class TypeDerivationKind(str, Enum):
+    """Supported XML Schema type-derivation methods."""
+
+    RESTRICTION = "restriction"
+    EXTENSION = "extension"
+    UNION = "union"
 
 
 @dataclass(frozen=True, slots=True)
@@ -94,6 +104,7 @@ class AttributeDeclaration:
     default_value: str | None = None
     fixed_value: str | None = None
     documentation: str | None = None
+    inline_simple_type: SimpleTypeDefinition | None = None
 
     def __post_init__(self) -> None:
         if self.name is None and self.ref is None:
@@ -211,12 +222,34 @@ class ModelGroup:
 class SimpleTypeDefinition:
     """Named XML Schema simple-type definition."""
 
-    name: QName
+    name: QName | None
     base_type: QName | None = None
+    derivation_kind: TypeDerivationKind | None = None
     facets: tuple[Facet, ...] = ()
     enumeration_values: tuple[str, ...] = ()
+    union_members: tuple[QName | SimpleTypeDefinition, ...] = ()
     union_member_types: tuple[QName, ...] = ()
     documentation: str | None = None
+
+    def __post_init__(self) -> None:
+        """Keep the legacy named-member view synchronized."""
+
+        if self.union_members:
+            object.__setattr__(
+                self,
+                "union_member_types",
+                tuple(
+                    member
+                    for member in self.union_members
+                    if isinstance(member, QName)
+                ),
+            )
+        elif self.union_member_types:
+            object.__setattr__(
+                self,
+                "union_members",
+                self.union_member_types,
+            )
 
 
 @dataclass(frozen=True, slots=True)
@@ -225,8 +258,11 @@ class ComplexTypeDefinition:
 
     name: QName
     base_type: QName | None = None
+    derivation_kind: TypeDerivationKind | None = None
+    simple_content: bool = False
     content: ModelGroup | ModelGroupReference | None = None
     attributes: tuple[AttributeDeclaration, ...] = ()
+    attribute_group_refs: tuple[QName, ...] = ()
     mixed: bool = False
     documentation: str | None = None
 
