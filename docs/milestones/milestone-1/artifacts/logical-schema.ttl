@@ -558,7 +558,8 @@ lsm:resource-01a76ef325c565ff07dde9344311badf49573411ecff5ab295f25194c04517bc a 
     lsm:local_name "COMPARABLE_ADJUSTMENTS" ;
     lsm:namespace "http://www.mismo.org/residential/2009/schemas" .
 
-lsm:resource-01af88a5d112daf400522cf21f1fe23eb70870425cc2489c1cd18f67077a0711 a lsm:Collection .
+lsm:resource-01af88a5d112daf400522cf21f1fe23eb70870425cc2489c1cd18f67077a0711 a lsm:Collection ;
+    lsm:member lsm:resource-5fba1906ed56d1595a84c902fc11248364df0abb2a9668f4dc854cbac1720596 .
 
 lsm:resource-01b07beb5c452a207c6f5a497eee1dbc8f5de7726aa40fd5516e9403e98f84fb a lsm:QName ;
     lsm:local_name "PropertyAccessTypicalToMarketIndicator" ;
@@ -1330,6 +1331,10 @@ lsm:resource-03bece0ed69922ec6ad629be09ab6830fa720dad17bff19af991fc8b8c398a1d a 
     lsm:mixed false ;
     lsm:name lsm:resource-0487fe4f305b14ce4ca64e055fb1ca2d33fa406fd9bcc7a2a53ce23f716b7720 ;
     lsm:simple_content false .
+
+lsm:resource-03bf0d801b78b7fec89221c8ed943b373a432492528e767b69c68dcc91290853 a lsm:Facet ;
+    lsm:name "minInclusive" ;
+    lsm:value "1" .
 
 lsm:resource-03bf938daaa87d9cf22d0b89a5b89e83ef2d1efe923bd805957fa73a898afc6d a lsm:QName ;
     lsm:local_name "OTHER" ;
@@ -7810,7 +7815,8 @@ lsm:resource-172242f035116515d984c73ef14c8b93e5a4099386562b7ba609de175313c86f a 
     lsm:member lsm:resource-bbc0e9789be2378e139c03b7dcc195672ba727c8ae2ac068db0cd97335ebffa4,
         lsm:resource-cf53b1270a8d610d1ddf1b64421aa7a2a7032a22e70db571d8afd3d515e333d1 .
 
-lsm:resource-172471ef4a3b86b457a7afd0cc5a305191e22c564f284afc43b8f3147d424e1b a lsm:Collection .
+lsm:resource-172471ef4a3b86b457a7afd0cc5a305191e22c564f284afc43b8f3147d424e1b a lsm:Collection ;
+    lsm:member lsm:resource-b4425a16c76883f06ff9346bc5caa8d6233297532d8549779cbba644ea752fd3 .
 
 lsm:resource-17277dac6b2ccc1ca75ffd06cace49d7332db8782cbd18ffa81696cec199f3ca a lsm:MappingEntry ;
     lsm:key lsm:resource-30c2c72718c8158ad9759664c429a1737d6c433c99bf11134acd223177c72410 ;
@@ -8506,6 +8512,10 @@ lsm:resource-19921c9b4e3c3cab0321aa38b8320ebc16acf9535051b0c9792f0fab38e38324 a 
     lsm:local_name "MISMOSequenceNumber_Base" ;
     lsm:namespace "http://www.mismo.org/residential/2009/schemas" .
 
+lsm:resource-1996652ef7ff70d5e8a92f3e3deedd72e4cd8cda119797b514832d822e68110b a lsm:Facet ;
+    lsm:name "minInclusive" ;
+    lsm:value "0001" .
+
 lsm:resource-19967f23e01d2245aa110d3e91fa481ad765c447fdb393c83720bf9c5304e908 a lsm:QName ;
     lsm:local_name "EXTENSION" ;
     lsm:namespace "http://www.mismo.org/residential/2009/schemas" .
@@ -8560,7 +8570,8 @@ lsm:resource-19c3571d29d9ba66309219bfd81ab0fc7e4198c6dd70d81aa9c5c12f922b9877 a 
     lsm:key lsm:resource-e83c6e227ee49bd8aafc60abd0d9621f868662ea0897a51d95cbba462ae0a2fd ;
     lsm:value lsm:resource-9358ab0a673530d1ffb89842f48044dd872565a64c3eca4a1cbf3a8b823ae741 .
 
-lsm:resource-19cacb9542dabac4559eef198d66754cee6e0bdfb7defeca1c525075391fbcdd a lsm:Collection .
+lsm:resource-19cacb9542dabac4559eef198d66754cee6e0bdfb7defeca1c525075391fbcdd a lsm:Collection ;
+    lsm:member lsm:resource-a0a11b1043a67023c4dd3fdffd080a93888a73d29dde67d7cfb1d57d07b7201d .
 
 lsm:resource-19cc0b2559e53621cff3fb7f22a6bba35d44d2b4642841017abfae454a0b5e4c a lsm:Collection ;
     lsm:member lsm:resource-a8e850cd66cc2227833ec365565999198ae1953544551525185cc79b3ca49595,
@@ -11412,7 +11423,8 @@ lsm:resource-22291186bfda38ae141cefecabb6198229c34c79edce038dd176f2c022719120 a 
     lsm:local_name "DepreciationMethodBase" ;
     lsm:namespace "http://www.mismo.org/residential/2009/schemas" .
 
-lsm:resource-222eddf9a89fb6e98ade076597b4278b856c436b28ca456ca9166aa81093fe0d a lsm:Collection .
+lsm:resource-222eddf9a89fb6e98ade076597b4278b856c436b28ca456ca9166aa81093fe0d a lsm:Collection ;
+    lsm:member lsm:resource-03bf0d801b78b7fec89221c8ed943b373a432492528e767b69c68dcc91290853 .
 
 lsm:resource-22309711c41c75dd7740280cb852fadb1353cc614f977ca90021ba4c4b2f2cf2 a lsm:QName ;
     lsm:local_name "ENVIRONMENTAL_CONDITIONS_OTHER_BASE" ;
@@ -31922,6 +31934,10 @@ lsm:resource-5aa6683288b369491b0a4fb4455fc66a45378d26efada6fa904d03dd83b378f5 a 
     lsm:local_name "ManufacturedHomeHitchWheelsAxlesRemovedIndicator" ;
     lsm:namespace "http://www.mismo.org/residential/2009/schemas" .
 
+lsm:resource-5aa988ec2d08c74cdee5f46f54938bd31b675778a023677e8fdfc1a74c920544 a lsm:Facet ;
+    lsm:name "fractionDigits" ;
+    lsm:value "2" .
+
 lsm:resource-5aab7e88fc29f9ae071989037e896fc86b529b8aa5d828bd706a97e3c7456a68 a lsm:QName ;
     lsm:local_name "MISMO_BASE" ;
     lsm:namespace "http://www.mismo.org/residential/2009/schemas" .
@@ -33069,6 +33085,10 @@ lsm:resource-5e20043313288eada25bda002f5534b8c9bfa3b64bb6dd2d7773076ca5d00f89 a 
 
 lsm:resource-5e201db59c3a992c397d6fa69e859074aba82c50015c44691a949850c08c4434 a lsm:Collection .
 
+lsm:resource-5e295db9cafcc4be14b024e9c45c983cab56e8175f7da21d8b81ccb8d0d5c14d a lsm:Facet ;
+    lsm:name "minLength" ;
+    lsm:value "1" .
+
 lsm:resource-5e2fffb49b5e2afabe5f7c5e04603c42c7ad3e90cec3eec4c106e40ad5752c35 a lsm:SimpleTypeDefinition ;
     lsm:base_type lsm:resource-de0c2f7551b87a7298707630918ddb87381ff260824775027c5a2d4e6a8736bc ;
     lsm:derivation_kind "restriction" ;
@@ -33685,6 +33705,10 @@ lsm:resource-5fb828337c7004b72e9f5120ad5c893886054d1284c1d0c235cc0511b5730565 a 
 lsm:resource-5fb93f28de9f9bce79aa457e225c9c1ae0e638842d6f595c5243b24ecf40eba1 a lsm:QName ;
     lsm:local_name "IMAGES" ;
     lsm:namespace "http://www.mismo.org/residential/2009/schemas" .
+
+lsm:resource-5fba1906ed56d1595a84c902fc11248364df0abb2a9668f4dc854cbac1720596 a lsm:Facet ;
+    lsm:name "pattern" ;
+    lsm:value "3\\.\\d*((\\.\\d*)?(\\[[B]\\d*(\\-\\d*)?\\])?)?" .
 
 lsm:resource-5fbf9a250eb116977eb7f3a5b33443e61688f280bf28dc8458ee149ee86f4b1e a lsm:QName ;
     lsm:local_name "BodyOfWaterBase" ;
@@ -38934,7 +38958,8 @@ lsm:resource-6f304a0a9b561125cfd56433f9b90c6c300abda37c9b032e318fb34b946f1c1d a 
     lsm:member lsm:resource-60eada8e06c2b5e8fcd12e6c2e0b50ea59dc639ae2fb53da0bfcf541ad07338c,
         lsm:resource-79607643004c144aeb91ce4e709931ae6e3870b2d8566bc68764b321d2f3bf5f .
 
-lsm:resource-6f3122181ad28f1ecc0b5875c22c034a87b5d0dd1c75fa25d8409b77111978b4 a lsm:Collection .
+lsm:resource-6f3122181ad28f1ecc0b5875c22c034a87b5d0dd1c75fa25d8409b77111978b4 a lsm:Collection ;
+    lsm:member lsm:resource-5e295db9cafcc4be14b024e9c45c983cab56e8175f7da21d8b81ccb8d0d5c14d .
 
 lsm:resource-6f329d1a1b9edc75cdb240bcdace0b3584c7f919a2461aadeef82702f17278f7 a lsm:QName ;
     lsm:local_name "MISMO" ;
@@ -39253,7 +39278,9 @@ lsm:resource-7025a5d9939e0b3d77f844738478d2250383c7ef889d446318fac1c7ec2ccc16 a 
         lsm:resource-de317f6cb3fab586bdfa905bfc8223febc78093362a09e9dc50277d4dc1edf2d,
         lsm:resource-e887adcec5a9dec76e2ad7bbf7492964efa49b7ebd1f3e1a60b6a12e9e328304 .
 
-lsm:resource-7025b3e2ecd97d8ed694227f1a02dc9ef4cb4b709c0eceba955dcc2bca8e3175 a lsm:Collection .
+lsm:resource-7025b3e2ecd97d8ed694227f1a02dc9ef4cb4b709c0eceba955dcc2bca8e3175 a lsm:Collection ;
+    lsm:member lsm:resource-1996652ef7ff70d5e8a92f3e3deedd72e4cd8cda119797b514832d822e68110b,
+        lsm:resource-87b2dc441a2dae84d7552bed987d203a8a974302f031833e48307ceb2b8f1c58 .
 
 lsm:resource-70271a1690cbccbaf03294189fcb5275ef8741d91c0e3403f925d2aa6e0ec0ed a lsm:Collection .
 
@@ -39412,6 +39439,10 @@ lsm:resource-70b453fc09c6d319a033115a6a671c73b7870b296b259f8d6b55f61b05cd24b3 a 
         "SubjectToRepair" .
 
 lsm:resource-70bf4a726c906da12f263cdda60ec0c210e1ef82edeb97c283e2b9adf9516b33 a lsm:Collection .
+
+lsm:resource-70bfc8551536cf5df42996b9ddec40614d01a2aa0958540e8d3be01c531ae334 a lsm:Facet ;
+    lsm:name "pattern" ;
+    lsm:value "[0-9]{4}([\\-][0-9]{2}){0,2}" .
 
 lsm:resource-70c15d0702837c81ece3b234514773e3082899626187fca15fd3b684e393026e a lsm:QName ;
     lsm:local_name "AttributeExtension" ;
@@ -47342,6 +47373,10 @@ lsm:resource-87a6014d6a663815721095f832ced616b54b507cbedec2958beb53add1d9b735 a 
     lsm:local_name "AmenityOwnershipTypeOtherDescription" ;
     lsm:namespace "http://www.mismo.org/residential/2009/schemas" .
 
+lsm:resource-87b2dc441a2dae84d7552bed987d203a8a974302f031833e48307ceb2b8f1c58 a lsm:Facet ;
+    lsm:name "maxInclusive" ;
+    lsm:value "9999" .
+
 lsm:resource-87b8631739aa6388a333b00edabbe2ef69d65bdb6fc72101ff22cdfa627b1b7e a lsm:Collection ;
     lsm:member lsm:resource-353f27374098945a083c956e6ad8bc7396298d27950170168fa90695f6ceb125,
         lsm:resource-e9ad00a213f624e7bc50c8edbfcb4633cdef953a1d850c732920ce6d82e34267 .
@@ -48662,6 +48697,10 @@ lsm:resource-8c0e38d4c1413118bfc6f803ea32b8e9038e257f22fbdc83915e27b0b9d6a393 a 
     lsm:mixed false ;
     lsm:name lsm:resource-c91bbfdd8862cdf57afaefa52680eced6c438e1bc5c40667361a6048bb6d58ef ;
     lsm:simple_content true .
+
+lsm:resource-8c11ad9072a39932fc5fae9d2c1cb03bdbee7b819d92a9b35a655a21af9386df a lsm:Facet ;
+    lsm:name "pattern" ;
+    lsm:value "[0-9]{4}\\-[0-9]{2}\\-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\\.[0-9]{1,9})?(Z|([+|\\-][0-9]{2}:[0-9]{2}))" .
 
 lsm:resource-8c14fe9c91e97c882c0869ec926ab59cec03328787a79987e2c6ffddb16f0e1e a lsm:Collection ;
     lsm:member lsm:resource-14b9e32d0f3757724ffa1c673dea1f7c45d76f23a090807859c97250649a931c,
@@ -51515,7 +51554,8 @@ lsm:resource-947097d48a0b2a522cc3bc57e254385939323437af7dfc8fe89f3dcf3dfceb48 a 
     lsm:min_occurs 1 ;
     lsm:particles lsm:resource-8c66c266f53ae841b33613ef202d0ae4fa23712adfc65a25a511f4ff51b2ac83 .
 
-lsm:resource-947279710e7bc5db755d1b91bf9e3bd4b28359fc9b2d07ff11823197a3242107 a lsm:Collection .
+lsm:resource-947279710e7bc5db755d1b91bf9e3bd4b28359fc9b2d07ff11823197a3242107 a lsm:Collection ;
+    lsm:member lsm:resource-e4b4093e2ab8b4df6aeb1424aa26cc9dc4e588427b099bf5a9984c9eaaf13554 .
 
 lsm:resource-947372c0daba503bcd2aaf4bcbe2169e00d01e99ba027674f47db18c9dcef3c2 a lsm:QName ;
     lsm:local_name "MISMOAmount" ;
@@ -55163,6 +55203,10 @@ lsm:resource-a0984e31e8a144ac5b1b45d08723236bcf3457935287b90fd7b25b577c55fbd8 a 
     lsm:value lsm:resource-34235def16bded1a11f35b939c9b5dafc003ff9d812101cc2b1deb7910fe6ea1 .
 
 lsm:resource-a09d061389028bc4b13985e7414b52b1fe1af90ea683024c98664e8da93d981d a lsm:Collection .
+
+lsm:resource-a0a11b1043a67023c4dd3fdffd080a93888a73d29dde67d7cfb1d57d07b7201d a lsm:Facet ;
+    lsm:name "minLength" ;
+    lsm:value "1" .
 
 lsm:resource-a0a2a1fda8c3728032e18c87c646f9759f16e47c1bd97e777b9d8129f950c132 a lsm:Collection ;
     lsm:member lsm:resource-0faac55c63b241497eaa7b2a1a7a8c5857fb72caa46f8e53ef25bd484e61b8bc,
@@ -61463,6 +61507,10 @@ lsm:resource-b4344f397c0e62452deaa68af51592942b37c30fb90ff46ae3e7d1b79d992146 a 
     lsm:local_name "MISMOString_Base" ;
     lsm:namespace "http://www.mismo.org/residential/2009/schemas" .
 
+lsm:resource-b4425a16c76883f06ff9346bc5caa8d6233297532d8549779cbba644ea752fd3 a lsm:Facet ;
+    lsm:name "pattern" ;
+    lsm:value "3\\.\\d*((\\.\\d*)?(\\.\\d*)?(\\[[B]\\d*(\\-\\d*)?\\])?)?" .
+
 lsm:resource-b442888db25cd3f75014434c45495193d5557fcad172f26fac0e8b6db97ddc1c a lsm:QName ;
     lsm:local_name "AssociationChargePeriodType" ;
     lsm:namespace "http://www.mismo.org/residential/2009/schemas" .
@@ -66770,6 +66818,10 @@ lsm:resource-c32845dd654aada464cae45c6a5f7e88357ec3794062b7025748a20ff1cd4cd1 a 
     lsm:local_name "EfficiencyRatingName" ;
     lsm:namespace "http://www.mismo.org/residential/2009/schemas" .
 
+lsm:resource-c328c6db90ae3ac9227cc10929ef892f4de9aa620c230f494ead2aff34e32ca9 a lsm:Facet ;
+    lsm:name "pattern" ;
+    lsm:value "\\d*" .
+
 lsm:resource-c32ba679921923912e5c9f44676bb5d121129b88fb53e3b97166ca0d3f0038dd a lsm:QName ;
     lsm:local_name "DataNotSuppliedReasonBase" ;
     lsm:namespace "http://www.mismo.org/residential/2009/schemas" .
@@ -70873,7 +70925,8 @@ lsm:resource-cdd0196ffeed2bdde27ec9a7178d164a0e1c75a3be0c7d4b3ae478fffb529c99 a 
     lsm:local_name "OTHER" ;
     lsm:namespace "http://www.mismo.org/residential/2009/schemas" .
 
-lsm:resource-cdd990638d9bb05488bc60297416bc5bcb65f2be2ef690b26b776b072e88c172 a lsm:Collection .
+lsm:resource-cdd990638d9bb05488bc60297416bc5bcb65f2be2ef690b26b776b072e88c172 a lsm:Collection ;
+    lsm:member lsm:resource-70bfc8551536cf5df42996b9ddec40614d01a2aa0958540e8d3be01c531ae334 .
 
 lsm:resource-cde2d71d16ce1d8c4718e5265db6f959a6c4a5ffa78b4d0c3a5c6e3b9e003e09 a lsm:QName ;
     lsm:local_name "SensitiveIndicator" .
@@ -77601,7 +77654,8 @@ lsm:resource-e0f743ce7fa96e3015b942f385735f2c4bdb7d82dcf473a7170c4ed70d15e08a a 
     lsm:required false ;
     lsm:type_name lsm:resource-0b842fd6a0b74add914a01c065535d98a38f038ef2bb16606250c0d88ce66063 .
 
-lsm:resource-e0fbe00987a5626a2008341ac3ae85bfd8ea21141d8ca2642d24743816df51d1 a lsm:Collection .
+lsm:resource-e0fbe00987a5626a2008341ac3ae85bfd8ea21141d8ca2642d24743816df51d1 a lsm:Collection ;
+    lsm:member lsm:resource-c328c6db90ae3ac9227cc10929ef892f4de9aa620c230f494ead2aff34e32ca9 .
 
 lsm:resource-e0fca7e282b3eeeefe3aa43997745532e38835c27194c613332ea2cc28cadda3 a lsm:QName ;
     lsm:local_name "SiteValuationMethodEnum" ;
@@ -78865,6 +78919,10 @@ lsm:resource-e4b0757718a802b93ed1ba7d254a17e18b9caf637499e18e2186e15a5b772600 a 
 lsm:resource-e4b2665a9665d179550defd1a79124cf215219dc6927c557186d9f5184503ca1 a lsm:Collection ;
     lsm:member lsm:resource-224b7d85a070fb53b8a744f484cbce0a3d887e883dfa4017a468c795f887b504,
         lsm:resource-86d052c1c7e853ab3a27ebf112de6d69b70c5a4ce585083d061000b8fc4df60f .
+
+lsm:resource-e4b4093e2ab8b4df6aeb1424aa26cc9dc4e588427b099bf5a9984c9eaaf13554 a lsm:Facet ;
+    lsm:name "minInclusive" ;
+    lsm:value "0" .
 
 lsm:resource-e4b4771dd628572c7883a844e14133a6b885ba379eae15dc0694a27b7f0ffee1 a lsm:Collection ;
     lsm:member "FullyUpdated",
@@ -81145,7 +81203,8 @@ lsm:resource-eb997734215127f620aa29ee272941e9cf01092012b3c81957c6df3726f5eafc a 
 
 lsm:resource-eb99a535ba790cc4d6053874f88aa70af33f9a9d9c62d519a85504ef1989e0b0 a lsm:Collection .
 
-lsm:resource-eb9e71d5a20953adb8283de495a21aafa1cf55a2292cc54e34cf6b16fd52363a a lsm:Collection .
+lsm:resource-eb9e71d5a20953adb8283de495a21aafa1cf55a2292cc54e34cf6b16fd52363a a lsm:Collection ;
+    lsm:member lsm:resource-5aa988ec2d08c74cdee5f46f54938bd31b675778a023677e8fdfc1a74c920544 .
 
 lsm:resource-eb9f93bd05e6600ccdab02f1492b32a49c41f2655f80394337ebd44821aeeacc a lsm:QName ;
     lsm:local_name "SensitiveIndicator" .
@@ -82283,7 +82342,8 @@ lsm:resource-eef91ff8f627cb42e88f2e5cfc1abeaa3f18754eb091ad702565a39196feaafe a 
 
 lsm:resource-ef02e7e1e3f0bad974f9f39ad1915c1e938306e9c2d8b1cfe1d24e75d0cb74c8 a lsm:Collection .
 
-lsm:resource-ef03584ab0e1a35c6680955e76dd6767625a2283a61947f0088e54f364634ce0 a lsm:Collection .
+lsm:resource-ef03584ab0e1a35c6680955e76dd6767625a2283a61947f0088e54f364634ce0 a lsm:Collection ;
+    lsm:member lsm:resource-8c11ad9072a39932fc5fae9d2c1cb03bdbee7b819d92a9b35a655a21af9386df .
 
 lsm:resource-ef042e332dbf033f70787222a12b1539d90f9c1e962d8e9527921ced9955e374 a lsm:MappingEntry ;
     lsm:key lsm:resource-015e8a809249bb8114f398c3cd81da4af6746cea7422c5efa8fbf836cf7e031b ;

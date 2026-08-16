@@ -20,6 +20,17 @@ SchemaQNameResolver = Callable[
     QName,
 ]
 
+SUPPORTED_RESTRICTION_FACETS = frozenset(
+    {
+        "fractionDigits",
+        "maxInclusive",
+        "maxLength",
+        "minInclusive",
+        "minLength",
+        "pattern",
+    }
+)
+
 
 @dataclass(frozen=True, slots=True)
 class ComplexTypeDerivation:
@@ -180,7 +191,7 @@ def _load_restriction(
 
         if local_name == "enumeration":
             enumeration_values.append(value)
-        elif local_name == "maxLength":
+        elif local_name in SUPPORTED_RESTRICTION_FACETS:
             facets.append(Facet(name=local_name, value=value))
 
     return SimpleTypeDefinition(

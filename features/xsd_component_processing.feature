@@ -68,7 +68,7 @@ Feature: Complete processing of XSD components used by UAD
 
   Rule: Datatype constraints preserve their meaning
 
-    @IT-5R4S1
+    @@IT-5R4S1
     Scenario: Process datatype facets used by UAD
       When datatype constraint components are processed
       Then enumeration constraints are preserved
