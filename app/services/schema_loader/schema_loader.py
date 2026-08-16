@@ -56,6 +56,7 @@ class SchemaLoader:
         schema = SchemaModel(
             target_namespace=document.root.attrib.get("targetNamespace"),
             namespace_bindings=dict(document.namespace_bindings),
+            schema_imports=document.schema_imports,
         )
 
         context = SchemaLoaderContext(
@@ -124,6 +125,7 @@ class SchemaLoader:
         entry_model = document_models[0]
         namespace_bindings = dict(entry_model.namespace_bindings)
         namespaces: set[str] = set()
+        schema_imports = []
         elements = {}
         complex_types = {}
         simple_types = {}
@@ -138,6 +140,7 @@ class SchemaLoader:
                 namespace_bindings.setdefault(prefix, namespace_iri)
 
             namespaces.update(document_model.namespaces)
+            schema_imports.extend(document_model.schema_imports)
 
             if document_model.target_namespace:
                 namespaces.add(document_model.target_namespace)
@@ -152,6 +155,7 @@ class SchemaLoader:
         return SchemaModel(
             target_namespace=entry_model.target_namespace,
             namespace_bindings=namespace_bindings,
+            schema_imports=tuple(schema_imports),
             elements=elements,
             complex_types=complex_types,
             simple_types=simple_types,

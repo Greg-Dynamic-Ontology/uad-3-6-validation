@@ -9,6 +9,8 @@ from types import MappingProxyType
 from typing import Iterable, Mapping
 import xml.etree.ElementTree as ET
 
+from app.models.schema_model import SchemaImport
+
 
 XML_SCHEMA_NAMESPACE = "http://www.w3.org/2001/XMLSchema"
 SCHEMA_ROOT_TAG = f"{{{XML_SCHEMA_NAMESPACE}}}schema"
@@ -23,6 +25,7 @@ class SchemaDocument:
     tree: ET.ElementTree
     root: ET.Element
     namespace_bindings: Mapping[str, str]
+    schema_imports: tuple[SchemaImport, ...]
 
 
 @dataclass(frozen=True, slots=True)
@@ -65,6 +68,7 @@ def discover_schema_closure(entry_point: Path) -> tuple[SchemaDocument, ...]:
         root = tree.getroot()
 
         _validate_schema_root(resolved_path, root)
+        schema_imports = _read_schema_imports(resolved_path, root)
 
         documents.append(
             SchemaDocument(
@@ -72,18 +76,15 @@ def discover_schema_closure(entry_point: Path) -> tuple[SchemaDocument, ...]:
                 tree=tree,
                 root=root,
                 namespace_bindings=namespace_bindings,
+                schema_imports=schema_imports,
             )
         )
 
-        import_tag = f"{{{XML_SCHEMA_NAMESPACE}}}import"
+        for schema_import in schema_imports:
+            imported_path = schema_import.resolved_document
 
-        for import_element in root.findall(import_tag):
-            schema_location = import_element.get("schemaLocation")
-
-            if not schema_location:
+            if imported_path is None:
                 continue
-
-            imported_path = resolved_path.parent / schema_location
 
             if not imported_path.is_file():
                 raise FileNotFoundError(
@@ -96,6 +97,35 @@ def discover_schema_closure(entry_point: Path) -> tuple[SchemaDocument, ...]:
     visit(entry_point)
 
     return tuple(documents)
+
+
+def _read_schema_imports(
+    source_document: Path,
+    root: ET.Element,
+) -> tuple[SchemaImport, ...]:
+    """Read every import occurrence from one schema document."""
+
+    import_tag = f"{{{XML_SCHEMA_NAMESPACE}}}import"
+    schema_imports: list[SchemaImport] = []
+
+    for element in root.findall(import_tag):
+        schema_location = element.get("schemaLocation")
+        resolved_document = (
+            (source_document.parent / schema_location).resolve()
+            if schema_location
+            else None
+        )
+
+        schema_imports.append(
+            SchemaImport(
+                namespace=element.get("namespace"),
+                schema_location=schema_location,
+                source_document=source_document,
+                resolved_document=resolved_document,
+            )
+        )
+
+    return tuple(schema_imports)
 
 
 def inventory_schema_components(

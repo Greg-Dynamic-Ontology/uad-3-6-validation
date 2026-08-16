@@ -9,6 +9,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from enum import Enum
+from pathlib import Path
 from typing import Mapping
 
 
@@ -29,6 +30,16 @@ class QName:
         if self.namespace is None:
             return self.local_name
         return f"{{{self.namespace}}}{self.local_name}"
+
+
+@dataclass(frozen=True, slots=True)
+class SchemaImport:
+    """One XML Schema import occurrence and its packaging metadata."""
+
+    namespace: str | None
+    schema_location: str | None
+    source_document: Path
+    resolved_document: Path | None
 
 
 class ModelGroupKind(str, Enum):
@@ -287,6 +298,7 @@ class SchemaModel:
     # Prefix -> Namespace URI
     #
     namespace_bindings: Mapping[str, str] = field(default_factory=dict)
+    schema_imports: tuple[SchemaImport, ...] = ()
 
     elements: Mapping[QName, ElementDeclaration] = field(default_factory=dict)
     complex_types: Mapping[QName, ComplexTypeDefinition] = field(default_factory=dict)

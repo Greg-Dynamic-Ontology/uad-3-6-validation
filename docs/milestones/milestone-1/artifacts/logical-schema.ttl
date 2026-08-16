@@ -9,6 +9,7 @@
     lsm:model_groups lsm:resource-8d7a8cc0f97d200fc425918fc729050c877103577d9dc3cadb1da2dc4a939885 ;
     lsm:namespace_bindings lsm:resource-a4ef5eea92210ee9ef17318a7ea7d7cad14384ec02008836549473c99539abf8 ;
     lsm:namespaces lsm:resource-1adb5ecd85bcc05384ca5bed039c7cb928ebe085692918674fa81bd82ff23c7b ;
+    lsm:schema_imports lsm:resource-bf797d414817a514df62c2ff565e7760e582bae8af1263a5c8176cea61c022f5 ;
     lsm:simple_types lsm:resource-cd8674fa45960519f94defe10829217e0d4e68d47161f45da9b9a5b990d9eeff ;
     lsm:target_namespace "http://www.mismo.org/residential/2009/schemas" .
 
@@ -27876,6 +27877,12 @@ lsm:resource-4eeecf76907db0e562618e6bf0e54201a038203df1b5ecf214a44def6cdbf275 a 
     lsm:local_name "OTHER" ;
     lsm:namespace "http://www.mismo.org/residential/2009/schemas" .
 
+lsm:resource-4eefe5d16521257181ad13fa3c0523d65f31202ed6de38deb068a592ab53a0b7 a lsm:SchemaImport ;
+    lsm:namespace "http://www.w3.org/XML/1998/namespace" ;
+    lsm:resolved_document "C:\\Users\\grego\\projects\\pycharm\\uad-3-6-validation\\specs\\UAD\\GSE_UAD_3.6.0_v1.3\\Combined\\xml.xsd" ;
+    lsm:schema_location "xml.xsd" ;
+    lsm:source_document "C:\\Users\\grego\\projects\\pycharm\\uad-3-6-validation\\specs\\UAD\\GSE_UAD_3.6.0_v1.3\\Combined\\GSE_UAD_3.6.0_xlink_v1.3.xsd" .
+
 lsm:resource-4ef49b479b1a48d1a17a7a76291c4c1d7fd2e3eb1f807213cc890f6e046c81f7 a lsm:QName ;
     lsm:local_name "DataNotSuppliedReasonTypeAdditionalDescription" .
 
@@ -42765,6 +42772,12 @@ lsm:resource-7acefdd364c10214c5f38423adc11e7966976462303387a0508824ed12a68fe2 a 
     lsm:name lsm:resource-2a51635b968230070435104d35d3f85c94a15c6f721068cbc6c30fb9da72fb7d ;
     lsm:required false ;
     lsm:type_name lsm:resource-5fa3f822473634416de4c7b2733ea4774c68163e833f6d3c7b9e9fdc5469b796 .
+
+lsm:resource-7ad6266156ed0ba6957345edd2603a8db30eeabf530cd95d674a45fb71df1da2 a lsm:SchemaImport ;
+    lsm:namespace "http://www.w3.org/XML/1998/namespace" ;
+    lsm:resolved_document "C:\\Users\\grego\\projects\\pycharm\\uad-3-6-validation\\specs\\UAD\\GSE_UAD_3.6.0_v1.3\\Combined\\xml.xsd" ;
+    lsm:schema_location "xml.xsd" ;
+    lsm:source_document "C:\\Users\\grego\\projects\\pycharm\\uad-3-6-validation\\specs\\UAD\\GSE_UAD_3.6.0_v1.3\\Combined\\GSE_UAD_3.6.0_v1.3.xsd" .
 
 lsm:resource-7ad65d23de69634b801d96535373a2c39a316b98defa38552ebe65004d1c18e2 a lsm:Collection .
 
@@ -65450,6 +65463,11 @@ lsm:resource-bf7609223b34bde7d3f946ab7edc999eaa707d15f5aa2b5c1c96469e157c35a7 a 
 
 lsm:resource-bf7766bed604bb0debe1d57ea4d1205901791b6b5fa8c1dce0b10a3cb3101e36 a lsm:Collection .
 
+lsm:resource-bf797d414817a514df62c2ff565e7760e582bae8af1263a5c8176cea61c022f5 a lsm:Collection ;
+    lsm:member lsm:resource-4eefe5d16521257181ad13fa3c0523d65f31202ed6de38deb068a592ab53a0b7,
+        lsm:resource-7ad6266156ed0ba6957345edd2603a8db30eeabf530cd95d674a45fb71df1da2,
+        lsm:resource-c3de2c7aa1901bee5b5ef366567f862b2c1a0032af87c3458bcf76f0767b3caf .
+
 lsm:resource-bf7b0223581848ba7b6de5e2c197adfb2bee0d1c5e2da9b001bdf2932abccabd a lsm:ComplexTypeDefinition ;
     lsm:attribute_group_refs lsm:resource-7e3028da2c5db9f8ec8279f39410cb36d903d164dc29e0fcbbc16b124452fd65 ;
     lsm:attributes lsm:resource-4862436063c212ee53b6b2e7a697941ec7a0b2bfb2488599abfbf09e75acd5a3 ;
@@ -67049,6 +67067,12 @@ lsm:resource-c3d1e8b0b3ec723fda4d457403330948924b755356efb3b913528b49609b4483 a 
 lsm:resource-c3daeb79a990d8d90027a14bddadbd1ef96804275841ff840d4e1d766b7c0ebe a lsm:MappingEntry ;
     lsm:key lsm:resource-2db715d0735b383a0cadfcb950bf139e804f1bd8ea4e1d85a731620a01e54d9f ;
     lsm:value lsm:resource-61b10f14e67bbf0ce081eff1ec431f50cecf9e83f1ad45dbcc9fdebc7245f34d .
+
+lsm:resource-c3de2c7aa1901bee5b5ef366567f862b2c1a0032af87c3458bcf76f0767b3caf a lsm:SchemaImport ;
+    lsm:namespace "http://www.w3.org/1999/xlink" ;
+    lsm:resolved_document "C:\\Users\\grego\\projects\\pycharm\\uad-3-6-validation\\specs\\UAD\\GSE_UAD_3.6.0_v1.3\\Combined\\GSE_UAD_3.6.0_xlink_v1.3.xsd" ;
+    lsm:schema_location "GSE_UAD_3.6.0_xlink_v1.3.xsd" ;
+    lsm:source_document "C:\\Users\\grego\\projects\\pycharm\\uad-3-6-validation\\specs\\UAD\\GSE_UAD_3.6.0_v1.3\\Combined\\GSE_UAD_3.6.0_v1.3.xsd" .
 
 lsm:resource-c3e50980075433825b5b307f61bdd54275aefcfe94256747d2ff7ba5d810aedb a lsm:Collection .
 
