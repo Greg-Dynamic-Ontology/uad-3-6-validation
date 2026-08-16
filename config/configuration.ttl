@@ -1,0 +1,63 @@
+@prefix cfg: <https://dynamicontology.com/uad36/configuration#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<https://dynamicontology.com/uad36/configuration/developer>
+    rdf:type cfg:ApplicationConfiguration ;
+    rdfs:label "UAD 3.6 developer configuration" ;
+    cfg:usesExperience cfg:DeveloperExperience ;
+    cfg:usesPipeline cfg:UadValidationPipeline .
+
+cfg:DeveloperExperience
+    rdf:type cfg:UserExperienceProfile ;
+    rdfs:label "Developer experience" ;
+    cfg:showsOverallProgress true ;
+    cfg:showsPipelineStages true ;
+    cfg:showsTechnicalArtifacts true ;
+    cfg:showsDeveloperDiagnostics true .
+
+cfg:UadValidationPipeline
+    rdf:type cfg:ValidationPipeline ;
+    rdfs:label "UAD 3.6 validation pipeline" ;
+    cfg:includesStage cfg:SchemaValidation ;
+    cfg:includesStage cfg:RdfProjection ;
+    cfg:includesStage cfg:ShaclValidation ;
+    cfg:includesStage cfg:Measurement ;
+    cfg:includesStage cfg:RuleEvaluation ;
+    cfg:includesStage cfg:FindingGeneration ;
+    cfg:includesStage cfg:ReportGeneration .
+
+cfg:SchemaValidation
+    rdf:type cfg:PipelineStage ;
+    rdfs:label "XML Schema Validation" ;
+    cfg:executionOrder 1 .
+
+cfg:RdfProjection
+    rdf:type cfg:PipelineStage ;
+    rdfs:label "RDF Projection" ;
+    cfg:executionOrder 2 .
+
+cfg:ShaclValidation
+    rdf:type cfg:PipelineStage ;
+    rdfs:label "SHACL Validation" ;
+    cfg:executionOrder 3 .
+
+cfg:Measurement
+    rdf:type cfg:PipelineStage ;
+    rdfs:label "Measurement" ;
+    cfg:executionOrder 4 .
+
+cfg:RuleEvaluation
+    rdf:type cfg:PipelineStage ;
+    rdfs:label "Rule Evaluation" ;
+    cfg:executionOrder 5 .
+
+cfg:FindingGeneration
+    rdf:type cfg:PipelineStage ;
+    rdfs:label "Finding Generation" ;
+    cfg:executionOrder 6 .
+
+cfg:ReportGeneration
+    rdf:type cfg:PipelineStage ;
+    rdfs:label "Report Generation" ;
+    cfg:executionOrder 7 .

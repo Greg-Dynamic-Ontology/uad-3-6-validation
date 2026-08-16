@@ -12,6 +12,12 @@ const technicalPipelineSpacing = document.getElementById(
 const technicalArtifactsSection = document.getElementById(
     "technical-artifacts-section"
 );
+const schemaComponentProcessingCoverage = document.getElementById(
+    "schema-component-processing-coverage"
+);
+const schemaComponentProcessingCoverageRows = document.getElementById(
+    "schema-component-processing-coverage-rows"
+);
 const validationIntroduction = document.getElementById(
     "validation-introduction"
 );
@@ -63,6 +69,7 @@ function applyExperience(profile) {
     technicalPipelineSelection.hidden = !profile.shows_pipeline_stages;
     technicalPipelineSpacing.hidden = !profile.shows_pipeline_stages;
     technicalArtifactsSection.hidden = !profile.shows_technical_artifacts;
+    schemaComponentProcessingCoverage.hidden = true;
 
     if (profile.shows_pipeline_stages) {
         validationTaskHeading.textContent = "Validation Pipeline";
@@ -84,13 +91,50 @@ function applyExperience(profile) {
         "Select a UAD 3.6 appraisal and validate it.";
 }
 
+function appendCoverageCell(row, column, value) {
+    const cell = document.createElement("td");
+    cell.dataset.column = column;
+    cell.textContent = String(value);
+    row.appendChild(cell);
+}
+
+function showSchemaComponentProcessingCoverage(report) {
+    schemaComponentProcessingCoverageRows.replaceChildren();
+
+    for (const coverage of report.component_kinds) {
+        const row = document.createElement("tr");
+        row.dataset.componentKind = coverage.component_kind;
+        appendCoverageCell(row, "component-kind", coverage.component_kind);
+        appendCoverageCell(row, "found", coverage.found);
+        appendCoverageCell(row, "processed", coverage.processed);
+        appendCoverageCell(row, "status", coverage.status);
+        schemaComponentProcessingCoverageRows.appendChild(row);
+    }
+
+    schemaComponentProcessingCoverage.hidden = false;
+}
+
+async function loadSchemaComponentProcessingCoverage() {
+    const response = await fetch(
+        "/schema/uad36/component-processing-coverage"
+    );
+    if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+    }
+    showSchemaComponentProcessingCoverage(await response.json());
+}
+
 async function configureExperience() {
     try {
         const response = await fetch("/configuration/experience");
         if (!response.ok) {
             throw new Error(`HTTP ${response.status}`);
         }
-        applyExperience(await response.json());
+        const profile = await response.json();
+        applyExperience(profile);
+        if (profile.shows_developer_diagnostics) {
+            await loadSchemaComponentProcessingCoverage();
+        }
     } catch (_error) {
         applyExperience(experienceProfile);
     }

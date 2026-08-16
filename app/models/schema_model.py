@@ -321,6 +321,7 @@ class SchemaModel:
     #
     namespace_bindings: Mapping[str, str] = field(default_factory=dict)
     schema_imports: tuple[SchemaImport, ...] = ()
+    component_counts: Mapping[str, int] = field(default_factory=dict)
     processing_dispositions: tuple[
         ComponentProcessingDisposition,
         ...,

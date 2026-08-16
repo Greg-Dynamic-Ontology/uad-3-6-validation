@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+from typing import Mapping
 
 from app.core.namespaces import SCHEMA_MODEL_NAMESPACE_IRI
 from app.models.schema_model import (
@@ -57,6 +58,7 @@ class SchemaLoader:
 
         return self._merge_document_models(
             document_models,
+            component_counts=inventory.counts_by_kind,
             processing_dispositions=processing_dispositions,
         )
 
@@ -127,6 +129,7 @@ class SchemaLoader:
     def _merge_document_models(
         document_models: tuple[SchemaModel, ...],
         *,
+        component_counts: Mapping[str, int] | None = None,
         processing_dispositions: tuple[
             ComponentProcessingDisposition,
             ...,
@@ -171,6 +174,11 @@ class SchemaLoader:
             target_namespace=entry_model.target_namespace,
             namespace_bindings=namespace_bindings,
             schema_imports=tuple(schema_imports),
+            component_counts=(
+                {}
+                if component_counts is None
+                else dict(component_counts)
+            ),
             processing_dispositions=processing_dispositions,
             elements=elements,
             complex_types=complex_types,

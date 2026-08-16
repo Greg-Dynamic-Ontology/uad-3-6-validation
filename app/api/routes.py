@@ -18,8 +18,15 @@ from app.models.validation import (
 from app.services.experience import ExperienceProfile, load_experience_profile
 from app.services.ingestion import ingestion_service
 from app.services.rdf_projection import RdfProjectionStage, RdfProjector
+from app.services.schema_loader import SchemaLoader
+from app.services.schema_loader.processing_coverage import (
+    report_component_processing_coverage,
+)
 from app.services.validation import validation_service
-from app.services.xml_schema_validator import validate_uad36_xml_bytes
+from app.services.xml_schema_validator import (
+    UAD36_SCHEMA_PATH,
+    validate_uad36_xml_bytes,
+)
 
 
 router = APIRouter()
@@ -48,6 +55,19 @@ def health() -> dict[str, str]:
 def get_experience_configuration(request: Request) -> dict[str, bool]:
     """Return only the presentation capabilities needed by the browser."""
     return active_experience(request).as_response()
+
+
+@router.get("/schema/uad36/component-processing-coverage")
+def get_uad36_component_processing_coverage(
+    request: Request,
+) -> dict[str, list[dict[str, object]]]:
+    """Return schema-processing diagnostics in Developer mode."""
+
+    if not active_experience(request).shows_developer_diagnostics:
+        raise HTTPException(status_code=404, detail="Not found")
+
+    schema = SchemaLoader().load(UAD36_SCHEMA_PATH)
+    return report_component_processing_coverage(schema).as_response()
 
 
 @router.post("/ingest/schema", response_model=IngestResponse)
