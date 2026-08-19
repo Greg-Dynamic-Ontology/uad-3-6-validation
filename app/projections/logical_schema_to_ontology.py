@@ -3,10 +3,12 @@
 from __future__ import annotations
 
 from hashlib import sha256
+from pathlib import Path
 
 from rdflib import Graph, Literal, Namespace, RDF, URIRef
 from rdflib.namespace import OWL
 
+from app.core.schema_source_iri import mint_schema_source_iri
 from app.generators.complex_type_vocabulary import (
     class_name_from_type_name,
     local_name_from_text,
@@ -96,6 +98,33 @@ def _record_schema_component(
                 Literal(name.namespace),
             )
         )
+
+
+def _record_source_document_traceability(
+    graph: Graph,
+    component_iri: URIRef,
+    source_document: Path,
+) -> None:
+    """Link a schema component to its governed source artifact."""
+
+    source_iri = mint_schema_source_iri(source_document)
+    digest = sha256(source_document.read_bytes()).hexdigest()
+
+    graph.add((component_iri, PROV.wasDerivedFrom, source_iri))
+    graph.add(
+        (
+            source_iri,
+            RDF.type,
+            UAD_SCHEMA.SchemaSourceDocument,
+        )
+    )
+    graph.add(
+        (
+            source_iri,
+            UAD_SCHEMA.contentDigest,
+            Literal(digest),
+        )
+    )
 
 
 def _project_mismo_complex_type(
@@ -194,6 +223,12 @@ def project_logical_schema_to_ontology(model: SchemaModel) -> Graph:
             component_iri,
             complex_type.name,
         )
+        if complex_type.source_document is not None:
+            _record_source_document_traceability(
+                graph,
+                component_iri,
+                complex_type.source_document,
+            )
 
         if complex_type.name.namespace == MISMO_SOURCE_NAMESPACE:
             _project_mismo_complex_type(

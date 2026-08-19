@@ -139,6 +139,7 @@ def _canonicalize(value: object) -> object:
             )
             for field in fields(value)
             if field.name != "documentation"
+            and field.metadata.get("logical_schema", True)
         )
 
     if isinstance(value, Mapping):

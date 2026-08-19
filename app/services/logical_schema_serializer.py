@@ -159,6 +159,9 @@ def _add_value(
 
     if is_dataclass(value):
         for field in fields(value):
+            if not field.metadata.get("logical_schema", True):
+                continue
+
             _add_value(
                 graph=graph,
                 subject=resource,

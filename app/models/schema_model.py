@@ -290,6 +290,12 @@ class ComplexTypeDefinition:
     """Named XML Schema complex-type definition."""
 
     name: QName
+    source_document: Path | None = field(
+        default=None,
+        compare=False,
+        repr=False,
+        metadata={"logical_schema": False},
+    )
     base_type: QName | None = None
     derivation_kind: TypeDerivationKind | None = None
     simple_content: bool = False

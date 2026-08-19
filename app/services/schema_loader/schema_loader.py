@@ -338,6 +338,7 @@ class SchemaLoader:
 
             complex_types[qname] = ComplexTypeDefinition(
                 name=qname,
+                source_document=context.path,
                 base_type=derivation.base_type,
                 derivation_kind=derivation.kind,
                 simple_content=derivation.simple_content,
