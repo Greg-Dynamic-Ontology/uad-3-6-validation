@@ -96,7 +96,7 @@ Feature: Project the UAD Logical Schema Model into the shared MISMO ontology
       Then the ontology resource records the originating schema component
       And the source schema location is preserved when available
 
-  @IT-7R4
+  @IT-7R5
   Rule: Produce valid RDF
 
     @IT-7R5S1
