@@ -248,6 +248,24 @@ def project_logical_schema_to_ontology(model: SchemaModel) -> Graph:
     return graph
 
 
+def serialize_logical_schema_ontology(
+    model: SchemaModel,
+    output_file: Path,
+) -> Path:
+    """Project a Logical Schema Model and serialize it as Turtle."""
+
+    graph = project_logical_schema_to_ontology(model)
+
+    output_file.parent.mkdir(parents=True, exist_ok=True)
+    graph.serialize(
+        destination=str(output_file),
+        format="turtle",
+        encoding="utf-8",
+    )
+
+    return output_file
+
+
 __all__ = [
     "MINTING_POLICY_VERSION",
     "MISMO_ONTOLOGY",
@@ -256,4 +274,5 @@ __all__ = [
     "RECONCILIATION_IRI",
     "UAD_SCHEMA",
     "project_logical_schema_to_ontology",
+    "serialize_logical_schema_ontology",
 ]
