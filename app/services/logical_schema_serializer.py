@@ -8,6 +8,8 @@ from typing import Any
 
 from rdflib import Graph, Literal, Namespace, RDF, URIRef
 
+from app.core.schema_source_iri import mint_schema_source_iri
+
 
 LOGICAL_SCHEMA = Namespace(
     "https://dynamicontology.com/uad36/logical-schema#"
@@ -74,6 +76,12 @@ def _add_value(
     root: bool = False,
 ) -> None:
     if value is None:
+        return
+
+    if isinstance(value, Path):
+        graph.add(
+            (subject, predicate, mint_schema_source_iri(value))
+        )
         return
 
     if _is_literal_value(value):
@@ -192,16 +200,12 @@ def _is_literal_value(value: Any) -> bool:
             float,
             bool,
             bytes,
-            Path,
             Enum,
         ),
     )
 
 
 def _to_literal(value: Any) -> Literal:
-    if isinstance(value, Path):
-        return Literal(str(value))
-
     if isinstance(value, Enum):
         return Literal(value.value)
 
