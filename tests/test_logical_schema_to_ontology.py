@@ -14,7 +14,9 @@ from app.models.schema_model import (
 
 
 MISMO_NAMESPACE = "http://www.mismo.org/residential/2009/schemas"
-UAD_SCHEMA = Namespace("https://dynamicontology.com/uad36/schema#")
+MISMO_ONTOLOGY = Namespace(
+    "https://dynamicontology.com/mismo/ontology#"
+)
 
 
 def _project_to_ontology(model: SchemaModel) -> Graph:
@@ -51,7 +53,7 @@ def _project_to_ontology(model: SchemaModel) -> Graph:
 
 
 def test_named_complex_type_projects_to_owl_class() -> None:
-    """A named complex type becomes its governed OWL class."""
+    """A named complex type becomes its governed MISMO OWL class."""
 
     type_name = QName(MISMO_NAMESPACE, "PropertyType")
     model = SchemaModel(
@@ -63,4 +65,4 @@ def test_named_complex_type_projects_to_owl_class() -> None:
 
     graph = _project_to_ontology(model)
 
-    assert (UAD_SCHEMA.Property, RDF.type, OWL.Class) in graph
+    assert (MISMO_ONTOLOGY.Property, RDF.type, OWL.Class) in graph

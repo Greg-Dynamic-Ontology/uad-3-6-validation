@@ -1,4 +1,4 @@
-Feature: Project the Logical Schema Model into the UAD ontology
+Feature: Project the UAD Logical Schema Model into the shared MISMO ontology
 
   As the UAD 3.6 validation engine
   I want to project the Logical Schema Model into an RDF ontology
@@ -63,16 +63,22 @@ Feature: Project the Logical Schema Model into the UAD ontology
   Rule: Produce deterministic identifiers
 
     @IT-7R3S1
-    Scenario: Projection uses the schema target namespace
-      Given a Logical Schema Model with a target namespace
+    Scenario: Projection uses the governed shared MISMO ontology namespace
+      Given a UAD Logical Schema Model with a target namespace
       When the model is projected to an ontology
-      Then projected resources use IRIs derived from the target namespace
+      Then every projected domain ontology term uses an IRI in the governed shared MISMO ontology namespace
+      And each projected schema component uses an IRI in the governed UAD schema-resource namespace
+      And each projected ontology term identifies its originating schema component
+      And the source target namespace is preserved as source identity and provenance
+      And no project-created term is minted under an uncontrolled source namespace
+      And any schema component without a governed MISMO mapping remains explicitly unresolved
 
     @IT-7R3S2
-    Scenario: Projection uses the fallback namespace when no target namespace exists
-      Given a Logical Schema Model without a target namespace
+    Scenario: Missing source namespace does not change ontology authority
+      Given a UAD Logical Schema Model without a target namespace
       When the model is projected to an ontology
-      Then projected resources use the configured fallback namespace
+      Then every projected domain ontology term uses an IRI in the governed shared MISMO ontology namespace
+      And the missing source namespace remains visible in the ontology-projection reconciliation
 
     @IT-7R3S3
     Scenario: Repeated projection produces the same IRIs
@@ -111,7 +117,7 @@ Feature: Project the Logical Schema Model into the UAD ontology
     @IT-7R6S1
     Scenario: Project every represented UAD schema component
       Given the complete UAD Logical Schema Model has been loaded
-      When the model is projected into the authoritative UAD ontology
+      When the model is projected into the governed shared MISMO ontology
       Then every schema component selected for representation identifies an authoritative RDF term
       And every projected RDF term identifies its originating schema component
       And every schema component occurrence has exactly one ontology-projection disposition
@@ -119,12 +125,12 @@ Feature: Project the Logical Schema Model into the UAD ontology
       And no selected schema component silently disappears
 
     @IT-7R6S2
-    Scenario: Projected appraisal terms use the authoritative UAD ontology
-      Given the authoritative UAD ontology has been generated
+    Scenario: Projected appraisal terms use the governed shared MISMO ontology
+      Given the governed shared MISMO ontology has been generated
       And a UAD XML appraisal has been loaded
       When the appraisal is projected into RDF
-      Then every instance class is declared by the authoritative UAD ontology or a documented external vocabulary
-      And every instance property is declared by the authoritative UAD ontology or a documented external vocabulary
+      Then every instance class is declared by the governed shared MISMO ontology or a documented external vocabulary
+      And every instance property is declared by the governed shared MISMO ontology or a documented external vocabulary
       And every value governed by a schema datatype uses its projected RDF datatype
       And every value governed by a controlled vocabulary uses its projected vocabulary term
       And every unresolved instance term remains visible
@@ -132,6 +138,6 @@ Feature: Project the Logical Schema Model into the UAD ontology
     @IT-7R6S3
     Scenario: Repeated complete ontology projection is deterministic
       Given the complete UAD Logical Schema Model has been loaded
-      When the model is projected into the authoritative UAD ontology more than once
+      When the model is projected into the governed shared MISMO ontology more than once
       Then each projection produces an equivalent ontology graph
       And each projection produces the same schema-to-ontology reconciliation
