@@ -25,6 +25,7 @@ UAD_SCHEMA = Namespace(
 )
 PROV = Namespace("http://www.w3.org/ns/prov#")
 MINTING_POLICY_VERSION = "ADR-0017"
+RECONCILIATION_IRI = UAD_SCHEMA["ontology-projection-reconciliation"]
 
 
 def _namespace_discriminator(namespace: str | None) -> str:
@@ -126,6 +127,52 @@ def _project_mismo_complex_type(
     )
 
 
+def _record_projection_reconciliation(
+    graph: Graph,
+    model: SchemaModel,
+) -> None:
+    """Record source-namespace status without changing ontology authority."""
+
+    graph.add(
+        (
+            RECONCILIATION_IRI,
+            RDF.type,
+            UAD_SCHEMA.OntologyProjectionReconciliation,
+        )
+    )
+    graph.add(
+        (
+            RECONCILIATION_IRI,
+            UAD_SCHEMA.ontologyAuthority,
+            URIRef(str(MISMO_ONTOLOGY)),
+        )
+    )
+
+    if model.target_namespace is None:
+        graph.add(
+            (
+                RECONCILIATION_IRI,
+                UAD_SCHEMA.sourceTargetNamespaceStatus,
+                Literal("missing"),
+            )
+        )
+    else:
+        graph.add(
+            (
+                RECONCILIATION_IRI,
+                UAD_SCHEMA.sourceTargetNamespaceStatus,
+                Literal("present"),
+            )
+        )
+        graph.add(
+            (
+                RECONCILIATION_IRI,
+                UAD_SCHEMA.sourceTargetNamespace,
+                Literal(model.target_namespace),
+            )
+        )
+
+
 def project_logical_schema_to_ontology(model: SchemaModel) -> Graph:
     """Project represented UAD schema components into MISMO ontology terms."""
 
@@ -134,6 +181,8 @@ def project_logical_schema_to_ontology(model: SchemaModel) -> Graph:
     graph.bind("uadschema", UAD_SCHEMA)
     graph.bind("prov", PROV)
     graph.bind("owl", OWL)
+
+    _record_projection_reconciliation(graph, model)
 
     for complex_type in model.complex_types.values():
         component_iri = _complex_type_component_iri(
@@ -169,6 +218,7 @@ __all__ = [
     "MISMO_ONTOLOGY",
     "MISMO_SOURCE_NAMESPACE",
     "PROV",
+    "RECONCILIATION_IRI",
     "UAD_SCHEMA",
     "project_logical_schema_to_ontology",
 ]
