@@ -1,0 +1,52 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix otdd: <https://dynamicontology.com/owb/otdd#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+
+otdd:TestExecution
+    a rdfs:Class .
+
+otdd:RedState
+    a rdfs:Class .
+
+otdd:MissingGovernedArtifact
+    a rdfs:Class .
+
+otdd:expectedReportType
+    a rdf:Property .
+
+otdd:failureReason
+    a rdf:Property .
+
+otdd:missingArtifact
+    a rdf:Property .
+
+otdd:reportProduced
+    a rdf:Property .
+
+otdd:scenario
+    a rdf:Property .
+
+
+<https://dynamicontology.com/uad36/otdd/IT-9R1S2/red>
+    a otdd:TestExecution , otdd:RedState ;
+    dcterms:description
+        "The acceptance test stopped before SHACL validation because the independent shapes graph did not exist." ;
+    otdd:scenario "IT-9R1S2" ;
+    otdd:expectedReportType
+        <http://www.w3.org/ns/shacl#ValidationReport> ;
+    otdd:reportProduced false ;
+    otdd:failureReason
+        "IT-9R1S2 requires independent namespace-correction shapes at operators/namespace_correction/shapes.ttl." ;
+    otdd:missingArtifact
+        <https://dynamicontology.com/uad36/otdd/IT-9R1S2/artifact/shapes.ttl> ;
+    prov:wasAssociatedWith
+        <https://dynamicontology.com/uad36/test/test_namespace_correction_shapes.py> .
+
+<https://dynamicontology.com/uad36/otdd/IT-9R1S2/artifact/shapes.ttl>
+    a otdd:MissingGovernedArtifact ;
+    dcterms:identifier
+        "operators/namespace_correction/shapes.ttl" .

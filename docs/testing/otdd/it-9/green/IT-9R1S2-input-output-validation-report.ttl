@@ -1,0 +1,80 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix otdd: <https://dynamicontology.com/owb/otdd#> .
+@prefix owbop: <https://dynamicontology.com/owb/operator#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+
+<https://dynamicontology.com/uad36/otdd/IT-9R1S2/green>
+    a otdd:TestExecution , otdd:GreenState ;
+    dcterms:description
+        "The input and output requirements were validated independently without executing the namespace-correction implementation." ;
+    otdd:scenario "IT-9R1S2" ;
+    otdd:reportProduced true ;
+    otdd:operatorImplementationExecuted false ;
+    otdd:hasValidationReport
+        <https://dynamicontology.com/uad36/otdd/IT-9R1S2/report/valid-input> ,
+        <https://dynamicontology.com/uad36/otdd/IT-9R1S2/report/malformed-input> ,
+        <https://dynamicontology.com/uad36/otdd/IT-9R1S2/report/valid-output> ,
+        <https://dynamicontology.com/uad36/otdd/IT-9R1S2/report/invalid-output> ;
+    prov:used
+        owbop:NamespaceCorrectionInputShape ,
+        owbop:NamespaceCorrectionOutputShape ;
+    prov:wasAssociatedWith
+        <https://dynamicontology.com/uad36/test/test_namespace_correction_shapes.py> .
+
+
+<https://dynamicontology.com/uad36/otdd/IT-9R1S2/report/valid-input>
+    a sh:ValidationReport ;
+    dcterms:description
+        "A provisional schema-source IRI with a lowercase 64-character SHA-256 digest conforms to the input shape." ;
+    sh:conforms true .
+
+<https://dynamicontology.com/uad36/otdd/IT-9R1S2/report/malformed-input>
+    a sh:ValidationReport ;
+    dcterms:description
+        "A provisional schema-source IRI without a valid SHA-256 digest does not conform to the input shape." ;
+    sh:conforms false ;
+    sh:result
+        <https://dynamicontology.com/uad36/otdd/IT-9R1S2/result/malformed-input-pattern> .
+
+<https://dynamicontology.com/uad36/otdd/IT-9R1S2/result/malformed-input-pattern>
+    a sh:ValidationResult ;
+    sh:focusNode
+        <https://dynamicontology.com/owb/schema-source/sha256/not-a-sha256-digest> ;
+    sh:resultMessage
+        "A namespace-correction input source must use the provisional namespace followed by a 64-character lowercase hexadecimal SHA-256 digest." ;
+    sh:resultSeverity sh:Violation ;
+    sh:sourceConstraintComponent sh:PatternConstraintComponent ;
+    sh:sourceShape owbop:NamespaceCorrectionInputShape ;
+    sh:value
+        <https://dynamicontology.com/owb/schema-source/sha256/not-a-sha256-digest> .
+
+
+<https://dynamicontology.com/uad36/otdd/IT-9R1S2/report/valid-output>
+    a sh:ValidationReport ;
+    dcterms:description
+        "A governed UAD schema-source IRI with a lowercase 64-character SHA-256 digest conforms to the output shape." ;
+    sh:conforms true .
+
+<https://dynamicontology.com/uad36/otdd/IT-9R1S2/report/invalid-output>
+    a sh:ValidationReport ;
+    dcterms:description
+        "A provisional schema-source IRI presented as operator output does not conform to the output shape." ;
+    sh:conforms false ;
+    sh:result
+        <https://dynamicontology.com/uad36/otdd/IT-9R1S2/result/invalid-output-pattern> .
+
+<https://dynamicontology.com/uad36/otdd/IT-9R1S2/result/invalid-output-pattern>
+    a sh:ValidationResult ;
+    sh:focusNode
+        <https://dynamicontology.com/owb/schema-source/sha256/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa> ;
+    sh:resultMessage
+        "A namespace-correction output source must use the governed UAD namespace followed by a 64-character lowercase hexadecimal SHA-256 digest." ;
+    sh:resultSeverity sh:Violation ;
+    sh:sourceConstraintComponent sh:PatternConstraintComponent ;
+    sh:sourceShape owbop:NamespaceCorrectionOutputShape ;
+    sh:value
+        <https://dynamicontology.com/owb/schema-source/sha256/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa> .
