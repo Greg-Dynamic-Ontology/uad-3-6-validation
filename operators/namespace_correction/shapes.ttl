@@ -1,0 +1,38 @@
+@prefix lsm: <https://dynamicontology.com/uad36/logical-schema#> .
+@prefix owbop: <https://dynamicontology.com/owb/operator#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+
+owbop:inputShape
+    a rdf:Property ;
+    rdfs:domain owbop:OperatorContract ;
+    rdfs:range sh:NodeShape .
+
+owbop:outputShape
+    a rdf:Property ;
+    rdfs:domain owbop:OperatorContract ;
+    rdfs:range sh:NodeShape .
+
+owbop:NamespaceCorrectionContract
+    owbop:inputShape owbop:NamespaceCorrectionInputShape ;
+    owbop:outputShape owbop:NamespaceCorrectionOutputShape .
+
+
+owbop:NamespaceCorrectionInputShape
+    a sh:NodeShape ;
+    rdfs:label "Namespace Correction Input Shape" ;
+    sh:targetObjectsOf lsm:source_document ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "^https://dynamicontology\\.com/owb/schema-source/sha256/[0-9a-f]{64}$" ;
+    sh:message "A namespace-correction input source must use the provisional namespace followed by a 64-character lowercase hexadecimal SHA-256 digest." .
+
+owbop:NamespaceCorrectionOutputShape
+    a sh:NodeShape ;
+    rdfs:label "Namespace Correction Output Shape" ;
+    sh:targetObjectsOf lsm:source_document ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "^https://dynamicontology\\.com/uad36/source/sha256/[0-9a-f]{64}$" ;
+    sh:message "A namespace-correction output source must use the governed UAD namespace followed by a 64-character lowercase hexadecimal SHA-256 digest." .
+

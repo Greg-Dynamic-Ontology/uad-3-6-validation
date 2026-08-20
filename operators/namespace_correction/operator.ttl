@@ -1,0 +1,89 @@
+@prefix owbop: <https://dynamicontology.com/owb/operator#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+
+owbop:KnowledgeGraphOperator
+    a rdfs:Class ;
+    rdfs:label "Knowledge Graph Operator" .
+
+owbop:OperatorContract
+    a rdfs:Class ;
+    rdfs:label "Operator Contract" .
+
+owbop:RDFGraph
+    a rdfs:Class ;
+    rdfs:label "RDF Graph" .
+
+
+owbop:contract
+    a rdf:Property ;
+    rdfs:domain owbop:KnowledgeGraphOperator ;
+    rdfs:range owbop:OperatorContract .
+
+owbop:definesOperator
+    a rdf:Property ;
+    rdfs:domain owbop:OperatorContract ;
+    rdfs:range owbop:KnowledgeGraphOperator .
+
+owbop:inputType
+    a rdf:Property ;
+    rdfs:domain owbop:OperatorContract ;
+    rdfs:range rdfs:Class .
+
+owbop:outputType
+    a rdf:Property ;
+    rdfs:domain owbop:OperatorContract ;
+    rdfs:range rdfs:Class .
+
+owbop:sourceNamespace
+    a rdf:Property ;
+    rdfs:domain owbop:OperatorContract .
+
+owbop:targetNamespace
+    a rdf:Property ;
+    rdfs:domain owbop:OperatorContract .
+
+owbop:governedBy
+    a rdf:Property ;
+    rdfs:domain owbop:OperatorContract .
+
+owbop:deterministic
+    a rdf:Property ;
+    rdfs:domain owbop:OperatorContract ;
+    rdfs:range xsd:boolean .
+
+owbop:idempotent
+    a rdf:Property ;
+    rdfs:domain owbop:OperatorContract ;
+    rdfs:range xsd:boolean .
+
+owbop:contractVersion
+    a rdf:Property ;
+    rdfs:domain owbop:OperatorContract ;
+    rdfs:range xsd:string .
+
+
+owbop:NamespaceCorrectionOperator
+    a owbop:KnowledgeGraphOperator ;
+    rdfs:label "Namespace Correction Operator" ;
+    owbop:contract owbop:NamespaceCorrectionContract .
+
+owbop:NamespaceCorrectionContract
+    a owbop:OperatorContract ;
+    rdfs:label "Namespace Correction Operator Contract" ;
+    owbop:contractVersion "1" ;
+    owbop:definesOperator owbop:NamespaceCorrectionOperator ;
+    owbop:inputType owbop:RDFGraph ;
+    owbop:outputType owbop:RDFGraph ;
+    owbop:sourceNamespace
+        <https://dynamicontology.com/owb/schema-source/sha256/> ;
+    owbop:targetNamespace
+        <https://dynamicontology.com/uad36/source/sha256/> ;
+    owbop:governedBy
+        <https://dynamicontology.com/uad36/decision/ADR-0017> ,
+        <https://dynamicontology.com/uad36/decision/ADR-0018> ;
+    owbop:deterministic true ;
+    owbop:idempotent true .
+
