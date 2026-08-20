@@ -1,0 +1,132 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix otdd: <https://dynamicontology.com/owb/otdd#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+
+otdd:TestExecution
+    a rdfs:Class .
+
+otdd:RedState
+    a rdfs:Class .
+
+otdd:GraphExecution
+    a rdfs:Class .
+
+otdd:actualOutput
+    a rdf:Property .
+
+otdd:exactTripleSetEquality
+    a rdf:Property .
+
+otdd:expectedOutput
+    a rdf:Property .
+
+otdd:inputGraph
+    a rdf:Property .
+
+otdd:inputTripleCount
+    a rdf:Property .
+
+otdd:objectOccurrenceCorrected
+    a rdf:Property .
+
+otdd:observedExecution
+    a rdf:Property .
+
+otdd:outputTripleCount
+    a rdf:Property .
+
+otdd:predicateOccurrenceCorrected
+    a rdf:Property .
+
+otdd:provisionalOccurrencesAfter
+    a rdf:Property .
+
+otdd:provisionalOccurrencesBefore
+    a rdf:Property .
+
+otdd:scenario
+    a rdf:Property .
+
+otdd:subjectOccurrenceCorrected
+    a rdf:Property .
+
+otdd:failedTestCount
+    a rdf:Property .
+
+otdd:passedTestCount
+    a rdf:Property .
+
+otdd:deselectedTestCount
+    a rdf:Property .
+
+otdd:durationSeconds
+    a rdf:Property .
+
+otdd:testArtifactInstalledInRepository
+    a rdf:Property .
+
+otdd:testOutcome
+    a rdf:Property .
+
+
+<https://dynamicontology.com/uad36/otdd/IT-9R2S2/red>
+    a otdd:TestExecution , otdd:RedState ;
+    dcterms:description
+        "The current operator corrected the object occurrence but retained provisional schema-source IRIs in subject and predicate positions." ;
+    otdd:scenario "IT-9R2S2" ;
+    otdd:testOutcome "failed" ;
+    otdd:testArtifactInstalledInRepository true ;
+    otdd:failedTestCount 1 ;
+    otdd:passedTestCount 301 ;
+    otdd:deselectedTestCount 1 ;
+    otdd:durationSeconds "86.87"^^<http://www.w3.org/2001/XMLSchema#decimal> ;
+    otdd:observedExecution
+        <https://dynamicontology.com/uad36/otdd/IT-9R2S2/red/operator-execution> ;
+    prov:used
+        <https://dynamicontology.com/uad36/feature/govern-schema-source-identities-in-a-knowledge-graph.feature> ,
+        <https://dynamicontology.com/uad36/test/test_namespace_correction_operator.py#prepared-IT-9R2S2> ,
+        <https://dynamicontology.com/owb/operator#NamespaceCorrectionContract> .
+
+
+<https://dynamicontology.com/uad36/otdd/IT-9R2S2/red/operator-execution>
+    a otdd:GraphExecution ;
+    otdd:inputGraph
+        <https://dynamicontology.com/uad36/otdd/IT-9R2S2/artifact/input-graph> ;
+    otdd:expectedOutput
+        <https://dynamicontology.com/uad36/otdd/IT-9R2S2/artifact/expected-output-graph> ;
+    otdd:actualOutput
+        <https://dynamicontology.com/uad36/otdd/IT-9R2S2/artifact/actual-output-graph> ;
+    otdd:inputTripleCount 3 ;
+    otdd:outputTripleCount 3 ;
+    otdd:provisionalOccurrencesBefore 3 ;
+    otdd:provisionalOccurrencesAfter 2 ;
+    otdd:subjectOccurrenceCorrected false ;
+    otdd:predicateOccurrenceCorrected false ;
+    otdd:objectOccurrenceCorrected true ;
+    otdd:exactTripleSetEquality false .
+
+
+<https://dynamicontology.com/uad36/otdd/IT-9R2S2/artifact/input-graph>
+    dcterms:identifier
+        "docs/testing/otdd/it-9/red/IT-9R2S2-input-graph.ttl" .
+
+<https://dynamicontology.com/uad36/otdd/IT-9R2S2/artifact/expected-output-graph>
+    dcterms:identifier
+        "docs/testing/otdd/it-9/red/IT-9R2S2-expected-output-graph.ttl" .
+
+<https://dynamicontology.com/uad36/otdd/IT-9R2S2/artifact/actual-output-graph>
+    dcterms:identifier
+        "docs/testing/otdd/it-9/red/IT-9R2S2-actual-output-graph.ttl" .
+
+
+<https://dynamicontology.com/uad36/test/test_namespace_correction_operator.py#prepared-IT-9R2S2>
+    dcterms:identifier
+        "tests/test_namespace_correction_operator.py" .
+
+
+<https://dynamicontology.com/uad36/feature/govern-schema-source-identities-in-a-knowledge-graph.feature>
+    dcterms:identifier
+        "features/govern-schema-source-identities-in-a-knowledge-graph.feature" .

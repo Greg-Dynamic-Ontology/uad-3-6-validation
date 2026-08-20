@@ -1,0 +1,175 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix otdd: <https://dynamicontology.com/owb/otdd#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+
+otdd:EvidenceManifest
+    a rdfs:Class .
+
+otdd:EvidenceArtifact
+    a rdfs:Class .
+
+otdd:ImplementationArtifact
+    a rdfs:Class .
+
+otdd:SoftwareEnvironment
+    a rdfs:Class .
+
+otdd:baseCommit
+    a rdf:Property .
+
+otdd:expectedAndActualHashesEqual
+    a rdf:Property .
+
+otdd:hasArtifact
+    a rdf:Property .
+
+otdd:hashAlgorithm
+    a rdf:Property .
+
+otdd:hashScope
+    a rdf:Property .
+
+otdd:implementationPresent
+    a rdf:Property .
+
+otdd:scenario
+    a rdf:Property .
+
+otdd:sha256
+    a rdf:Property .
+
+otdd:softwareName
+    a rdf:Property .
+
+otdd:softwareVersion
+    a rdf:Property .
+
+otdd:testOutcome
+    a rdf:Property .
+
+
+<https://dynamicontology.com/uad36/otdd/IT-9R2S2/green/manifest>
+    a otdd:EvidenceManifest ;
+    dcterms:created "2026-08-20"^^xsd:date ;
+    dcterms:description
+        "Content manifest for the confirmed green state of IT-9R2S2 after extending namespace correction to every RDF triple position." ;
+    otdd:scenario "IT-9R2S2" ;
+    otdd:testOutcome "passed" ;
+    otdd:baseCommit
+        "d2f884729bf8f196a872c12842d231498384018d" ;
+    otdd:hashAlgorithm "SHA-256" ;
+    otdd:hashScope "Exact working-tree file bytes" ;
+    otdd:expectedAndActualHashesEqual true ;
+    otdd:hasArtifact
+        <https://dynamicontology.com/uad36/otdd/IT-9R2S2/artifact/feature> ,
+        <https://dynamicontology.com/uad36/otdd/IT-9R2S2/artifact/test> ,
+        <https://dynamicontology.com/uad36/otdd/IT-9R2S2/artifact/operator-contract> ,
+        <https://dynamicontology.com/uad36/otdd/IT-9R2S2/artifact/shapes> ,
+        <https://dynamicontology.com/uad36/otdd/IT-9R2S2/artifact/operator.py> ,
+        <https://dynamicontology.com/uad36/otdd/IT-9R2S2/artifact/input-graph> ,
+        <https://dynamicontology.com/uad36/otdd/IT-9R2S2/artifact/expected-output-graph> ,
+        <https://dynamicontology.com/uad36/otdd/IT-9R2S2/artifact/output-graph> ,
+        <https://dynamicontology.com/uad36/otdd/IT-9R2S2/artifact/green-test-execution> ,
+        <https://dynamicontology.com/uad36/otdd/IT-9R2S2/artifact/green-pytest-output> ;
+    prov:used
+        <https://dynamicontology.com/uad36/otdd/IT-9R2S2/environment/python> ,
+        <https://dynamicontology.com/uad36/otdd/IT-9R2S2/environment/pytest> ,
+        <https://dynamicontology.com/uad36/otdd/IT-9R2S2/environment/rdflib> ,
+        <https://dynamicontology.com/uad36/otdd/IT-9R2S2/environment/pyshacl> .
+
+
+<https://dynamicontology.com/uad36/otdd/IT-9R2S2/artifact/feature>
+    a otdd:EvidenceArtifact ;
+    dcterms:identifier
+        "features/govern-schema-source-identities-in-a-knowledge-graph.feature" ;
+    otdd:sha256
+        "5bb474c69cf624c6dca1aa7cc03bd705190ed17fed828761711d7a900213d30d" .
+
+<https://dynamicontology.com/uad36/otdd/IT-9R2S2/artifact/test>
+    a otdd:EvidenceArtifact ;
+    dcterms:identifier
+        "tests/test_namespace_correction_operator.py" ;
+    otdd:sha256
+        "7c393320080d2a1af8bd446995c0e10f47c72a8b7bb28fbbaa4608a70f3ed0cb" .
+
+<https://dynamicontology.com/uad36/otdd/IT-9R2S2/artifact/operator-contract>
+    a otdd:EvidenceArtifact ;
+    dcterms:identifier
+        "operators/namespace_correction/operator.ttl" ;
+    otdd:sha256
+        "3fc0f176ccf9481db68ac79a3282c37580d36d66dcbafbc36e9db399a862b984" .
+
+<https://dynamicontology.com/uad36/otdd/IT-9R2S2/artifact/shapes>
+    a otdd:EvidenceArtifact ;
+    dcterms:identifier
+        "operators/namespace_correction/shapes.ttl" ;
+    otdd:sha256
+        "d4b5f6906887d48d2b85cad60a3a18b69048b8f30cffe8c2c86ae74cf3932384" .
+
+<https://dynamicontology.com/uad36/otdd/IT-9R2S2/artifact/operator.py>
+    a otdd:ImplementationArtifact ;
+    dcterms:identifier
+        "operators/namespace_correction/operator.py" ;
+    otdd:implementationPresent true ;
+    otdd:sha256
+        "abe4eabd5da5066090faa9420ce941346a6db7b3bff561be2951af839043dfa1" .
+
+<https://dynamicontology.com/uad36/otdd/IT-9R2S2/artifact/input-graph>
+    a otdd:EvidenceArtifact ;
+    dcterms:identifier
+        "docs/testing/otdd/it-9/red/IT-9R2S2-input-graph.ttl" ;
+    otdd:sha256
+        "40464f023960a7bd037a171b18e8c5ff583e32c31d178c60546d57fe6811d1a4" .
+
+<https://dynamicontology.com/uad36/otdd/IT-9R2S2/artifact/expected-output-graph>
+    a otdd:EvidenceArtifact ;
+    dcterms:identifier
+        "docs/testing/otdd/it-9/red/IT-9R2S2-expected-output-graph.ttl" ;
+    otdd:sha256
+        "8cc5bc39b01188c9da3bff7c501bf6d12e7ed97f3d2a1426b2595c90def943ec" .
+
+<https://dynamicontology.com/uad36/otdd/IT-9R2S2/artifact/output-graph>
+    a otdd:EvidenceArtifact ;
+    dcterms:identifier
+        "docs/testing/otdd/it-9/green/IT-9R2S2-output-graph.ttl" ;
+    otdd:sha256
+        "8cc5bc39b01188c9da3bff7c501bf6d12e7ed97f3d2a1426b2595c90def943ec" .
+
+<https://dynamicontology.com/uad36/otdd/IT-9R2S2/artifact/green-test-execution>
+    a otdd:EvidenceArtifact ;
+    dcterms:identifier
+        "docs/testing/otdd/it-9/green/IT-9R2S2-green-test-execution.ttl" ;
+    otdd:sha256
+        "428ac395c6a3b0f92fd7566f9484ac2db8d5ff71fa421cecea076fd7eaab736d" .
+
+<https://dynamicontology.com/uad36/otdd/IT-9R2S2/artifact/green-pytest-output>
+    a otdd:EvidenceArtifact ;
+    dcterms:identifier
+        "docs/testing/otdd/it-9/green/IT-9R2S2-pytest-output.txt" ;
+    otdd:sha256
+        "4411b877d5771fc1e4342c11d5cada44ce93ed7b3a6de21693ca4dcc3342143b" .
+
+
+<https://dynamicontology.com/uad36/otdd/IT-9R2S2/environment/python>
+    a otdd:SoftwareEnvironment ;
+    otdd:softwareName "Python" ;
+    otdd:softwareVersion "3.13.1" .
+
+<https://dynamicontology.com/uad36/otdd/IT-9R2S2/environment/pytest>
+    a otdd:SoftwareEnvironment ;
+    otdd:softwareName "pytest" ;
+    otdd:softwareVersion "9.1.1" .
+
+<https://dynamicontology.com/uad36/otdd/IT-9R2S2/environment/rdflib>
+    a otdd:SoftwareEnvironment ;
+    otdd:softwareName "RDFLib" ;
+    otdd:softwareVersion "7.6.0" .
+
+<https://dynamicontology.com/uad36/otdd/IT-9R2S2/environment/pyshacl>
+    a otdd:SoftwareEnvironment ;
+    otdd:softwareName "pySHACL" ;
+    otdd:softwareVersion "0.31.0" .

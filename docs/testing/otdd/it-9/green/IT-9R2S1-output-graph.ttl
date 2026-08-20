@@ -1,0 +1,7 @@
+@prefix example: <https://dynamicontology.com/test/> .
+@prefix lsm: <https://dynamicontology.com/uad36/logical-schema#> .
+
+
+example:schemaComponent
+    lsm:source_document
+        <https://dynamicontology.com/uad36/source/sha256/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa> .

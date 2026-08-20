@@ -1,0 +1,93 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix otdd: <https://dynamicontology.com/owb/otdd#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+
+otdd:TestExecution
+    a rdfs:Class .
+
+otdd:GreenState
+    a rdfs:Class .
+
+otdd:GraphExecution
+    a rdfs:Class .
+
+otdd:actualOutput
+    a rdf:Property .
+
+otdd:exactTripleSetEquality
+    a rdf:Property .
+
+otdd:expectedOutput
+    a rdf:Property .
+
+otdd:inputGraph
+    a rdf:Property .
+
+otdd:inputTripleCount
+    a rdf:Property .
+
+otdd:observedExecution
+    a rdf:Property .
+
+otdd:outputTripleCount
+    a rdf:Property .
+
+otdd:scenario
+    a rdf:Property .
+
+otdd:testOutcome
+    a rdf:Property .
+
+
+<https://dynamicontology.com/uad36/otdd/IT-9R2S1/green>
+    a otdd:TestExecution , otdd:GreenState ;
+    dcterms:description
+        "The namespace-correction operator replaced the provisional schema-source IRI with the governed UAD schema-source IRI and preserved the SHA-256 digest." ;
+    otdd:scenario "IT-9R2S1" ;
+    otdd:testOutcome "passed" ;
+    otdd:observedExecution
+        <https://dynamicontology.com/uad36/otdd/IT-9R2S1/green/operator-execution> ;
+    prov:used
+        <https://dynamicontology.com/uad36/feature/govern-schema-source-identities-in-a-knowledge-graph.feature> ,
+        <https://dynamicontology.com/uad36/test/test_namespace_correction_operator.py> ,
+        <https://dynamicontology.com/owb/operator#NamespaceCorrectionContract> .
+
+
+<https://dynamicontology.com/uad36/otdd/IT-9R2S1/green/operator-execution>
+    a otdd:GraphExecution ;
+    otdd:inputGraph
+        <https://dynamicontology.com/uad36/otdd/IT-9R2S1/artifact/input-graph> ;
+    otdd:expectedOutput
+        <https://dynamicontology.com/uad36/otdd/IT-9R2S1/artifact/expected-output-graph> ;
+    otdd:actualOutput
+        <https://dynamicontology.com/uad36/otdd/IT-9R2S1/artifact/output-graph> ;
+    otdd:inputTripleCount 1 ;
+    otdd:outputTripleCount 1 ;
+    otdd:exactTripleSetEquality true .
+
+
+<https://dynamicontology.com/uad36/otdd/IT-9R2S1/artifact/input-graph>
+    dcterms:identifier
+        "docs/testing/otdd/it-9/red/IT-9R2S1-input-graph.ttl" .
+
+<https://dynamicontology.com/uad36/otdd/IT-9R2S1/artifact/expected-output-graph>
+    dcterms:identifier
+        "docs/testing/otdd/it-9/red/IT-9R2S1-expected-output-graph.ttl" .
+
+<https://dynamicontology.com/uad36/otdd/IT-9R2S1/artifact/output-graph>
+    dcterms:identifier
+        "docs/testing/otdd/it-9/green/IT-9R2S1-output-graph.ttl" .
+
+
+<https://dynamicontology.com/uad36/test/test_namespace_correction_operator.py>
+    dcterms:identifier
+        "tests/test_namespace_correction_operator.py" .
+
+
+<https://dynamicontology.com/uad36/feature/govern-schema-source-identities-in-a-knowledge-graph.feature>
+    dcterms:identifier
+        "features/govern-schema-source-identities-in-a-knowledge-graph.feature" .

@@ -1,0 +1,36 @@
+IT-9R2S2 Red-State Test Failure
+================================
+
+Scenario:
+IT-9R2S2 - Correct a schema-source IRI wherever it occurs in an RDF graph
+
+Test:
+tests/test_namespace_correction_operator.py::test_schema_source_iri_is_corrected_in_every_triple_position
+
+Observed result:
+FAILED tests/test_namespace_correction_operator.py::test_schema_source_iri_is_corrected_in_every_triple_position - AssertionError: assert {(rdflib.term...tionObject'))} == {(rdflib.term...tionObject'))}
+
+Summary:
+1 failed, 301 passed, 1 deselected in 86.87s (0:01:26)
+
+Observed graph facts:
+- Input triple count: 3
+- Output triple count: 3
+- Provisional occurrences in the input: 3
+- Provisional occurrences remaining in the output: 2
+- Subject occurrence corrected: no
+- Predicate occurrence corrected: no
+- Object occurrence corrected: yes
+- Actual output exactly equals expected output: no
+
+Red-state interpretation:
+The IT-9R2S1 implementation corrects a valid provisional schema-source IRI
+when it occurs as an RDF object. It does not yet correct the same IRI when it
+occurs as an RDF subject or predicate.
+
+Provenance note:
+This artifact preserves the full-suite result reported after the expanded
+acceptance test was installed in the repository. Pytest's abbreviated RDFLib
+term representations are retained exactly as reported. The complete input,
+expected output, and actual output are preserved as RDF graphs beside this
+file.

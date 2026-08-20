@@ -1,0 +1,145 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix otdd: <https://dynamicontology.com/owb/otdd#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+
+otdd:EvidenceManifest
+    a rdfs:Class .
+
+otdd:EvidenceArtifact
+    a rdfs:Class .
+
+otdd:ImplementationArtifact
+    a rdfs:Class .
+
+otdd:SoftwareEnvironment
+    a rdfs:Class .
+
+otdd:baseCommit
+    a rdf:Property .
+
+otdd:hasArtifact
+    a rdf:Property .
+
+otdd:hashAlgorithm
+    a rdf:Property .
+
+otdd:hashScope
+    a rdf:Property .
+
+otdd:implementationPresent
+    a rdf:Property .
+
+otdd:scenario
+    a rdf:Property .
+
+otdd:sha256
+    a rdf:Property .
+
+otdd:softwareName
+    a rdf:Property .
+
+otdd:softwareVersion
+    a rdf:Property .
+
+otdd:testOutcome
+    a rdf:Property .
+
+
+<https://dynamicontology.com/uad36/otdd/IT-9R2S1/red/manifest>
+    a otdd:EvidenceManifest ;
+    dcterms:created "2026-08-20"^^xsd:date ;
+    dcterms:description
+        "Content manifest for the confirmed red state of IT-9R2S1 before creation of the namespace-correction implementation." ;
+    otdd:scenario "IT-9R2S1" ;
+    otdd:testOutcome "failed" ;
+    otdd:baseCommit
+        "d2f884729bf8f196a872c12842d231498384018d" ;
+    otdd:hashAlgorithm "SHA-256" ;
+    otdd:hashScope "Exact working-tree file bytes" ;
+    otdd:hasArtifact
+        <https://dynamicontology.com/uad36/otdd/IT-9R2S1/artifact/feature> ,
+        <https://dynamicontology.com/uad36/otdd/IT-9R2S1/artifact/test> ,
+        <https://dynamicontology.com/uad36/otdd/IT-9R2S1/artifact/operator-contract> ,
+        <https://dynamicontology.com/uad36/otdd/IT-9R2S1/artifact/shapes> ,
+        <https://dynamicontology.com/uad36/otdd/IT-9R2S1/artifact/input-graph> ,
+        <https://dynamicontology.com/uad36/otdd/IT-9R2S1/artifact/expected-output-graph> ,
+        <https://dynamicontology.com/uad36/otdd/IT-9R2S1/artifact/operator.py> ;
+    prov:used
+        <https://dynamicontology.com/uad36/otdd/IT-9R2S1/environment/python> ,
+        <https://dynamicontology.com/uad36/otdd/IT-9R2S1/environment/pytest> ,
+        <https://dynamicontology.com/uad36/otdd/IT-9R2S1/environment/rdflib> ,
+        <https://dynamicontology.com/uad36/otdd/IT-9R2S1/environment/pyshacl> .
+
+
+<https://dynamicontology.com/uad36/otdd/IT-9R2S1/artifact/feature>
+    a otdd:EvidenceArtifact ;
+    dcterms:identifier
+        "features/govern-schema-source-identities-in-a-knowledge-graph.feature" ;
+    otdd:sha256
+        "5bb474c69cf624c6dca1aa7cc03bd705190ed17fed828761711d7a900213d30d" .
+
+<https://dynamicontology.com/uad36/otdd/IT-9R2S1/artifact/test>
+    a otdd:EvidenceArtifact ;
+    dcterms:identifier
+        "tests/test_namespace_correction_operator.py" ;
+    otdd:sha256
+        "5788a8f13b64658f51761bc8956dd78fc85b187234bf89dc59e76397d3292a9b" .
+
+<https://dynamicontology.com/uad36/otdd/IT-9R2S1/artifact/operator-contract>
+    a otdd:EvidenceArtifact ;
+    dcterms:identifier
+        "operators/namespace_correction/operator.ttl" ;
+    otdd:sha256
+        "3fc0f176ccf9481db68ac79a3282c37580d36d66dcbafbc36e9db399a862b984" .
+
+<https://dynamicontology.com/uad36/otdd/IT-9R2S1/artifact/shapes>
+    a otdd:EvidenceArtifact ;
+    dcterms:identifier
+        "operators/namespace_correction/shapes.ttl" ;
+    otdd:sha256
+        "d4b5f6906887d48d2b85cad60a3a18b69048b8f30cffe8c2c86ae74cf3932384" .
+
+<https://dynamicontology.com/uad36/otdd/IT-9R2S1/artifact/input-graph>
+    a otdd:EvidenceArtifact ;
+    dcterms:identifier
+        "docs/testing/otdd/it-9/red/IT-9R2S1-input-graph.ttl" ;
+    otdd:sha256
+        "237995dc73e420de2ef5223ced071105e0cce3ab1eb19ff38566863ae2e3646d" .
+
+<https://dynamicontology.com/uad36/otdd/IT-9R2S1/artifact/expected-output-graph>
+    a otdd:EvidenceArtifact ;
+    dcterms:identifier
+        "docs/testing/otdd/it-9/red/IT-9R2S1-expected-output-graph.ttl" ;
+    otdd:sha256
+        "e2f0f44195ac511093b85f57bd5ad111d65a8b12fe9cc6d6c3e24a040da878d8" .
+
+<https://dynamicontology.com/uad36/otdd/IT-9R2S1/artifact/operator.py>
+    a otdd:ImplementationArtifact ;
+    dcterms:identifier
+        "operators/namespace_correction/operator.py" ;
+    otdd:implementationPresent false .
+
+
+<https://dynamicontology.com/uad36/otdd/IT-9R2S1/environment/python>
+    a otdd:SoftwareEnvironment ;
+    otdd:softwareName "Python" ;
+    otdd:softwareVersion "3.13.1" .
+
+<https://dynamicontology.com/uad36/otdd/IT-9R2S1/environment/pytest>
+    a otdd:SoftwareEnvironment ;
+    otdd:softwareName "pytest" ;
+    otdd:softwareVersion "9.1.1" .
+
+<https://dynamicontology.com/uad36/otdd/IT-9R2S1/environment/rdflib>
+    a otdd:SoftwareEnvironment ;
+    otdd:softwareName "RDFLib" ;
+    otdd:softwareVersion "7.6.0" .
+
+<https://dynamicontology.com/uad36/otdd/IT-9R2S1/environment/pyshacl>
+    a otdd:SoftwareEnvironment ;
+    otdd:softwareName "pySHACL" ;
+    otdd:softwareVersion "0.31.0" .

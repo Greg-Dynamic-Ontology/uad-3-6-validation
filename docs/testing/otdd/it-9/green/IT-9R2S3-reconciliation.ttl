@@ -1,0 +1,84 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix otdd: <https://dynamicontology.com/owb/otdd#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+
+otdd:GraphReconciliation
+    a rdfs:Class .
+
+otdd:affectedInputTripleCount
+    a rdf:Property .
+
+otdd:allExpectedCounterpartsPresent
+    a rdf:Property .
+
+otdd:artifactFileSha256
+    a rdf:Property .
+
+otdd:expectedCounterpartCount
+    a rdf:Property .
+
+otdd:governedInputIriCount
+    a rdf:Property .
+
+otdd:governedOutputIriCount
+    a rdf:Property .
+
+otdd:inputTripleCount
+    a rdf:Property .
+
+otdd:mappedGovernedIriCount
+    a rdf:Property .
+
+otdd:missingCounterpartCount
+    a rdf:Property .
+
+otdd:outputContainsBlankNodes
+    a rdf:Property .
+
+otdd:outputGroundTripleSetSha256
+    a rdf:Property .
+
+otdd:outputTripleCount
+    a rdf:Property .
+
+otdd:provisionalInputIriCount
+    a rdf:Property .
+
+otdd:provisionalOutputIriCount
+    a rdf:Property .
+
+otdd:schemaSourceSetEqualsRequiredUnion
+    a rdf:Property .
+
+otdd:unexpectedGovernedOutputIriCount
+    a rdf:Property .
+
+
+<https://dynamicontology.com/uad36/otdd/IT-9R2S3/reconciliation>
+    a otdd:GraphReconciliation ;
+    dcterms:description
+        "Reconciliation of the complete Milestone 1 Logical Schema graph after namespace correction." ;
+    otdd:artifactFileSha256
+        "2142f0e465bce231d5ad0b422c1e8a5c8ffc07c196b33e384eafce4c56bc2590" ;
+    otdd:inputTripleCount 244023 ;
+    otdd:outputTripleCount 244023 ;
+    otdd:provisionalInputIriCount 3 ;
+    otdd:governedInputIriCount 0 ;
+    otdd:mappedGovernedIriCount 3 ;
+    otdd:governedOutputIriCount 3 ;
+    otdd:provisionalOutputIriCount 0 ;
+    otdd:affectedInputTripleCount 19853 ;
+    otdd:expectedCounterpartCount 19853 ;
+    otdd:missingCounterpartCount 0 ;
+    otdd:unexpectedGovernedOutputIriCount 0 ;
+    otdd:allExpectedCounterpartsPresent true ;
+    otdd:schemaSourceSetEqualsRequiredUnion true ;
+    otdd:outputContainsBlankNodes false ;
+    otdd:outputGroundTripleSetSha256
+        "0ddf9fbd5462021bd8369d33dfc790c489788f59b0ace99b7c29aa99e61166fb" .
+
+<https://dynamicontology.com/uad36/otdd/digest/sorted-ground-triple-set-sha256>
+    dcterms:description
+        "SHA-256 of UTF-8 lines formed by lexically sorting the complete ground RDF triple set in N-Triples term notation, appending ' .' to each triple and a newline to each line." .

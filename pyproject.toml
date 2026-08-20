@@ -30,3 +30,6 @@ include = ["app*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+markers = [
+    "canonical_artifact: comprehensive tests that read or regenerate canonical project artifacts",
+]

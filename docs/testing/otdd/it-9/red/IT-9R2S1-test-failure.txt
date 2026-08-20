@@ -1,0 +1,26 @@
+IT-9R2S1 Red-State Test Failure
+================================
+
+Scenario:
+IT-9R2S1 - Correct a provisional schema-source IRI
+
+Test:
+tests/test_namespace_correction_operator.py::test_provisional_schema_source_iri_is_corrected
+
+Observed result:
+FAILED tests/test_namespace_correction_operator.py::test_provisional_schema_source_iri_is_corrected - Failed: IT-9R2S1 requires the namespace-correction implementation at operators/namespace_correction/operator.py.
+
+Summary:
+1 failed
+
+Red-state interpretation:
+The acceptance test was collected and executed. It reached the intended
+implementation boundary and failed because
+operators/namespace_correction/operator.py did not exist. The
+namespace-correction operator did not run, and no output RDF graph was
+produced.
+
+Provenance note:
+This artifact preserves the failure text reported when IT-9R2S1 was confirmed
+red. No timestamp, traceback, environment version, or test duration has been
+added because those values were not included in the reported result.
