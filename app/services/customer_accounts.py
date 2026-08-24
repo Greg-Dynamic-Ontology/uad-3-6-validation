@@ -11,6 +11,9 @@ class CustomerAccountRole(StrEnum):
     """Customer-account roles established by implemented business rules."""
 
     OWNER = "owner"
+    BILLING_ADMINISTRATOR = "billing administrator"
+    VALIDATOR = "validator"
+    REVIEWER = "reviewer"
 
 
 @dataclass(frozen=True)
@@ -20,6 +23,7 @@ class CustomerAccountMembership:
     human_user_id: str
     role: CustomerAccountRole
     active: bool
+    customer_account_id: str | None = None
 
 
 @dataclass(frozen=True)
@@ -72,6 +76,7 @@ def create_customer_account(
         human_user_id=person.human_user_id,
         role=CustomerAccountRole.OWNER,
         active=True,
+        customer_account_id=customer_account_id,
     )
     customer_account = CustomerAccount(
         customer_account_id=customer_account_id,
