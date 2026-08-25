@@ -150,9 +150,10 @@ And the membership receives the invited role
 And the invitation cannot be accepted a second time
 And the acceptance is recorded in the account audit history
 
+  @IT-16R1
 Rule: Authorize customer actions according to membership role
 
-@otdd-account-s-05 @authorization @roles
+@otdd-account-s-05 @IT-16R1S1
 Scenario Outline: Authorize a user according to the assigned role
 Given a user has an active <role> membership in a customer account
 When the user attempts to <activity>
@@ -168,15 +169,15 @@ Examples:
 | reviewer              | submit a report for a new validation cycle    | denied   |
 | validator             | close the customer account                    | denied   |
 
-@otdd-account-s-06 @owner @membership
+@otdd-account-s-06 @@IT-16R1S2
 Scenario: Require an owner to manage membership and account closure
 Given a customer account is active
-When a user without the owner role attempts to manage membership or close the account
+When a user without the owner role attemp ts to manage membership or close the account
 Then the request is denied
 And the customer account remains unchanged
 And the denied request is recorded in the audit history
 
-@otdd-account-s-07 @billing @credits
+@otdd-account-s-07 @IT-16R1S3
 Scenario: Allow a billing administrator to manage credits and financial history
 Given a user is an active billing administrator of a customer account
 When the user accesses account billing
@@ -185,7 +186,7 @@ And the user can view credit balances and credit-ledger activity
 And the user can view payment, refund, and invoice history for the account
 And the user cannot use billing authority to gain access to another customer account
 
-@otdd-account-s-08 @validator @validation-cycle
+@otdd-account-s-08 @IT-16R1S4
 Scenario: Allow a validator to submit reports and manage validation cycles
 Given a user is an active validator of a customer account
 When the user submits a UAD appraisal report for validation
@@ -193,7 +194,7 @@ Then the report submission is scoped to that customer account
 And any resulting validation cycle is owned by that customer account
 And the user is recorded as the actor who submitted the report
 
-@otdd-account-s-09 @reviewer @read-only
+@otdd-account-s-09 @IT-16R1S5
 Scenario: Keep the reviewer role read-only
 Given a user is an active reviewer of a customer account
 When the user accesses reports, findings, and validation-cycle history
@@ -201,9 +202,10 @@ Then the user can view the information authorized for that account
 But the user cannot create a validation cycle
 And the user cannot modify reports, findings, credits, billing, or membership
 
+  @IT-17R1
 Rule: Preserve account records when membership changes
 
-@otdd-account-s-10 @membership @removal @retention
+@otdd-account-s-10 @IT-17R1S1
 Scenario: Remove a member without removing account records
 Given a user has an active membership in a customer account
 And the user previously performed actions for that account
@@ -213,7 +215,7 @@ And reports, validation cycles, credits, billing records, and audit history rema
 And prior actions remain attributed to the removed user
 And the membership removal is recorded in the audit history
 
-@otdd-account-s-11 @membership @multi-account
+@otdd-account-s-11 @IT-17R1S2
 Scenario: Allow one person to belong to multiple customer accounts
 Given a person has active memberships in two customer accounts
 When the person selects one customer account as the active context
@@ -221,9 +223,10 @@ Then permissions are evaluated from the membership in the selected account
 And reports, cycles, credits, and billing from the other account are not included
 And switching account context does not transfer ownership between accounts
 
+  @IT-18R1
 Rule: Make customer-owned service resources belong to the customer account
 
-@otdd-account-s-12 @credits @ownership
+@otdd-account-s-12 @IT-18R1S1
 Scenario: Make validation credits belong to the customer account
 Given a user purchases validation credits while acting in a customer account
 When the payment completes and the credits are issued
@@ -232,7 +235,7 @@ And the credits do not belong personally to the purchasing user
 And removing the purchasing user's membership does not remove the credits
 And credit use is attributed to the acting user or software client
 
-@otdd-account-s-13 @reports @validation-cycle @ownership
+@otdd-account-s-13 @IT-18R1S2
 Scenario: Make reports and validation cycles belong to the customer account
 Given a user or software client acts for a customer account
 When it submits a report or opens a validation cycle
@@ -241,9 +244,10 @@ And the validation cycle belongs to the customer account
 And membership changes do not transfer or remove that ownership
 And access remains governed by account membership and retention policy
 
+  @IT-19R1
 Rule: Isolate customer accounts and attribute their actions
 
-@otdd-account-s-14 @security @tenant-isolation
+@otdd-account-s-14 @IT-19R1S1
 Scenario: Isolate one customer account from another
 Given a report, validation cycle, finding, credit entry, or billing record belongs to one customer account
 When a user or software client acting for another account requests it
@@ -252,7 +256,7 @@ And no protected account information is disclosed
 And the protected record remains unchanged
 And the denied access is recorded for security review
 
-@otdd-account-s-15 @audit @actor-attribution
+@otdd-account-s-15 @IT-19R1S2
 Scenario: Attribute every material action to an actor and account
 Given a human user or software client performs a material account action
 When the action is accepted or denied
@@ -262,9 +266,10 @@ And the audit record identifies the action and its effective time
 And the audit record identifies the affected resource when applicable
 And later membership changes do not rewrite the actor attribution
 
+  @IT-20R1
 Rule: Give software clients separate credentials and scopes
 
-@otdd-account-s-16 @api-client @credentials @least-privilege
+@otdd-account-s-16 @IT-20R1S1
 Scenario: Create a software client with separate credentials and scopes
 Given an owner is authorized to manage software clients for a customer account
 When the owner creates a software client
@@ -274,7 +279,7 @@ And its permissions are limited to explicitly granted scopes
 And its actions are attributed to the software-client identity
 And its credentials do not grant access to another customer account
 
-@otdd-account-s-17 @api-client @revocation
+@otdd-account-s-17 @IT-20R1S2
 Scenario: Revoke a software client's credentials
 Given a software client has active credentials for a customer account
 When an owner revokes the credentials
@@ -282,9 +287,10 @@ Then the software client can no longer authenticate with those credentials
 And existing customer-account records remain unchanged
 And the revocation is recorded in the audit history
 
+  @IT-21R1
 Rule: Preserve governed records throughout account suspension and closure
 
-@otdd-account-s-18 @account-state @suspension
+@otdd-account-s-18 @IT-21R1S1
 Scenario: Suspend a customer account while preserving its records
 Given a customer account is active
 When an authorized administrative action suspends the account
@@ -294,7 +300,7 @@ And existing reports, cycles, findings, credits, billing records, and audit hist
 And access required for authorized review or account resolution follows suspension policy
 And the suspension is recorded in the audit history
 
-@otdd-account-s-19 @account-state @closure @retention
+@otdd-account-s-19 @IT-21R1S2
 Scenario: Close a customer account without silently deleting governed records
 Given a customer account is eligible for closure
 When an owner completes the account-closure process
@@ -304,19 +310,19 @@ And reports, cycles, findings, billing records, and audit history are retained o
 And unused credits and outstanding financial obligations are handled according to billing policy
 And the closure is recorded in the audit history
 
+  @IT-22R1
 Rule: Apply centrally governed GSE constraints without weakening them
 
-Background:
 Given GSE constraint sets are centrally governed and versioned
 
-@otdd-account-s-20 @gse @constraints @governance
+@otdd-account-s-20 @IT-22R1S1
 Scenario: Prevent a customer account from weakening governed GSE constraints
 Given a customer account validates UAD appraisal reports
 When an owner, user, or software client configures account preferences
 Then the preferences cannot disable or weaken centrally governed applicable GSE constraints
 And every validation result identifies the constraint-set versions applied
 
-@otdd-account-s-21 @gse @default-policy
+@otdd-account-s-21 @IT-22R1S2
 Scenario: Validate against both GSE rule sets by default
 Given a customer account has not selected a target GSE for a validation cycle
 When a UAD appraisal report is validated
@@ -324,7 +330,7 @@ Then the service applies both Fannie Mae and Freddie Mac rule sets
 And the validation result distinguishes shared and GSE-specific findings
 And the account default does not alter the centrally governed constraints
 
-@otdd-account-s-22 @gse @target-selection
+@otdd-account-s-22 @IT-22R1S3
 Scenario: Select a target GSE without weakening its constraints
 Given a customer account is permitted to select a target GSE for a validation cycle
 When the account selects Fannie Mae or Freddie Mac
@@ -333,9 +339,10 @@ And the complete centrally governed rule set applicable to that GSE is applied
 And the validation result identifies the selected GSE and constraint-set version
 And selecting a target does not modify the governed constraint definitions
 
+  @IT-23R1
 Rule: Keep customer systems of record and GSE submissions outside the service boundary
 
-@otdd-account-s-23 @system-of-record @boundary
+@otdd-account-s-23 @IT-23R1S1
 Scenario: Keep the customer responsible for its system of record and GSE submission
 Given a report is owned by a customer account and passes validation
 When the passing result is returned
