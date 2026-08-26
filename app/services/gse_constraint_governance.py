@@ -47,6 +47,14 @@ class GovernedValidationGateway(Protocol[ConstraintSet]):
     ) -> ValidationGatewayResult: ...
 
 
+class ValidationCycleTargetRepository(Protocol):
+    def record_target_gse(
+        self,
+        validation_cycle_id: str,
+        target_gse: str,
+    ) -> None: ...
+
+
 @dataclass(frozen=True)
 class EffectiveCustomerConstraintPreferences:
     """An accepted account preference that cannot alter governed rules."""
@@ -62,6 +70,7 @@ class GovernedConstraintValidationResult:
 
     findings: tuple[object, ...]
     constraint_set_versions: tuple[str, ...]
+    target_gse: str | None = None
 
 
 def configure_customer_constraint_preferences(
@@ -110,20 +119,57 @@ def validate_with_governed_constraints(
     validation_request: object,
     registry: GovernedConstraintRegistry[ConstraintSet],
     validation_gateway: GovernedValidationGateway[ConstraintSet],
+    target_gse: str | None = None,
+    validation_cycle_id: str | None = None,
+    validation_cycle_repository: (
+        ValidationCycleTargetRepository | None
+    ) = None,
 ) -> GovernedConstraintValidationResult:
-    """Apply the exact registry sets and identify every applied version."""
+    """Apply both GSEs by default or shared plus one selected GSE."""
 
     constraint_sets = registry.applicable_constraint_sets(
         customer_account_id
     )
+    selected_constraint_sets = constraint_sets
+    if target_gse is not None:
+        target_classifications = {
+            "fannie_mae": "fannie_mae_only",
+            "freddie_mac": "freddie_mac_only",
+        }
+        try:
+            target_classification = target_classifications[target_gse]
+        except KeyError as error:
+            raise ValueError(
+                f"Unsupported target GSE: {target_gse}"
+            ) from error
+        if (
+            validation_cycle_id is None
+            or validation_cycle_repository is None
+        ):
+            raise ValueError(
+                "A selected target GSE requires a validation cycle and "
+                "target repository."
+            )
+        selected_constraint_sets = tuple(
+            constraint_set
+            for constraint_set in constraint_sets
+            if getattr(constraint_set, "gse_classification", None)
+            in ("shared", target_classification)
+        )
+        validation_cycle_repository.record_target_gse(
+            validation_cycle_id,
+            target_gse,
+        )
+
     gateway_result = validation_gateway.validate(
         validation_request,
-        constraint_sets,
+        selected_constraint_sets,
     )
     return GovernedConstraintValidationResult(
         findings=tuple(gateway_result.findings),
         constraint_set_versions=tuple(
             f"{constraint_set.constraint_set_id}:{constraint_set.version}"
-            for constraint_set in constraint_sets
+            for constraint_set in selected_constraint_sets
         ),
+        target_gse=target_gse,
     )
