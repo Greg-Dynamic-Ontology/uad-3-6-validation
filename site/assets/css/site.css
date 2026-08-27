@@ -191,6 +191,39 @@ code {
     min-width: 0;
 }
 
+.demo-mode-indicator {
+    width: fit-content;
+    margin: 0 auto 1rem;
+    padding: 0.4rem 1rem;
+    border: 2px solid #9a6700;
+    border-radius: 999px;
+    background: #fff1b8;
+    color: #5f3b00;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.demo-mode-disclosure {
+    width: min(90vw, 640px);
+    padding: 1.75rem;
+    border: 2px solid #9a6700;
+    border-radius: var(--border-radius);
+    box-shadow: 0 16px 48px rgb(31 41 51 / 28%);
+}
+
+.demo-mode-disclosure::backdrop {
+    background: rgb(31 41 51 / 58%);
+}
+
+.demo-mode-disclosure__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+}
+
 .site-kicker {
     margin: 0 0 0.2rem;
     color: var(--text-muted);

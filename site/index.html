@@ -6,6 +6,7 @@
     <title>UAD 3.6 Validation</title>
     <link rel="icon" href="/assets/icons/favicon.ico">
     <link rel="stylesheet" href="/assets/css/site.css">
+    <script src="/assets/js/demo-mode-entry.js" defer></script>
     <style>
         .service-shell { max-width: 960px; margin: 0 auto; padding: 4rem 1.5rem; }
         .service-hero {
@@ -89,7 +90,36 @@
             <h1>UAD 3.6 Validation</h1>
         </div>
     </div>
+    <p class="demo-mode-indicator" role="status">Demo Mode</p>
 </header>
+
+<dialog id="demo-mode-disclosure"
+        class="demo-mode-disclosure"
+        aria-labelledby="demo-mode-disclosure-title"
+        aria-modal="true"
+        open>
+    <h2 id="demo-mode-disclosure-title">Continue in Demo Mode?</h2>
+    <p>Before continuing, please understand these Demo-mode limitations:</p>
+    <ul>
+        <li>Demo mode does not provide customer-owned validation cycles.</li>
+        <li>Demo mode does not retain account validation history.</li>
+        <li>Demo mode does not support corrected submissions within an existing cycle.</li>
+        <li>Demo mode does not purchase, hold, or consume account credits.</li>
+    </ul>
+    <form id="demo-mode-disclosure-actions"
+          class="demo-mode-disclosure__actions"
+          method="dialog">
+        <button id="cancel-demo-mode"
+                type="submit"
+                value="cancel">Cancel</button>
+        <button id="continue-demo-mode"
+                type="submit"
+                value="continue"
+                data-demo-destination="/validation/">
+            Continue in Demo Mode
+        </button>
+    </form>
+</dialog>
 
 <main class="service-shell">
     <section class="service-hero" aria-labelledby="service-title">
@@ -99,7 +129,9 @@
             <p class="service-version">Version 0.1</p>
 
             <div class="service-actions">
-                <a class="service-button service-button--primary"
+                <a id="run-validation-action"
+                   class="service-button service-button--primary"
+                   data-demo-consent-required="true"
                    href="/validation/">Run Validation</a>
                 <a class="service-button service-button--secondary"
                    href="/docs">Documentation</a>
