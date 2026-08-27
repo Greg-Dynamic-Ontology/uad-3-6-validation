@@ -163,6 +163,33 @@ class ServiceFailureValidationCycleRepository(
     ) -> bool: ...
 
 
+class CorrectedResultValidationCycleRepository(Protocol):
+    def get_by_id(self, validation_cycle_id: str) -> object: ...
+
+    def submission_belongs_to_cycle(
+        self,
+        validation_cycle_id: str,
+        validation_submission_id: str,
+    ) -> bool: ...
+
+    def save(self, validation_cycle: object) -> None: ...
+
+    def append_result_history(
+        self,
+        validation_cycle_id: str,
+        validation_result_id: str,
+    ) -> None: ...
+
+
+class CustomerValidationNotifier(Protocol):
+    def notify_validation_passed(
+        self,
+        validation_cycle_id: str,
+        validation_result_id: str,
+        message: str,
+    ) -> None: ...
+
+
 class ReportRevision(Protocol):
     report_id: str
 
@@ -549,6 +576,64 @@ def apply_first_actionable_validation_result(
             occurred_at=clock(),
         )
     )
+    return updated_cycle
+
+
+def apply_corrected_actionable_validation_result(
+    validation_cycle_id: str,
+    validation_result: ActionableValidationResult,
+    repository: CorrectedResultValidationCycleRepository,
+    customer_notifier: CustomerValidationNotifier | None = None,
+) -> object:
+    """Apply a corrected result without overwriting prior result history."""
+
+    validation_cycle = repository.get_by_id(validation_cycle_id)
+    if validation_cycle is None:
+        raise LookupError(
+            f"Validation cycle not found: {validation_cycle_id}"
+        )
+    if getattr(validation_cycle, "validation_cycle_id", None) != (
+        validation_cycle_id
+    ):
+        raise ValueError("The repository returned a different cycle.")
+    if getattr(validation_cycle, "state", None) != "open":
+        raise ValueError("A corrected result requires an open cycle.")
+    if not validation_result.actionable:
+        raise ValueError("A correction requires an actionable result.")
+    if validation_result.passed and validation_result.findings:
+        raise ValueError("A passing correction cannot contain findings.")
+    if not validation_result.passed and not validation_result.findings:
+        raise ValueError("A failing correction must contain findings.")
+    if validation_result.passed and customer_notifier is None:
+        raise ValueError("A passing correction requires customer notification.")
+    if not repository.submission_belongs_to_cycle(
+        validation_cycle_id,
+        validation_result.validation_submission_id,
+    ):
+        raise ValueError(
+            "The corrected result belongs to another submission or cycle."
+        )
+
+    next_state = (
+        "passed-and-closed" if validation_result.passed else "open"
+    )
+    updated_cycle = replace(
+        validation_cycle,
+        state=next_state,
+        current_validation_result_id=validation_result.validation_result_id,
+    )
+    repository.save(updated_cycle)
+    repository.append_result_history(
+        validation_cycle_id,
+        validation_result.validation_result_id,
+    )
+    if validation_result.passed:
+        assert customer_notifier is not None
+        customer_notifier.notify_validation_passed(
+            validation_cycle_id,
+            validation_result.validation_result_id,
+            "The report passed this validation service.",
+        )
     return updated_cycle
 
 
