@@ -10,6 +10,10 @@ class GovernedConstraintWeakeningError(ValueError):
     """Reject an account preference that would weaken governed constraints."""
 
 
+class GseConstraintClassificationError(ValueError):
+    """Reject a GSE constraint without exactly one valid classification."""
+
+
 class GovernedConstraintSet(Protocol):
     constraint_set_id: str
     version: str
@@ -33,6 +37,10 @@ class GovernedConstraintRegistry(Protocol[ConstraintSet]):
 
 class CustomerPreferenceRepository(Protocol):
     def save(self, preferences: object) -> None: ...
+
+
+class GovernedConstraintRepository(Protocol):
+    def save(self, constraint: object) -> None: ...
 
 
 class ValidationGatewayResult(Protocol):
@@ -65,12 +73,51 @@ class EffectiveCustomerConstraintPreferences:
 
 
 @dataclass(frozen=True)
+class RegisteredGseConstraint:
+    """A governed constraint with one mutually exclusive GSE scope."""
+
+    constraint_id: str
+    gse_classification: str
+
+
+@dataclass(frozen=True)
 class GovernedConstraintValidationResult:
     """Validation output with exact constraint-set version identities."""
 
     findings: tuple[object, ...]
     constraint_set_versions: tuple[str, ...]
     target_gse: str | None = None
+
+
+def register_gse_constraint(
+    constraint_id: str,
+    classifications: frozenset[str],
+    repository: GovernedConstraintRepository,
+) -> RegisteredGseConstraint:
+    """Register a constraint only with one recognized GSE classification."""
+
+    allowed_classifications = frozenset(
+        {
+            "fannie_mae_only",
+            "freddie_mac_only",
+            "shared",
+        }
+    )
+    if (
+        len(classifications) != 1
+        or not classifications <= allowed_classifications
+    ):
+        raise GseConstraintClassificationError(
+            "A GSE constraint must be classified exactly once as "
+            "Fannie Mae-only, Freddie Mac-only, or shared."
+        )
+
+    registered_constraint = RegisteredGseConstraint(
+        constraint_id=constraint_id,
+        gse_classification=next(iter(classifications)),
+    )
+    repository.save(registered_constraint)
+    return registered_constraint
 
 
 def configure_customer_constraint_preferences(
