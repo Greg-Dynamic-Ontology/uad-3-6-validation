@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from datetime import datetime
 from hashlib import sha256
 from typing import Protocol
@@ -124,6 +124,45 @@ class ValidationResultRepository(Protocol):
     def save_result(self, validation_result: object) -> None: ...
 
 
+class FirstResultValidationCycleRepository(Protocol):
+    def get_by_id(self, validation_cycle_id: str) -> object: ...
+
+    def submission_belongs_to_cycle(
+        self,
+        validation_cycle_id: str,
+        validation_submission_id: str,
+    ) -> bool: ...
+
+    def save(self, validation_cycle: object) -> None: ...
+
+
+class CreditLifecycleEventPublisher(Protocol):
+    def publish(self, lifecycle_event: object) -> None: ...
+
+
+class CancellationValidationCycleRepository(Protocol):
+    def get_by_id(self, validation_cycle_id: str) -> object: ...
+
+    def save(self, validation_cycle: object) -> None: ...
+
+    def append_history_event(
+        self,
+        validation_cycle_id: str,
+        lifecycle_event: object,
+    ) -> None: ...
+
+
+class ServiceFailureValidationCycleRepository(
+    CancellationValidationCycleRepository,
+    Protocol,
+):
+    def submission_belongs_to_cycle(
+        self,
+        validation_cycle_id: str,
+        validation_submission_id: str,
+    ) -> bool: ...
+
+
 class ReportRevision(Protocol):
     report_id: str
 
@@ -148,6 +187,8 @@ class PendingValidationCycle:
     report_id: str
     state: str
     created_at: datetime
+    current_validation_result_id: str | None = None
+    billable_validation_service_delivered: bool | None = None
 
 
 @dataclass(frozen=True)
@@ -183,6 +224,33 @@ class ActionableValidationResult:
     passed: bool
     findings: tuple[object, ...]
     completed_at: datetime
+
+
+@dataclass(frozen=True)
+class ValidationCycleBillableServiceEvent:
+    """A lifecycle transition made available to credit management."""
+
+    event_type: str
+    validation_cycle_id: str
+    validation_result_id: str
+    previous_state: str
+    current_state: str
+    billable_validation_service_delivered: bool
+    occurred_at: datetime
+
+
+@dataclass(frozen=True)
+class ValidationCycleCancellationEvent:
+    """A non-billable cancellation retained in cycle history."""
+
+    event_type: str
+    validation_cycle_id: str
+    previous_state: str
+    current_state: str
+    billable_validation_service_delivered: bool
+    failure_category: str
+    failure_reason: str
+    occurred_at: datetime
 
 
 def create_pending_validation_cycle(
@@ -420,6 +488,172 @@ def produce_actionable_validation_result(
     )
     repository.save_result(result)
     return result
+
+
+def apply_first_actionable_validation_result(
+    validation_cycle_id: str,
+    validation_result: ActionableValidationResult,
+    clock: Clock,
+    repository: FirstResultValidationCycleRepository,
+    credit_event_publisher: CreditLifecycleEventPublisher,
+) -> object:
+    """Determine a pending cycle's state from its first actionable result."""
+
+    validation_cycle = repository.get_by_id(validation_cycle_id)
+    if validation_cycle is None:
+        raise LookupError(
+            f"Validation cycle not found: {validation_cycle_id}"
+        )
+    if getattr(validation_cycle, "validation_cycle_id", None) != (
+        validation_cycle_id
+    ):
+        raise ValueError("The repository returned a different cycle.")
+    if getattr(validation_cycle, "state", None) != "pending":
+        raise ValueError("The first result requires a pending cycle.")
+    if getattr(validation_cycle, "current_validation_result_id", None):
+        raise ValueError("The validation cycle already has a current result.")
+    if not validation_result.actionable:
+        raise ValueError(
+            "A pending cycle outcome requires an actionable result."
+        )
+    if validation_result.passed and validation_result.findings:
+        raise ValueError("A result with findings cannot be passing.")
+    if not validation_result.passed and not validation_result.findings:
+        raise ValueError("A failing result must contain findings.")
+    if not repository.submission_belongs_to_cycle(
+        validation_cycle_id,
+        validation_result.validation_submission_id,
+    ):
+        raise ValueError(
+            "The validation result belongs to another submission or cycle."
+        )
+
+    next_state = (
+        "passed-and-closed" if validation_result.passed else "open"
+    )
+    updated_cycle = replace(
+        validation_cycle,
+        state=next_state,
+        current_validation_result_id=validation_result.validation_result_id,
+        billable_validation_service_delivered=True,
+    )
+    repository.save(updated_cycle)
+    credit_event_publisher.publish(
+        ValidationCycleBillableServiceEvent(
+            event_type="billable_validation_service_delivered",
+            validation_cycle_id=validation_cycle_id,
+            validation_result_id=validation_result.validation_result_id,
+            previous_state="pending",
+            current_state=next_state,
+            billable_validation_service_delivered=True,
+            occurred_at=clock(),
+        )
+    )
+    return updated_cycle
+
+
+def cancel_pending_cycle_for_ingestion_failure(
+    validation_cycle_id: str,
+    failure_reason: str,
+    clock: Clock,
+    repository: CancellationValidationCycleRepository,
+    credit_event_publisher: CreditLifecycleEventPublisher,
+) -> object:
+    """Cancel a pending cycle when its artifact cannot be ingested."""
+
+    validation_cycle = repository.get_by_id(validation_cycle_id)
+    if validation_cycle is None:
+        raise LookupError(
+            f"Validation cycle not found: {validation_cycle_id}"
+        )
+    if getattr(validation_cycle, "validation_cycle_id", None) != (
+        validation_cycle_id
+    ):
+        raise ValueError("The repository returned a different cycle.")
+    if getattr(validation_cycle, "state", None) != "pending":
+        raise ValueError("Only a pending cycle can be cancelled this way.")
+    if not failure_reason.strip():
+        raise ValueError("An ingestion failure reason is required.")
+
+    cancelled_cycle = replace(
+        validation_cycle,
+        state="cancelled",
+        current_validation_result_id=None,
+        billable_validation_service_delivered=False,
+    )
+    cancellation_event = ValidationCycleCancellationEvent(
+        event_type="validation_cycle_cancelled",
+        validation_cycle_id=validation_cycle_id,
+        previous_state="pending",
+        current_state="cancelled",
+        billable_validation_service_delivered=False,
+        failure_category="artifact-ingestion-failure",
+        failure_reason=failure_reason,
+        occurred_at=clock(),
+    )
+    repository.save(cancelled_cycle)
+    repository.append_history_event(
+        validation_cycle_id,
+        cancellation_event,
+    )
+    credit_event_publisher.publish(cancellation_event)
+    return cancelled_cycle
+
+
+def cancel_pending_cycle_for_validation_service_failure(
+    validation_cycle_id: str,
+    validation_submission_id: str,
+    failure_reason: str,
+    clock: Clock,
+    repository: ServiceFailureValidationCycleRepository,
+    credit_event_publisher: CreditLifecycleEventPublisher,
+) -> object:
+    """Cancel a pending cycle when validation cannot produce a result."""
+
+    validation_cycle = repository.get_by_id(validation_cycle_id)
+    if validation_cycle is None:
+        raise LookupError(
+            f"Validation cycle not found: {validation_cycle_id}"
+        )
+    if getattr(validation_cycle, "validation_cycle_id", None) != (
+        validation_cycle_id
+    ):
+        raise ValueError("The repository returned a different cycle.")
+    if getattr(validation_cycle, "state", None) != "pending":
+        raise ValueError("Only a pending cycle can be cancelled this way.")
+    if not repository.submission_belongs_to_cycle(
+        validation_cycle_id,
+        validation_submission_id,
+    ):
+        raise ValueError(
+            "The failed submission belongs to another validation cycle."
+        )
+    if not failure_reason.strip():
+        raise ValueError("A validation-service failure reason is required.")
+
+    cancelled_cycle = replace(
+        validation_cycle,
+        state="cancelled",
+        current_validation_result_id=None,
+        billable_validation_service_delivered=False,
+    )
+    cancellation_event = ValidationCycleCancellationEvent(
+        event_type="validation_cycle_cancelled",
+        validation_cycle_id=validation_cycle_id,
+        previous_state="pending",
+        current_state="cancelled",
+        billable_validation_service_delivered=False,
+        failure_category="validation-service-failure",
+        failure_reason=failure_reason,
+        occurred_at=clock(),
+    )
+    repository.save(cancelled_cycle)
+    repository.append_history_event(
+        validation_cycle_id,
+        cancellation_event,
+    )
+    credit_event_publisher.publish(cancellation_event)
+    return cancelled_cycle
 
 
 def associate_report_revision_with_cycle(
