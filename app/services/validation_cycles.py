@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from datetime import datetime
+from hashlib import sha256
 from typing import Protocol
 from uuid import UUID
 
@@ -11,6 +12,14 @@ from app.services.account_resource_access import (
     CustomerAccountResourceAccessDecision,
     ResourceAccessResult,
 )
+
+
+class MissingValidationCycleIdentifierError(ValueError):
+    """Raised when a corrected submission does not identify its cycle."""
+
+
+class ValidationAttemptAlreadyActiveError(RuntimeError):
+    """Raised when a cycle already has a running validation attempt."""
 
 
 class UadAppraisalReport(Protocol):
@@ -60,6 +69,48 @@ class ValidationCycleSecurityReviewHistory(Protocol):
     def record(self, **event: str) -> None: ...
 
 
+class UadReportArtifact(Protocol):
+    report_id: str
+    content: bytes
+
+
+class ValidationSubmissionIdFactory(Protocol):
+    def __call__(self) -> str: ...
+
+
+class ValidationAttemptIdFactory(Protocol):
+    def __call__(self) -> str: ...
+
+
+class ArtifactRetention(Protocol):
+    def retain(
+        self,
+        artifact: object,
+        integrity_digest: str,
+    ) -> str: ...
+
+
+class ValidationSubmissionRepository(Protocol):
+    def save_submission(self, submission: object) -> None: ...
+
+
+class CorrectedSubmissionRepository(ValidationSubmissionRepository, Protocol):
+    def get_by_id(self, validation_cycle_id: str) -> object: ...
+
+
+class ValidationAttemptRepository(Protocol):
+    def get_active_for_cycle(
+        self,
+        validation_cycle_id: str,
+    ) -> object | None: ...
+
+    def save_attempt(self, validation_attempt: object) -> None: ...
+
+
+class ValidationRunner(Protocol):
+    def __call__(self, validation_attempt: object) -> object: ...
+
+
 class ReportRevision(Protocol):
     report_id: str
 
@@ -84,6 +135,29 @@ class PendingValidationCycle:
     report_id: str
     state: str
     created_at: datetime
+
+
+@dataclass(frozen=True)
+class AcceptedValidationSubmission:
+    """An immutable record of one accepted report artifact."""
+
+    validation_submission_id: str
+    validation_cycle_id: str
+    report_id: str
+    accepted_at: datetime
+    integrity_digest: str
+    artifact_reference: str
+
+
+@dataclass(frozen=True)
+class RunningValidationAttempt:
+    """One validation attempt currently executing for a cycle."""
+
+    validation_attempt_id: str
+    validation_cycle_id: str
+    validation_submission_id: str
+    state: str
+    started_at: datetime
 
 
 def create_pending_validation_cycle(
@@ -187,6 +261,110 @@ def request_validation_cycle_access(
         result=ResourceAccessResult.DENIED,
         resource=None,
     )
+
+
+def accept_report_submission(
+    validation_cycle_id: str,
+    report_artifact: UadReportArtifact,
+    submission_id_factory: ValidationSubmissionIdFactory,
+    clock: Clock,
+    artifact_retention: ArtifactRetention,
+    repository: ValidationSubmissionRepository,
+) -> AcceptedValidationSubmission:
+    """Assign identity and traceability to one accepted report artifact."""
+
+    validation_submission_id = submission_id_factory()
+    UUID(validation_submission_id)
+    integrity_digest = sha256(report_artifact.content).hexdigest()
+    artifact_reference = artifact_retention.retain(
+        report_artifact,
+        integrity_digest,
+    )
+    submission = AcceptedValidationSubmission(
+        validation_submission_id=validation_submission_id,
+        validation_cycle_id=validation_cycle_id,
+        report_id=report_artifact.report_id,
+        accepted_at=clock(),
+        integrity_digest=integrity_digest,
+        artifact_reference=artifact_reference,
+    )
+    repository.save_submission(submission)
+    return submission
+
+
+def accept_corrected_report_submission(
+    validation_cycle_id: str | None,
+    corrected_report_artifact: UadReportArtifact,
+    submission_id_factory: ValidationSubmissionIdFactory,
+    clock: Clock,
+    artifact_retention: ArtifactRetention,
+    repository: CorrectedSubmissionRepository,
+) -> AcceptedValidationSubmission:
+    """Accept a correction only into its explicitly identified open cycle."""
+
+    if not validation_cycle_id:
+        raise MissingValidationCycleIdentifierError(
+            "A validation cycle identifier is required for a corrected "
+            "submission."
+        )
+
+    validation_cycle = repository.get_by_id(validation_cycle_id)
+    if validation_cycle is None:
+        raise LookupError(
+            f"Validation cycle not found: {validation_cycle_id}"
+        )
+    if getattr(validation_cycle, "validation_cycle_id", None) != (
+        validation_cycle_id
+    ):
+        raise ValueError("The repository returned a different cycle.")
+    if getattr(validation_cycle, "state", None) != "open":
+        raise ValueError("Corrected reports require an open validation cycle.")
+    if getattr(validation_cycle, "report_id", None) != (
+        corrected_report_artifact.report_id
+    ):
+        raise ValueError(
+            "A corrected report must belong to the cycle's report."
+        )
+
+    return accept_report_submission(
+        validation_cycle_id=validation_cycle_id,
+        report_artifact=corrected_report_artifact,
+        submission_id_factory=submission_id_factory,
+        clock=clock,
+        artifact_retention=artifact_retention,
+        repository=repository,
+    )
+
+
+def start_validation_attempt(
+    validation_cycle_id: str,
+    validation_submission_id: str,
+    attempt_id_factory: ValidationAttemptIdFactory,
+    clock: Clock,
+    validation_runner: ValidationRunner,
+    repository: ValidationAttemptRepository,
+) -> RunningValidationAttempt:
+    """Start validation only when the cycle has no active attempt."""
+
+    active_attempt = repository.get_active_for_cycle(validation_cycle_id)
+    if active_attempt is not None:
+        raise ValidationAttemptAlreadyActiveError(
+            f"Validation cycle {validation_cycle_id} already has an "
+            "active validation attempt."
+        )
+
+    validation_attempt_id = attempt_id_factory()
+    UUID(validation_attempt_id)
+    validation_attempt = RunningValidationAttempt(
+        validation_attempt_id=validation_attempt_id,
+        validation_cycle_id=validation_cycle_id,
+        validation_submission_id=validation_submission_id,
+        state="running",
+        started_at=clock(),
+    )
+    repository.save_attempt(validation_attempt)
+    validation_runner(validation_attempt)
+    return validation_attempt
 
 
 def associate_report_revision_with_cycle(
