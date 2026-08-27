@@ -111,6 +111,19 @@ class ValidationRunner(Protocol):
     def __call__(self, validation_attempt: object) -> object: ...
 
 
+class CompletedValidatorResult(Protocol):
+    ingestible: bool
+    findings: tuple[object, ...]
+
+
+class ValidationResultIdFactory(Protocol):
+    def __call__(self) -> str: ...
+
+
+class ValidationResultRepository(Protocol):
+    def save_result(self, validation_result: object) -> None: ...
+
+
 class ReportRevision(Protocol):
     report_id: str
 
@@ -158,6 +171,18 @@ class RunningValidationAttempt:
     validation_submission_id: str
     state: str
     started_at: datetime
+
+
+@dataclass(frozen=True)
+class ActionableValidationResult:
+    """A completed result that a customer can act upon."""
+
+    validation_result_id: str
+    validation_submission_id: str
+    actionable: bool
+    passed: bool
+    findings: tuple[object, ...]
+    completed_at: datetime
 
 
 def create_pending_validation_cycle(
@@ -365,6 +390,36 @@ def start_validation_attempt(
     repository.save_attempt(validation_attempt)
     validation_runner(validation_attempt)
     return validation_attempt
+
+
+def produce_actionable_validation_result(
+    validation_submission_id: str,
+    validator_result: CompletedValidatorResult,
+    result_id_factory: ValidationResultIdFactory,
+    clock: Clock,
+    repository: ValidationResultRepository,
+) -> ActionableValidationResult:
+    """Record findings or a pass for one ingestible report submission."""
+
+    if not validator_result.ingestible:
+        raise ValueError(
+            "A non-ingestible artifact cannot produce an actionable "
+            "validation result."
+        )
+
+    validation_result_id = result_id_factory()
+    UUID(validation_result_id)
+    findings = tuple(validator_result.findings)
+    result = ActionableValidationResult(
+        validation_result_id=validation_result_id,
+        validation_submission_id=validation_submission_id,
+        actionable=True,
+        passed=not findings,
+        findings=findings,
+        completed_at=clock(),
+    )
+    repository.save_result(result)
+    return result
 
 
 def associate_report_revision_with_cycle(
