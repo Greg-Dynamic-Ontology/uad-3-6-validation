@@ -223,6 +223,23 @@ class CompletionEventAudit(Protocol):
     def record(self, **event: str) -> None: ...
 
 
+class ValidationCycleHistoryEvent(Protocol):
+    history_event_id: str
+    validation_cycle_id: str
+    event_type: str
+    subject_id: str
+    effective_at: datetime
+
+
+class ValidationCycleHistoryRepository(Protocol):
+    def append_event(self, event: ValidationCycleHistoryEvent) -> None: ...
+
+    def list_events(
+        self,
+        validation_cycle_id: str,
+    ) -> tuple[ValidationCycleHistoryEvent, ...]: ...
+
+
 class ReportRevision(Protocol):
     report_id: str
 
@@ -814,6 +831,41 @@ def apply_validation_completion_event(
     )
     credit_event_publisher.publish(completion_event)
     return ValidationCompletionEventDisposition.APPLIED
+
+
+def append_validation_cycle_history_event(
+    validation_cycle_id: str,
+    history_event: ValidationCycleHistoryEvent,
+    repository: ValidationCycleHistoryRepository,
+) -> ValidationCycleHistoryEvent:
+    """Append one attributable event without replacing prior history."""
+
+    if history_event.validation_cycle_id != validation_cycle_id:
+        raise ValueError("The history event belongs to another cycle.")
+    if not history_event.history_event_id:
+        raise ValueError("A history event identifier is required.")
+    if not history_event.event_type or not history_event.subject_id:
+        raise ValueError("A history event must identify its type and subject.")
+    if history_event.effective_at.tzinfo is None:
+        raise ValueError("A history event requires a timezone-aware effective time.")
+
+    repository.append_event(history_event)
+    return history_event
+
+
+def get_validation_cycle_history(
+    validation_cycle_id: str,
+    repository: ValidationCycleHistoryRepository,
+) -> tuple[ValidationCycleHistoryEvent, ...]:
+    """Return the cycle's complete history in preserved append order."""
+
+    history = tuple(repository.list_events(validation_cycle_id))
+    if any(
+        event.validation_cycle_id != validation_cycle_id
+        for event in history
+    ):
+        raise ValueError("The repository returned history from another cycle.")
+    return history
 
 
 def associate_report_revision_with_cycle(
