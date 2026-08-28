@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, replace
 from datetime import datetime
+from enum import StrEnum
 from hashlib import sha256
 from typing import Protocol
 from uuid import UUID
@@ -190,6 +191,38 @@ class CustomerValidationNotifier(Protocol):
     ) -> None: ...
 
 
+class ValidationCompletionEvent(Protocol):
+    completion_event_id: str
+    validation_cycle_id: str
+    validation_attempt_id: str
+    validation_submission_id: str
+    validation_result_id: str
+
+
+class ValidationCompletionRepository(Protocol):
+    def has_applied_completion_event(
+        self,
+        completion_event_id: str,
+    ) -> bool: ...
+
+    def get_by_id(self, validation_cycle_id: str) -> object: ...
+
+    def append_result_history(
+        self,
+        validation_cycle_id: str,
+        validation_result_id: str,
+    ) -> None: ...
+
+    def mark_completion_event_applied(
+        self,
+        completion_event_id: str,
+    ) -> None: ...
+
+
+class CompletionEventAudit(Protocol):
+    def record(self, **event: str) -> None: ...
+
+
 class ReportRevision(Protocol):
     report_id: str
 
@@ -278,6 +311,13 @@ class ValidationCycleCancellationEvent:
     failure_category: str
     failure_reason: str
     occurred_at: datetime
+
+
+class ValidationCompletionEventDisposition(StrEnum):
+    """Outcomes from receiving a validation-completion event."""
+
+    APPLIED = "applied"
+    DUPLICATE_IGNORED = "duplicate-ignored"
 
 
 def create_pending_validation_cycle(
@@ -739,6 +779,41 @@ def cancel_pending_cycle_for_validation_service_failure(
     )
     credit_event_publisher.publish(cancellation_event)
     return cancelled_cycle
+
+
+def apply_validation_completion_event(
+    completion_event: ValidationCompletionEvent,
+    repository: ValidationCompletionRepository,
+    credit_event_publisher: CreditLifecycleEventPublisher,
+    audit: CompletionEventAudit,
+) -> ValidationCompletionEventDisposition:
+    """Apply a completion event no more than once by stable event identity."""
+
+    if repository.has_applied_completion_event(
+        completion_event.completion_event_id
+    ):
+        audit.record(
+            event_type="duplicate_validation_completion_event_ignored",
+            completion_event_id=completion_event.completion_event_id,
+            validation_cycle_id=completion_event.validation_cycle_id,
+            validation_attempt_id=completion_event.validation_attempt_id,
+            validation_submission_id=(
+                completion_event.validation_submission_id
+            ),
+            validation_result_id=completion_event.validation_result_id,
+        )
+        return ValidationCompletionEventDisposition.DUPLICATE_IGNORED
+
+    repository.get_by_id(completion_event.validation_cycle_id)
+    repository.append_result_history(
+        completion_event.validation_cycle_id,
+        completion_event.validation_result_id,
+    )
+    repository.mark_completion_event_applied(
+        completion_event.completion_event_id
+    )
+    credit_event_publisher.publish(completion_event)
+    return ValidationCompletionEventDisposition.APPLIED
 
 
 def associate_report_revision_with_cycle(

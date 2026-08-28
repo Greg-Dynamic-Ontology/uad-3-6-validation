@@ -252,7 +252,7 @@ And no lifecycle transition is repeated
 And no additional billable-service fact is recorded
 And the duplicate event is retained or logged for audit
 
-  @IT-25R7S1
+  @IT-25R7S2
 Scenario: Prevent a stale result from changing the current cycle state
 Given a newer validation result has already become current for a cycle
 When a delayed result from an earlier validation submission is received
