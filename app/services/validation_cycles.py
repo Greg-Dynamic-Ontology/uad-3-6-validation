@@ -254,6 +254,26 @@ class ValidationCycleRevisionRepository(Protocol):
     ) -> None: ...
 
 
+class PassedValidationCycle(Protocol):
+    validation_cycle_id: str
+    customer_account_id: str
+    report_id: str
+    state: str
+
+
+class PassingCycleValidationResult(Protocol):
+    report_id: str
+    passed: bool
+
+
+class CustomerSystemOfRecord(Protocol):
+    """External customer-controlled record system outside this service."""
+
+
+class GseSubmissionGateway(Protocol):
+    """External GSE submission capability outside this service."""
+
+
 @dataclass(frozen=True)
 class PendingValidationCycle:
     """A newly accepted report awaiting its first validation outcome."""
@@ -328,6 +348,18 @@ class ValidationCycleCancellationEvent:
     failure_category: str
     failure_reason: str
     occurred_at: datetime
+
+
+@dataclass(frozen=True)
+class PassingValidationCycleResultDelivery:
+    """A passing result returned without changing external customer systems."""
+
+    validation_result: PassingCycleValidationResult
+    validation_cycle_id: str
+    customer_account_id: str
+    authoritative_report_replaced: bool
+    submitted_to_gse: bool
+    gse_submission_responsibility: str
 
 
 class ValidationCompletionEventDisposition(StrEnum):
@@ -866,6 +898,35 @@ def get_validation_cycle_history(
     ):
         raise ValueError("The repository returned history from another cycle.")
     return history
+
+
+def return_passing_validation_cycle_result(
+    validation_cycle: PassedValidationCycle,
+    passing_result: PassingCycleValidationResult,
+    system_of_record: CustomerSystemOfRecord,
+    gse_submission_gateway: GseSubmissionGateway,
+) -> PassingValidationCycleResultDelivery:
+    """Return a passing result without writing or submitting externally."""
+
+    if validation_cycle.state != "passed-and-closed":
+        raise ValueError("The validation cycle has not passed and closed.")
+    if not passing_result.passed:
+        raise ValueError("Only a passing validation result can be returned.")
+    if passing_result.report_id != validation_cycle.report_id:
+        raise ValueError("The validation result belongs to another report.")
+
+    # These collaborators deliberately remain untouched. The customer retains
+    # both its authoritative report and responsibility for GSE submission.
+    del system_of_record, gse_submission_gateway
+
+    return PassingValidationCycleResultDelivery(
+        validation_result=passing_result,
+        validation_cycle_id=validation_cycle.validation_cycle_id,
+        customer_account_id=validation_cycle.customer_account_id,
+        authoritative_report_replaced=False,
+        submitted_to_gse=False,
+        gse_submission_responsibility="customer account",
+    )
 
 
 def associate_report_revision_with_cycle(
