@@ -367,6 +367,7 @@ class ValidationCompletionEventDisposition(StrEnum):
 
     APPLIED = "applied"
     DUPLICATE_IGNORED = "duplicate-ignored"
+    STALE_IGNORED = "stale-ignored"
 
 
 def create_pending_validation_cycle(
@@ -853,7 +854,39 @@ def apply_validation_completion_event(
         )
         return ValidationCompletionEventDisposition.DUPLICATE_IGNORED
 
-    repository.get_by_id(completion_event.validation_cycle_id)
+    validation_cycle = repository.get_by_id(
+        completion_event.validation_cycle_id
+    )
+    completion_sequence = getattr(
+        completion_event,
+        "validation_submission_sequence",
+        None,
+    )
+    current_sequence = getattr(
+        validation_cycle,
+        "current_validation_submission_sequence",
+        None,
+    )
+    if (
+        isinstance(completion_sequence, int)
+        and isinstance(current_sequence, int)
+        and completion_sequence < current_sequence
+    ):
+        audit.record(
+            event_type="stale_validation_completion_event_ignored",
+            completion_event_id=completion_event.completion_event_id,
+            validation_cycle_id=completion_event.validation_cycle_id,
+            validation_attempt_id=completion_event.validation_attempt_id,
+            validation_submission_id=(
+                completion_event.validation_submission_id
+            ),
+            validation_result_id=completion_event.validation_result_id,
+        )
+        repository.mark_completion_event_applied(
+            completion_event.completion_event_id
+        )
+        return ValidationCompletionEventDisposition.STALE_IGNORED
+
     repository.append_result_history(
         completion_event.validation_cycle_id,
         completion_event.validation_result_id,
