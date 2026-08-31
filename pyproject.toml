@@ -3,7 +3,7 @@ requires = ["setuptools>=69", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "uad36-compliance-scaffold"
+name = "uad36-compliance"
 version = "0.1.0"
 description = "MVP scaffold for graph-backed UAD 3.6 compliance validation API"
 requires-python = ">=3.11"
@@ -20,9 +20,10 @@ dependencies = [
 [project.optional-dependencies]
 dev = [
     "pytest>=8.2.0",
-    "httpx>=0.27.0",
+    "httpx2",
     "playwright>=1.60.0",
     "pytest-playwright>=0.7.0",
+    "lxml>=5.0.0",
 ]
 
 [tool.setuptools.packages.find]
