@@ -82,3 +82,28 @@ Feature: Build Logical Schema Model
       Given an XML Schema importing another namespace
       When the schema is loaded
       Then declarations from the imported schema are available in the Logical Schema Model
+
+  # IT-31 — Preserve governed source identities for named Logical Schema resources
+  @IT-31R1
+  Rule: Named schema identities remain recognizable in the Logical Schema Model
+    @IT-31R1S1
+    Scenario: Preserve a QName using its governed source identity
+      Given an XML Schema containing a QName with a namespace and local name
+      When the Logical Schema Model is serialized as RDF
+      Then the QName identity is derived from its namespace and local name
+      And the QName identity does not depend on the serializer traversal path
+      And the QName remains recognizable by its source local name
+
+    @IT-31R1S2
+    Scenario: Reuse the same QName identity wherever the QName is referenced
+      Given the same QName is referenced from more than one schema context
+      When the Logical Schema Model is serialized as RDF
+      Then every reference resolves to the same QName identity
+      And the QName retains the same namespace and local name in every context
+
+    @IT-31R1S3
+    Scenario: Reserve generated identities for schema structures without governed source names
+      Given a Logical Schema Model contains a schema structure with no governed source name
+      When the Logical Schema Model is serialized as RDF
+      Then the serializer may assign a deterministic generated identity
+      And the generated identity does not replace a governed source identity

@@ -5,10 +5,12 @@ from enum import Enum
 from hashlib import sha256
 from pathlib import Path
 from typing import Any
+from urllib.parse import quote
 
 from rdflib import Graph, Literal, Namespace, RDF, URIRef
 
 from app.core.schema_source_iri import mint_schema_source_iri
+from app.models.schema_model import QName
 
 
 LOGICAL_SCHEMA = Namespace(
@@ -16,6 +18,9 @@ LOGICAL_SCHEMA = Namespace(
 )
 LOGICAL_SCHEMA_MODEL_IRI = URIRef(
     "https://dynamicontology.com/uad36/logical-schema/model"
+)
+LOGICAL_SCHEMA_QNAME_BASE_IRI = (
+    "https://dynamicontology.com/uad36/logical-schema/qname/"
 )
 
 
@@ -143,7 +148,10 @@ def _add_value(
     resource = subject if root else visited.get(object_id)
 
     if resource is None:
-        resource = subject if root else _resource_iri(path)
+        if root:
+            resource = subject
+        else:
+            resource = _intrinsic_resource_iri(value) or _resource_iri(path)
         visited[object_id] = resource
 
     if not root:
@@ -187,6 +195,21 @@ def _add_value(
             path=f"{path}/{name}",
             visited=visited,
         )
+
+
+def _intrinsic_resource_iri(value: Any) -> URIRef | None:
+    if isinstance(value, QName):
+        return _qname_iri(value)
+
+    return None
+
+
+def _qname_iri(value: QName) -> URIRef:
+    source_identity = value.clark_name
+    encoded_identity = quote(source_identity, safe="")
+    return URIRef(
+        f"{LOGICAL_SCHEMA_QNAME_BASE_IRI}{encoded_identity}"
+    )
 
 
 def _resource_iri(path: str) -> URIRef:
