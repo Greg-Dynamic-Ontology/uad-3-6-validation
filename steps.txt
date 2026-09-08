@@ -1,0 +1,7 @@
+Normalized constraint RDF
+Logical Schema binding
+Context resolution
+Validation behavior
+Instance RDF binding
+SHACL representation
+Report finding

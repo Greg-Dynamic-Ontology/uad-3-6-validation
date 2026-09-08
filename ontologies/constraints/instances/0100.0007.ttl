@@ -1,0 +1,39 @@
+@prefix uadcr: <https://dynamicontology.com/uad36/constraint/> .
+@prefix uadcv: <https://dynamicontology.com/uad36/constraint-vocabulary#> .
+@prefix uadsrccon: <https://dynamicontology.com/uad36/source/umdp/fannie-mae/constraint/> .
+@prefix uadsrcrule: <https://dynamicontology.com/uad36/source/umdp/fannie-mae/rule/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+uadcr:0100.0007
+    a uadcv:GovernedConstraint ;
+    uadcv:sourceConstraint uadsrccon:0100.0007 ;
+    uadcv:umdpRule uadsrcrule:UAD1001 ;
+    uadcv:dataPointName "AddressLineText" ;
+    uadcv:constrainsDataPoint
+        <https://dynamicontology.com/uad36/logical-schema/qname/%7Bhttp%3A%2F%2Fwww.mismo.org%2Fresidential%2F2009%2Fschemas%7DAddressLineText> ;
+    uadcv:applicableContext
+        <https://dynamicontology.com/uad36/constraint/0100.0007/context/subject-property-address> ;
+    uadcv:behavior uadcv:RequiredPresence ;
+    uadcv:minimumOccurrences "1"^^xsd:nonNegativeInteger ;
+    uadcv:violationKind uadcv:MissingRequiredValue ;
+    uadcv:requirement
+        "Provide the address line for the subject property physical address." ;
+    uadcv:violationCondition
+        "If AddressLineText is not provided" ;
+    uadcv:severity "Fatal" ;
+    prov:wasDerivedFrom uadsrccon:0100.0007 .
+
+<https://dynamicontology.com/uad36/constraint/0100.0007/context/subject-property-address>
+    a uadcv:ConstraintContext ;
+    uadcv:schemaPath (
+        <https://dynamicontology.com/uad36/logical-schema/qname/%7Bhttp%3A%2F%2Fwww.mismo.org%2Fresidential%2F2009%2Fschemas%7DPROPERTY>
+        <https://dynamicontology.com/uad36/logical-schema/qname/%7Bhttp%3A%2F%2Fwww.mismo.org%2Fresidential%2F2009%2Fschemas%7DADDRESS>
+        <https://dynamicontology.com/uad36/logical-schema/qname/%7Bhttp%3A%2F%2Fwww.mismo.org%2Fresidential%2F2009%2Fschemas%7DAddressLineText>
+    ) .
+
+uadcv:RequiredPresence
+    a uadcv:ConstraintBehavior .
+
+uadcv:MissingRequiredValue
+    a uadcv:ViolationKind .
