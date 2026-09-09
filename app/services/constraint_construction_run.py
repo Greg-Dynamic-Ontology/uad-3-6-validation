@@ -138,11 +138,65 @@ def link_shared_construction_knowledge(
     )
 
 
+CONSTRUCTION_STAGES = frozenset(
+    {
+        "normalized-constraint-representation",
+        "logical-schema-binding",
+        "context-resolution",
+        "validation-behavior",
+        "instance-rdf-binding",
+        "shacl-representation",
+        "finding-definition",
+    }
+)
+
+VALIDATION_EXECUTION_STAGES = frozenset(
+    {
+        "received-file-validation",
+        "shacl-validation-result",
+        "governed-validation-finding",
+    }
+)
+
+
+@dataclass(frozen=True)
+class ConstructionRunActivityClassification:
+    """Classification of an activity relative to the construction-run boundary."""
+
+    stage: str
+    run_type: str
+    allowed_in_construction_run: bool
+
+
+def classify_construction_run_activity(
+    *,
+    stage: str,
+) -> ConstructionRunActivityClassification:
+    """Classify whether a stage belongs in a constraint-construction run."""
+    if stage in CONSTRUCTION_STAGES:
+        return ConstructionRunActivityClassification(
+            stage=stage,
+            run_type="constraint-construction",
+            allowed_in_construction_run=True,
+        )
+
+    if stage in VALIDATION_EXECUTION_STAGES:
+        return ConstructionRunActivityClassification(
+            stage=stage,
+            run_type="validation-execution",
+            allowed_in_construction_run=False,
+        )
+
+    raise ValueError(f"Unknown construction or validation stage: {stage}")
+
+
 __all__ = [
     "ConstraintConstructionRunRecord",
     "ConstructionActivityTimingRecord",
     "SharedConstructionKnowledgeRelationship",
+    "ConstructionRunActivityClassification",
     "create_constraint_construction_run",
     "record_construction_activity_timing",
     "link_shared_construction_knowledge",
+    "classify_construction_run_activity",
 ]
