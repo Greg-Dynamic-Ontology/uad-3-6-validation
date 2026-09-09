@@ -10,6 +10,8 @@ from rdflib import Literal, Namespace, RDF, URIRef
 UADCON = Namespace("https://dynamicontology.com/uad36/constraint/")
 UADCV = Namespace("https://dynamicontology.com/uad36/constraint-vocabulary#")
 
+NORMALIZATION_STAGE = "normalized-constraint-representation"
+
 
 @dataclass(frozen=True)
 class NormalizedConstraintResult:
@@ -19,6 +21,26 @@ class NormalizedConstraintResult:
     unique_id: str
     data_point_name: str
     source_rule_id: str
+
+
+@dataclass(frozen=True)
+class NormalizationException:
+    """Contracted knowledge exception returned by the bounded worker."""
+
+    kind: str
+    constraint_id: str
+    stage: str
+    requires_review: bool
+    message: str
+
+
+@dataclass(frozen=True)
+class ConstraintNormalizationExecutionResult:
+    """Contracted result of one bounded normalization-agent execution."""
+
+    status: str
+    output: NormalizedConstraintResult | None
+    exception: NormalizationException | None
 
 
 def normalize_governed_constraint(
@@ -145,7 +167,55 @@ def normalize_governed_constraint(
     )
 
 
+def execute_constraint_normalization(
+    *,
+    governed_source: dict,
+    output_graph,
+) -> ConstraintNormalizationExecutionResult:
+    """
+    Execute normalization as a bounded worker.
+
+    Knowledge insufficiency or ambiguity is converted into a contracted
+    exception result rather than escaping as an unbounded implementation
+    exception. Successful normalization returns only the contracted output.
+    """
+    try:
+        output = normalize_governed_constraint(
+            governed_source=governed_source,
+            output_graph=output_graph,
+        )
+    except ValueError as exc:
+        message = str(exc)
+        if message.startswith("Insufficient governed source knowledge"):
+            kind = "insufficient-governed-knowledge"
+        elif message.startswith("Ambiguous governed source knowledge"):
+            kind = "ambiguous-governed-knowledge"
+        else:
+            raise
+
+        return ConstraintNormalizationExecutionResult(
+            status="exception",
+            output=None,
+            exception=NormalizationException(
+                kind=kind,
+                constraint_id=str(governed_source.get("unique_id", "")),
+                stage=NORMALIZATION_STAGE,
+                requires_review=True,
+                message=message,
+            ),
+        )
+
+    return ConstraintNormalizationExecutionResult(
+        status="success",
+        output=output,
+        exception=None,
+    )
+
+
 __all__ = [
+    "ConstraintNormalizationExecutionResult",
+    "NormalizationException",
     "NormalizedConstraintResult",
+    "execute_constraint_normalization",
     "normalize_governed_constraint",
 ]
