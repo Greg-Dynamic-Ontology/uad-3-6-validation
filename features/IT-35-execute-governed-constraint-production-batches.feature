@@ -11,13 +11,13 @@ Feature: Execute governed constraint-production batches from the Batch Knowledge
     And column A of the governed worksheet contains the governed Unique ID for each source constraint
     And batch execution produces a persistent RDF batch-results graph on disk
 
-  # IT-34 — Execute governed constraint-production batches
+  # IT-35 — Execute governed constraint-production batches
   # configured location "ontologies/constraints/batches/governed-batch-knowledge-graph.ttl"
 
-  @IT-34R1
+  @IT-35R1
   Rule: Materialize the governed members of a batch before constraint production begins
 
-    @IT-34R1S1
+    @IT-35R1S1
     Scenario: Write the governed Unique IDs for a batch into the batch-results RDF graph
       Given a batch is selected from the governed Batch Knowledge Graph
       And the selected batch identifies a governed workbook, worksheet, and cell range
@@ -28,10 +28,10 @@ Feature: Execute governed constraint-production batches from the Batch Knowledge
       And the number of represented Unique IDs equals the intended constraint count for the batch
       And the batch-results RDF graph is written to disk
 
-  @IT-34R2
+  @IT-35R2
   Rule: Keep the persistent batch-results graph synchronized with constraint production
 
-    @IT-34R2S1
+    @IT-35R2S1
     Scenario: Add or overwrite constraint knowledge and persist batch-run knowledge as processing proceeds
       Given the governed Unique IDs for the selected batch have been materialized in the batch-results RDF graph
       And constraint production is executing for the selected batch
