@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from datetime import datetime
+from pathlib import Path
 from uuid import uuid4
 
 
@@ -190,13 +191,103 @@ def classify_construction_run_activity(
     raise ValueError(f"Unknown construction or validation stage: {stage}")
 
 
+@dataclass(frozen=True)
+class ActiveConstructionRunGraphPersistence:
+    """Persistence result for one active constraint-construction run graph."""
+
+    run_id: str
+    output_path: Path
+    graph_state: str
+    persisted: bool
+
+
+def persist_active_construction_run_graph(
+    *,
+    graph,
+    run_id: str,
+    output_path: str | Path,
+) -> ActiveConstructionRunGraphPersistence:
+    """
+    Persist the current state of one active construction run as Turtle.
+
+    Repeated calls for the same run and output path replace the on-disk
+    serialization with the graph's current state. This keeps one persistent
+    RDF results graph current as construction events complete.
+    """
+    path = Path(output_path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+
+    graph.serialize(destination=path, format="turtle")
+
+    return ActiveConstructionRunGraphPersistence(
+        run_id=run_id,
+        output_path=path,
+        graph_state="active",
+        persisted=path.exists(),
+    )
+
+
+@dataclass(frozen=True)
+class CompletedConstructionRunGraphPersistence:
+    """Persistence result for one frozen completed construction-run graph."""
+
+    run_id: str
+    output_path: Path
+    graph_state: str
+    frozen: bool
+
+
+def freeze_completed_construction_run_graph(
+    *,
+    graph,
+    run_id: str,
+    output_path: str | Path,
+) -> CompletedConstructionRunGraphPersistence:
+    """
+    Persist a completed construction-run graph once and then freeze it.
+
+    If the target file already exists, its RDF content must be identical to the
+    graph being supplied. A different graph is rejected so completed
+    construction history cannot be silently rewritten.
+    """
+    path = Path(output_path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+
+    if path.exists():
+        existing_graph = graph.__class__()
+        existing_graph.parse(path, format="turtle")
+
+        if not existing_graph.isomorphic(graph):
+            raise ValueError("completed construction-run graph is frozen")
+
+        return CompletedConstructionRunGraphPersistence(
+            run_id=run_id,
+            output_path=path,
+            graph_state="completed",
+            frozen=True,
+        )
+
+    graph.serialize(destination=path, format="turtle")
+
+    return CompletedConstructionRunGraphPersistence(
+        run_id=run_id,
+        output_path=path,
+        graph_state="completed",
+        frozen=True,
+    )
+
+
 __all__ = [
     "ConstraintConstructionRunRecord",
     "ConstructionActivityTimingRecord",
     "SharedConstructionKnowledgeRelationship",
     "ConstructionRunActivityClassification",
+    "ActiveConstructionRunGraphPersistence",
+    "CompletedConstructionRunGraphPersistence",
     "create_constraint_construction_run",
     "record_construction_activity_timing",
     "link_shared_construction_knowledge",
     "classify_construction_run_activity",
+    "persist_active_construction_run_graph",
+    "freeze_completed_construction_run_graph",
 ]
