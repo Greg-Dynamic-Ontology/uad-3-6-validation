@@ -7,8 +7,11 @@ from datetime import datetime
 from pathlib import Path
 from uuid import uuid4
 
+from rdflib import Namespace, RDF, URIRef
+
 
 BASE_RUN_IRI = "https://dynamicontology.com/uad36/construction/run/"
+PROV = Namespace("http://www.w3.org/ns/prov#")
 
 
 @dataclass(frozen=True)
@@ -277,6 +280,50 @@ def freeze_completed_construction_run_graph(
     )
 
 
+@dataclass(frozen=True)
+class ConstructionProvenanceRecord:
+    """Common construction provenance represented using PROV-O."""
+
+    activity_id: str
+    agent_id: str
+    used_knowledge_ids: list[str]
+    generated_knowledge_ids: list[str]
+
+
+def record_construction_provenance(
+    *,
+    graph,
+    activity_id: str,
+    agent_id: str,
+    used_knowledge_ids: list[str],
+    generated_knowledge_ids: list[str],
+) -> ConstructionProvenanceRecord:
+    """Record common execution and provenance relationships using PROV-O."""
+    activity = URIRef(activity_id)
+    agent = URIRef(agent_id)
+
+    graph.add((activity, RDF.type, PROV.Activity))
+    graph.add((agent, RDF.type, PROV.Agent))
+    graph.add((activity, PROV.wasAssociatedWith, agent))
+
+    for knowledge_id in used_knowledge_ids:
+        knowledge = URIRef(knowledge_id)
+        graph.add((knowledge, RDF.type, PROV.Entity))
+        graph.add((activity, PROV.used, knowledge))
+
+    for knowledge_id in generated_knowledge_ids:
+        knowledge = URIRef(knowledge_id)
+        graph.add((knowledge, RDF.type, PROV.Entity))
+        graph.add((knowledge, PROV.wasGeneratedBy, activity))
+
+    return ConstructionProvenanceRecord(
+        activity_id=activity_id,
+        agent_id=agent_id,
+        used_knowledge_ids=list(used_knowledge_ids),
+        generated_knowledge_ids=list(generated_knowledge_ids),
+    )
+
+
 __all__ = [
     "ConstraintConstructionRunRecord",
     "ConstructionActivityTimingRecord",
@@ -284,10 +331,12 @@ __all__ = [
     "ConstructionRunActivityClassification",
     "ActiveConstructionRunGraphPersistence",
     "CompletedConstructionRunGraphPersistence",
+    "ConstructionProvenanceRecord",
     "create_constraint_construction_run",
     "record_construction_activity_timing",
     "link_shared_construction_knowledge",
     "classify_construction_run_activity",
     "persist_active_construction_run_graph",
     "freeze_completed_construction_run_graph",
+    "record_construction_provenance",
 ]
