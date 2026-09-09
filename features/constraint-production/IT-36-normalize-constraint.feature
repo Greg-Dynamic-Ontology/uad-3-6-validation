@@ -95,3 +95,57 @@ Feature: 1 Normalize governed constraints
       And it does not generate Instance RDF bindings
       And it does not generate SHACL
       And it does not generate report findings
+
+      @IT-36R5
+  Rule: Normalize constraints from the governed source workbook
+
+    @IT-36R5S1
+    Scenario: Read a governed constraint row from the governed Excel workbook
+      Given the governed UAD compliance-rules workbook
+      And a governed batch identifies a source row in that workbook
+      When the normalization process materializes the governed source row
+      Then the materialized source knowledge is derived from that workbook row
+      And its governed Unique ID is preserved
+      And its source location is preserved
+
+    @IT-36R5S2
+    Scenario: Produce normalized RDF from an actual governed workbook row
+      Given a governed source row materialized from the UAD compliance-rules workbook
+      When the normalization agent processes that governed source knowledge
+      Then normalized constraint RDF is produced
+      And the normalized constraint remains traceable to the workbook row
+
+    @IT-36R6
+  Rule: Record normalization test results as governed construction knowledge
+
+    @IT-36R6S1
+    Scenario: Record a GREEN normalization test result
+      Given a normalization scenario is executed
+      And the scenario passes
+      When the test result is recorded
+      Then a governed test-result resource is produced
+      And the result identifies the scenario
+      And the result records GREEN status
+      And the result identifies the tested constraint when applicable
+      And the result remains traceable to the test execution activity
+      And the result remains traceable to the governed source artifacts used
+
+    @IT-36R6S2
+    Scenario: Record a RED normalization test result
+      Given a normalization scenario is executed
+      And the scenario fails
+      When the test result is recorded
+      Then a governed test-result resource is produced
+      And the result identifies the scenario
+      And the result records RED status
+      And the failure reason is preserved
+      And the result remains traceable to the test execution activity
+
+    @IT-36R6S3
+    Scenario: Preserve warnings without converting them into failure
+      Given a normalization scenario passes
+      And the test execution produces warnings
+      When the test result is recorded
+      Then the result records GREEN status
+      And the warnings are preserved as test-execution knowledge
+      And the warnings do not become constraint-production failures
