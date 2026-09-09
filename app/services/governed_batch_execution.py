@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from pathlib import Path
 
 from rdflib import Literal, Namespace, URIRef
 
@@ -62,7 +63,52 @@ def materialize_governed_batch_members(
     )
 
 
+@dataclass(frozen=True)
+class BatchConstraintSynchronizationResult:
+    """Persistence result for one constraint update in a batch-results graph."""
+
+    batch_id: str
+    constraint_id: str
+    output_path: Path
+    persisted: bool
+
+
+def synchronize_batch_constraint_knowledge(
+    *,
+    batch_results_graph,
+    batch_id: str,
+    constraint_id: str,
+    constraint_knowledge: dict,
+    output_path: str | Path,
+) -> BatchConstraintSynchronizationResult:
+    """
+    Add or overwrite current constraint knowledge and persist the batch-results graph.
+
+    For each supplied predicate, any prior values for that predicate on the same
+    constraint are removed before the new value is added. Other established
+    constraint knowledge remains unchanged.
+    """
+    constraint = URIRef(constraint_id)
+
+    for predicate, value in constraint_knowledge.items():
+        batch_results_graph.remove((constraint, predicate, None))
+        batch_results_graph.add((constraint, predicate, value))
+
+    path = Path(output_path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    batch_results_graph.serialize(destination=path, format="turtle")
+
+    return BatchConstraintSynchronizationResult(
+        batch_id=batch_id,
+        constraint_id=constraint_id,
+        output_path=path,
+        persisted=path.exists(),
+    )
+
+
 __all__ = [
     "GovernedBatchMaterializationResult",
+    "BatchConstraintSynchronizationResult",
     "materialize_governed_batch_members",
+    "synchronize_batch_constraint_knowledge",
 ]
