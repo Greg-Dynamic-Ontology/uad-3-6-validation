@@ -48,6 +48,26 @@ def normalize_governed_constraint(
             + ", ".join(missing_fields)
         )
 
+    scalar_fields = (
+        "unique_id",
+        "data_point_name",
+        "source_rule_id",
+        "requirement_text",
+        "violation_condition",
+        "severity",
+        "source_locator",
+    )
+    ambiguous_fields = [
+        field
+        for field in scalar_fields
+        if isinstance(governed_source[field], (list, tuple, set, dict))
+    ]
+    if ambiguous_fields:
+        raise ValueError(
+            "Ambiguous governed source knowledge; multiple values supplied for: "
+            + ", ".join(ambiguous_fields)
+        )
+
     unique_id = str(governed_source["unique_id"])
     constraint = URIRef(f"{UADCON}{unique_id}")
 
