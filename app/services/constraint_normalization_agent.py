@@ -6,6 +6,8 @@ from dataclasses import dataclass
 
 from rdflib import Literal, Namespace, RDF, URIRef
 
+from app.services.governed_constraint_source_reader import read_governed_constraint_row
+
 
 UADCON = Namespace("https://dynamicontology.com/uad36/constraint/")
 UADCV = Namespace("https://dynamicontology.com/uad36/constraint-vocabulary#")
@@ -167,6 +169,32 @@ def normalize_governed_constraint(
     )
 
 
+def normalize_governed_constraint_from_workbook(
+    *,
+    workbook_path,
+    worksheet_name: str,
+    cell_range: str,
+    output_graph,
+) -> NormalizedConstraintResult:
+    """
+    Read one governed workbook row and normalize that source knowledge into RDF.
+
+    The workbook reader owns source extraction. The normalization agent owns the
+    transformation from materialized governed source knowledge to the stable,
+    implementation-independent normalized constraint representation.
+    """
+    governed_source = read_governed_constraint_row(
+        workbook_path=workbook_path,
+        worksheet_name=worksheet_name,
+        cell_range=cell_range,
+    )
+
+    return normalize_governed_constraint(
+        governed_source=governed_source,
+        output_graph=output_graph,
+    )
+
+
 def execute_constraint_normalization(
     *,
     governed_source: dict,
@@ -218,4 +246,5 @@ __all__ = [
     "NormalizedConstraintResult",
     "execute_constraint_normalization",
     "normalize_governed_constraint",
+    "normalize_governed_constraint_from_workbook",
 ]
