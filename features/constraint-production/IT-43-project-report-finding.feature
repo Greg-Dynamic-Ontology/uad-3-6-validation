@@ -11,12 +11,12 @@ Feature: 7 Project SHACL validation results into governed report findings
     And the governed constraint knowledge is available
     And the report-finding agent has an explicit input, output, and error contract
 
-  # IT-42R1 — Project a SHACL violation into a governed validation finding
+  # IT-43R1 — Project a SHACL violation into a governed validation finding
 
-  @IT-42R1
+  @IT-43R1
   Rule: Produce a governed validation finding for each governed SHACL violation
 
-    @IT-42R1S1
+    @IT-43R1S1
     Scenario: Project one SHACL validation result into one governed validation finding
       Given the SHACL validation report contains a validation result
       And the validation result was produced by a shape that implements one governed constraint
@@ -32,12 +32,12 @@ Feature: 7 Project SHACL validation results into governed report findings
       And the finding remains traceable to the governed source knowledge
       And the finding is available to the validation reporting process
 
-  # IT-42R2 — Enrich validation mechanics with governed meaning
+  # IT-43R2 — Enrich validation mechanics with governed meaning
 
-  @IT-42R2
+  @IT-43R2
   Rule: Governed finding meaning comes from governed constraint knowledge rather than SHACL mechanics
 
-    @IT-42R2S1
+    @IT-43R2S1
     Scenario: Combine a SHACL validation result with its governed constraint knowledge
       Given a SHACL validation result identifies the shape that produced it
       And that shape identifies the governed constraint it implements
@@ -49,24 +49,24 @@ Feature: 7 Project SHACL validation results into governed report findings
       And governed source traceability is obtained from the governed constraint knowledge
       And SHACL-specific identifiers do not replace governed constraint identities
 
-  # IT-42R3 — Produce no governed finding without a governed violation
+  # IT-43R3 — Produce no governed finding without a governed violation
 
-  @IT-42R3
+  @IT-43R3
   Rule: Do not invent a report finding when SHACL validation produced no governed violation
 
-    @IT-42R3S1
+    @IT-43R3S1
     Scenario: Produce no finding for a conforming validation report
       Given the SHACL validation report contains no validation result for a governed constraint
       When the report-finding agent executes
       Then no governed validation finding is produced for that constraint
       And the absence of a SHACL violation is not converted into a finding
 
-  # IT-42R4 — Reject validation results that cannot be governed
+  # IT-43R4 — Reject validation results that cannot be governed
 
-  @IT-42R4
+  @IT-43R4
   Rule: Do not invent governed meaning for an unresolvable SHACL validation result
 
-    @IT-42R4S1
+    @IT-43R4S1
     Scenario: Reject a SHACL validation result that cannot be traced to a governed constraint
       Given the SHACL validation report contains a validation result
       And the shape that produced the result cannot be resolved to a governed constraint
@@ -78,7 +78,7 @@ Feature: 7 Project SHACL validation results into governed report findings
       And the agent does not invent a governed constraint identity
       And the exception is eligible to be written to the Batch Results Graph
 
-    @IT-42R4S2
+    @IT-43R4S2
     Scenario: Reject a governed constraint whose required finding knowledge is incomplete
       Given a SHACL validation result can be traced to a governed constraint
       And governed knowledge required by the finding contract is missing
@@ -90,12 +90,12 @@ Feature: 7 Project SHACL validation results into governed report findings
       And the agent does not infer or invent a replacement value
       And the constraint is routed for review
 
-  # IT-42R5 — Satisfy the report-finding agent contract
+  # IT-43R5 — Satisfy the report-finding agent contract
 
-  @IT-42R5
+  @IT-43R5
   Rule: The report-finding agent behaves as a bounded worker
 
-    @IT-42R5S1
+    @IT-43R5S1
     Scenario: Return only contracted output or a contracted exception
       Given the report-finding agent receives a SHACL validation report and governed constraint knowledge
       When the report-finding agent completes its work

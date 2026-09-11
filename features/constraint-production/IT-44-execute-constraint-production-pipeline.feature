@@ -10,12 +10,12 @@ Feature: Execute the governed constraint-production pipeline
     And the Batch Results Graph is available for persistent production state
     And a constraint may advance only from verified output of one agent to the next agent
 
-  # IT-43R1 — Execute the seven agents in governed order
+  # IT-44R1 — Execute the seven agents in governed order
 
-  @IT-43R1
+  @IT-44R1
   Rule: Advance a governed constraint through the constraint-production agents in order
 
-    @IT-43R1S1
+    @IT-44R1S1
     Scenario: Advance one governed constraint through all seven agents
       Given the governed source constraint contains sufficient knowledge for normalization
       And each downstream agent can satisfy its contract for the constraint
@@ -31,12 +31,12 @@ Feature: Execute the governed constraint-production pipeline
       And each completed production stage is recorded in the Batch Results Graph
       And the constraint is complete only after every required production stage succeeds
 
-  # IT-43R2 — Enforce verified handoffs between agents
+  # IT-44R2 — Enforce verified handoffs between agents
 
-  @IT-43R2
+  @IT-44R2
   Rule: An agent may consume only verified output from its immediate upstream production stage
 
-    @IT-43R2S1
+    @IT-44R2S1
     Scenario: Prevent downstream execution before upstream output is verified
       Given a governed constraint is being processed
       And an upstream agent has produced output that has not been verified GREEN
@@ -46,12 +46,12 @@ Feature: Execute the governed constraint-production pipeline
       And the Batch Results Graph records the current stage state
       And unverified knowledge is not treated as governed input to a downstream agent
 
-  # IT-43R3 — Stop one constraint when an agent reports an exception
+  # IT-44R3 — Stop one constraint when an agent reports an exception
 
-  @IT-43R3
+  @IT-44R3
   Rule: A contracted agent exception stops downstream production for that constraint without stopping eligible constraints
 
-    @IT-43R3S1
+    @IT-44R3S1
     Scenario: Stop advancement when an agent reports an exception
       Given a governed constraint is being processed
       And one constraint-production agent cannot satisfy its contract
@@ -64,12 +64,12 @@ Feature: Execute the governed constraint-production pipeline
       And the constraint is eligible for governed review
       And other eligible constraints may continue through the production pipeline
 
-  # IT-43R4 — Resume a constraint from governed persistent state
+  # IT-44R4 — Resume a constraint from governed persistent state
 
-  @IT-43R4
+  @IT-44R4
   Rule: Resume resolved constraints without repeating already verified production stages
 
-    @IT-43R4S1
+    @IT-44R4S1
     Scenario: Resume production after a recorded exception is resolved
       Given a governed constraint has a recorded exception in the Batch Results Graph
       And the exception has been resolved through governed review
@@ -80,12 +80,12 @@ Feature: Execute the governed constraint-production pipeline
       And downstream agents execute only after the resumed stage is verified GREEN
       And the Batch Results Graph is updated as production proceeds
 
-  # IT-43R5 — Preserve the seven agent boundaries during orchestration
+  # IT-44R5 — Preserve the seven agent boundaries during orchestration
 
-  @IT-43R5
+  @IT-44R5
   Rule: Pipeline orchestration coordinates agents without absorbing their knowledge-transformation responsibilities
 
-    @IT-43R5S1
+    @IT-44R5S1
     Scenario: Keep production responsibilities inside their contracted agents
       Given the governed constraint-production pipeline is executing
       When a constraint advances through production
@@ -98,12 +98,12 @@ Feature: Execute the governed constraint-production pipeline
       And governed report findings are produced only by the report-finding agent
       And the pipeline itself coordinates handoffs, verification state, exceptions, and persistence
 
-  # IT-43R6 — Complete production only from governed successful state
+  # IT-44R6 — Complete production only from governed successful state
 
-  @IT-43R6
+  @IT-44R6
   Rule: Do not declare a constraint complete unless every required production stage is verified
 
-    @IT-43R6S1
+    @IT-44R6S1
     Scenario: Mark a constraint complete after the full governed production chain succeeds
       Given a governed constraint has passed through all seven constraint-production agents
       And every required production stage is verified GREEN

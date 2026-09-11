@@ -11,12 +11,12 @@ Feature: 6 Generate SHACL from governed constraint knowledge
     And the governed Instance RDF binding has been established
     And the SHACL-generation agent has an explicit input, output, and error contract
 
-  # IT-41R1 — Generate an executable SHACL representation
+  # IT-42R1 — Generate an executable SHACL representation
 
-  @IT-41R1
+  @IT-42R1
   Rule: Generate SHACL only from verified governed constraint knowledge
 
-    @IT-41R1S1
+    @IT-42R1S1
     Scenario: Generate one SHACL representation for a governed constraint
       Given the governed validation behavior has an established SHACL implementation pattern
       And the governed Instance RDF binding identifies the RDF representation to be validated
@@ -32,12 +32,12 @@ Feature: 6 Generate SHACL from governed constraint knowledge
       And the SHACL representation is written to its governed project location
       And the SHACL representation is available to validation execution
 
-  # IT-41R2 — Keep executable SHACL subordinate to governed knowledge
+  # IT-42R2 — Keep executable SHACL subordinate to governed knowledge
 
-  @IT-41R2
+  @IT-42R2
   Rule: SHACL implements governed constraint knowledge but does not define it
 
-    @IT-41R2S1
+    @IT-42R2S1
     Scenario: Preserve governed meaning independently of generated SHACL
       Given a governed constraint can be represented as executable SHACL
       When the SHACL-generation agent produces the SHACL representation
@@ -48,12 +48,12 @@ Feature: 6 Generate SHACL from governed constraint knowledge
       And SHACL-specific structures do not replace governed knowledge
       And the generated SHACL explicitly identifies the governed constraint it implements
 
-  # IT-41R3 — Reuse established SHACL implementation patterns
+  # IT-42R3 — Reuse established SHACL implementation patterns
 
-  @IT-41R3
+  @IT-42R3
   Rule: Reuse a governed SHACL implementation pattern for recurring validation behavior
 
-    @IT-41R3S1
+    @IT-42R3S1
     Scenario: Generate constraint-specific SHACL from an established behavior pattern
       Given more than one governed constraint uses the same established validation behavior
       And that validation behavior has an established SHACL implementation pattern
@@ -64,12 +64,12 @@ Feature: 6 Generate SHACL from governed constraint knowledge
       And each generated SHACL representation uses its own governed Instance RDF binding
       And constraint-specific governed knowledge is not replaced by shared implementation knowledge
 
-  # IT-41R4 — Reject unsupported or ambiguous SHACL generation
+  # IT-42R4 — Reject unsupported or ambiguous SHACL generation
 
-  @IT-41R4
+  @IT-42R4
   Rule: Do not invent executable SHACL when governed knowledge does not determine an implementation
 
-    @IT-41R4S1
+    @IT-42R4S1
     Scenario: Reject a constraint whose validation behavior has no governed SHACL implementation pattern
       Given the governed validation behavior has been classified
       And no governed SHACL implementation pattern exists for that behavior
@@ -83,7 +83,7 @@ Feature: 6 Generate SHACL from governed constraint knowledge
       And the exception is eligible to be written to the Batch Results Graph
       And the constraint is routed for review
 
-    @IT-41R4S2
+    @IT-42R4S2
     Scenario: Reject a constraint when more than one incompatible SHACL representation is permitted
       Given the governed validation behavior has an established implementation pattern
       And more than one incompatible SHACL representation is consistent with the governed knowledge
@@ -94,12 +94,12 @@ Feature: 6 Generate SHACL from governed constraint knowledge
       And the exception records the incompatible implementation alternatives
       And the constraint is routed for review
 
-  # IT-41R5 — Satisfy the SHACL-generation agent contract
+  # IT-42R5 — Satisfy the SHACL-generation agent contract
 
-  @IT-41R5
+  @IT-42R5
   Rule: The SHACL-generation agent behaves as a bounded worker
 
-    @IT-41R5S1
+    @IT-42R5S1
     Scenario: Return only contracted output or a contracted exception
       Given the SHACL-generation agent receives verified governed behavior and Instance RDF binding knowledge
       When the SHACL-generation agent completes its work

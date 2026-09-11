@@ -10,12 +10,12 @@ Feature: 3 Resolve governed constraint context
     And the governed source context fields are available
     And the context-resolution agent has an explicit input, output, and error contract
 
-  # IT-38R1 — Produce governed applicable context
+  # IT-39R1 — Produce governed applicable context
 
-  @IT-38R1
+  @IT-39R1
   Rule: Resolve one governed applicable context when the graph and source knowledge determine it
 
-    @IT-38R1S1
+    @IT-39R1S1
     Scenario: Resolve one applicable context for a bound constraint
       Given a bound governed constraint identifies its Logical Schema resource
       And the governed source constraint identifies its source context
@@ -29,12 +29,12 @@ Feature: 3 Resolve governed constraint context
       And the context remains traceable to the Logical Schema Model
       And the resolved context is available to downstream constraint-production agents
 
-  # IT-38R2 — Preserve ordered context knowledge
+  # IT-39R2 — Preserve ordered context knowledge
 
-  @IT-38R2
+  @IT-39R2
   Rule: Preserve the governed order of schema resources that defines the applicable context
 
-    @IT-38R2S1
+    @IT-39R2S1
     Scenario: Represent an applicable context as an ordered governed schema path
       Given a governed applicable context has been resolved
       When the context-resolution agent records that context
@@ -43,12 +43,12 @@ Feature: 3 Resolve governed constraint context
       And the constrained data point remains the terminal governed resource of the applicable path
       And downstream agents can distinguish this context from other contexts that use the same data point name
 
-  # IT-38R3 — Reject unresolved or ambiguous context
+  # IT-39R3 — Reject unresolved or ambiguous context
 
-  @IT-38R3
+  @IT-39R3
   Rule: Do not invent an applicable context when governed knowledge does not determine one
 
-    @IT-38R3S1
+    @IT-39R3S1
     Scenario: Reject a bound constraint when no governed context can be resolved
       Given a bound governed constraint identifies its Logical Schema resource
       And no Logical Schema path is consistent with the governed source context
@@ -61,7 +61,7 @@ Feature: 3 Resolve governed constraint context
       And the agent does not invent a schema path or context
       And the exception is eligible to be written to the Batch Results Graph
 
-    @IT-38R3S2
+    @IT-39R3S2
     Scenario: Reject a bound constraint when more than one incompatible context is permitted
       Given a bound governed constraint identifies its Logical Schema resource
       And more than one incompatible Logical Schema path is consistent with the governed source context
@@ -72,12 +72,12 @@ Feature: 3 Resolve governed constraint context
       And the exception records the candidate governed contexts
       And the constraint is routed for review
 
-  # IT-38R4 — Satisfy the context-resolution agent contract
+  # IT-39R4 — Satisfy the context-resolution agent contract
 
-  @IT-38R4
+  @IT-39R4
   Rule: The context-resolution agent behaves as a bounded worker
 
-    @IT-38R4S1
+    @IT-39R4S1
     Scenario: Return only contracted output or a contracted exception
       Given the context-resolution agent receives a governed Logical Schema binding
       When the context-resolution agent completes its work

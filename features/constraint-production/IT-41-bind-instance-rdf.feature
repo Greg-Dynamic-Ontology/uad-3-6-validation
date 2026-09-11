@@ -11,12 +11,12 @@ Feature: 5 Bind governed validation behavior to Instance RDF
     And the Instance RDF projection model is available
     And the Instance RDF binding agent has an explicit input, output, and error contract
 
-  # IT-40R1 — Produce an Instance RDF binding
+  # IT-41R1 — Produce an Instance RDF binding
 
-  @IT-40R1
+  @IT-41R1
   Rule: Bind governed validation knowledge to the established Instance RDF representation
 
-    @IT-40R1S1
+    @IT-41R1S1
     Scenario: Bind a governed constraint to one Instance RDF representation
       Given the governed applicable context identifies the Logical Schema resources required by the constraint
       And the Instance RDF projection model defines how those resources are represented in Instance RDF
@@ -31,12 +31,12 @@ Feature: 5 Bind governed validation behavior to Instance RDF
       And the binding remains traceable to the governed source constraint
       And the binding is available to downstream constraint-production agents
 
-  # IT-40R2 — Conform to the established Instance RDF projection model
+  # IT-41R2 — Conform to the established Instance RDF projection model
 
-  @IT-40R2
+  @IT-41R2
   Rule: Instance RDF binding must describe the existing projection rather than redesign it
 
-    @IT-40R2S1
+    @IT-41R2S1
     Scenario: Reuse the RDF terms produced by the Instance RDF projector
       Given the Instance RDF projector has an established representation for the required instance data
       When the Instance RDF binding agent records the binding
@@ -46,12 +46,12 @@ Feature: 5 Bind governed validation behavior to Instance RDF
       And the agent does not require the Instance RDF projector to change in order to simplify validation
       And the binding describes how governed validation knowledge reaches the projected instance data
 
-  # IT-40R3 — Reject unresolved or ambiguous Instance RDF bindings
+  # IT-41R3 — Reject unresolved or ambiguous Instance RDF bindings
 
-  @IT-40R3
+  @IT-41R3
   Rule: Do not invent an Instance RDF binding when the established projection does not determine one
 
-    @IT-40R3S1
+    @IT-41R3S1
     Scenario: Reject a constraint when no Instance RDF binding can be resolved
       Given the governed applicable context has been resolved
       And the required Logical Schema resource has no established representation in the Instance RDF projection model
@@ -64,7 +64,7 @@ Feature: 5 Bind governed validation behavior to Instance RDF
       And the agent does not invent an RDF class, predicate, or path
       And the exception is eligible to be written to the Batch Results Graph
 
-    @IT-40R3S2
+    @IT-41R3S2
     Scenario: Reject a constraint when more than one incompatible Instance RDF binding is possible
       Given the governed applicable context has been resolved
       And more than one incompatible Instance RDF binding is consistent with the established projection model
@@ -75,12 +75,12 @@ Feature: 5 Bind governed validation behavior to Instance RDF
       And the exception records the candidate Instance RDF bindings
       And the constraint is routed for review
 
-  # IT-40R4 — Satisfy the Instance RDF binding agent contract
+  # IT-41R4 — Satisfy the Instance RDF binding agent contract
 
-  @IT-40R4
+  @IT-41R4
   Rule: The Instance RDF binding agent behaves as a bounded worker
 
-    @IT-40R4S1
+    @IT-41R4S1
     Scenario: Return only contracted output or a contracted exception
       Given the Instance RDF binding agent receives a context-resolved constraint with governed validation behavior
       When the Instance RDF binding agent completes its work
