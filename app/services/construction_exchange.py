@@ -23,6 +23,9 @@ class ConstructionStageResultRecord:
     constraint_id: str
     construction_stage: str
     construction_status: str
+    available_for_downstream: bool = False
+    exception_reason: str | None = None
+    requires_review: bool = False
 
 
 def record_construction_stage_result(
@@ -257,6 +260,89 @@ def record_downstream_stage_result(
     return downstream_result
 
 
+def exchange_successful_construction_stage_result(
+    *,
+    exchange_graph: Graph,
+    constraint_id: str,
+    construction_stage: str,
+) -> ConstructionStageResultRecord:
+    """Record a GREEN stage result as available for downstream consumption."""
+    stage_result = record_construction_stage_result(
+        output_graph=exchange_graph,
+        constraint_id=constraint_id,
+        construction_stage=construction_stage,
+        construction_status="GREEN",
+    )
+
+    exchange_graph.add(
+        (
+            stage_result.result_id,
+            UADEX.availableForDownstream,
+            Literal(True),
+        )
+    )
+
+    return ConstructionStageResultRecord(
+        result_id=stage_result.result_id,
+        constraint_id=stage_result.constraint_id,
+        construction_stage=stage_result.construction_stage,
+        construction_status=stage_result.construction_status,
+        available_for_downstream=True,
+    )
+
+
+def exchange_construction_stage_exception(
+    *,
+    exchange_graph: Graph,
+    constraint_id: str,
+    construction_stage: str,
+    exception_reason: str,
+    requires_review: bool,
+) -> ConstructionStageResultRecord:
+    """Record governed exception knowledge instead of inventing successful output."""
+    if not exception_reason.strip():
+        raise ValueError("exception_reason is required")
+
+    stage_result = record_construction_stage_result(
+        output_graph=exchange_graph,
+        constraint_id=constraint_id,
+        construction_stage=construction_stage,
+        construction_status="EXCEPTION",
+    )
+
+    exchange_graph.add(
+        (
+            stage_result.result_id,
+            UADEX.exceptionReason,
+            Literal(exception_reason),
+        )
+    )
+    exchange_graph.add(
+        (
+            stage_result.result_id,
+            UADEX.requiresReview,
+            Literal(requires_review),
+        )
+    )
+    exchange_graph.add(
+        (
+            stage_result.result_id,
+            UADEX.availableForDownstream,
+            Literal(False),
+        )
+    )
+
+    return ConstructionStageResultRecord(
+        result_id=stage_result.result_id,
+        constraint_id=stage_result.constraint_id,
+        construction_stage=stage_result.construction_stage,
+        construction_status=stage_result.construction_status,
+        available_for_downstream=False,
+        exception_reason=exception_reason,
+        requires_review=requires_review,
+    )
+
+
 __all__ = [
     "ConstructionStageResultRecord",
     "ConstructionStageProvenanceRecord",
@@ -267,4 +353,6 @@ __all__ = [
     "record_construction_stage_timing",
     "record_downstream_stage_input",
     "record_downstream_stage_result",
+    "exchange_successful_construction_stage_result",
+    "exchange_construction_stage_exception",
 ]
