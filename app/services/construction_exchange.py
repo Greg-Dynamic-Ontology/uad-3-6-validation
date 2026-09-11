@@ -343,11 +343,76 @@ def exchange_construction_stage_exception(
     )
 
 
+@dataclass(frozen=True)
+class StageSpecificKnowledgeRecord:
+    """A common exchange result linked to independently addressable stage knowledge."""
+
+    result_id: URIRef
+    stage_knowledge_id: URIRef
+
+
+def carry_stage_specific_knowledge(
+    *,
+    exchange_graph: Graph,
+    result_id: str,
+    stage_knowledge_id: str,
+    expected_stage: str,
+    expected_knowledge_type: str,
+) -> StageSpecificKnowledgeRecord:
+    """Link a construction-stage result to governed stage-specific RDF knowledge."""
+    result = URIRef(result_id)
+    stage_knowledge = URIRef(stage_knowledge_id)
+    knowledge_type = URIRef(expected_knowledge_type)
+
+    if (
+        result,
+        RDF.type,
+        UADEX.ConstructionStageResult,
+    ) not in exchange_graph:
+        raise ValueError(
+            "result_id must identify a ConstructionStageResult "
+            "present in the exchange graph"
+        )
+
+    if (
+        result,
+        UADEX.constructionStage,
+        Literal(expected_stage),
+    ) not in exchange_graph:
+        raise ValueError(
+            "construction-stage result does not identify the expected stage"
+        )
+
+    if (
+        stage_knowledge,
+        RDF.type,
+        knowledge_type,
+    ) not in exchange_graph:
+        raise ValueError(
+            "stage_knowledge_id does not identify the expected governed "
+            "stage-specific knowledge type"
+        )
+
+    exchange_graph.add(
+        (
+            result,
+            UADEX.stageKnowledge,
+            stage_knowledge,
+        )
+    )
+
+    return StageSpecificKnowledgeRecord(
+        result_id=result,
+        stage_knowledge_id=stage_knowledge,
+    )
+
+
 __all__ = [
     "ConstructionStageResultRecord",
     "ConstructionStageProvenanceRecord",
     "ConstructionStageTimingRecord",
     "DownstreamStageInputRecord",
+    "StageSpecificKnowledgeRecord",
     "record_construction_stage_result",
     "record_construction_stage_provenance",
     "record_construction_stage_timing",
@@ -355,4 +420,5 @@ __all__ = [
     "record_downstream_stage_result",
     "exchange_successful_construction_stage_result",
     "exchange_construction_stage_exception",
+    "carry_stage_specific_knowledge",
 ]
