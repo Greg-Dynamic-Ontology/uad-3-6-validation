@@ -157,11 +157,114 @@ def record_construction_stage_timing(
     )
 
 
+@dataclass(frozen=True)
+class DownstreamStageInputRecord:
+    """Governed RDF identity used as input by a downstream construction activity."""
+
+    downstream_activity_id: URIRef
+    upstream_result_id: URIRef
+
+
+def record_downstream_stage_input(
+    *,
+    exchange_graph: Graph,
+    downstream_activity_id: str,
+    upstream_result_id: str,
+) -> DownstreamStageInputRecord:
+    """Record that a downstream construction activity uses an upstream RDF result."""
+    downstream_activity = URIRef(downstream_activity_id)
+    upstream_result = URIRef(upstream_result_id)
+
+    if (
+        upstream_result,
+        RDF.type,
+        UADEX.ConstructionStageResult,
+    ) not in exchange_graph:
+        raise ValueError(
+            "upstream_result_id must identify a ConstructionStageResult "
+            "present in the exchange graph"
+        )
+
+    exchange_graph.add(
+        (
+            downstream_activity,
+            RDF.type,
+            PROV.Activity,
+        )
+    )
+    exchange_graph.add(
+        (
+            downstream_activity,
+            PROV.used,
+            upstream_result,
+        )
+    )
+
+    return DownstreamStageInputRecord(
+        downstream_activity_id=downstream_activity,
+        upstream_result_id=upstream_result,
+    )
+
+
+def record_downstream_stage_result(
+    *,
+    exchange_graph: Graph,
+    constraint_id: str,
+    construction_stage: str,
+    construction_status: str,
+    downstream_activity_id: str,
+    upstream_result_id: str,
+) -> ConstructionStageResultRecord:
+    """Produce a downstream result while preserving its governed upstream knowledge."""
+    downstream_activity = URIRef(downstream_activity_id)
+    upstream_result = URIRef(upstream_result_id)
+
+    if (
+        upstream_result,
+        RDF.type,
+        UADEX.ConstructionStageResult,
+    ) not in exchange_graph:
+        raise ValueError(
+            "upstream_result_id must identify a ConstructionStageResult "
+            "present in the exchange graph"
+        )
+
+    if (
+        downstream_activity,
+        PROV.used,
+        upstream_result,
+    ) not in exchange_graph:
+        raise ValueError(
+            "downstream activity must use the governed upstream result "
+            "before producing its result"
+        )
+
+    downstream_result = record_construction_stage_result(
+        output_graph=exchange_graph,
+        constraint_id=constraint_id,
+        construction_stage=construction_stage,
+        construction_status=construction_status,
+    )
+
+    exchange_graph.add(
+        (
+            downstream_result.result_id,
+            PROV.wasGeneratedBy,
+            downstream_activity,
+        )
+    )
+
+    return downstream_result
+
+
 __all__ = [
     "ConstructionStageResultRecord",
     "ConstructionStageProvenanceRecord",
     "ConstructionStageTimingRecord",
+    "DownstreamStageInputRecord",
     "record_construction_stage_result",
     "record_construction_stage_provenance",
     "record_construction_stage_timing",
+    "record_downstream_stage_input",
+    "record_downstream_stage_result",
 ]
