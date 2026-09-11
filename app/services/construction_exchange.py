@@ -407,12 +407,141 @@ def carry_stage_specific_knowledge(
     )
 
 
+@dataclass(frozen=True)
+class ConstructionFailureRecord:
+    """Governed construction failure kept distinct from appraisal validation results."""
+
+    result_id: URIRef
+    constraint_id: str
+    construction_stage: str
+    construction_status: str
+    failure_reason: str
+
+
+def record_construction_failure(
+    *,
+    exchange_graph: Graph,
+    result_id: str,
+    constraint_id: str,
+    construction_stage: str,
+    failure_reason: str,
+) -> ConstructionFailureRecord:
+    """Record a construction failure without asserting appraisal validation knowledge."""
+    if not failure_reason.strip():
+        raise ValueError("failure_reason is required")
+
+    result = URIRef(result_id)
+    constraint = URIRef(f"{UADCON}{constraint_id}")
+
+    exchange_graph.add(
+        (result, RDF.type, UADEX.ConstructionStageResult)
+    )
+    exchange_graph.add(
+        (result, UADEX.forConstraint, constraint)
+    )
+    exchange_graph.add(
+        (
+            result,
+            UADEX.constructionStage,
+            Literal(construction_stage),
+        )
+    )
+    exchange_graph.add(
+        (
+            result,
+            UADEX.constructionStatus,
+            Literal("EXCEPTION"),
+        )
+    )
+    exchange_graph.add(
+        (
+            result,
+            UADEX.failureReason,
+            Literal(failure_reason),
+        )
+    )
+
+    return ConstructionFailureRecord(
+        result_id=result,
+        constraint_id=constraint_id,
+        construction_stage=construction_stage,
+        construction_status="EXCEPTION",
+        failure_reason=failure_reason,
+    )
+
+
+@dataclass(frozen=True)
+class FindingDefinitionExchangeRecord:
+    """Construction-stage exchange of finding-definition knowledge."""
+
+    result_id: URIRef
+    finding_definition_id: URIRef
+
+
+def exchange_finding_definition_knowledge(
+    *,
+    exchange_graph: Graph,
+    result_id: str,
+    finding_definition_id: str,
+) -> FindingDefinitionExchangeRecord:
+    """Exchange finding-definition knowledge without creating a runtime finding."""
+    result = URIRef(result_id)
+    finding_definition = URIRef(finding_definition_id)
+
+    if (
+        result,
+        RDF.type,
+        UADEX.ConstructionStageResult,
+    ) not in exchange_graph:
+        raise ValueError(
+            "result_id must identify a ConstructionStageResult "
+            "present in the exchange graph"
+        )
+
+    if (
+        result,
+        UADEX.constructionStage,
+        Literal("finding-definition"),
+    ) not in exchange_graph:
+        raise ValueError(
+            "construction-stage result must identify the finding-definition stage"
+        )
+
+    finding_definition_type = URIRef(
+        "https://dynamicontology.com/uad36/"
+        "constraint-vocabulary#FindingDefinition"
+    )
+    if (
+        finding_definition,
+        RDF.type,
+        finding_definition_type,
+    ) not in exchange_graph:
+        raise ValueError(
+            "finding_definition_id must identify governed FindingDefinition knowledge"
+        )
+
+    exchange_graph.add(
+        (
+            result,
+            UADEX.stageKnowledge,
+            finding_definition,
+        )
+    )
+
+    return FindingDefinitionExchangeRecord(
+        result_id=result,
+        finding_definition_id=finding_definition,
+    )
+
+
 __all__ = [
     "ConstructionStageResultRecord",
     "ConstructionStageProvenanceRecord",
     "ConstructionStageTimingRecord",
     "DownstreamStageInputRecord",
     "StageSpecificKnowledgeRecord",
+    "ConstructionFailureRecord",
+    "FindingDefinitionExchangeRecord",
     "record_construction_stage_result",
     "record_construction_stage_provenance",
     "record_construction_stage_timing",
@@ -421,4 +550,6 @@ __all__ = [
     "exchange_successful_construction_stage_result",
     "exchange_construction_stage_exception",
     "carry_stage_specific_knowledge",
+    "record_construction_failure",
+    "exchange_finding_definition_knowledge",
 ]
