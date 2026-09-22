@@ -12,6 +12,7 @@ class Finding(BaseModel):
     investor: Investor
     rule_type: RuleType
     data_location: str | None = None
+    nearest_existing_ancestor: str | None = None
     graph_resource_iri: str | None = None
     observed_value: str | None = None
     expected_condition: str | None = None

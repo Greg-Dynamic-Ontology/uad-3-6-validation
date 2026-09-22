@@ -10,7 +10,7 @@ CONSTRAINT_FILE = (
     / "ontologies"
     / "constraints"
     / "instances"
-    / "0100.0007.old.ttl"
+    / "0100.0007.ttl"
 )
 
 LOGICAL_SCHEMA_FILE = (
