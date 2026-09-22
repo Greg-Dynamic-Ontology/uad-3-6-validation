@@ -1,0 +1,1 @@
+python -m app.services.generate_logical_schema_graph

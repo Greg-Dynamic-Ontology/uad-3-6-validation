@@ -1,0 +1,18 @@
+@prefix ex: <https://dynamicontology.com/uad36/test/it-32-r1-c1/> .
+@prefix mismo: <http://www.mismo.org/residential/2009/schemas> .
+
+ex:valuation-analysis
+    a mismo:VALUATION_ANALYSIS ;
+    mismo:PROPERTIES ex:properties .
+
+ex:properties
+    a mismo:PROPERTIES ;
+    mismo:PROPERTY ex:subject-property .
+
+ex:subject-property
+    a mismo:PROPERTY ;
+    mismo:ADDRESS ex:subject-address .
+
+ex:subject-address
+    a mismo:ADDRESS ;
+    mismo:AddressLineText "123 Main Street" .

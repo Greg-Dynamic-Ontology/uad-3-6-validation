@@ -1,0 +1,18 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix mismo: <http://www.mismo.org/residential/2009/schemas> .
+@prefix uadcr: <https://dynamicontology.com/uad36/constraint/> .
+@prefix uadcv: <https://dynamicontology.com/uad36/constraint-vocabulary#> .
+@prefix uadshape: <https://dynamicontology.com/uad36/shape/> .
+
+uadshape:0100.0007
+    a sh:NodeShape ;
+    uadcv:implementsConstraint uadcr:0100.0007 ;
+    sh:targetClass mismo:PROPERTY ;
+    sh:property [
+        sh:path (
+            mismo:ADDRESS
+            mismo:AddressLineText
+        ) ;
+        sh:minCount 1 ;
+        sh:message "UAD1001: Provide the address line for the subject property physical address." ;
+    ] .

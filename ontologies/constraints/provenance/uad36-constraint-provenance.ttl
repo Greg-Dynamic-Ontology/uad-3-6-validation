@@ -1,0 +1,21 @@
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix uadcr: <https://dynamicontology.com/uad36/constraint/> .
+@prefix uadsrc: <https://dynamicontology.com/uad36/constraint-source/> .
+
+uadsrc:appendix-h-1-uad-compliance-rules-urar
+    a prov:Entity .
+
+uadsrc:0100.0007
+    a prov:Entity ;
+    prov:wasDerivedFrom
+        uadsrc:appendix-h-1-uad-compliance-rules-urar .
+
+uadcr:normalization-0100.0007
+    a prov:Activity ;
+    prov:used uadsrc:0100.0007 .
+
+uadcr:UAD1001
+    a prov:Entity ;
+    prov:wasDerivedFrom uadsrc:0100.0007 ;
+    prov:wasGeneratedBy
+        uadcr:normalization-0100.0007 .

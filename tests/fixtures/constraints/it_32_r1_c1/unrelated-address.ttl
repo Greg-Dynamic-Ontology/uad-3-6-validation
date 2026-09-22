@@ -1,0 +1,9 @@
+@prefix ex: <https://dynamicontology.com/uad36/test/it-32-r1-c1/> .
+@prefix mismo: <http://www.mismo.org/residential/2009/schemas> .
+
+ex:additional-addresses
+    a mismo:ADDITIONAL_ADDRESSES ;
+    mismo:ADDRESS ex:other-address .
+
+ex:other-address
+    a mismo:ADDRESS .
