@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="53" skipped="0" tests="108" time="2.867" timestamp="2026-09-21T15:11:52.990361-06:00" hostname="DESKTOP-EG2OSMS"><testcase classname="tests.test_required_data_fixtures" name="test_baseline_and_manifest" time="0.115" /><testcase classname="tests.test_required_data_fixtures" name="test_fixture[0100.0007-UAD1001]" time="0.023" /><testcase classname="tests.test_required_data_fixtures" name="test_fixture[0100.0009-UAD1002]" time="0.025" /><testcase classname="tests.test_required_data_fixtures" name="test_fixture[0100.0010-UAD1003]" time="0.037" /><testcase classname="tests.test_required_data_fixtures" name="test_fixture[0100.0011-UAD1004]" time="0.021" /><testcase classname="tests.test_required_data_fixtures" name="test_fixture[0100.0012-UAD1006]" time="0.024" /><testcase classname="tests.test_required_data_fixtures" name="test_fixture[0100.0019-UAD1010]" time="0.022" /><testcase classname="tests.test_required_data_fixtures" name="test_fixture[0100.0020-UAD1012]" time="0.019" /><testcase classname="tests.test_required_data_fixtures" name="test_fixture[0100.0021-UAD1013]" time="0.020" /><testcase classname="tests.test_required_data_fixtures" name="test_fixture[0100.0022-UAD1017]" time="0.022" /><testcase classname="tests.test_required_data_fixtures" name="test_fixture[0100.0026-UAD1023]" time="0.021" /><testcase classname="tests.test_required_data_fixtures" name="test_fixture[0100.0033-UAD1027]" time="0.030" /><testcase classname="tests.test_required_data_fixtures" name="test_fixture[0100.0046-UAD1035]" time="0.025" /><testcase classname="tests.test_required_data_fixtures" name="test_fixture[0100.0047-UAD1036]" time="0.021" /><testcase classname="tests.test_required_data_fixtures" name="test_fixture[0100.0054-UAD1040]" time="0.020" /><testcase classname="tests.test_required_data_fixtures" name="test_fixture[0100.0065-UAD1042]" time="0.022" /><testcase classname="tests.test_required_data_fixtures" name="test_fixture[0200.0015-UAD1045]" time="0.021" /><testcase classname="tests.test_required_data_fixtures" name="test_fixture[0300.0010-UAD1049]" time="0.022" /><testcase classname="tests.test_required_data_fixtures" name="test_fixture[0600.0016-UAD1134]" time="0.019" /><testcase classname="tests.test_required_data_fixtures" name="test_fixture[0800.0005-UAD1191]" time="0.019" /><testcase classname="tests.test_required_data_fixtures" name="test_fixture[0900.0004-UAD1203]" time="0.021" /><testcase classname="tests.test_required_data_fixtures" name="test_fixture[1000.0027-UAD1210]" time="0.023" /><testcase classname="tests.test_required_data_fixtures" name="test_fixture[1000.0028-UAD1211]" time="0.023" /><testcase classname="tests.test_required_data_fixtures" name="test_fixture[1000.0030-UAD1213]" time="0.019" /><testcase classname="tests.test_required_data_fixtures" name="test_fixture[1000.0031-UAD1216]" time="0.022" /><testcase classname="tests.test_required_data_fixtures" name="test_fixture[1000.0032-UAD1218]" time="0.021" /><testcase classname="tests.test_required_data_fixtures" name="test_fixture[1000.0034-UAD1219]" time="0.028" /><testcase classname="tests.test_required_data_fixtures" name="test_fixture[1000.0158-UAD1222]" time="0.020" /><testcase classname="tests.test_required_data_fixtures" name="test_fixture[1300.0012-UAD1257]" time="0.019" /><testcase classname="tests.test_required_data_fixtures" name="test_fixture[1300.0017-UAD1262]" time="0.041" /><testcase classname="tests.test_required_data_fixtures" name="test_fixture[1300.0021-UAD1266]" time="0.019" /><testcase classname="tests.test_required_data_fixtures" name="test_fixture[1500.0054-UAD1317]" time="0.020" /><testcase classname="tests.test_required_data_fixtures" name="test_fixture[1500.0055-UAD1318]" time="0.024" /><testcase classname="tests.test_required_data_fixtures" name="test_fixture[1500.0125-UAD1369]" time="0.018" /><testcase classname="tests.test_required_data_fixtures" name="test_fixture[1500.0178-UAD1373]" time="0.020" /><testcase classname="tests.test_required_data_fixtures" name="test_fixture[1600.0006-UAD1384]" time="0.021" /><testcase classname="tests.test_required_data_fixtures" name="test_fixture[1600.0007-UAD1385]" time="0.020" /><testcase classname="tests.test_required_data_fixtures" name="test_fixture[2200.0017-UAD1508]" time="0.019" /><testcase classname="tests.test_required_data_fixtures" name="test_fixture[2200.0038-UAD1511]" time="0.019" /><testcase classname="tests.test_required_data_fixtures" name="test_fixture[1000.0043-UAD1519]" time="0.020" /><testcase classname="tests.test_required_data_fixtures" name="test_fixture[2600.0003-UAD1616]" time="0.025" /><testcase classname="tests.test_required_data_fixtures" name="test_fixture[2600.0004-UAD1617]" time="0.022" /><testcase classname="tests.test_required_data_fixtures" name="test_fixture[2600.0005-UAD1618]" time="0.022" /><testcase classname="tests.test_required_data_fixtures" name="test_fixture[3000.0008-UAD1626]" time="0.025" /><testcase classname="tests.test_required_data_fixtures" name="test_fixture[3000.0009-UAD1627]" time="0.027" /><testcase classname="tests.test_required_data_fixtures" name="test_fixture[3000.0033-UAD1652]" time="0.028" /><testcase classname="tests.test_required_data_fixtures" name="test_fixture[3000.0034-UAD1653]" time="0.023" /><testcase classname="tests.test_required_data_fixtures" name="test_fixture[3100.0003-UAD1659]" time="0.025" /><testcase classname="tests.test_required_data_fixtures" name="test_fixture[3100.0004-UAD1660]" time="0.026" /><testcase classname="tests.test_required_data_fixtures" name="test_fixture[3100.0005-UAD1661]" time="0.019" /><testcase classname="tests.test_required_data_fixtures" name="test_fixture[3100.0006-UAD1662]" time="0.031" /><testcase classname="tests.test_required_data_fixtures" name="test_fixture[3100.0007-UAD1663]" time="0.025" /><testcase classname="tests.test_required_data_fixtures" name="test_fixture[3300.0002-UAD1676]" time="0.019" /><testcase classname="tests.test_required_data_fixtures" name="test_fixture[4000.0004-UAD1750]" time="0.020" /><testcase classname="tests.test_required_data_acceptance" name="test_production_baseline_has_no_required_findings" time="0.002" /><testcase classname="tests.test_required_data_acceptance" name="test_production_detects_missing_required_data[0100.0007-UAD1001]" time="0.002"><failure message="AssertionError: Expected UAD1001 for missing AddressLineText; received []&#10;assert set() == {'UAD1001'}&#10;  &#10;  Extra items in the right set:&#10;  'UAD1001'&#10;  Use -v to get more diff">E   AssertionError: Expected UAD1001 for missing AddressLineText; received []
+    assert set() == {'UAD1001'}
+      
+      Extra items in the right set:
+      'UAD1001'
+      Use -v to get more diff</failure></testcase><testcase classname="tests.test_required_data_acceptance" name="test_production_detects_missing_required_data[0100.0009-UAD1002]" time="0.003"><failure message="AssertionError: Expected UAD1002 for missing CityName; received []&#10;assert set() == {'UAD1002'}&#10;  &#10;  Extra items in the right set:&#10;  'UAD1002'&#10;  Use -v to get more diff">E   AssertionError: Expected UAD1002 for missing CityName; received []
+    assert set() == {'UAD1002'}
+      
+      Extra items in the right set:
+      'UAD1002'
+      Use -v to get more diff</failure></testcase><testcase classname="tests.test_required_data_acceptance" name="test_production_detects_missing_required_data[0100.0010-UAD1003]" time="0.003"><failure message="AssertionError: Expected UAD1003 for missing CountyName; received []&#10;assert set() == {'UAD1003'}&#10;  &#10;  Extra items in the right set:&#10;  'UAD1003'&#10;  Use -v to get more diff">E   AssertionError: Expected UAD1003 for missing CountyName; received []
+    assert set() == {'UAD1003'}
+      
+      Extra items in the right set:
+      'UAD1003'
+      Use -v to get more diff</failure></testcase><testcase classname="tests.test_required_data_acceptance" name="test_production_detects_missing_required_data[0100.0011-UAD1004]" time="0.003"><failure message="AssertionError: Expected UAD1004 for missing PostalCode; received []&#10;assert set() == {'UAD1004'}&#10;  &#10;  Extra items in the right set:&#10;  'UAD1004'&#10;  Use -v to get more diff">E   AssertionError: Expected UAD1004 for missing PostalCode; received []
+    assert set() == {'UAD1004'}
+      
+      Extra items in the right set:
+      'UAD1004'
+      Use -v to get more diff</failure></testcase><testcase classname="tests.test_required_data_acceptance" name="test_production_detects_missing_required_data[0100.0012-UAD1006]" time="0.002"><failure message="AssertionError: Expected UAD1006 for missing StateCode; received []&#10;assert set() == {'UAD1006'}&#10;  &#10;  Extra items in the right set:&#10;  'UAD1006'&#10;  Use -v to get more diff">E   AssertionError: Expected UAD1006 for missing StateCode; received []
+    assert set() == {'UAD1006'}
+      
+      Extra items in the right set:
+      'UAD1006'
+      Use -v to get more diff</failure></testcase><testcase classname="tests.test_required_data_acceptance" name="test_production_detects_missing_required_data[0100.0019-UAD1010]" time="0.002"><failure message="AssertionError: Expected UAD1010 for missing AccessoryDwellingUnitTotalCount; received []&#10;assert set() == {'UAD1010'}&#10;  &#10;  Extra items in the right set:&#10;  'UAD1010'&#10;  Use -v to get more diff">E   AssertionError: Expected UAD1010 for missing AccessoryDwellingUnitTotalCount; received []
+    assert set() == {'UAD1010'}
+      
+      Extra items in the right set:
+      'UAD1010'
+      Use -v to get more diff</failure></testcase><testcase classname="tests.test_required_data_acceptance" name="test_production_detects_missing_required_data[0100.0020-UAD1012]" time="0.003"><failure message="AssertionError: Expected UAD1012 for missing AttachmentType; received []&#10;assert set() == {'UAD1012'}&#10;  &#10;  Extra items in the right set:&#10;  'UAD1012'&#10;  Use -v to get more diff">E   AssertionError: Expected UAD1012 for missing AttachmentType; received []
+    assert set() == {'UAD1012'}
+      
+      Extra items in the right set:
+      'UAD1012'
+      Use -v to get more diff</failure></testcase><testcase classname="tests.test_required_data_acceptance" name="test_production_detects_missing_required_data[0100.0021-UAD1013]" time="0.002"><failure message="AssertionError: Expected UAD1013 for missing DwellingCount; received []&#10;assert set() == {'UAD1013'}&#10;  &#10;  Extra items in the right set:&#10;  'UAD1013'&#10;  Use -v to get more diff">E   AssertionError: Expected UAD1013 for missing DwellingCount; received []
+    assert set() == {'UAD1013'}
+      
+      Extra items in the right set:
+      'UAD1013'
+      Use -v to get more diff</failure></testcase><testcase classname="tests.test_required_data_acceptance" name="test_production_detects_missing_required_data[0100.0022-UAD1017]" time="0.002"><failure message="AssertionError: Expected UAD1017 for missing LivingUnitExcludingADUCount; received []&#10;assert set() == {'UAD1017'}&#10;  &#10;  Extra items in the right set:&#10;  'UAD1017'&#10;  Use -v to get more diff">E   AssertionError: Expected UAD1017 for missing LivingUnitExcludingADUCount; received []
+    assert set() == {'UAD1017'}
+      
+      Extra items in the right set:
+      'UAD1017'
+      Use -v to get more diff</failure></testcase><testcase classname="tests.test_required_data_acceptance" name="test_production_detects_missing_required_data[0100.0026-UAD1023]" time="0.002"><failure message="AssertionError: Expected UAD1023 for missing PUDIndicator; received []&#10;assert set() == {'UAD1023'}&#10;  &#10;  Extra items in the right set:&#10;  'UAD1023'&#10;  Use -v to get more diff">E   AssertionError: Expected UAD1023 for missing PUDIndicator; received []
+    assert set() == {'UAD1023'}
+      
+      Extra items in the right set:
+      'UAD1023'
+      Use -v to get more diff</failure></testcase><testcase classname="tests.test_required_data_acceptance" name="test_production_detects_missing_required_data[0100.0033-UAD1027]" time="0.002"><failure message="AssertionError: Expected UAD1027 for missing SpecialTaxAssessmentsIndicator; received []&#10;assert set() == {'UAD1027'}&#10;  &#10;  Extra items in the right set:&#10;  'UAD1027'&#10;  Use -v to get more diff">E   AssertionError: Expected UAD1027 for missing SpecialTaxAssessmentsIndicator; received []
+    assert set() == {'UAD1027'}
+      
+      Extra items in the right set:
+      'UAD1027'
+      Use -v to get more diff</failure></testcase><testcase classname="tests.test_required_data_acceptance" name="test_production_detects_missing_required_data[0100.0046-UAD1035]" time="0.002"><failure message="AssertionError: Expected UAD1035 for missing HomeownerResponsibleForExteriorMaintenanceIndicator; received []&#10;assert set() == {'UAD1035'}&#10;  &#10;  Extra items in the right set:&#10;  'UAD1035'&#10;  Use -v to get more diff">E   AssertionError: Expected UAD1035 for missing HomeownerResponsibleForExteriorMaintenanceIndicator; received []
+    assert set() == {'UAD1035'}
+      
+      Extra items in the right set:
+      'UAD1035'
+      Use -v to get more diff</failure></testcase><testcase classname="tests.test_required_data_acceptance" name="test_production_detects_missing_required_data[0100.0047-UAD1036]" time="0.002"><failure message="AssertionError: Expected UAD1036 for missing LandOwnedInCommonIndicator; received []&#10;assert set() == {'UAD1036'}&#10;  &#10;  Extra items in the right set:&#10;  'UAD1036'&#10;  Use -v to get more diff">E   AssertionError: Expected UAD1036 for missing LandOwnedInCommonIndicator; received []
+    assert set() == {'UAD1036'}
+      
+      Extra items in the right set:
+      'UAD1036'
+      Use -v to get more diff</failure></testcase><testcase classname="tests.test_required_data_acceptance" name="test_production_detects_missing_required_data[0100.0054-UAD1040]" time="0.002"><failure message="AssertionError: Expected UAD1040 for missing NativeAmericanLandsIndicator; received []&#10;assert set() == {'UAD1040'}&#10;  &#10;  Extra items in the right set:&#10;  'UAD1040'&#10;  Use -v to get more diff">E   AssertionError: Expected UAD1040 for missing NativeAmericanLandsIndicator; received []
+    assert set() == {'UAD1040'}
+      
+      Extra items in the right set:
+      'UAD1040'
+      Use -v to get more diff</failure></testcase><testcase classname="tests.test_required_data_acceptance" name="test_production_detects_missing_required_data[0100.0065-UAD1042]" time="0.002"><failure message="AssertionError: Expected UAD1042 for missing PropertyInProjectIndicator; received []&#10;assert set() == {'UAD1042'}&#10;  &#10;  Extra items in the right set:&#10;  'UAD1042'&#10;  Use -v to get more diff">E   AssertionError: Expected UAD1042 for missing PropertyInProjectIndicator; received []
+    assert set() == {'UAD1042'}
+      
+      Extra items in the right set:
+      'UAD1042'
+      Use -v to get more diff</failure></testcase><testcase classname="tests.test_required_data_acceptance" name="test_production_detects_missing_required_data[0200.0015-UAD1045]" time="0.002"><failure message="AssertionError: Expected UAD1045 for missing PropertyAmenityExistsIndicator; received []&#10;assert set() == {'UAD1045'}&#10;  &#10;  Extra items in the right set:&#10;  'UAD1045'&#10;  Use -v to get more diff">E   AssertionError: Expected UAD1045 for missing PropertyAmenityExistsIndicator; received []
+    assert set() == {'UAD1045'}
+      
+      Extra items in the right set:
+      'UAD1045'
+      Use -v to get more diff</failure></testcase><testcase classname="tests.test_required_data_acceptance" name="test_production_detects_missing_required_data[0300.0010-UAD1049]" time="0.002"><failure message="AssertionError: Expected UAD1049 for missing NewConstructionIndicator; received []&#10;assert set() == {'UAD1049'}&#10;  &#10;  Extra items in the right set:&#10;  'UAD1049'&#10;  Use -v to get more diff">E   AssertionError: Expected UAD1049 for missing NewConstructionIndicator; received []
+    assert set() == {'UAD1049'}
+      
+      Extra items in the right set:
+      'UAD1049'
+      Use -v to get more diff</failure></testcase><testcase classname="tests.test_required_data_acceptance" name="test_production_detects_missing_required_data[0600.0016-UAD1134]" time="0.003"><failure message="AssertionError: Expected UAD1134 for missing SalesContractExistsIndicator; received []&#10;assert set() == {'UAD1134'}&#10;  &#10;  Extra items in the right set:&#10;  'UAD1134'&#10;  Use -v to get more diff">E   AssertionError: Expected UAD1134 for missing SalesContractExistsIndicator; received []
+    assert set() == {'UAD1134'}
+      
+      Extra items in the right set:
+      'UAD1134'
+      Use -v to get more diff</failure></testcase><testcase classname="tests.test_required_data_acceptance" name="test_production_detects_missing_required_data[0800.0005-UAD1191]" time="0.002"><failure message="AssertionError: Expected UAD1191 for missing PriorSalesOrTransfersIndicator; received []&#10;assert set() == {'UAD1191'}&#10;  &#10;  Extra items in the right set:&#10;  'UAD1191'&#10;  Use -v to get more diff">E   AssertionError: Expected UAD1191 for missing PriorSalesOrTransfersIndicator; received []
+    assert set() == {'UAD1191'}
+      
+      Extra items in the right set:
+      'UAD1191'
+      Use -v to get more diff</failure></testcase><testcase classname="tests.test_required_data_acceptance" name="test_production_detects_missing_required_data[0900.0004-UAD1203]" time="0.002"><failure message="AssertionError: Expected UAD1203 for missing ListedWithinPreviousYearIndicator; received []&#10;assert set() == {'UAD1203'}&#10;  &#10;  Extra items in the right set:&#10;  'UAD1203'&#10;  Use -v to get more diff">E   AssertionError: Expected UAD1203 for missing ListedWithinPreviousYearIndicator; received []
+    assert set() == {'UAD1203'}
+      
+      Extra items in the right set:
+      'UAD1203'
+      Use -v to get more diff</failure></testcase><testcase classname="tests.test_required_data_acceptance" name="test_production_detects_missing_required_data[1000.0027-UAD1210]" time="0.002"><failure message="AssertionError: Expected UAD1210 for missing CostApproachIndicator; received []&#10;assert set() == {'UAD1210'}&#10;  &#10;  Extra items in the right set:&#10;  'UAD1210'&#10;  Use -v to get more diff">E   AssertionError: Expected UAD1210 for missing CostApproachIndicator; received []
+    assert set() == {'UAD1210'}
+      
+      Extra items in the right set:
+      'UAD1210'
+      Use -v to get more diff</failure></testcase><testcase classname="tests.test_required_data_acceptance" name="test_production_detects_missing_required_data[1000.0028-UAD1211]" time="0.002"><failure message="AssertionError: Expected UAD1211 for missing GovernmentAgencyAppraisalIndicator; received []&#10;assert set() == {'UAD1211'}&#10;  &#10;  Extra items in the right set:&#10;  'UAD1211'&#10;  Use -v to get more diff">E   AssertionError: Expected UAD1211 for missing GovernmentAgencyAppraisalIndicator; received []
+    assert set() == {'UAD1211'}
+      
+      Extra items in the right set:
+      'UAD1211'
+      Use -v to get more diff</failure></testcase><testcase classname="tests.test_required_data_acceptance" name="test_production_detects_missing_required_data[1000.0030-UAD1213]" time="0.003"><failure message="AssertionError: Expected UAD1213 for missing IncomeApproachIndicator; received []&#10;assert set() == {'UAD1213'}&#10;  &#10;  Extra items in the right set:&#10;  'UAD1213'&#10;  Use -v to get more diff">E   AssertionError: Expected UAD1213 for missing IncomeApproachIndicator; received []
+    assert set() == {'UAD1213'}
+      
+      Extra items in the right set:
+      'UAD1213'
+      Use -v to get more diff</failure></testcase><testcase classname="tests.test_required_data_acceptance" name="test_production_detects_missing_required_data[1000.0031-UAD1216]" time="0.002"><failure message="AssertionError: Expected UAD1216 for missing RentScheduleIndicator; received []&#10;assert set() == {'UAD1216'}&#10;  &#10;  Extra items in the right set:&#10;  'UAD1216'&#10;  Use -v to get more diff">E   AssertionError: Expected UAD1216 for missing RentScheduleIndicator; received []
+    assert set() == {'UAD1216'}
+      
+      Extra items in the right set:
+      'UAD1216'
+      Use -v to get more diff</failure></testcase><testcase classname="tests.test_required_data_acceptance" name="test_production_detects_missing_required_data[1000.0032-UAD1218]" time="0.002"><failure message="AssertionError: Expected UAD1218 for missing SalesComparisonApproachIndicator; received []&#10;assert set() == {'UAD1218'}&#10;  &#10;  Extra items in the right set:&#10;  'UAD1218'&#10;  Use -v to get more diff">E   AssertionError: Expected UAD1218 for missing SalesComparisonApproachIndicator; received []
+    assert set() == {'UAD1218'}
+      
+      Extra items in the right set:
+      'UAD1218'
+      Use -v to get more diff</failure></testcase><testcase classname="tests.test_required_data_acceptance" name="test_production_detects_missing_required_data[1000.0034-UAD1219]" time="0.003"><failure message="AssertionError: Expected UAD1219 for missing ValuationAssignmentType; received []&#10;assert set() == {'UAD1219'}&#10;  &#10;  Extra items in the right set:&#10;  'UAD1219'&#10;  Use -v to get more diff">E   AssertionError: Expected UAD1219 for missing ValuationAssignmentType; received []
+    assert set() == {'UAD1219'}
+      
+      Extra items in the right set:
+      'UAD1219'
+      Use -v to get more diff</failure></testcase><testcase classname="tests.test_required_data_acceptance" name="test_production_detects_missing_required_data[1000.0158-UAD1222]" time="0.002"><failure message="AssertionError: Expected UAD1222 for missing PropertyValuationMethodType; received []&#10;assert set() == {'UAD1222'}&#10;  &#10;  Extra items in the right set:&#10;  'UAD1222'&#10;  Use -v to get more diff">E   AssertionError: Expected UAD1222 for missing PropertyValuationMethodType; received []
+    assert set() == {'UAD1222'}
+      
+      Extra items in the right set:
+      'UAD1222'
+      Use -v to get more diff</failure></testcase><testcase classname="tests.test_required_data_acceptance" name="test_production_detects_missing_required_data[1300.0012-UAD1257]" time="0.002"><failure message="AssertionError: Expected UAD1257 for missing AppraisalReportEffectiveDate; received []&#10;assert set() == {'UAD1257'}&#10;  &#10;  Extra items in the right set:&#10;  'UAD1257'&#10;  Use -v to get more diff">E   AssertionError: Expected UAD1257 for missing AppraisalReportEffectiveDate; received []
+    assert set() == {'UAD1257'}
+      
+      Extra items in the right set:
+      'UAD1257'
+      Use -v to get more diff</failure></testcase><testcase classname="tests.test_required_data_acceptance" name="test_production_detects_missing_required_data[1300.0017-UAD1262]" time="0.004"><failure message="AssertionError: Expected UAD1262 for missing OpinionOfValueAmount; received []&#10;assert set() == {'UAD1262'}&#10;  &#10;  Extra items in the right set:&#10;  'UAD1262'&#10;  Use -v to get more diff">E   AssertionError: Expected UAD1262 for missing OpinionOfValueAmount; received []
+    assert set() == {'UAD1262'}
+      
+      Extra items in the right set:
+      'UAD1262'
+      Use -v to get more diff</failure></testcase><testcase classname="tests.test_required_data_acceptance" name="test_production_detects_missing_required_data[1300.0021-UAD1266]" time="0.002"><failure message="AssertionError: Expected UAD1266 for missing ValuationReconciliationSummaryCommentDescription; received []&#10;assert set() == {'UAD1266'}&#10;  &#10;  Extra items in the right set:&#10;  'UAD1266'&#10;  Use -v to get more diff">E   AssertionError: Expected UAD1266 for missing ValuationReconciliationSummaryCommentDescription; received []
+    assert set() == {'UAD1266'}
+      
+      Extra items in the right set:
+      'UAD1266'
+      Use -v to get more diff</failure></testcase><testcase classname="tests.test_required_data_acceptance" name="test_production_detects_missing_required_data[1500.0054-UAD1317]" time="0.002"><failure message="AssertionError: Expected UAD1317 for missing PropertyAccessTypicalToMarketIndicator; received []&#10;assert set() == {'UAD1317'}&#10;  &#10;  Extra items in the right set:&#10;  'UAD1317'&#10;  Use -v to get more diff">E   AssertionError: Expected UAD1317 for missing PropertyAccessTypicalToMarketIndicator; received []
+    assert set() == {'UAD1317'}
+      
+      Extra items in the right set:
+      'UAD1317'
+      Use -v to get more diff</failure></testcase><testcase classname="tests.test_required_data_acceptance" name="test_production_detects_missing_required_data[1500.0055-UAD1318]" time="0.002"><failure message="AssertionError: Expected UAD1318 for missing PropertyPrimaryEntryExitMethodType; received []&#10;assert set() == {'UAD1318'}&#10;  &#10;  Extra items in the right set:&#10;  'UAD1318'&#10;  Use -v to get more diff">E   AssertionError: Expected UAD1318 for missing PropertyPrimaryEntryExitMethodType; received []
+    assert set() == {'UAD1318'}
+      
+      Extra items in the right set:
+      'UAD1318'
+      Use -v to get more diff</failure></testcase><testcase classname="tests.test_required_data_acceptance" name="test_production_detects_missing_required_data[1500.0125-UAD1369]" time="0.002"><failure message="AssertionError: Expected UAD1369 for missing SiteZoningComplianceType; received []&#10;assert set() == {'UAD1369'}&#10;  &#10;  Extra items in the right set:&#10;  'UAD1369'&#10;  Use -v to get more diff">E   AssertionError: Expected UAD1369 for missing SiteZoningComplianceType; received []
+    assert set() == {'UAD1369'}
+      
+      Extra items in the right set:
+      'UAD1369'
+      Use -v to get more diff</failure></testcase><testcase classname="tests.test_required_data_acceptance" name="test_production_detects_missing_required_data[1500.0178-UAD1373]" time="0.003"><failure message="AssertionError: Expected UAD1373 for missing SiteDefectsExistIndicator; received []&#10;assert set() == {'UAD1373'}&#10;  &#10;  Extra items in the right set:&#10;  'UAD1373'&#10;  Use -v to get more diff">E   AssertionError: Expected UAD1373 for missing SiteDefectsExistIndicator; received []
+    assert set() == {'UAD1373'}
+      
+      Extra items in the right set:
+      'UAD1373'
+      Use -v to get more diff</failure></testcase><testcase classname="tests.test_required_data_acceptance" name="test_production_detects_missing_required_data[1600.0006-UAD1384]" time="0.003"><failure message="AssertionError: Expected UAD1384 for missing OverallConditionRatingCode; received []&#10;assert set() == {'UAD1384'}&#10;  &#10;  Extra items in the right set:&#10;  'UAD1384'&#10;  Use -v to get more diff">E   AssertionError: Expected UAD1384 for missing OverallConditionRatingCode; received []
+    assert set() == {'UAD1384'}
+      
+      Extra items in the right set:
+      'UAD1384'
+      Use -v to get more diff</failure></testcase><testcase classname="tests.test_required_data_acceptance" name="test_production_detects_missing_required_data[1600.0007-UAD1385]" time="0.002"><failure message="AssertionError: Expected UAD1385 for missing OverallQualityRatingCode; received []&#10;assert set() == {'UAD1385'}&#10;  &#10;  Extra items in the right set:&#10;  'UAD1385'&#10;  Use -v to get more diff">E   AssertionError: Expected UAD1385 for missing OverallQualityRatingCode; received []
+    assert set() == {'UAD1385'}
+      
+      Extra items in the right set:
+      'UAD1385'
+      Use -v to get more diff</failure></testcase><testcase classname="tests.test_required_data_acceptance" name="test_production_detects_missing_required_data[2200.0017-UAD1508]" time="0.002"><failure message="AssertionError: Expected UAD1508 for missing AppraiserPriorServicesPerformedIndicator; received []&#10;assert set() == {'UAD1508'}&#10;  &#10;  Extra items in the right set:&#10;  'UAD1508'&#10;  Use -v to get more diff">E   AssertionError: Expected UAD1508 for missing AppraiserPriorServicesPerformedIndicator; received []
+    assert set() == {'UAD1508'}
+      
+      Extra items in the right set:
+      'UAD1508'
+      Use -v to get more diff</failure></testcase><testcase classname="tests.test_required_data_acceptance" name="test_production_detects_missing_required_data[2200.0038-UAD1511]" time="0.002"><failure message="AssertionError: Expected UAD1511 for missing ValuationReportInspectionCertificationType; received []&#10;assert set() == {'UAD1511'}&#10;  &#10;  Extra items in the right set:&#10;  'UAD1511'&#10;  Use -v to get more diff">E   AssertionError: Expected UAD1511 for missing ValuationReportInspectionCertificationType; received []
+    assert set() == {'UAD1511'}
+      
+      Extra items in the right set:
+      'UAD1511'
+      Use -v to get more diff</failure></testcase><testcase classname="tests.test_required_data_acceptance" name="test_production_detects_missing_required_data[1000.0043-UAD1519]" time="0.002"><failure message="AssertionError: Expected UAD1519 for missing PropertyDataReportIndicator; received []&#10;assert set() == {'UAD1519'}&#10;  &#10;  Extra items in the right set:&#10;  'UAD1519'&#10;  Use -v to get more diff">E   AssertionError: Expected UAD1519 for missing PropertyDataReportIndicator; received []
+    assert set() == {'UAD1519'}
+      
+      Extra items in the right set:
+      'UAD1519'
+      Use -v to get more diff</failure></testcase><testcase classname="tests.test_required_data_acceptance" name="test_production_detects_missing_required_data[2600.0003-UAD1616]" time="0.002"><failure message="AssertionError: Expected UAD1616 for missing EfficiencyRatingExistsIndicator; received []&#10;assert set() == {'UAD1616'}&#10;  &#10;  Extra items in the right set:&#10;  'UAD1616'&#10;  Use -v to get more diff">E   AssertionError: Expected UAD1616 for missing EfficiencyRatingExistsIndicator; received []
+    assert set() == {'UAD1616'}
+      
+      Extra items in the right set:
+      'UAD1616'
+      Use -v to get more diff</failure></testcase><testcase classname="tests.test_required_data_acceptance" name="test_production_detects_missing_required_data[2600.0004-UAD1617]" time="0.002"><failure message="AssertionError: Expected UAD1617 for missing GreenCertificationExistsIndicator; received []&#10;assert set() == {'UAD1617'}&#10;  &#10;  Extra items in the right set:&#10;  'UAD1617'&#10;  Use -v to get more diff">E   AssertionError: Expected UAD1617 for missing GreenCertificationExistsIndicator; received []
+    assert set() == {'UAD1617'}
+      
+      Extra items in the right set:
+      'UAD1617'
+      Use -v to get more diff</failure></testcase><testcase classname="tests.test_required_data_acceptance" name="test_production_detects_missing_required_data[2600.0005-UAD1618]" time="0.002"><failure message="AssertionError: Expected UAD1618 for missing RenewableEnergyComponentExistsIndicator; received []&#10;assert set() == {'UAD1618'}&#10;  &#10;  Extra items in the right set:&#10;  'UAD1618'&#10;  Use -v to get more diff">E   AssertionError: Expected UAD1618 for missing RenewableEnergyComponentExistsIndicator; received []
+    assert set() == {'UAD1618'}
+      
+      Extra items in the right set:
+      'UAD1618'
+      Use -v to get more diff</failure></testcase><testcase classname="tests.test_required_data_acceptance" name="test_production_detects_missing_required_data[3000.0008-UAD1626]" time="0.002"><failure message="AssertionError: Expected UAD1626 for missing MarketBoundariesDescription; received []&#10;assert set() == {'UAD1626'}&#10;  &#10;  Extra items in the right set:&#10;  'UAD1626'&#10;  Use -v to get more diff">E   AssertionError: Expected UAD1626 for missing MarketBoundariesDescription; received []
+    assert set() == {'UAD1626'}
+      
+      Extra items in the right set:
+      'UAD1626'
+      Use -v to get more diff</failure></testcase><testcase classname="tests.test_required_data_acceptance" name="test_production_detects_missing_required_data[3000.0009-UAD1627]" time="0.002"><failure message="AssertionError: Expected UAD1627 for missing MarketInventoryLookbackMonthsCount; received []&#10;assert set() == {'UAD1627'}&#10;  &#10;  Extra items in the right set:&#10;  'UAD1627'&#10;  Use -v to get more diff">E   AssertionError: Expected UAD1627 for missing MarketInventoryLookbackMonthsCount; received []
+    assert set() == {'UAD1627'}
+      
+      Extra items in the right set:
+      'UAD1627'
+      Use -v to get more diff</failure></testcase><testcase classname="tests.test_required_data_acceptance" name="test_production_detects_missing_required_data[3000.0033-UAD1652]" time="0.002"><failure message="AssertionError: Expected UAD1652 for missing MarketSupplyTrendType; received []&#10;assert set() == {'UAD1652'}&#10;  &#10;  Extra items in the right set:&#10;  'UAD1652'&#10;  Use -v to get more diff">E   AssertionError: Expected UAD1652 for missing MarketSupplyTrendType; received []
+    assert set() == {'UAD1652'}
+      
+      Extra items in the right set:
+      'UAD1652'
+      Use -v to get more diff</failure></testcase><testcase classname="tests.test_required_data_acceptance" name="test_production_detects_missing_required_data[3000.0034-UAD1653]" time="0.003"><failure message="AssertionError: Expected UAD1653 for missing MarketTrendsForeclosureActivityIndicator; received []&#10;assert set() == {'UAD1653'}&#10;  &#10;  Extra items in the right set:&#10;  'UAD1653'&#10;  Use -v to get more diff">E   AssertionError: Expected UAD1653 for missing MarketTrendsForeclosureActivityIndicator; received []
+    assert set() == {'UAD1653'}
+      
+      Extra items in the right set:
+      'UAD1653'
+      Use -v to get more diff</failure></testcase><testcase classname="tests.test_required_data_acceptance" name="test_production_detects_missing_required_data[3100.0003-UAD1659]" time="0.002"><failure message="AssertionError: Expected UAD1659 for missing FinanciallyFeasibleIndicator; received []&#10;assert set() == {'UAD1659'}&#10;  &#10;  Extra items in the right set:&#10;  'UAD1659'&#10;  Use -v to get more diff">E   AssertionError: Expected UAD1659 for missing FinanciallyFeasibleIndicator; received []
+    assert set() == {'UAD1659'}
+      
+      Extra items in the right set:
+      'UAD1659'
+      Use -v to get more diff</failure></testcase><testcase classname="tests.test_required_data_acceptance" name="test_production_detects_missing_required_data[3100.0004-UAD1660]" time="0.002"><failure message="AssertionError: Expected UAD1660 for missing LegallyPermissibleIndicator; received []&#10;assert set() == {'UAD1660'}&#10;  &#10;  Extra items in the right set:&#10;  'UAD1660'&#10;  Use -v to get more diff">E   AssertionError: Expected UAD1660 for missing LegallyPermissibleIndicator; received []
+    assert set() == {'UAD1660'}
+      
+      Extra items in the right set:
+      'UAD1660'
+      Use -v to get more diff</failure></testcase><testcase classname="tests.test_required_data_acceptance" name="test_production_detects_missing_required_data[3100.0005-UAD1661]" time="0.002"><failure message="AssertionError: Expected UAD1661 for missing MaximallyProductiveIndicator; received []&#10;assert set() == {'UAD1661'}&#10;  &#10;  Extra items in the right set:&#10;  'UAD1661'&#10;  Use -v to get more diff">E   AssertionError: Expected UAD1661 for missing MaximallyProductiveIndicator; received []
+    assert set() == {'UAD1661'}
+      
+      Extra items in the right set:
+      'UAD1661'
+      Use -v to get more diff</failure></testcase><testcase classname="tests.test_required_data_acceptance" name="test_production_detects_missing_required_data[3100.0006-UAD1662]" time="0.002"><failure message="AssertionError: Expected UAD1662 for missing PhysicallyPossibleIndicator; received []&#10;assert set() == {'UAD1662'}&#10;  &#10;  Extra items in the right set:&#10;  'UAD1662'&#10;  Use -v to get more diff">E   AssertionError: Expected UAD1662 for missing PhysicallyPossibleIndicator; received []
+    assert set() == {'UAD1662'}
+      
+      Extra items in the right set:
+      'UAD1662'
+      Use -v to get more diff</failure></testcase><testcase classname="tests.test_required_data_acceptance" name="test_production_detects_missing_required_data[3100.0007-UAD1663]" time="0.002"><failure message="AssertionError: Expected UAD1663 for missing SiteHighestBestUseIndicator; received []&#10;assert set() == {'UAD1663'}&#10;  &#10;  Extra items in the right set:&#10;  'UAD1663'&#10;  Use -v to get more diff">E   AssertionError: Expected UAD1663 for missing SiteHighestBestUseIndicator; received []
+    assert set() == {'UAD1663'}
+      
+      Extra items in the right set:
+      'UAD1663'
+      Use -v to get more diff</failure></testcase><testcase classname="tests.test_required_data_acceptance" name="test_production_detects_missing_required_data[3300.0002-UAD1676]" time="0.002"><failure message="AssertionError: Expected UAD1676 for missing SketchExistsIndicator; received []&#10;assert set() == {'UAD1676'}&#10;  &#10;  Extra items in the right set:&#10;  'UAD1676'&#10;  Use -v to get more diff">E   AssertionError: Expected UAD1676 for missing SketchExistsIndicator; received []
+    assert set() == {'UAD1676'}
+      
+      Extra items in the right set:
+      'UAD1676'
+      Use -v to get more diff</failure></testcase><testcase classname="tests.test_required_data_acceptance" name="test_production_detects_missing_required_data[4000.0004-UAD1750]" time="0.002"><failure message="AssertionError: Expected UAD1750 for missing ReconsiderationOfValueIndicator; received []&#10;assert set() == {'UAD1750'}&#10;  &#10;  Extra items in the right set:&#10;  'UAD1750'&#10;  Use -v to get more diff">E   AssertionError: Expected UAD1750 for missing ReconsiderationOfValueIndicator; received []
+    assert set() == {'UAD1750'}
+      
+      Extra items in the right set:
+      'UAD1750'
+      Use -v to get more diff</failure></testcase></testsuite></testsuites>

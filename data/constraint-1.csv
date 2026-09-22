@@ -1,0 +1,2 @@
+Unique ID,Primary Data Element,Message ID,Message Text,Rule Logic,Severity,Property Affected,Report Section,Report Subsection,Report Label / Value,Data Point Name / Value, xPath,Related Value(s),Date Format,Number Format,Min Value,Max Value
+0100.0007,AddressLineText,UAD1001,Provide the address line for the subject property physical address.,If AddressLineText is not provided,Fatal,Subject,Subject Property,{No Subsection},Physical Address,AddressLineText,../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/ADDRESS/,,,,,

@@ -1,6 +1,7 @@
 """Evaluate unconditional Fatal required-data rules from the production CSV."""
 
 import csv
+import logging
 from functools import lru_cache
 from pathlib import Path
 from uuid import uuid4
@@ -15,6 +16,7 @@ ROOT = Path(__file__).resolve().parents[2]
 RULE_FILE = ROOT / "data" / "data-constraints.csv"
 NAMESPACE = "http://www.mismo.org/residential/2009/schemas"
 NS = {"m": NAMESPACE}
+logger = logging.getLogger(__name__)
 
 
 @lru_cache(maxsize=1)
@@ -30,27 +32,45 @@ def load_required_rules() -> tuple[dict[str, str], ...]:
         == f"If {row['Primary Data Element']} is not provided"
     )
 
-    if len(rules) != 53:
-        raise ValueError(
-            f"Expected 53 required-data rules in {RULE_FILE}; "
-            f"found {len(rules)}."
-        )
-
-    if len({rule["Message ID"] for rule in rules}) != 53:
+    if len({rule["Message ID"] for rule in rules}) != len(rules):
         raise ValueError("Required-data rule IDs must be unique.")
 
+    valid_rules = []
+
     for rule in rules:
-        if rule["Property Affected"] not in {"Subject", "N/A"}:
-            raise ValueError(
-                f"Unsupported property context: {rule['Message ID']}"
-            )
+        problem = None
+        field = None
+        property_scope = rule.get("Property Affected")
+        xml_path = rule.get(" xPath")
 
-        if not rule[" xPath"].startswith("../VALUATION_ANALYSIS/"):
-            raise ValueError(
-                f"Unsupported XML path: {rule['Message ID']}"
-            )
+        if not property_scope or not property_scope.strip():
+            field = "Property Affected"
+            problem = "Missing property context"
+        elif property_scope not in {"Subject", "N/A"}:
+            field = "Property Affected"
+            problem = f"Unsupported property context: {property_scope}"
+        elif not xml_path or not xml_path.strip():
+            field = " xPath"
+            problem = "Missing XML path"
+        elif not xml_path.startswith("../VALUATION_ANALYSIS/"):
+            field = " xPath"
+            problem = f"Unsupported XML path: {xml_path}"
 
-    return rules
+        if problem is not None:
+            logger.error(
+                "Required-data configuration error for row %s: %s",
+                rule.get("Unique ID"),
+                problem,
+                extra={
+                    "row_id": rule.get("Unique ID"),
+                    "configuration_field": field,
+                },
+            )
+            continue
+
+        valid_rules.append(rule)
+
+    return tuple(valid_rules)
 
 
 def rule_path(rule: dict[str, str]) -> str:
