@@ -18,6 +18,9 @@ class Finding(BaseModel):
     expected_condition: str | None = None
     rule_id: str | None = None
     row_id: str | None = None
+    primary_data_element: str | None = None
+    property_affected: str | None = None
+    violation_kind: str | None = None
     source: Provenance | None = None
     finding: str
     requires_human_review: bool = False

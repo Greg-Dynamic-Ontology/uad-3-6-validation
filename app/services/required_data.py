@@ -164,7 +164,9 @@ def evaluate_required_data(
         for child in parent
     }
 
-    for rule in load_required_rules():
+    for rule in sorted(
+        load_required_rules(), key=lambda row: row["Unique ID"]
+    ):
         parts = rule[" xPath"].removeprefix("../").strip("/").split("/")
         element_name = rule["Primary Data Element"]
 
@@ -237,6 +239,9 @@ def evaluate_required_data(
                         rule_type=RuleType.APPENDIX_H,
                         rule_id=rule["Message ID"],
                         row_id=rule["Unique ID"],
+                        primary_data_element=element_name,
+                        property_affected=rule["Property Affected"],
+                        violation_kind="MissingRequiredValue",
                         data_location=data_location,
                         nearest_existing_ancestor=ancestor_path,
                         observed_value="missing, empty, or nil",
