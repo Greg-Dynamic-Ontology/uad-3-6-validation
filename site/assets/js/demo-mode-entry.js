@@ -13,26 +13,51 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
     }
 
-    if (typeof disclosure.showModal === "function") {
-        if (disclosure.open) {
-            disclosure.close();
+    let requestedDestination = null;
+
+    function showDisclosure() {
+        disclosure.returnValue = "";
+
+        if (typeof disclosure.showModal === "function") {
+            if (disclosure.open) {
+                disclosure.close();
+            }
+            disclosure.showModal();
+        } else {
+            disclosure.setAttribute("open", "");
         }
-        disclosure.showModal();
     }
 
     runValidation.addEventListener("click", (event) => {
-        if (disclosure.open) {
-            event.preventDefault();
+        if (runValidation.dataset.demoConsentRequired !== "true") {
+            return;
         }
+
+        event.preventDefault();
+        requestedDestination = runValidation.getAttribute("href");
+        showDisclosure();
     });
 
     disclosure.addEventListener("close", () => {
-        if (disclosure.returnValue !== "continue") {
+        // Ignore a close event caused by reopening the initial dialog.
+        if (disclosure.open) {
             return;
         }
-        const continueDestination = continueDemo.dataset.demoDestination;
-        if (continueDestination) {
-            window.location.assign(continueDestination);
+
+        if (disclosure.returnValue !== "continue") {
+            requestedDestination = null;
+            return;
         }
+
+        const destination = (
+            requestedDestination
+            || continueDemo.dataset.demoDestination
+            || "/validation/"
+        );
+        window.location.assign(destination);
     });
+
+    if (disclosure.open) {
+        showDisclosure();
+    }
 });
