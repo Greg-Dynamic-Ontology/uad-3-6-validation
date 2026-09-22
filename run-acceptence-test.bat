@@ -1,0 +1,1 @@
+.\.venv\Scripts\python.exe -B -m pytest tests data\uad36-test-suite\tests\test_required_data_acceptance.py -q --tb=short -p no:cacheprovider
