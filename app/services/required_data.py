@@ -1,0 +1,153 @@
+"""Evaluate unconditional Fatal required-data rules from the production CSV."""
+
+import csv
+from functools import lru_cache
+from pathlib import Path
+from uuid import uuid4
+from xml.etree.ElementTree import Element
+
+from app.models.common import Provenance
+from app.models.enums import Investor, RuleType, Severity
+from app.models.validation import Finding
+
+
+ROOT = Path(__file__).resolve().parents[2]
+RULE_FILE = ROOT / "data" / "data-constraints.csv"
+NAMESPACE = "http://www.mismo.org/residential/2009/schemas"
+NS = {"m": NAMESPACE}
+
+
+@lru_cache(maxsize=1)
+def load_required_rules() -> tuple[dict[str, str], ...]:
+    with RULE_FILE.open(encoding="utf-8-sig", newline="") as stream:
+        rows = list(csv.DictReader(stream))
+
+    rules = tuple(
+        row
+        for row in rows
+        if row["Severity"] == "Fatal"
+        and row["Rule Logic"]
+        == f"If {row['Primary Data Element']} is not provided"
+    )
+
+    if len(rules) != 53:
+        raise ValueError(
+            f"Expected 53 required-data rules in {RULE_FILE}; "
+            f"found {len(rules)}."
+        )
+
+    if len({rule["Message ID"] for rule in rules}) != 53:
+        raise ValueError("Required-data rule IDs must be unique.")
+
+    for rule in rules:
+        if rule["Property Affected"] not in {"Subject", "N/A"}:
+            raise ValueError(
+                f"Unsupported property context: {rule['Message ID']}"
+            )
+
+        if not rule[" xPath"].startswith("../VALUATION_ANALYSIS/"):
+            raise ValueError(
+                f"Unsupported XML path: {rule['Message ID']}"
+            )
+
+    return rules
+
+
+def rule_path(rule: dict[str, str]) -> str:
+    parts = rule[" xPath"].removeprefix("../").strip("/").split("/")
+    parts.append(rule["Primary Data Element"])
+
+    return "//" + "/".join(
+        "m:" + part
+        + (
+            "[@ValuationUseType='SubjectProperty']"
+            if part == "PROPERTY"
+            and rule["Property Affected"] == "Subject"
+            else ""
+        )
+        for part in parts
+    )
+
+
+def has_value(element: Element) -> bool:
+    nil = element.get(
+        "{http://www.w3.org/2001/XMLSchema-instance}nil", ""
+    )
+    return nil not in {"true", "1"} and bool(
+        (element.text or "").strip()
+    )
+
+
+def evaluate_required_data(
+    root: Element,
+    investor: Investor,
+) -> list[Finding]:
+    """Evaluate each rule separately for each valuation/property context."""
+    findings: list[Finding] = []
+
+    analyses = list(root.iter(f"{{{NAMESPACE}}}VALUATION_ANALYSIS"))
+    if not analyses:
+        raise ValueError(
+            "The XML contains no UAD VALUATION_ANALYSIS context."
+        )
+
+    for rule in load_required_rules():
+        parts = rule[" xPath"].removeprefix("../").strip("/").split("/")
+        element_name = rule["Primary Data Element"]
+
+        for analysis in analyses:
+            if rule["Property Affected"] == "Subject":
+                if parts[1:3] != ["PROPERTIES", "PROPERTY"]:
+                    raise ValueError(
+                        f"Unsupported subject path: {rule['Message ID']}"
+                    )
+
+                contexts = analysis.findall(
+                    "m:PROPERTIES/m:PROPERTY"
+                    "[@ValuationUseType='SubjectProperty']",
+                    NS,
+                )
+                remaining = parts[3:]
+            else:
+                contexts = [analysis]
+                remaining = parts[1:]
+
+            relative_path = "/".join(
+                "m:" + part for part in remaining + [element_name]
+            )
+
+            # A missing subject container also means its required data
+            # was not supplied.
+            for context in contexts or [None]:
+                elements = (
+                    context.findall(relative_path, NS)
+                    if context is not None
+                    else []
+                )
+
+                if elements and all(has_value(node) for node in elements):
+                    continue
+
+                findings.append(
+                    Finding(
+                        finding_id=f"F-{uuid4().hex[:8]}",
+                        severity=Severity.FATAL,
+                        investor=investor,
+                        rule_type=RuleType.APPENDIX_H,
+                        rule_id=rule["Message ID"],
+                        row_id=rule["Unique ID"],
+                        data_location=rule_path(rule),
+                        observed_value="missing, empty, or nil",
+                        expected_condition=(
+                            f"{element_name} must be provided."
+                        ),
+                        source=Provenance(
+                            source_document="data/data-constraints.csv",
+                            source_version="UAD 3.6",
+                            source_section=rule["Unique ID"],
+                        ),
+                        finding=rule["Message Text"],
+                    )
+                )
+
+    return findings

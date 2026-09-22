@@ -78,6 +78,19 @@
                 <input
                         type="radio"
                         name="pipeline"
+                        value="required-data"
+                        aria-describedby="required-data-description">
+                Required Data Validation
+            </label>
+            <p id="required-data-description">
+                Checks 53 required-data rules and reports missing values.
+                This is not a complete UAD compliance check.
+            </p>
+
+            <label>
+                <input
+                        type="radio"
+                        name="pipeline"
                         value="rdf-projection">
                 RDF Projection
             </label>

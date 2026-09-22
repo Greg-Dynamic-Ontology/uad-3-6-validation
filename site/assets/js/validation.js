@@ -65,7 +65,6 @@ function resetArtifacts() {
 
 function applyExperience(profile) {
     experienceProfile = profile;
-
     technicalPipelineSelection.hidden = !profile.shows_pipeline_stages;
     technicalPipelineSpacing.hidden = !profile.shows_pipeline_stages;
     technicalArtifactsSection.hidden = !profile.shows_technical_artifacts;
@@ -78,8 +77,7 @@ function applyExperience(profile) {
             "the desired validation pipeline.";
         validateButton.textContent = "Validate";
         statusMessage.textContent =
-            "Select a UAD 3.6 appraisal XML instance document and run " +
-            "XML Schema validation.";
+            "Select an appraisal file and the validation to run.";
         return;
     }
 
@@ -142,13 +140,18 @@ async function configureExperience() {
 
 const experienceReady = configureExperience();
 
+function escapeHtml(value) {
+    const element = document.createElement("div");
+    element.textContent = String(value ?? "");
+    return element.innerHTML;
+}
+
 function showResults(report) {
     const passed = report.status === "passed";
     const malformed = report.well_formed === false;
     const title = malformed
         ? "XML Parsing"
         : "UAD 3.6 XML Schema Validation";
-    const outcome = passed ? "PASSED" : "FAILED";
     const summary = passed
         ? "The uploaded document conforms to the UAD 3.6 XML Schema."
         : malformed
@@ -166,7 +169,9 @@ function showResults(report) {
 
     resultsContent.innerHTML = `
         <p class="result-stage">${title}</p>
-        <p class="result-outcome result-outcome--${passed ? "passed" : "failed"}">${outcome}</p>
+        <p class="result-outcome result-outcome--${passed ? "passed" : "failed"}">
+            ${passed ? "PASSED" : "FAILED"}
+        </p>
         <p>${summary}</p>
         <dl class="result-summary">
             <div><dt>File</dt><dd>${escapeHtml(report.package_name)}</dd></div>
@@ -177,13 +182,67 @@ function showResults(report) {
         ${findings}
     `;
     resultsCard.hidden = false;
-
     setArtifactStatus("log", "Generated", "generated");
+
     if (passed) {
         setArtifactStatus("rdf", "Ready for Next Stage", "ready");
         setArtifactStatus("shacl", "Not Generated", "inactive");
         setArtifactStatus("measurement", "Not Generated", "inactive");
     }
+}
+
+function showRequiredDataResults(report, filename) {
+    const fatalCount = report.summary.fatal;
+    const errorCount = report.summary.error + report.summary.critical;
+    const failed = fatalCount > 0 || errorCount > 0;
+
+    const summary = errorCount > 0
+        ? "The appraisal could not be checked. Review the error below."
+        : fatalCount > 0
+            ? "Required data is missing. Review the findings below."
+            : "No required-data findings in the 53 checked rules.";
+
+    const findings = report.findings.length === 0
+        ? ""
+        : `<ol class="finding-list">${report.findings.map((finding) => `
+            <li>
+                <p>
+                    <strong>${escapeHtml(finding.severity.toUpperCase())}</strong>
+                    ${escapeHtml(finding.rule_id)}
+                    ${finding.row_id ? `— Row ${escapeHtml(finding.row_id)}` : ""}
+                </p>
+                <p>${escapeHtml(finding.finding)}</p>
+                ${finding.data_location ? `
+                    <details>
+                        <summary>XML context</summary>
+                        <code>${escapeHtml(finding.data_location)}</code>
+                    </details>
+                ` : ""}
+            </li>
+        `).join("")}</ol>`;
+
+    resultsContent.innerHTML = `
+        <p class="result-stage">Required Data Validation</p>
+        <p class="result-outcome result-outcome--${failed ? "failed" : "passed"}">
+            ${failed ? "FAILED" : "PASSED"}
+        </p>
+        <p>${escapeHtml(summary)}</p>
+        <p>This check covers 53 required-data rules.
+           It does not establish complete UAD compliance or XML Schema validity.</p>
+        <dl class="result-summary">
+            <div><dt>File</dt><dd>${escapeHtml(filename)}</dd></div>
+            <div><dt>Fatal findings</dt><dd>${escapeHtml(fatalCount)}</dd></div>
+            <div><dt>Errors</dt><dd>${escapeHtml(errorCount)}</dd></div>
+        </dl>
+        ${findings}
+    `;
+    resultsCard.hidden = false;
+    setArtifactStatus("log", "Generated", "generated");
+    setStatus(
+        failed ? "failed" : "passed",
+        `Required Data Validation ${failed ? "failed" : "passed"}`,
+        summary
+    );
 }
 
 function showUserPipelineResults(report) {
@@ -207,9 +266,7 @@ function showUserPipelineResults(report) {
 function showDeveloperPipelineResults(report) {
     const stage = report.stages[0];
     const completed = report.status === "completed";
-    const tripleCount = completed
-        ? stage.artifacts.rdf_triple_count
-        : null;
+    const tripleCount = completed ? stage.artifacts.rdf_triple_count : null;
     const description = completed
         ? "The uploaded appraisal was projected into an RDF instance graph."
         : stage.error.business_message;
@@ -236,10 +293,9 @@ function showDeveloperPipelineResults(report) {
 function showPipelineResults(report) {
     if (experienceProfile.shows_pipeline_stages) {
         showDeveloperPipelineResults(report);
-        return;
+    } else {
+        showUserPipelineResults(report);
     }
-
-    showUserPipelineResults(report);
 }
 
 function showRequestError(message) {
@@ -249,10 +305,32 @@ function showRequestError(message) {
     setArtifactStatus("log", "Not Generated", "inactive");
 }
 
-function escapeHtml(value) {
-    const element = document.createElement("div");
-    element.textContent = String(value);
-    return element.innerHTML;
+async function readRequiredDataXml(file) {
+    const bytes = new Uint8Array(await file.arrayBuffer());
+    let text;
+    try {
+        text = new TextDecoder("utf-8", {fatal: true}).decode(bytes);
+    } catch (_error) {
+        throw new Error(
+            "Required Data Validation currently accepts UTF-8 XML. " +
+            "Please export the appraisal as UTF-8 XML."
+        );
+    }
+    if (text.includes("\u0000")) {
+        throw new Error(
+            "Required Data Validation currently accepts UTF-8 XML."
+        );
+    }
+    const declaration = text.match(
+        /^\s*<\?xml\b[^?]*\bencoding\s*=\s*["']([^"']+)["']/i
+    );
+    if (declaration && !/^(utf-8|utf8|us-ascii|ascii)$/i.test(declaration[1])) {
+        throw new Error(
+            "Required Data Validation currently accepts UTF-8 XML. " +
+            "Please export the appraisal as UTF-8 XML."
+        );
+    }
+    return text;
 }
 
 form.addEventListener("submit", async (event) => {
@@ -264,6 +342,7 @@ form.addEventListener("submit", async (event) => {
         ? form.querySelector('input[name="pipeline"]:checked').value
         : "rdf-projection";
     const isRdfProjection = selectedPipeline === "rdf-projection";
+    const isRequiredData = selectedPipeline === "required-data";
 
     if (!file) {
         setStatus(
@@ -285,21 +364,35 @@ form.addEventListener("submit", async (event) => {
             : "Checking the appraisal."
     );
 
-    const formData = new FormData();
-    formData.append("file", file);
-    if (isRdfProjection) {
-        formData.append("pipeline", selectedPipeline);
-    }
-
     try {
-        const endpoint = isRdfProjection
-            ? "/validate/uad36/pipeline"
-            : "/validate/uad36/xml-schema";
-        const response = await fetch(endpoint, {
-            method: "POST",
-            body: formData,
-        });
+        let endpoint;
+        let options;
 
+        if (isRequiredData) {
+            const xmlText = await readRequiredDataXml(file);
+            endpoint = "/validate/uad36";
+            options = {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    package_name: file.name,
+                    xml_text: xmlText,
+                    investor_scope: "both",
+                }),
+            };
+        } else {
+            const formData = new FormData();
+            formData.append("file", file);
+            if (isRdfProjection) {
+                formData.append("pipeline", selectedPipeline);
+            }
+            endpoint = isRdfProjection
+                ? "/validate/uad36/pipeline"
+                : "/validate/uad36/xml-schema";
+            options = {method: "POST", body: formData};
+        }
+
+        const response = await fetch(endpoint, options);
         if (!response.ok) {
             throw new Error(
                 `The validation service returned HTTP ${response.status}.`
@@ -308,9 +401,13 @@ form.addEventListener("submit", async (event) => {
 
         const report = await response.json();
 
+        if (isRequiredData) {
+            showRequiredDataResults(report, file.name);
+            return;
+        }
+
         if (isRdfProjection) {
             showPipelineResults(report);
-
             if (report.status === "completed") {
                 setStatus(
                     "passed",

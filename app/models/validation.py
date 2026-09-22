@@ -1,7 +1,9 @@
+from datetime import datetime
+
 from pydantic import BaseModel, Field
+
 from app.models.common import Provenance, utc_now
 from app.models.enums import Investor, RuleType, Severity
-from datetime import datetime
 
 
 class Finding(BaseModel):
@@ -14,6 +16,7 @@ class Finding(BaseModel):
     observed_value: str | None = None
     expected_condition: str | None = None
     rule_id: str | None = None
+    row_id: str | None = None
     source: Provenance | None = None
     finding: str
     requires_human_review: bool = False
@@ -32,6 +35,7 @@ class ValidationSummary(BaseModel):
     warning: int = 0
     error: int = 0
     critical: int = 0
+    fatal: int = 0
 
 
 class RdfArtifactSource(BaseModel):

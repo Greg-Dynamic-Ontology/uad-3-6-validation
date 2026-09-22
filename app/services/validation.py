@@ -1,5 +1,6 @@
 from hashlib import sha256
 from uuid import uuid4
+from xml.etree import ElementTree as ET
 
 from rdflib import Graph, Literal, RDF, URIRef
 
@@ -15,9 +16,15 @@ from app.models.validation import (
     ValidationRun,
     ValidationSummary,
 )
+from app.services.required_data import NAMESPACE, evaluate_required_data
 
 
 EXECUTION_NAMESPACE = "https://dynamicontology.com/uad36/execution/"
+
+
+class _AppraisalTreeBuilder(ET.TreeBuilder):
+    def doctype(self, name, pubid, system):
+        raise ValueError("DOCTYPE declarations are not supported.")
 
 
 class ValidationService:
@@ -28,7 +35,27 @@ class ValidationService:
 
     def validate(self, request: ValidationRequest) -> ValidationRun:
         findings: list[Finding] = []
-        if not request.xml_text or not request.xml_text.strip().startswith("<"):
+        root = None
+
+        try:
+            if not request.xml_text or not request.xml_text.strip():
+                raise ValueError("The XML payload is empty.")
+
+            parser = ET.XMLParser(target=_AppraisalTreeBuilder())
+            root = ET.fromstring(request.xml_text, parser=parser)
+
+            if not any(
+                True
+                for _ in root.iter(
+                    f"{{{NAMESPACE}}}VALUATION_ANALYSIS"
+                )
+            ):
+                raise ValueError(
+                    "The XML contains no UAD VALUATION_ANALYSIS context."
+                )
+
+        except (ET.ParseError, ValueError) as error:
+            root = None
             findings.append(
                 Finding(
                     finding_id=f"F-{uuid4().hex[:8]}",
@@ -36,31 +63,47 @@ class ValidationService:
                     investor=request.investor_scope,
                     rule_type=RuleType.SCHEMA,
                     data_location="/",
-                    observed_value="empty or non-XML payload",
-                    expected_condition="A readable UAD 3.6 XML report package",
+                    observed_value=str(error),
+                    expected_condition=(
+                        "A readable UAD 3.6 XML report package "
+                        "containing VALUATION_ANALYSIS"
+                    ),
                     source=Provenance(
                         source_document="GSE trimmed UAD 3.6 schema",
                         source_version="UAD 3.6",
                         source_section="schema",
                     ),
-                    finding="Submitted package is not a readable XML document.",
+                    finding=(
+                        "Submitted package is not a readable "
+                        "UAD 3.6 appraisal XML document."
+                    ),
                     requires_human_review=False,
                 )
             )
 
+        if root is not None:
+            findings.extend(
+                evaluate_required_data(root, request.investor_scope)
+            )
+
         rules = graph_store.list_rules()
-        rule_set_versions = sorted({rule.provenance.source_version for rule in rules}) or ["UAD 3.6"]
-        summary = self._summarize(findings)
+        versions = {
+            rule.provenance.source_version for rule in rules
+        }
+        versions.add("UAD 3.6")
+
         run = ValidationRun(
             run_id=f"VR-{uuid4().hex[:12]}",
             investor_scope=request.investor_scope,
-            rule_set_versions=rule_set_versions,
-            summary=summary,
+            rule_set_versions=sorted(versions),
+            summary=self._summarize(findings),
             findings=findings,
         )
         self.runs[run.run_id] = run
+
         for finding in findings:
             self.findings[finding.finding_id] = finding
+
         return run
 
     def get_run(self, run_id: str) -> ValidationRun | None:
@@ -119,7 +162,9 @@ class ValidationService:
         )
 
         execution_graph = Graph()
-        execution_graph.add((pipeline_run, RDF.type, UAD.PipelineRun))
+        execution_graph.add(
+            (pipeline_run, RDF.type, UAD.PipelineRun)
+        )
         execution_graph.add(
             (pipeline_run, UAD.executionStatus, UAD.Failed)
         )
@@ -132,7 +177,9 @@ class ValidationService:
         execution_graph.add(
             (stage_execution, UAD.executionStatus, UAD.Failed)
         )
-        execution_graph.add((stage_execution, UAD.hasError, error))
+        execution_graph.add(
+            (stage_execution, UAD.hasError, error)
+        )
         execution_graph.add(
             (error, UAD.errorCode, Literal(error_code))
         )
@@ -156,6 +203,7 @@ class ValidationService:
     @staticmethod
     def _summarize(findings: list[Finding]) -> ValidationSummary:
         summary = ValidationSummary()
+
         for finding in findings:
             if finding.severity == Severity.INFO:
                 summary.info += 1
@@ -165,6 +213,9 @@ class ValidationService:
                 summary.error += 1
             elif finding.severity == Severity.CRITICAL:
                 summary.critical += 1
+            elif finding.severity == Severity.FATAL:
+                summary.fatal += 1
+
         return summary
 
 

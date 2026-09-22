@@ -12,6 +12,7 @@ class Severity(StrEnum):
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
+    FATAL = "fatal"
 
 
 class RuleType(StrEnum):
