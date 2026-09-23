@@ -1,0 +1,343 @@
+@prefix t: <https://dynamicontology.com/uad36/test-vocabulary#> .
+@prefix suite: <https://dynamicontology.com/uad36/test-suite/> .
+@prefix case: <https://dynamicontology.com/uad36/test-case/required-data/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+# Reviewed sales-contract requirements.
+#
+# Source: data/data-constraints.csv.
+# Trigger: SalesContractReviewedIndicator = "true".
+# Scope: subject property, within the same SALES_CONTRACT_DETAIL.
+#
+# Each case starts from a fresh in-memory baseline copy.
+# Change only the declared trigger and dependent element.
+# Never modify the baseline file or production rule inventory.
+#
+# Expected findings are counted for the suite's declared rule ID.
+# A finding must match its row ID, Fatal severity, and XML context.
+#
+# The four supplied values below are taken from the existing baseline.
+# These tests check required-data behavior, not all value-domain rules.
+#
+# This file requires the runner extension for multiple RDF files
+# and multiple conditional suites.
+
+suite:sales-contract-mismo
+    t:prefix "m" ;
+    t:namespaceIRI <http://www.mismo.org/residential/2009/schemas> .
+
+suite:sales-contract-xsi
+    t:prefix "xsi" ;
+    t:namespaceIRI <http://www.w3.org/2001/XMLSchema-instance> .
+
+# UAD1128: SalesConcessionIndicator
+
+suite:conditional-required-UAD1128
+    a t:ConditionalTestSuite ;
+    rdfs:label "Reviewed contract requires concession indicator" ;
+    t:definitionVersion "1" ;
+    t:baselinePath "baseline/SF1_Appraisal_v1.4.xml" ;
+    t:expectedCaseCount 6 ;
+    t:rowId "0600.0006" ;
+    t:ruleId "UAD1128" ;
+    t:primaryDataElement "SalesConcessionIndicator" ;
+    t:expectedSeverity "fatal" ;
+    t:contextPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SALES_CONTRACTS/m:SALES_CONTRACT/m:SALES_CONTRACT_DETAIL" ;
+    t:expectedContextCount 1 ;
+    t:triggerElement "m:SalesContractReviewedIndicator" ;
+    t:targetElement "m:SalesConcessionIndicator" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SALES_CONTRACTS/m:SALES_CONTRACT/m:SALES_CONTRACT_DETAIL/m:SalesConcessionIndicator" ;
+    t:conditionOperator t:Equals ;
+    t:conditionValue "true" ;
+    t:namespaceBinding suite:sales-contract-mismo,
+                       suite:sales-contract-xsi .
+
+case:0600.0006-UAD1128-true-missing
+    a t:ConditionalTestCase ;
+    t:inSuite suite:conditional-required-UAD1128 ;
+    t:scenarioId "IT-34R1S1" ;
+    t:triggerValue "true" ;
+    t:expectedConditionResult true ;
+    t:targetState t:Absent ;
+    t:expectedMatchingFindingCount 1 .
+
+case:0600.0006-UAD1128-true-present
+    a t:ConditionalTestCase ;
+    t:inSuite suite:conditional-required-UAD1128 ;
+    t:scenarioId "IT-34R1S1" ;
+    t:triggerValue "true" ;
+    t:expectedConditionResult true ;
+    t:targetState t:Present ;
+    t:targetValue "true" ;
+    t:expectedMatchingFindingCount 0 .
+
+case:0600.0006-UAD1128-false-missing
+    a t:ConditionalTestCase ;
+    t:inSuite suite:conditional-required-UAD1128 ;
+    t:scenarioId "IT-34R1S2" ;
+    t:triggerValue "false" ;
+    t:expectedConditionResult false ;
+    t:targetState t:Absent ;
+    t:expectedMatchingFindingCount 0 .
+
+case:0600.0006-UAD1128-true-empty
+    a t:ConditionalTestCase ;
+    t:inSuite suite:conditional-required-UAD1128 ;
+    t:scenarioId "IT-34R1S1" ;
+    t:triggerValue "true" ;
+    t:expectedConditionResult true ;
+    t:targetState t:Empty ;
+    t:expectedMatchingFindingCount 1 .
+
+case:0600.0006-UAD1128-true-whitespace
+    a t:ConditionalTestCase ;
+    t:inSuite suite:conditional-required-UAD1128 ;
+    t:scenarioId "IT-34R1S1" ;
+    t:triggerValue "true" ;
+    t:expectedConditionResult true ;
+    t:targetState t:Whitespace ;
+    t:targetValue " \t\n " ;
+    t:expectedMatchingFindingCount 1 .
+
+case:0600.0006-UAD1128-true-nil
+    a t:ConditionalTestCase ;
+    t:inSuite suite:conditional-required-UAD1128 ;
+    t:scenarioId "IT-34R1S1" ;
+    t:triggerValue "true" ;
+    t:expectedConditionResult true ;
+    t:targetState t:Nil ;
+    t:expectedMatchingFindingCount 1 .
+
+# UAD1129: SalesContractAmount
+
+suite:conditional-required-UAD1129
+    a t:ConditionalTestSuite ;
+    rdfs:label "Reviewed contract requires contract amount" ;
+    t:definitionVersion "1" ;
+    t:baselinePath "baseline/SF1_Appraisal_v1.4.xml" ;
+    t:expectedCaseCount 6 ;
+    t:rowId "0600.0008" ;
+    t:ruleId "UAD1129" ;
+    t:primaryDataElement "SalesContractAmount" ;
+    t:expectedSeverity "fatal" ;
+    t:contextPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SALES_CONTRACTS/m:SALES_CONTRACT/m:SALES_CONTRACT_DETAIL" ;
+    t:expectedContextCount 1 ;
+    t:triggerElement "m:SalesContractReviewedIndicator" ;
+    t:targetElement "m:SalesContractAmount" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SALES_CONTRACTS/m:SALES_CONTRACT/m:SALES_CONTRACT_DETAIL/m:SalesContractAmount" ;
+    t:conditionOperator t:Equals ;
+    t:conditionValue "true" ;
+    t:namespaceBinding suite:sales-contract-mismo,
+                       suite:sales-contract-xsi .
+
+case:0600.0008-UAD1129-true-missing
+    a t:ConditionalTestCase ;
+    t:inSuite suite:conditional-required-UAD1129 ;
+    t:scenarioId "IT-34R1S1" ;
+    t:triggerValue "true" ;
+    t:expectedConditionResult true ;
+    t:targetState t:Absent ;
+    t:expectedMatchingFindingCount 1 .
+
+case:0600.0008-UAD1129-true-present
+    a t:ConditionalTestCase ;
+    t:inSuite suite:conditional-required-UAD1129 ;
+    t:scenarioId "IT-34R1S1" ;
+    t:triggerValue "true" ;
+    t:expectedConditionResult true ;
+    t:targetState t:Present ;
+    t:targetValue "489000" ;
+    t:expectedMatchingFindingCount 0 .
+
+case:0600.0008-UAD1129-false-missing
+    a t:ConditionalTestCase ;
+    t:inSuite suite:conditional-required-UAD1129 ;
+    t:scenarioId "IT-34R1S2" ;
+    t:triggerValue "false" ;
+    t:expectedConditionResult false ;
+    t:targetState t:Absent ;
+    t:expectedMatchingFindingCount 0 .
+
+case:0600.0008-UAD1129-true-empty
+    a t:ConditionalTestCase ;
+    t:inSuite suite:conditional-required-UAD1129 ;
+    t:scenarioId "IT-34R1S1" ;
+    t:triggerValue "true" ;
+    t:expectedConditionResult true ;
+    t:targetState t:Empty ;
+    t:expectedMatchingFindingCount 1 .
+
+case:0600.0008-UAD1129-true-whitespace
+    a t:ConditionalTestCase ;
+    t:inSuite suite:conditional-required-UAD1129 ;
+    t:scenarioId "IT-34R1S1" ;
+    t:triggerValue "true" ;
+    t:expectedConditionResult true ;
+    t:targetState t:Whitespace ;
+    t:targetValue " \t\n " ;
+    t:expectedMatchingFindingCount 1 .
+
+case:0600.0008-UAD1129-true-nil
+    a t:ConditionalTestCase ;
+    t:inSuite suite:conditional-required-UAD1129 ;
+    t:scenarioId "IT-34R1S1" ;
+    t:triggerValue "true" ;
+    t:expectedConditionResult true ;
+    t:targetState t:Nil ;
+    t:expectedMatchingFindingCount 1 .
+
+# UAD1130: SalesContractDate
+
+suite:conditional-required-UAD1130
+    a t:ConditionalTestSuite ;
+    rdfs:label "Reviewed contract requires contract date" ;
+    t:definitionVersion "1" ;
+    t:baselinePath "baseline/SF1_Appraisal_v1.4.xml" ;
+    t:expectedCaseCount 6 ;
+    t:rowId "0600.0009" ;
+    t:ruleId "UAD1130" ;
+    t:primaryDataElement "SalesContractDate" ;
+    t:expectedSeverity "fatal" ;
+    t:contextPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SALES_CONTRACTS/m:SALES_CONTRACT/m:SALES_CONTRACT_DETAIL" ;
+    t:expectedContextCount 1 ;
+    t:triggerElement "m:SalesContractReviewedIndicator" ;
+    t:targetElement "m:SalesContractDate" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SALES_CONTRACTS/m:SALES_CONTRACT/m:SALES_CONTRACT_DETAIL/m:SalesContractDate" ;
+    t:conditionOperator t:Equals ;
+    t:conditionValue "true" ;
+    t:namespaceBinding suite:sales-contract-mismo,
+                       suite:sales-contract-xsi .
+
+case:0600.0009-UAD1130-true-missing
+    a t:ConditionalTestCase ;
+    t:inSuite suite:conditional-required-UAD1130 ;
+    t:scenarioId "IT-34R1S1" ;
+    t:triggerValue "true" ;
+    t:expectedConditionResult true ;
+    t:targetState t:Absent ;
+    t:expectedMatchingFindingCount 1 .
+
+case:0600.0009-UAD1130-true-present
+    a t:ConditionalTestCase ;
+    t:inSuite suite:conditional-required-UAD1130 ;
+    t:scenarioId "IT-34R1S1" ;
+    t:triggerValue "true" ;
+    t:expectedConditionResult true ;
+    t:targetState t:Present ;
+    t:targetValue "2019-09-17" ;
+    t:expectedMatchingFindingCount 0 .
+
+case:0600.0009-UAD1130-false-missing
+    a t:ConditionalTestCase ;
+    t:inSuite suite:conditional-required-UAD1130 ;
+    t:scenarioId "IT-34R1S2" ;
+    t:triggerValue "false" ;
+    t:expectedConditionResult false ;
+    t:targetState t:Absent ;
+    t:expectedMatchingFindingCount 0 .
+
+case:0600.0009-UAD1130-true-empty
+    a t:ConditionalTestCase ;
+    t:inSuite suite:conditional-required-UAD1130 ;
+    t:scenarioId "IT-34R1S1" ;
+    t:triggerValue "true" ;
+    t:expectedConditionResult true ;
+    t:targetState t:Empty ;
+    t:expectedMatchingFindingCount 1 .
+
+case:0600.0009-UAD1130-true-whitespace
+    a t:ConditionalTestCase ;
+    t:inSuite suite:conditional-required-UAD1130 ;
+    t:scenarioId "IT-34R1S1" ;
+    t:triggerValue "true" ;
+    t:expectedConditionResult true ;
+    t:targetState t:Whitespace ;
+    t:targetValue " \t\n " ;
+    t:expectedMatchingFindingCount 1 .
+
+case:0600.0009-UAD1130-true-nil
+    a t:ConditionalTestCase ;
+    t:inSuite suite:conditional-required-UAD1130 ;
+    t:scenarioId "IT-34R1S1" ;
+    t:triggerValue "true" ;
+    t:expectedConditionResult true ;
+    t:targetState t:Nil ;
+    t:expectedMatchingFindingCount 1 .
+
+# UAD1135: SaleType
+
+suite:conditional-required-UAD1135
+    a t:ConditionalTestSuite ;
+    rdfs:label "Reviewed contract requires sale type" ;
+    t:definitionVersion "1" ;
+    t:baselinePath "baseline/SF1_Appraisal_v1.4.xml" ;
+    t:expectedCaseCount 6 ;
+    t:rowId "0600.0017" ;
+    t:ruleId "UAD1135" ;
+    t:primaryDataElement "SaleType" ;
+    t:expectedSeverity "fatal" ;
+    t:contextPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SALES_CONTRACTS/m:SALES_CONTRACT/m:SALES_CONTRACT_DETAIL" ;
+    t:expectedContextCount 1 ;
+    t:triggerElement "m:SalesContractReviewedIndicator" ;
+    t:targetElement "m:SaleType" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SALES_CONTRACTS/m:SALES_CONTRACT/m:SALES_CONTRACT_DETAIL/m:SaleType" ;
+    t:conditionOperator t:Equals ;
+    t:conditionValue "true" ;
+    t:namespaceBinding suite:sales-contract-mismo,
+                       suite:sales-contract-xsi .
+
+case:0600.0017-UAD1135-true-missing
+    a t:ConditionalTestCase ;
+    t:inSuite suite:conditional-required-UAD1135 ;
+    t:scenarioId "IT-34R1S1" ;
+    t:triggerValue "true" ;
+    t:expectedConditionResult true ;
+    t:targetState t:Absent ;
+    t:expectedMatchingFindingCount 1 .
+
+case:0600.0017-UAD1135-true-present
+    a t:ConditionalTestCase ;
+    t:inSuite suite:conditional-required-UAD1135 ;
+    t:scenarioId "IT-34R1S1" ;
+    t:triggerValue "true" ;
+    t:expectedConditionResult true ;
+    t:targetState t:Present ;
+    t:targetValue "TypicallyMotivated" ;
+    t:expectedMatchingFindingCount 0 .
+
+case:0600.0017-UAD1135-false-missing
+    a t:ConditionalTestCase ;
+    t:inSuite suite:conditional-required-UAD1135 ;
+    t:scenarioId "IT-34R1S2" ;
+    t:triggerValue "false" ;
+    t:expectedConditionResult false ;
+    t:targetState t:Absent ;
+    t:expectedMatchingFindingCount 0 .
+
+case:0600.0017-UAD1135-true-empty
+    a t:ConditionalTestCase ;
+    t:inSuite suite:conditional-required-UAD1135 ;
+    t:scenarioId "IT-34R1S1" ;
+    t:triggerValue "true" ;
+    t:expectedConditionResult true ;
+    t:targetState t:Empty ;
+    t:expectedMatchingFindingCount 1 .
+
+case:0600.0017-UAD1135-true-whitespace
+    a t:ConditionalTestCase ;
+    t:inSuite suite:conditional-required-UAD1135 ;
+    t:scenarioId "IT-34R1S1" ;
+    t:triggerValue "true" ;
+    t:expectedConditionResult true ;
+    t:targetState t:Whitespace ;
+    t:targetValue " \t\n " ;
+    t:expectedMatchingFindingCount 1 .
+
+case:0600.0017-UAD1135-true-nil
+    a t:ConditionalTestCase ;
+    t:inSuite suite:conditional-required-UAD1135 ;
+    t:scenarioId "IT-34R1S1" ;
+    t:triggerValue "true" ;
+    t:expectedConditionResult true ;
+    t:targetState t:Nil ;
+    t:expectedMatchingFindingCount 1 .

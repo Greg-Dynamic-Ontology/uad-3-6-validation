@@ -1,11 +1,12 @@
 """Evaluate Fatal required-data rules from the production CSV.
 
-Supports unconditional required-data rules and the explicitly mapped
-UAD1022 conditional requirement. Test definitions are not read here.
+Supports unconditional requirements and explicitly mapped conditional
+requirements. RDF test definitions are never read by this module.
 """
 
 import csv
 import logging
+from dataclasses import dataclass
 from functools import lru_cache
 from pathlib import Path
 from uuid import uuid4
@@ -22,27 +23,76 @@ NAMESPACE = "http://www.mismo.org/residential/2009/schemas"
 NS = {"m": NAMESPACE}
 logger = logging.getLogger(__name__)
 
-# Explicitly supported governed condition.
-# The trigger is a sibling of the dependent element in PROPERTY_DETAIL.
-CONDITIONAL_ROW_ID = "0100.0053"
-CONDITIONAL_RULE_ID = "UAD1022"
-CONDITIONAL_ELEMENT = "PropertyEstateTypeOtherDescription"
-CONDITIONAL_TRIGGER = "PropertyEstateType"
-CONDITIONAL_VALUE = "Other"
-CONDITIONAL_PARENT_PATH = (
+
+@dataclass(frozen=True)
+class ConditionalRule:
+    element: str
+    trigger: str
+    value: str
+    parent_path: str
+
+    @property
+    def logic(self) -> str:
+        return (
+            f'If {self.trigger} = "{self.value}" and '
+            f"{self.element} is not provided"
+        )
+
+
+PROPERTY_DETAIL_PATH = (
     "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/"
 )
-CONDITIONAL_LOGIC = (
-    'If PropertyEstateType = "Other" and '
-    "PropertyEstateTypeOtherDescription is not provided"
+SALES_CONTRACT_DETAIL_PATH = (
+    "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/"
+    "SALES_CONTRACTS/SALES_CONTRACT/SALES_CONTRACT_DETAIL/"
 )
+
+# Each trigger and dependent element share the declared parent context.
+# Keys preserve both source row identity and source rule identity.
+CONDITIONAL_RULES = {
+    ("0100.0053", "UAD1022"): ConditionalRule(
+        element="PropertyEstateTypeOtherDescription",
+        trigger="PropertyEstateType",
+        value="Other",
+        parent_path=PROPERTY_DETAIL_PATH,
+    ),
+    ("0600.0006", "UAD1128"): ConditionalRule(
+        element="SalesConcessionIndicator",
+        trigger="SalesContractReviewedIndicator",
+        value="true",
+        parent_path=SALES_CONTRACT_DETAIL_PATH,
+    ),
+    ("0600.0008", "UAD1129"): ConditionalRule(
+        element="SalesContractAmount",
+        trigger="SalesContractReviewedIndicator",
+        value="true",
+        parent_path=SALES_CONTRACT_DETAIL_PATH,
+    ),
+    ("0600.0009", "UAD1130"): ConditionalRule(
+        element="SalesContractDate",
+        trigger="SalesContractReviewedIndicator",
+        value="true",
+        parent_path=SALES_CONTRACT_DETAIL_PATH,
+    ),
+    ("0600.0017", "UAD1135"): ConditionalRule(
+        element="SaleType",
+        trigger="SalesContractReviewedIndicator",
+        value="true",
+        parent_path=SALES_CONTRACT_DETAIL_PATH,
+    ),
+}
+
+
+def conditional_spec(
+    rule: dict[str, str],
+) -> ConditionalRule | None:
+    return CONDITIONAL_RULES.get(
+        (rule.get("Unique ID"), rule.get("Message ID"))
+    )
 
 
 def is_conditional_rule(rule: dict[str, str]) -> bool:
-    return (
-        rule.get("Unique ID") == CONDITIONAL_ROW_ID
-        and rule.get("Message ID") == CONDITIONAL_RULE_ID
-    )
+    return conditional_spec(rule) is not None
 
 
 @lru_cache(maxsize=1)
@@ -52,21 +102,24 @@ def load_required_rules() -> tuple[dict[str, str], ...]:
 
     rules = []
     for row in rows:
-        if is_conditional_rule(row):
+        specification = conditional_spec(row)
+
+        if specification is not None:
             expected = {
-                "Primary Data Element": CONDITIONAL_ELEMENT,
-                "Rule Logic": CONDITIONAL_LOGIC,
+                "Primary Data Element": specification.element,
+                "Rule Logic": specification.logic,
                 "Severity": "Fatal",
                 "Property Affected": "Subject",
-                " xPath": CONDITIONAL_PARENT_PATH,
+                " xPath": specification.parent_path,
             }
             for field, value in expected.items():
                 if row.get(field) != value:
                     raise ValueError(
-                        f"{CONDITIONAL_ROW_ID}/{CONDITIONAL_RULE_ID}: "
+                        f"{row['Unique ID']}/{row['Message ID']}: "
                         f"unsupported governed definition for {field}"
                     )
             rules.append(row)
+
         elif (
             row["Severity"] == "Fatal"
             and row["Rule Logic"]
@@ -145,12 +198,15 @@ def conditional_elements(
     remaining: list[str],
     rule: dict[str, str],
 ) -> list[Element] | None:
-    """Return dependent elements when true; None when explicitly false.
+    """Return dependent elements when true; None when false.
 
-    Missing or ambiguous condition input is an evaluation error, never
-    silently interpreted as a false condition.
+    Missing or ambiguous condition inputs raise an evaluation error.
+    They are not silently interpreted as false.
     """
     identity = f"{rule['Unique ID']}/{rule['Message ID']}"
+    specification = conditional_spec(rule)
+    if specification is None:
+        raise ValueError(f"{identity}: unsupported conditional rule")
 
     if context is None:
         raise ValueError(
@@ -171,22 +227,22 @@ def conditional_elements(
 
     container = containers[0]
     triggers = container.findall(
-        f"{{{NAMESPACE}}}{CONDITIONAL_TRIGGER}"
+        f"{{{NAMESPACE}}}{specification.trigger}"
     )
     if len(triggers) != 1:
         raise ValueError(
-            f"{identity}: expected one {CONDITIONAL_TRIGGER}, "
+            f"{identity}: expected one {specification.trigger}, "
             f"found {len(triggers)}"
         )
 
     trigger = triggers[0]
     if list(trigger) or not has_value(trigger):
         raise ValueError(
-            f"{identity}: {CONDITIONAL_TRIGGER} must have "
+            f"{identity}: {specification.trigger} must have "
             "one nonblank, non-nil scalar value"
         )
 
-    if (trigger.text or "").strip() != CONDITIONAL_VALUE:
+    if (trigger.text or "").strip() != specification.value:
         return None
 
     return container.findall(
@@ -264,7 +320,7 @@ def evaluate_required_data(
             rule[" xPath"].removeprefix("../").strip("/").split("/")
         )
         element_name = rule["Primary Data Element"]
-        conditional = is_conditional_rule(rule)
+        specification = conditional_spec(rule)
 
         for analysis in analyses:
             if rule["Property Affected"] == "Subject":
@@ -288,12 +344,11 @@ def evaluate_required_data(
             )
 
             for context in contexts or [None]:
-                if conditional:
+                if specification is not None:
                     elements = conditional_elements(
                         context, remaining, rule
                     )
                     if elements is None:
-                        # Explicitly false condition: no dependent check.
                         continue
                 else:
                     elements = (
@@ -335,11 +390,11 @@ def evaluate_required_data(
                 expected_condition = (
                     f"{element_name} must be provided."
                 )
-                if conditional:
+                if specification is not None:
                     expected_condition = (
                         f'{element_name} must be provided when '
-                        f'{CONDITIONAL_TRIGGER} = "{CONDITIONAL_VALUE}" '
-                        "in the same subject-property context."
+                        f'{specification.trigger} = "{specification.value}" '
+                        "in the same subject-property XML context."
                     )
 
                 findings.append(

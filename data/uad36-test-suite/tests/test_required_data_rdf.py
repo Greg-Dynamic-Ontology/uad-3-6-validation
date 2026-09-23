@@ -1,11 +1,14 @@
-"""Run RDF-defined unconditional and conditional required-data tests.
+"""Run RDF-defined required-data acceptance tests.
 
-The RDF describes test inputs and expectations, not production rules.
+Loads:
+    fixtures/required_data/test-suite.ttl
+    fixtures/required_data/sales-contract-tests.ttl
 
-Expected collection with the current test-suite.ttl:
-    55 existing tests + 6 conditional cases = 61 tests.
+With the current definitions:
+    55 unconditional tests + 30 conditional cases = 85 tests.
 
-No XML fixtures, RDF definitions, or production rules are modified.
+RDF supplies test inputs and expectations, never production rules.
+XML variations are created in memory; no fixture files are modified.
 """
 
 from pathlib import Path, PurePosixPath
@@ -21,7 +24,10 @@ from app.services.validation import ValidationService
 
 T = Namespace("https://dynamicontology.com/uad36/test-vocabulary#")
 FIXTURES = Path(__file__).resolve().parent / "fixtures" / "required_data"
-DEFINITIONS = FIXTURES / "test-suite.ttl"
+DEFINITION_FILES = (
+    FIXTURES / "test-suite.ttl",
+    FIXTURES / "sales-contract-tests.ttl",
+)
 XSI = "http://www.w3.org/2001/XMLSchema-instance"
 NIL_ATTRIBUTE = f"{{{XSI}}}nil"
 
@@ -98,35 +104,66 @@ def namespaces(graph, subject):
     return result
 
 
-def suite_subject(graph, suite_type):
-    subjects = set(graph.subjects(RDF.type, suite_type))
-    if len(subjects) != 1:
+def suite_subjects(graph, suite_type):
+    subjects = sorted(set(graph.subjects(RDF.type, suite_type)), key=str)
+    if not subjects:
+        raise ValueError(f"No suites declared for {suite_type}")
+    for subject in subjects:
+        if not isinstance(subject, URIRef):
+            raise ValueError("Every suite must have a stable IRI")
+        if string_value(graph, subject, T.definitionVersion) != "1":
+            raise ValueError(f"{subject}: unsupported definition version")
+    return subjects
+
+
+def validate_memberships(graph):
+    """Reject orphan cases, unknown suites, and ambiguous membership."""
+    type_pairs = {
+        T.TestSuite: T.TestCase,
+        T.ConditionalTestSuite: T.ConditionalTestCase,
+    }
+    suite_types = {}
+    for suite_type in type_pairs:
+        for subject in graph.subjects(RDF.type, suite_type):
+            if subject in suite_types:
+                raise ValueError(f"{subject}: conflicting suite types")
+            suite_types[subject] = suite_type
+
+    case_types = {}
+    for case_type in type_pairs.values():
+        for member in graph.subjects(RDF.type, case_type):
+            if member in case_types:
+                raise ValueError(f"{member}: conflicting case types")
+            case_types[member] = case_type
+
+    linked_cases = set(graph.subjects(T.inSuite, None))
+    if linked_cases != set(case_types):
         raise ValueError(
-            f"Expected one {suite_type}, found {len(subjects)}"
+            "Every declared case must have suite membership, "
+            "and every suite member must have a supported case type"
         )
-    subject = next(iter(subjects))
-    if string_value(graph, subject, T.definitionVersion) != "1":
-        raise ValueError(f"{subject}: unsupported definition version")
-    return subject
+
+    for member, case_type in case_types.items():
+        if not isinstance(member, URIRef):
+            raise ValueError("Every case must have a stable IRI")
+        suite = one(graph, member, T.inSuite)
+        suite_type = suite_types.get(suite)
+        if suite_type is None:
+            raise ValueError(f"{member}: unknown suite {suite}")
+        if type_pairs[suite_type] != case_type:
+            raise ValueError(f"{member}: case type does not match its suite")
 
 
 def members(graph, subject, case_type):
     found = set(graph.subjects(T.inSuite, subject))
-    typed = set(graph.subjects(RDF.type, case_type))
-    if found != typed:
-        raise ValueError(
-            f"{subject}: suite membership and {case_type} declarations differ"
-        )
-
     expected = count_value(graph, subject, T.expectedCaseCount)
     if expected == 0 or len(found) != expected:
         raise ValueError(
             f"{subject}: expected {expected} cases, found {len(found)}"
         )
-
     for member in found:
-        if not isinstance(member, URIRef):
-            raise ValueError("Every case must have a stable IRI")
+        if (member, RDF.type, case_type) not in graph:
+            raise ValueError(f"{member}: expected type {case_type}")
         if one(graph, member, T.inSuite) != subject:
             raise ValueError(f"{member}: invalid suite membership")
     return sorted(found, key=str)
@@ -150,7 +187,11 @@ def expanded_name(qname, ns):
 
 
 def load_required_suite(graph):
-    subject = suite_subject(graph, T.TestSuite)
+    subjects = suite_subjects(graph, T.TestSuite)
+    if len(subjects) != 1:
+        raise ValueError("Expected exactly one unconditional suite")
+    subject = subjects[0]
+
     if one(graph, subject, T.findingScope) != T.DeclaredRuleIds:
         raise ValueError("Unsupported required-data finding scope")
     if one(graph, subject, T.caseKind) != T.MissingElement:
@@ -205,12 +246,12 @@ def load_required_suite(graph):
     return suite
 
 
-def load_conditional_suite(graph):
-    subject = suite_subject(graph, T.ConditionalTestSuite)
+def load_conditional_suite(graph, subject):
     if one(graph, subject, T.conditionOperator) != T.Equals:
-        raise ValueError("Only the Equals condition is supported")
+        raise ValueError(f"{subject}: only Equals conditions are supported")
 
     suite = {
+        "iri": str(subject),
         "baseline": fixture_path(
             string_value(graph, subject, T.baselinePath)
         ),
@@ -290,25 +331,65 @@ def load_conditional_suite(graph):
             raise ValueError(f"{member}: inconsistent finding expectation")
         cases.append(case)
 
-    ids = [case["id"] for case in cases]
-    if len(set(ids)) != len(ids):
-        raise ValueError("Duplicate conditional test IDs")
-
     suite["cases"] = sorted(cases, key=lambda case: case["id"])
     return suite
 
 
-if not DEFINITIONS.is_file():
-    raise ValueError(f"Missing RDF test definitions: {DEFINITIONS}")
+def load_definitions():
+    graph = Graph()
+    seen_suites = set()
+    seen_cases = set()
 
-GRAPH = Graph()
-GRAPH.parse(DEFINITIONS, format="turtle")
+    for path in DEFINITION_FILES:
+        if not path.is_file():
+            raise ValueError(f"Missing RDF test definitions: {path}")
+
+        document = Graph()
+        document.parse(path, format="turtle")
+
+        document_suites = (
+            set(document.subjects(RDF.type, T.TestSuite))
+            | set(document.subjects(RDF.type, T.ConditionalTestSuite))
+        )
+        document_cases = (
+            set(document.subjects(RDF.type, T.TestCase))
+            | set(document.subjects(RDF.type, T.ConditionalTestCase))
+        )
+        if not document_suites:
+            raise ValueError(f"No test suites declared in {path}")
+        if seen_suites & document_suites:
+            raise ValueError(f"Duplicate suite definitions across files: {path}")
+        if seen_cases & document_cases:
+            raise ValueError(f"Duplicate case definitions across files: {path}")
+
+        seen_suites.update(document_suites)
+        seen_cases.update(document_cases)
+        graph += document
+
+    validate_memberships(graph)
+    return graph
+
+
+GRAPH = load_definitions()
 REQUIRED = load_required_suite(GRAPH)
-CONDITIONAL = load_conditional_suite(GRAPH)
+CONDITIONAL_SUITES = [
+    load_conditional_suite(GRAPH, subject)
+    for subject in suite_subjects(GRAPH, T.ConditionalTestSuite)
+]
+
+# Every parameter carries its own suite; no shared mutable current suite.
+CONDITIONAL_CASES = [
+    (suite, case)
+    for suite in CONDITIONAL_SUITES
+    for case in suite["cases"]
+]
+CONDITIONAL_IDS = [case["id"] for _, case in CONDITIONAL_CASES]
+if len(set(CONDITIONAL_IDS)) != len(CONDITIONAL_IDS):
+    raise ValueError("Duplicate conditional test IDs across suites")
 
 
 def select_nodes(root, path, ns):
-    """Resolve the supported descendant paths using namespace bindings."""
+    """Resolve supported descendant paths using namespace bindings."""
     if not path.startswith("//"):
         raise ValueError(f"Unsupported XML context: {path}")
     wrapper = ET.Element("_test_document")
@@ -430,9 +511,8 @@ def test_rdf_missing_element_produces_expected_finding(case):
         )
 
 
-def conditional_xml(case):
+def conditional_xml(suite, case):
     """Create one independent variation without changing any disk file."""
-    suite = CONDITIONAL
     root = ET.parse(suite["baseline"]).getroot()
     contexts = select_nodes(root, suite["context"], suite["namespaces"])
     assert len(contexts) == suite["context_count"], (
@@ -485,11 +565,15 @@ def conditional_xml(case):
 
 
 @pytest.mark.parametrize(
-    "case", CONDITIONAL["cases"], ids=lambda case: case["id"]
+    "suite,case",
+    CONDITIONAL_CASES,
+    ids=CONDITIONAL_IDS,
 )
-def test_rdf_conditional_required_data(case):
-    suite = CONDITIONAL
-    result = validate_xml(conditional_xml(case), case["id"] + ".xml")
+def test_rdf_conditional_required_data(suite, case):
+    result = validate_xml(
+        conditional_xml(suite, case),
+        case["id"] + ".xml",
+    )
     matching = [
         finding for finding in result.findings
         if finding.rule_id == suite["rule_id"]
