@@ -1,4 +1,4 @@
-"""IT-33R5S2 — Prove the positive control and each supported negative fixture."""
+"""IT-33R5S2 — Prove unconditional positive and negative fixtures."""
 
 import csv
 from pathlib import Path
@@ -31,13 +31,29 @@ with (FIXTURES / "manifest.csv").open(
 def supported_rules():
     required_data.load_required_rules.cache_clear()
     try:
-        rules = required_data.load_required_rules()
+        loaded = required_data.load_required_rules()
+
+        assert len({row["Unique ID"] for row in loaded}) == len(loaded), (
+            "Source row IDs must be unique."
+        )
+
+        # This manifest covers unconditional requirements.
+        # Conditional requirements are covered by IT-34.
+        rules = [
+            row
+            for row in loaded
+            if row["Rule Logic"]
+            == f"If {row['Primary Data Element']} is not provided"
+        ]
         by_id = {row["Unique ID"]: row for row in rules}
 
         assert CASES, "The manifest must contain fixture cases."
-        assert len(by_id) == len(rules), "Source row IDs must be unique."
+        assert len({case["row_id"] for case in CASES}) == len(CASES), (
+            "Each manifest row must have a unique source row ID."
+        )
         assert set(by_id) == {case["row_id"] for case in CASES}, (
-            "Fixture coverage must match the supported constraint set."
+            "Fixture coverage must exactly match the supported "
+            "unconditional constraint set."
         )
 
         yield by_id
@@ -46,7 +62,7 @@ def supported_rules():
 
 
 def test_it_33_r5_s2_positive_control(supported_rules):
-    """The complete source XML has no selected required-data findings."""
+    """The complete source XML has no required-data findings."""
     original = BASELINE.read_bytes()
     root = ET.fromstring(original)
     original_tree = ET.tostring(root)
@@ -79,9 +95,10 @@ def test_it_33_r5_s2_negative_fixture(case, supported_rules):
     assert len(root.findall(parent_path, required_data.NS)) == 1
     assert root.findall(lookup_path, required_data.NS) == []
 
+    # Exercise all loaded rules, including conditional rules.
     findings = required_data.evaluate_required_data(root, Investor.BOTH)
 
-    # Exactly one finding also rejects unexpected findings for other rows.
+    # Unexpected findings from any rule must still fail this test.
     assert len(findings) == 1, (
         f"Expected only the defect for {case['row_id']}; "
         f"received {[(f.row_id, f.data_location) for f in findings]}"
