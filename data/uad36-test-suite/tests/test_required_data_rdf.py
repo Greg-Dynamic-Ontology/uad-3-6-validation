@@ -1,14 +1,14 @@
 """Run RDF-defined required-data acceptance tests.
 
-Loads:
-    fixtures/required_data/test-suite.ttl
-    fixtures/required_data/sales-contract-tests.ttl
-
-With the current definitions:
-    55 unconditional tests + 30 conditional cases = 85 tests.
+Current collection:
+    55 unconditional tests
+    30 conditional cases
+     6 context-isolation cases
+    --------------------------
+    91 tests
 
 RDF supplies test inputs and expectations, never production rules.
-XML variations are created in memory; no fixture files are modified.
+All XML variations are created in memory.
 """
 
 from pathlib import Path, PurePosixPath
@@ -27,9 +27,16 @@ FIXTURES = Path(__file__).resolve().parent / "fixtures" / "required_data"
 DEFINITION_FILES = (
     FIXTURES / "test-suite.ttl",
     FIXTURES / "sales-contract-tests.ttl",
+    FIXTURES / "context-isolation-tests.ttl",
 )
+TYPE_PAIRS = {
+    T.TestSuite: T.TestCase,
+    T.ConditionalTestSuite: T.ConditionalTestCase,
+    T.ContextIsolationSuite: T.ContextIsolationCase,
+}
 XSI = "http://www.w3.org/2001/XMLSchema-instance"
 NIL_ATTRIBUTE = f"{{{XSI}}}nil"
+TARGET_STATES = {T.Absent, T.Present, T.Empty, T.Whitespace, T.Nil}
 
 
 def one(graph, subject, predicate):
@@ -43,10 +50,10 @@ def one(graph, subject, predicate):
 
 def string_value(graph, subject, predicate, allow_blank=False):
     value = one(graph, subject, predicate)
-    if not isinstance(value, Literal):
+    if not isinstance(value, Literal) or not isinstance(
+        value.toPython(), str
+    ):
         raise ValueError(f"{subject}: {predicate} must be a string literal")
-    if not isinstance(value.toPython(), str):
-        raise ValueError(f"{subject}: {predicate} must be a string")
     text = str(value)
     if not allow_blank and not text.strip():
         raise ValueError(f"{subject}: {predicate} must not be blank")
@@ -80,7 +87,6 @@ def fixture_path(relative):
         or ":" in relative
     ):
         raise ValueError(f"Invalid relative fixture path: {relative}")
-
     path = FIXTURES.joinpath(*portable.parts).resolve()
     if not path.is_relative_to(FIXTURES.resolve()):
         raise ValueError(f"Fixture path escapes fixture directory: {relative}")
@@ -117,40 +123,33 @@ def suite_subjects(graph, suite_type):
 
 
 def validate_memberships(graph):
-    """Reject orphan cases, unknown suites, and ambiguous membership."""
-    type_pairs = {
-        T.TestSuite: T.TestCase,
-        T.ConditionalTestSuite: T.ConditionalTestCase,
-    }
     suite_types = {}
-    for suite_type in type_pairs:
+    for suite_type in TYPE_PAIRS:
         for subject in graph.subjects(RDF.type, suite_type):
             if subject in suite_types:
                 raise ValueError(f"{subject}: conflicting suite types")
             suite_types[subject] = suite_type
 
     case_types = {}
-    for case_type in type_pairs.values():
+    for case_type in TYPE_PAIRS.values():
         for member in graph.subjects(RDF.type, case_type):
             if member in case_types:
                 raise ValueError(f"{member}: conflicting case types")
             case_types[member] = case_type
 
-    linked_cases = set(graph.subjects(T.inSuite, None))
-    if linked_cases != set(case_types):
+    if set(graph.subjects(T.inSuite, None)) != set(case_types):
         raise ValueError(
-            "Every declared case must have suite membership, "
-            "and every suite member must have a supported case type"
+            "Every case must have membership and a supported case type"
         )
 
     for member, case_type in case_types.items():
         if not isinstance(member, URIRef):
             raise ValueError("Every case must have a stable IRI")
-        suite = one(graph, member, T.inSuite)
-        suite_type = suite_types.get(suite)
+        owner = one(graph, member, T.inSuite)
+        suite_type = suite_types.get(owner)
         if suite_type is None:
-            raise ValueError(f"{member}: unknown suite {suite}")
-        if type_pairs[suite_type] != case_type:
+            raise ValueError(f"{member}: unknown suite {owner}")
+        if TYPE_PAIRS[suite_type] != case_type:
             raise ValueError(f"{member}: case type does not match its suite")
 
 
@@ -179,11 +178,47 @@ def fatal_severity(graph, subject):
 def expanded_name(qname, ns):
     parts = qname.split(":")
     if len(parts) != 2 or not all(parts):
-        raise ValueError(f"Expected a namespace-qualified element: {qname}")
+        raise ValueError(f"Expected a qualified element name: {qname}")
     prefix, local = parts
-    if prefix not in ns or any(c in local for c in "/[]@* "):
+    if prefix not in ns or any(c in local for c in "/[]@* \t\n"):
         raise ValueError(f"Invalid qualified element name: {qname}")
     return f"{{{ns[prefix]}}}{local}"
+
+
+def load_definitions():
+    graph = Graph()
+    seen_suites = set()
+    seen_cases = set()
+
+    for path in DEFINITION_FILES:
+        if not path.is_file():
+            raise ValueError(f"Missing RDF definitions: {path}")
+        document = Graph()
+        document.parse(path, format="turtle")
+
+        document_suites = {
+            subject
+            for kind in TYPE_PAIRS
+            for subject in document.subjects(RDF.type, kind)
+        }
+        document_cases = {
+            subject
+            for kind in TYPE_PAIRS.values()
+            for subject in document.subjects(RDF.type, kind)
+        }
+        if not document_suites:
+            raise ValueError(f"No supported suites declared in {path}")
+        if seen_suites & document_suites:
+            raise ValueError(f"Duplicate suite definitions across files: {path}")
+        if seen_cases & document_cases:
+            raise ValueError(f"Duplicate case definitions across files: {path}")
+
+        seen_suites.update(document_suites)
+        seen_cases.update(document_cases)
+        graph += document
+
+    validate_memberships(graph)
+    return graph
 
 
 def load_required_suite(graph):
@@ -197,7 +232,7 @@ def load_required_suite(graph):
     if one(graph, subject, T.caseKind) != T.MissingElement:
         raise ValueError("Expected MissingElement cases")
     if count_value(graph, subject, T.expectedCaseCount) != 53:
-        raise ValueError("The original acceptance suite must contain 53 cases")
+        raise ValueError("The original suite must contain 53 cases")
 
     suite = {
         "baseline": fixture_path(
@@ -246,7 +281,7 @@ def load_required_suite(graph):
     return suite
 
 
-def load_conditional_suite(graph, subject):
+def load_condition_context(graph, subject):
     if one(graph, subject, T.conditionOperator) != T.Equals:
         raise ValueError(f"{subject}: only Equals conditions are supported")
 
@@ -270,10 +305,7 @@ def load_conditional_suite(graph, subject):
         "condition_value": string_value(graph, subject, T.conditionValue),
     }
     if suite["context_count"] != 1:
-        raise ValueError("This conditional runner requires one target context")
-    if suite["namespaces"].get("xsi") != XSI:
-        raise ValueError("Expected the XML Schema Instance namespace")
-
+        raise ValueError("This runner requires one primary context")
     suite["trigger_tag"] = expanded_name(
         suite["trigger"], suite["namespaces"]
     )
@@ -281,93 +313,123 @@ def load_conditional_suite(graph, subject):
         suite["target"], suite["namespaces"]
     )
     if suite["trigger_tag"] == suite["target_tag"]:
-        raise ValueError("Trigger and dependent element must be different")
+        raise ValueError("Trigger and target must be different")
     if suite["target_tag"].rsplit("}", 1)[-1] != suite["element"]:
-        raise ValueError("Target element and Primary Data Element disagree")
+        raise ValueError("Target and Primary Data Element disagree")
     if suite["xml_context"] != suite["context"] + "/" + suite["target"]:
-        raise ValueError("Finding context does not identify the target element")
+        raise ValueError("Finding context does not identify the target")
+    return suite
+
+
+def load_case_core(graph, member, suite):
+    state = one(graph, member, T.targetState)
+    if state not in TARGET_STATES:
+        raise ValueError(f"{member}: unsupported targetState {state}")
+    case = {
+        "id": str(member).rsplit("/", 1)[-1],
+        "trigger_value": string_value(graph, member, T.triggerValue),
+        "condition_result": boolean_value(
+            graph, member, T.expectedConditionResult
+        ),
+        "state": state,
+        "matching_count": count_value(
+            graph, member, T.expectedMatchingFindingCount
+        ),
+    }
+    condition = case["trigger_value"] == suite["condition_value"]
+    if condition != case["condition_result"]:
+        raise ValueError(f"{member}: inconsistent condition expectation")
+    if case["matching_count"] != int(condition and state != T.Present):
+        raise ValueError(f"{member}: inconsistent finding expectation")
+    return case
+
+
+def load_conditional_suite(graph, subject):
+    suite = load_condition_context(graph, subject)
+    if suite["namespaces"].get("xsi") != XSI:
+        raise ValueError("Expected the XML Schema Instance namespace")
 
     cases = []
-    allowed_states = {T.Absent, T.Present, T.Empty, T.Whitespace, T.Nil}
     for member in members(graph, subject, T.ConditionalTestCase):
-        state = one(graph, member, T.targetState)
-        if state not in allowed_states:
-            raise ValueError(f"{member}: unsupported targetState {state}")
-
-        case = {
-            "id": str(member).rsplit("/", 1)[-1],
-            "scenario": string_value(graph, member, T.scenarioId),
-            "trigger_value": string_value(graph, member, T.triggerValue),
-            "condition_result": boolean_value(
-                graph, member, T.expectedConditionResult
-            ),
-            "state": state,
-            "matching_count": count_value(
-                graph, member, T.expectedMatchingFindingCount
-            ),
-            "target_value": None,
-        }
+        case = load_case_core(graph, member, suite)
+        case["scenario"] = string_value(graph, member, T.scenarioId)
+        case["target_value"] = None
 
         values = list(graph.objects(member, T.targetValue))
-        if state in {T.Present, T.Whitespace}:
-            case["target_value"] = string_value(
+        if case["state"] in {T.Present, T.Whitespace}:
+            value = string_value(
                 graph, member, T.targetValue, allow_blank=True
             )
-            if state == T.Present and not case["target_value"].strip():
+            if case["state"] == T.Present and not value.strip():
                 raise ValueError(f"{member}: Present requires nonblank text")
-            if state == T.Whitespace and (
-                not case["target_value"] or case["target_value"].strip()
+            if case["state"] == T.Whitespace and (
+                not value or value.strip()
             ):
                 raise ValueError(f"{member}: expected whitespace-only text")
+            case["target_value"] = value
         elif values:
             raise ValueError(f"{member}: targetValue is not allowed here")
-
-        condition = case["trigger_value"] == suite["condition_value"]
-        if condition != case["condition_result"]:
-            raise ValueError(f"{member}: inconsistent condition expectation")
-
-        expected = int(condition and state != T.Present)
-        if case["matching_count"] != expected:
-            raise ValueError(f"{member}: inconsistent finding expectation")
         cases.append(case)
 
     suite["cases"] = sorted(cases, key=lambda case: case["id"])
     return suite
 
 
-def load_definitions():
-    graph = Graph()
-    seen_suites = set()
-    seen_cases = set()
+def load_isolation_suite(graph, subject):
+    suite = load_condition_context(graph, subject)
+    suite.update({
+        "scenario": string_value(graph, subject, T.scenarioId),
+        "distractor_context": string_value(
+            graph, subject, T.distractorContextPath
+        ),
+        "distractor_count": count_value(
+            graph, subject, T.expectedDistractorContextCount
+        ),
+        "supplied_value": string_value(
+            graph, subject, T.suppliedTargetValue
+        ),
+        "repeat_count": count_value(
+            graph, subject, T.repeatValidationCount
+        ),
+    })
+    if suite["distractor_count"] != 1:
+        raise ValueError("Isolation requires exactly one distractor context")
+    if suite["context"] == suite["distractor_context"]:
+        raise ValueError("Primary and distractor paths must differ")
+    if suite["repeat_count"] < 2:
+        raise ValueError("Isolation requires at least two validation runs")
 
-    for path in DEFINITION_FILES:
-        if not path.is_file():
-            raise ValueError(f"Missing RDF test definitions: {path}")
-
-        document = Graph()
-        document.parse(path, format="turtle")
-
-        document_suites = (
-            set(document.subjects(RDF.type, T.TestSuite))
-            | set(document.subjects(RDF.type, T.ConditionalTestSuite))
+    cases = []
+    for member in members(graph, subject, T.ContextIsolationCase):
+        case = load_case_core(graph, member, suite)
+        case["scenario"] = suite["scenario"]
+        case["target_value"] = suite["supplied_value"]
+        case["distractor_trigger"] = string_value(
+            graph, member, T.distractorTriggerValue
         )
-        document_cases = (
-            set(document.subjects(RDF.type, T.TestCase))
-            | set(document.subjects(RDF.type, T.ConditionalTestCase))
+        case["distractor_state"] = one(
+            graph, member, T.distractorTargetState
         )
-        if not document_suites:
-            raise ValueError(f"No test suites declared in {path}")
-        if seen_suites & document_suites:
-            raise ValueError(f"Duplicate suite definitions across files: {path}")
-        if seen_cases & document_cases:
-            raise ValueError(f"Duplicate case definitions across files: {path}")
+        if case["state"] not in {T.Absent, T.Present}:
+            raise ValueError("Isolation supports Absent and Present only")
+        if case["distractor_state"] not in {T.Absent, T.Present}:
+            raise ValueError("Unsupported distractor target state")
+        cases.append(case)
 
-        seen_suites.update(document_suites)
-        seen_cases.update(document_cases)
-        graph += document
+    suite["cases"] = sorted(cases, key=lambda case: case["id"])
+    return suite
 
-    validate_memberships(graph)
-    return graph
+
+def parameters(suites):
+    pairs = [
+        (suite, case)
+        for suite in suites
+        for case in suite["cases"]
+    ]
+    ids = [case["id"] for _, case in pairs]
+    if len(set(ids)) != len(ids):
+        raise ValueError("Duplicate test IDs across suites")
+    return pairs, ids
 
 
 GRAPH = load_definitions()
@@ -376,20 +438,15 @@ CONDITIONAL_SUITES = [
     load_conditional_suite(GRAPH, subject)
     for subject in suite_subjects(GRAPH, T.ConditionalTestSuite)
 ]
-
-# Every parameter carries its own suite; no shared mutable current suite.
-CONDITIONAL_CASES = [
-    (suite, case)
-    for suite in CONDITIONAL_SUITES
-    for case in suite["cases"]
+ISOLATION_SUITES = [
+    load_isolation_suite(GRAPH, subject)
+    for subject in suite_subjects(GRAPH, T.ContextIsolationSuite)
 ]
-CONDITIONAL_IDS = [case["id"] for _, case in CONDITIONAL_CASES]
-if len(set(CONDITIONAL_IDS)) != len(CONDITIONAL_IDS):
-    raise ValueError("Duplicate conditional test IDs across suites")
+CONDITIONAL_CASES, CONDITIONAL_IDS = parameters(CONDITIONAL_SUITES)
+ISOLATION_CASES, ISOLATION_IDS = parameters(ISOLATION_SUITES)
 
 
 def select_nodes(root, path, ns):
-    """Resolve supported descendant paths using namespace bindings."""
     if not path.startswith("//"):
         raise ValueError(f"Unsupported XML context: {path}")
     wrapper = ET.Element("_test_document")
@@ -400,8 +457,10 @@ def select_nodes(root, path, ns):
         raise ValueError(f"Invalid XML context {path}: {error}") from error
 
 
-def validate_xml(xml_text, package_name):
-    result = ValidationService().validate(
+def validate_xml(xml_text, package_name, service=None):
+    if service is None:
+        service = ValidationService()
+    result = service.validate(
         ValidationRequest(
             package_name=package_name,
             xml_text=xml_text,
@@ -450,6 +509,35 @@ def check_finding(finding, row_id, severity, xml_context, test_id):
         f"Expected: {xml_context}\n"
         f"Received: {finding.data_location}"
     )
+
+
+def check_conditional_result(result, suite, case):
+    matching = [
+        finding for finding in result.findings
+        if finding.rule_id == suite["rule_id"]
+    ]
+    assert len(matching) == case["matching_count"], (
+        f"{case['id']} ({case['scenario']}): expected "
+        f"{case['matching_count']} findings for {suite['rule_id']}; "
+        f"received {describe(result.findings)}"
+    )
+    for finding in matching:
+        check_finding(
+            finding, suite["row_id"], suite["severity"],
+            suite["xml_context"], case["id"],
+        )
+        assert finding.primary_data_element == suite["element"], (
+            f"{case['id']}: incorrect Primary Data Element"
+        )
+        guidance = finding.expected_condition or ""
+        for term in (
+            suite["trigger"].split(":", 1)[1],
+            suite["condition_value"],
+            suite["element"],
+        ):
+            assert term in guidance, (
+                f"{case['id']}: correction guidance must include {term!r}"
+            )
 
 
 def test_rdf_fixtures_have_the_declared_missing_elements():
@@ -511,33 +599,26 @@ def test_rdf_missing_element_produces_expected_finding(case):
         )
 
 
-def conditional_xml(suite, case):
-    """Create one independent variation without changing any disk file."""
-    root = ET.parse(suite["baseline"]).getroot()
-    contexts = select_nodes(root, suite["context"], suite["namespaces"])
-    assert len(contexts) == suite["context_count"], (
-        f"{case['id']}: expected {suite['context_count']} contexts, "
-        f"found {len(contexts)}"
-    )
-    context = contexts[0]
-
+def set_context_state(
+    context, suite, trigger_value, state, value, allow_new_trigger=False
+):
+    """Modify only the trigger and target in the selected XML context."""
     triggers = context.findall(suite["trigger_tag"])
-    assert len(triggers) == 1, (
-        f"{case['id']}: expected one existing trigger, found {len(triggers)}"
-    )
-    trigger = triggers[0]
-    assert not list(trigger), "Trigger must be a scalar element"
+    assert len(triggers) <= 1, "Duplicate trigger elements"
+    if not triggers:
+        assert allow_new_trigger, "Expected one existing trigger"
+        trigger = ET.SubElement(context, suite["trigger_tag"])
+    else:
+        trigger = triggers[0]
+
+    assert not list(trigger), "Trigger must be scalar"
     assert trigger.get(NIL_ATTRIBUTE) not in {"true", "1"}, (
         "Baseline trigger must not be nil"
     )
-    trigger.text = case["trigger_value"]
-
-    assert (trigger.text == suite["condition_value"]) == case[
-        "condition_result"
-    ], f"{case['id']}: fixture condition does not match the definition"
+    trigger.text = trigger_value
 
     existing = context.findall(suite["target_tag"])
-    assert len(existing) <= 1, "Baseline has duplicate dependent elements"
+    assert len(existing) <= 1, "Duplicate dependent elements"
     position = (
         list(context).index(existing[0])
         if existing
@@ -546,58 +627,154 @@ def conditional_xml(suite, case):
     for target in existing:
         context.remove(target)
 
-    if case["state"] != T.Absent:
+    if state != T.Absent:
         target = ET.Element(suite["target_tag"])
-        if case["state"] in {T.Present, T.Whitespace}:
-            target.text = case["target_value"]
-        elif case["state"] == T.Nil:
+        if state in {T.Present, T.Whitespace}:
+            target.text = value
+        elif state == T.Nil:
             target.set(NIL_ATTRIBUTE, "true")
         context.insert(position, target)
 
-    targets = select_nodes(
-        root, suite["xml_context"], suite["namespaces"]
+    # Verify the constructed input before calling production code.
+    triggers = context.findall(suite["trigger_tag"])
+    assert len(triggers) == 1
+    assert triggers[0].text == trigger_value
+    assert trigger_value.strip()
+    targets = context.findall(suite["target_tag"])
+    assert len(targets) == (0 if state == T.Absent else 1)
+
+    if targets:
+        target = targets[0]
+        assert not list(target)
+        if state in {T.Present, T.Whitespace}:
+            assert target.text == value
+            assert target.get(NIL_ATTRIBUTE) is None
+        elif state == T.Empty:
+            assert not target.text
+            assert target.get(NIL_ATTRIBUTE) is None
+        elif state == T.Nil:
+            assert target.get(NIL_ATTRIBUTE) == "true"
+            assert not target.text
+
+
+def primary_context(root, suite, case):
+    contexts = select_nodes(root, suite["context"], suite["namespaces"])
+    assert len(contexts) == suite["context_count"], (
+        f"{case['id']}: expected {suite['context_count']} primary "
+        f"contexts, found {len(contexts)}"
     )
-    expected_targets = 0 if case["state"] == T.Absent else 1
-    assert len(targets) == expected_targets, (
-        f"{case['id']}: constructed target state is incorrect"
+    return contexts[0]
+
+
+def conditional_xml(suite, case):
+    root = ET.parse(suite["baseline"]).getroot()
+    context = primary_context(root, suite, case)
+    set_context_state(
+        context, suite, case["trigger_value"],
+        case["state"], case["target_value"],
     )
+    trigger = context.find(suite["trigger_tag"])
+    assert trigger is not None
+    assert (trigger.text == suite["condition_value"]) == case[
+        "condition_result"
+    ]
     return ET.tostring(root, encoding="unicode")
 
 
 @pytest.mark.parametrize(
-    "suite,case",
-    CONDITIONAL_CASES,
-    ids=CONDITIONAL_IDS,
+    "suite,case", CONDITIONAL_CASES, ids=CONDITIONAL_IDS
 )
 def test_rdf_conditional_required_data(suite, case):
     result = validate_xml(
-        conditional_xml(suite, case),
-        case["id"] + ".xml",
+        conditional_xml(suite, case), case["id"] + ".xml"
     )
-    matching = [
-        finding for finding in result.findings
-        if finding.rule_id == suite["rule_id"]
-    ]
-    assert len(matching) == case["matching_count"], (
-        f"{case['id']} ({case['scenario']}): "
-        f"expected {case['matching_count']} findings for {suite['rule_id']}; "
-        f"received {describe(result.findings)}"
+    check_conditional_result(result, suite, case)
+
+
+def isolation_xml(suite, case):
+    root = ET.parse(suite["baseline"]).getroot()
+    subject = primary_context(root, suite, case)
+    distractors = select_nodes(
+        root, suite["distractor_context"], suite["namespaces"]
+    )
+    assert len(distractors) == suite["distractor_count"], (
+        f"{case['id']}: expected {suite['distractor_count']} distractor "
+        f"contexts, found {len(distractors)}"
+    )
+    distractor = distractors[0]
+    assert subject is not distractor, "Contexts must be distinct"
+    assert distractor not in list(subject.iter())
+    assert subject not in list(distractor.iter())
+
+    set_context_state(
+        subject, suite, case["trigger_value"],
+        case["state"], suite["supplied_value"],
+    )
+    subject_before = ET.tostring(subject)
+
+    set_context_state(
+        distractor, suite, case["distractor_trigger"],
+        case["distractor_state"], suite["supplied_value"],
+        allow_new_trigger=True,
+    )
+    assert ET.tostring(subject) == subject_before, (
+        "Editing the distractor changed the subject context"
     )
 
-    for finding in matching:
-        check_finding(
-            finding, suite["row_id"], suite["severity"],
-            suite["xml_context"], case["id"],
+    trigger = subject.find(suite["trigger_tag"])
+    assert trigger is not None
+    assert (trigger.text == suite["condition_value"]) == case[
+        "condition_result"
+    ]
+    return ET.tostring(root, encoding="unicode")
+
+
+def ordered_finding_signatures(result):
+    """Compare meaningful finding content, excluding generated identity."""
+    fields = (
+        "rule_id",
+        "row_id",
+        "severity",
+        "investor",
+        "rule_type",
+        "data_location",
+        "nearest_existing_ancestor",
+        "primary_data_element",
+        "property_affected",
+        "violation_kind",
+        "observed_value",
+        "expected_condition",
+        "finding",
+    )
+    return [
+        tuple(getattr(finding, field) for field in fields)
+        for finding in result.findings
+    ]
+
+
+@pytest.mark.parametrize(
+    "suite,case", ISOLATION_CASES, ids=ISOLATION_IDS
+)
+def test_rdf_context_isolation(suite, case):
+    original_baseline = suite["baseline"].read_bytes()
+    xml_text = isolation_xml(suite, case)
+    service = ValidationService()
+    first_signature = None
+
+    for _ in range(suite["repeat_count"]):
+        result = validate_xml(
+            xml_text, case["id"] + ".xml", service=service
         )
-        assert finding.primary_data_element == suite["element"], (
-            f"{case['id']}: incorrect Primary Data Element"
-        )
-        guidance = finding.expected_condition or ""
-        for term in (
-            suite["trigger"].split(":", 1)[1],
-            suite["condition_value"],
-            suite["element"],
-        ):
-            assert term in guidance, (
-                f"{case['id']}: correction guidance must include {term!r}"
+        check_conditional_result(result, suite, case)
+        signature = ordered_finding_signatures(result)
+        if first_signature is None:
+            first_signature = signature
+        else:
+            assert signature == first_signature, (
+                f"{case['id']}: repeated validation changed finding "
+                "content or order"
             )
+
+    assert suite["baseline"].read_bytes() == original_baseline, (
+        f"{case['id']}: baseline file changed"
+    )

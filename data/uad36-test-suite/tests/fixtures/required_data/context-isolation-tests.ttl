@@ -1,0 +1,164 @@
+@prefix t: <https://dynamicontology.com/uad36/test-vocabulary#> .
+@prefix suite: <https://dynamicontology.com/uad36/test-suite/> .
+@prefix case: <https://dynamicontology.com/uad36/test-case/context-isolation/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+# IT-34R2S1: subject/comparable context isolation.
+#
+# Requires a runner extension for ContextIsolationSuite and
+# ContextIsolationCase. The current runner does not load this file.
+#
+# For each case:
+# 1. Parse a fresh baseline copy.
+# 2. Locate exactly one subject context and one distractor context.
+# 3. Confirm that these are distinct XML nodes.
+# 4. Set each context's trigger to its declared value.
+# 5. Remove its existing target element.
+# 6. For Present, insert the target with suppliedTargetValue.
+#    For Absent, leave the target absent.
+# 7. Run the production validator.
+# 8. Check the exact finding count for the declared rule ID.
+# 9. Check each finding's row ID, Fatal severity, and subject XML path.
+# 10. Repeat validation of the same XML and compare ordered finding
+#     signatures, excluding generated finding IDs and run metadata.
+#
+# Trigger and target edits are scoped to their respective contexts.
+# The runner may create a trigger when absent in the comparable.
+# Each trigger must end with exactly one nonblank, non-nil scalar value.
+#
+# The baseline's second PROPERTY is the first SalesComparable.
+# The positional path also checks its ValuationUseType.
+#
+# Neither baseline files nor production rules are modified.
+# This group tests business-rule isolation, not XML Schema conformance.
+
+suite:isolation-mismo
+    t:prefix "m" ;
+    t:namespaceIRI <http://www.mismo.org/residential/2009/schemas> .
+
+# Ownership description: UAD1022.
+# Governed requirement applies to Subject, not SalesComparable.
+
+suite:context-isolation-UAD1022
+    a t:ContextIsolationSuite ;
+    rdfs:label "Ownership description remains in subject context" ;
+    t:definitionVersion "1" ;
+    t:scenarioId "IT-34R2S1" ;
+    t:baselinePath "baseline/SF1_Appraisal_v1.4.xml" ;
+    t:expectedCaseCount 3 ;
+    t:rowId "0100.0053" ;
+    t:ruleId "UAD1022" ;
+    t:primaryDataElement "PropertyEstateTypeOtherDescription" ;
+    t:expectedSeverity "fatal" ;
+    t:contextPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL" ;
+    t:distractorContextPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[2][@ValuationUseType='SalesComparable']/m:PROPERTY_DETAIL" ;
+    t:expectedContextCount 1 ;
+    t:expectedDistractorContextCount 1 ;
+    t:triggerElement "m:PropertyEstateType" ;
+    t:targetElement "m:PropertyEstateTypeOtherDescription" ;
+    t:conditionOperator t:Equals ;
+    t:conditionValue "Other" ;
+    t:suppliedTargetValue "Description of the other ownership interest" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyEstateTypeOtherDescription" ;
+    t:repeatValidationCount 2 ;
+    t:namespaceBinding suite:isolation-mismo .
+
+# A comparable's supplied description must not satisfy the subject.
+
+case:0100.0053-UAD1022-other-property-cannot-supply-value
+    a t:ContextIsolationCase ;
+    t:inSuite suite:context-isolation-UAD1022 ;
+    t:triggerValue "Other" ;
+    t:expectedConditionResult true ;
+    t:targetState t:Absent ;
+    t:distractorTriggerValue "Other" ;
+    t:distractorTargetState t:Present ;
+    t:expectedMatchingFindingCount 1 .
+
+# A comparable's trigger must not activate the subject requirement.
+
+case:0100.0053-UAD1022-other-property-cannot-activate-condition
+    a t:ContextIsolationCase ;
+    t:inSuite suite:context-isolation-UAD1022 ;
+    t:triggerValue "FeeSimple" ;
+    t:expectedConditionResult false ;
+    t:targetState t:Absent ;
+    t:distractorTriggerValue "Other" ;
+    t:distractorTargetState t:Absent ;
+    t:expectedMatchingFindingCount 0 .
+
+# A comparable's missing description must not become a subject finding.
+
+case:0100.0053-UAD1022-other-property-defect-stays-outside-scope
+    a t:ContextIsolationCase ;
+    t:inSuite suite:context-isolation-UAD1022 ;
+    t:triggerValue "Other" ;
+    t:expectedConditionResult true ;
+    t:targetState t:Present ;
+    t:distractorTriggerValue "Other" ;
+    t:distractorTargetState t:Absent ;
+    t:expectedMatchingFindingCount 0 .
+
+# Contract amount: UAD1129.
+# Governed requirement applies to the subject's reviewed sales contract.
+# The baseline subject contract amount is 489000.
+
+suite:context-isolation-UAD1129
+    a t:ContextIsolationSuite ;
+    rdfs:label "Contract amount remains in subject context" ;
+    t:definitionVersion "1" ;
+    t:scenarioId "IT-34R2S1" ;
+    t:baselinePath "baseline/SF1_Appraisal_v1.4.xml" ;
+    t:expectedCaseCount 3 ;
+    t:rowId "0600.0008" ;
+    t:ruleId "UAD1129" ;
+    t:primaryDataElement "SalesContractAmount" ;
+    t:expectedSeverity "fatal" ;
+    t:contextPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SALES_CONTRACTS/m:SALES_CONTRACT/m:SALES_CONTRACT_DETAIL" ;
+    t:distractorContextPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[2][@ValuationUseType='SalesComparable']/m:SALES_CONTRACTS/m:SALES_CONTRACT/m:SALES_CONTRACT_DETAIL" ;
+    t:expectedContextCount 1 ;
+    t:expectedDistractorContextCount 1 ;
+    t:triggerElement "m:SalesContractReviewedIndicator" ;
+    t:targetElement "m:SalesContractAmount" ;
+    t:conditionOperator t:Equals ;
+    t:conditionValue "true" ;
+    t:suppliedTargetValue "489000" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SALES_CONTRACTS/m:SALES_CONTRACT/m:SALES_CONTRACT_DETAIL/m:SalesContractAmount" ;
+    t:repeatValidationCount 2 ;
+    t:namespaceBinding suite:isolation-mismo .
+
+# A comparable's amount must not satisfy the subject's requirement.
+
+case:0600.0008-UAD1129-other-property-cannot-supply-value
+    a t:ContextIsolationCase ;
+    t:inSuite suite:context-isolation-UAD1129 ;
+    t:triggerValue "true" ;
+    t:expectedConditionResult true ;
+    t:targetState t:Absent ;
+    t:distractorTriggerValue "true" ;
+    t:distractorTargetState t:Present ;
+    t:expectedMatchingFindingCount 1 .
+
+# A comparable's reviewed flag must not activate the subject requirement.
+
+case:0600.0008-UAD1129-other-property-cannot-activate-condition
+    a t:ContextIsolationCase ;
+    t:inSuite suite:context-isolation-UAD1129 ;
+    t:triggerValue "false" ;
+    t:expectedConditionResult false ;
+    t:targetState t:Absent ;
+    t:distractorTriggerValue "true" ;
+    t:distractorTargetState t:Absent ;
+    t:expectedMatchingFindingCount 0 .
+
+# A comparable's missing amount must not become a subject finding.
+
+case:0600.0008-UAD1129-other-property-defect-stays-outside-scope
+    a t:ContextIsolationCase ;
+    t:inSuite suite:context-isolation-UAD1129 ;
+    t:triggerValue "true" ;
+    t:expectedConditionResult true ;
+    t:targetState t:Present ;
+    t:distractorTriggerValue "true" ;
+    t:distractorTargetState t:Absent ;
+    t:expectedMatchingFindingCount 0 .
