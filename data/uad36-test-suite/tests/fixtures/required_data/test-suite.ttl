@@ -1,0 +1,668 @@
+@prefix t: <https://dynamicontology.com/uad36/test-vocabulary#> .
+@prefix suite: <https://dynamicontology.com/uad36/test-suite/> .
+@prefix case: <https://dynamicontology.com/uad36/test-case/required-data/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+# Required-data test suite
+#
+# This file describes test inputs and expected outcomes.
+# It does not supply production validation rules.
+#
+# Runner contract:
+# - Discover cases through t:inSuite.
+# - Resolve fixturePath and baselinePath relative to this file.
+# - Use the XML namespace binding below when interpreting XML contexts.
+# - Validate through the production ValidationService.
+# - Scope finding counts to the rule IDs declared by this suite.
+# - Check each case's rule ID, row ID, severity, and exact XML context.
+# - Fail on malformed definitions or missing fixtures; do not skip cases.
+#
+# All case identifiers, filenames, and XML contexts below were taken
+# from the existing manifest.csv.
+#
+# Shared expectations are explicit suite properties, not RDF inference.
+# The runner must apply them to every member case.
+#
+# No claim is made here that the baseline passes all UAD rules or that
+# this suite performs XML Schema validation.
+
+suite:required-data-53
+    a t:TestSuite ;
+    rdfs:label "53 single data point existence tests" ;
+    t:definitionVersion "1" ;
+    t:sourceManifestPath "manifest.csv" ;
+    t:baselinePath "baseline/SF1_Appraisal_v1.4.xml" ;
+    t:expectedCaseCount 53 ;
+    t:expectedBaselineFindingCount 0 ;
+    t:findingScope t:DeclaredRuleIds ;
+    t:caseKind t:MissingElement ;
+    t:expectedSeverity "fatal" ;
+    t:expectedMatchingFindingCount 1 ;
+    t:expectedOtherScopedFindingCount 0 ;
+    t:namespaceBinding [
+        t:prefix "m" ;
+        t:namespaceIRI <http://www.mismo.org/residential/2009/schemas>
+    ] .
+
+# Property address
+
+case:0100.0007-UAD1001
+    a t:TestCase ;
+    t:inSuite suite:required-data-53 ;
+    t:fixturePath "tests/0100.0007-UAD1001-missing-AddressLineText.xml" ;
+    t:rowId "0100.0007" ;
+    t:primaryDataElement "AddressLineText" ;
+    t:ruleId "UAD1001" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:ADDRESS/m:AddressLineText" .
+
+case:0100.0009-UAD1002
+    a t:TestCase ;
+    t:inSuite suite:required-data-53 ;
+    t:fixturePath "tests/0100.0009-UAD1002-missing-CityName.xml" ;
+    t:rowId "0100.0009" ;
+    t:primaryDataElement "CityName" ;
+    t:ruleId "UAD1002" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:ADDRESS/m:CityName" .
+
+case:0100.0010-UAD1003
+    a t:TestCase ;
+    t:inSuite suite:required-data-53 ;
+    t:fixturePath "tests/0100.0010-UAD1003-missing-CountyName.xml" ;
+    t:rowId "0100.0010" ;
+    t:primaryDataElement "CountyName" ;
+    t:ruleId "UAD1003" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:ADDRESS/m:CountyName" .
+
+case:0100.0011-UAD1004
+    a t:TestCase ;
+    t:inSuite suite:required-data-53 ;
+    t:fixturePath "tests/0100.0011-UAD1004-missing-PostalCode.xml" ;
+    t:rowId "0100.0011" ;
+    t:primaryDataElement "PostalCode" ;
+    t:ruleId "UAD1004" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:ADDRESS/m:PostalCode" .
+
+case:0100.0012-UAD1006
+    a t:TestCase ;
+    t:inSuite suite:required-data-53 ;
+    t:fixturePath "tests/0100.0012-UAD1006-missing-StateCode.xml" ;
+    t:rowId "0100.0012" ;
+    t:primaryDataElement "StateCode" ;
+    t:ruleId "UAD1006" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:ADDRESS/m:StateCode" .
+
+# Property characteristics
+
+case:0100.0019-UAD1010
+    a t:TestCase ;
+    t:inSuite suite:required-data-53 ;
+    t:fixturePath "tests/0100.0019-UAD1010-missing-AccessoryDwellingUnitTotalCount.xml" ;
+    t:rowId "0100.0019" ;
+    t:primaryDataElement "AccessoryDwellingUnitTotalCount" ;
+    t:ruleId "UAD1010" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:AccessoryDwellingUnitTotalCount" .
+
+case:0100.0020-UAD1012
+    a t:TestCase ;
+    t:inSuite suite:required-data-53 ;
+    t:fixturePath "tests/0100.0020-UAD1012-missing-AttachmentType.xml" ;
+    t:rowId "0100.0020" ;
+    t:primaryDataElement "AttachmentType" ;
+    t:ruleId "UAD1012" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:AttachmentType" .
+
+case:0100.0021-UAD1013
+    a t:TestCase ;
+    t:inSuite suite:required-data-53 ;
+    t:fixturePath "tests/0100.0021-UAD1013-missing-DwellingCount.xml" ;
+    t:rowId "0100.0021" ;
+    t:primaryDataElement "DwellingCount" ;
+    t:ruleId "UAD1013" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:DwellingCount" .
+
+case:0100.0022-UAD1017
+    a t:TestCase ;
+    t:inSuite suite:required-data-53 ;
+    t:fixturePath "tests/0100.0022-UAD1017-missing-LivingUnitExcludingADUCount.xml" ;
+    t:rowId "0100.0022" ;
+    t:primaryDataElement "LivingUnitExcludingADUCount" ;
+    t:ruleId "UAD1017" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:LivingUnitExcludingADUCount" .
+
+case:0100.0026-UAD1023
+    a t:TestCase ;
+    t:inSuite suite:required-data-53 ;
+    t:fixturePath "tests/0100.0026-UAD1023-missing-PUDIndicator.xml" ;
+    t:rowId "0100.0026" ;
+    t:primaryDataElement "PUDIndicator" ;
+    t:ruleId "UAD1023" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PUDIndicator" .
+
+case:0100.0033-UAD1027
+    a t:TestCase ;
+    t:inSuite suite:required-data-53 ;
+    t:fixturePath "tests/0100.0033-UAD1027-missing-SpecialTaxAssessmentsIndicator.xml" ;
+    t:rowId "0100.0033" ;
+    t:primaryDataElement "SpecialTaxAssessmentsIndicator" ;
+    t:ruleId "UAD1027" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_TAXES/m:PROPERTY_TAX/m:PROPERTY_TAX_DETAIL/m:SpecialTaxAssessmentsIndicator" .
+
+case:0100.0046-UAD1035
+    a t:TestCase ;
+    t:inSuite suite:required-data-53 ;
+    t:fixturePath "tests/0100.0046-UAD1035-missing-HomeownerResponsibleForExteriorMaintenanceIndicator.xml" ;
+    t:rowId "0100.0046" ;
+    t:primaryDataElement "HomeownerResponsibleForExteriorMaintenanceIndicator" ;
+    t:ruleId "UAD1035" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:HomeownerResponsibleForExteriorMaintenanceIndicator" .
+
+case:0100.0047-UAD1036
+    a t:TestCase ;
+    t:inSuite suite:required-data-53 ;
+    t:fixturePath "tests/0100.0047-UAD1036-missing-LandOwnedInCommonIndicator.xml" ;
+    t:rowId "0100.0047" ;
+    t:primaryDataElement "LandOwnedInCommonIndicator" ;
+    t:ruleId "UAD1036" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SITE/m:SITE_DETAIL/m:LandOwnedInCommonIndicator" .
+
+case:0100.0054-UAD1040
+    a t:TestCase ;
+    t:inSuite suite:required-data-53 ;
+    t:fixturePath "tests/0100.0054-UAD1040-missing-NativeAmericanLandsIndicator.xml" ;
+    t:rowId "0100.0054" ;
+    t:primaryDataElement "NativeAmericanLandsIndicator" ;
+    t:ruleId "UAD1040" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:NativeAmericanLandsIndicator" .
+
+case:0100.0065-UAD1042
+    a t:TestCase ;
+    t:inSuite suite:required-data-53 ;
+    t:fixturePath "tests/0100.0065-UAD1042-missing-PropertyInProjectIndicator.xml" ;
+    t:rowId "0100.0065" ;
+    t:primaryDataElement "PropertyInProjectIndicator" ;
+    t:ruleId "UAD1042" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyInProjectIndicator" .
+
+case:0200.0015-UAD1045
+    a t:TestCase ;
+    t:inSuite suite:required-data-53 ;
+    t:fixturePath "tests/0200.0015-UAD1045-missing-PropertyAmenityExistsIndicator.xml" ;
+    t:rowId "0200.0015" ;
+    t:primaryDataElement "PropertyAmenityExistsIndicator" ;
+    t:ruleId "UAD1045" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyAmenityExistsIndicator" .
+
+case:0300.0010-UAD1049
+    a t:TestCase ;
+    t:inSuite suite:required-data-53 ;
+    t:fixturePath "tests/0300.0010-UAD1049-missing-NewConstructionIndicator.xml" ;
+    t:rowId "0300.0010" ;
+    t:primaryDataElement "NewConstructionIndicator" ;
+    t:ruleId "UAD1049" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:NewConstructionIndicator" .
+
+# Sales and listing information
+
+case:0600.0016-UAD1134
+    a t:TestCase ;
+    t:inSuite suite:required-data-53 ;
+    t:fixturePath "tests/0600.0016-UAD1134-missing-SalesContractExistsIndicator.xml" ;
+    t:rowId "0600.0016" ;
+    t:primaryDataElement "SalesContractExistsIndicator" ;
+    t:ruleId "UAD1134" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SALES_CONTRACTS/m:SALES_CONTRACT/m:SALES_CONTRACT_DETAIL/m:SalesContractExistsIndicator" .
+
+case:0800.0005-UAD1191
+    a t:TestCase ;
+    t:inSuite suite:required-data-53 ;
+    t:fixturePath "tests/0800.0005-UAD1191-missing-PriorSalesOrTransfersIndicator.xml" ;
+    t:rowId "0800.0005" ;
+    t:primaryDataElement "PriorSalesOrTransfersIndicator" ;
+    t:ruleId "UAD1191" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PriorSalesOrTransfersIndicator" .
+
+case:0900.0004-UAD1203
+    a t:TestCase ;
+    t:inSuite suite:required-data-53 ;
+    t:fixturePath "tests/0900.0004-UAD1203-missing-ListedWithinPreviousYearIndicator.xml" ;
+    t:rowId "0900.0004" ;
+    t:primaryDataElement "ListedWithinPreviousYearIndicator" ;
+    t:ruleId "UAD1203" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:LISTING_INFORMATION_SUMMARY/m:ListedWithinPreviousYearIndicator" .
+
+# Scope of work and valuation method
+
+case:1000.0027-UAD1210
+    a t:TestCase ;
+    t:inSuite suite:required-data-53 ;
+    t:fixturePath "tests/1000.0027-UAD1210-missing-CostApproachIndicator.xml" ;
+    t:rowId "1000.0027" ;
+    t:primaryDataElement "CostApproachIndicator" ;
+    t:ruleId "UAD1210" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:SCOPE_OF_WORK/m:SCOPE_OF_WORK_DETAIL/m:CostApproachIndicator" .
+
+case:1000.0028-UAD1211
+    a t:TestCase ;
+    t:inSuite suite:required-data-53 ;
+    t:fixturePath "tests/1000.0028-UAD1211-missing-GovernmentAgencyAppraisalIndicator.xml" ;
+    t:rowId "1000.0028" ;
+    t:primaryDataElement "GovernmentAgencyAppraisalIndicator" ;
+    t:ruleId "UAD1211" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:SCOPE_OF_WORK/m:SCOPE_OF_WORK_DETAIL/m:GovernmentAgencyAppraisalIndicator" .
+
+case:1000.0030-UAD1213
+    a t:TestCase ;
+    t:inSuite suite:required-data-53 ;
+    t:fixturePath "tests/1000.0030-UAD1213-missing-IncomeApproachIndicator.xml" ;
+    t:rowId "1000.0030" ;
+    t:primaryDataElement "IncomeApproachIndicator" ;
+    t:ruleId "UAD1213" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:SCOPE_OF_WORK/m:SCOPE_OF_WORK_DETAIL/m:IncomeApproachIndicator" .
+
+case:1000.0031-UAD1216
+    a t:TestCase ;
+    t:inSuite suite:required-data-53 ;
+    t:fixturePath "tests/1000.0031-UAD1216-missing-RentScheduleIndicator.xml" ;
+    t:rowId "1000.0031" ;
+    t:primaryDataElement "RentScheduleIndicator" ;
+    t:ruleId "UAD1216" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:SCOPE_OF_WORK/m:SCOPE_OF_WORK_DETAIL/m:RentScheduleIndicator" .
+
+case:1000.0032-UAD1218
+    a t:TestCase ;
+    t:inSuite suite:required-data-53 ;
+    t:fixturePath "tests/1000.0032-UAD1218-missing-SalesComparisonApproachIndicator.xml" ;
+    t:rowId "1000.0032" ;
+    t:primaryDataElement "SalesComparisonApproachIndicator" ;
+    t:ruleId "UAD1218" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:SCOPE_OF_WORK/m:SCOPE_OF_WORK_DETAIL/m:SalesComparisonApproachIndicator" .
+
+case:1000.0034-UAD1219
+    a t:TestCase ;
+    t:inSuite suite:required-data-53 ;
+    t:fixturePath "tests/1000.0034-UAD1219-missing-ValuationAssignmentType.xml" ;
+    t:rowId "1000.0034" ;
+    t:primaryDataElement "ValuationAssignmentType" ;
+    t:ruleId "UAD1219" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:SCOPE_OF_WORK/m:SCOPE_OF_WORK_DETAIL/m:ValuationAssignmentType" .
+
+case:1000.0158-UAD1222
+    a t:TestCase ;
+    t:inSuite suite:required-data-53 ;
+    t:fixturePath "tests/1000.0158-UAD1222-missing-PropertyValuationMethodType.xml" ;
+    t:rowId "1000.0158" ;
+    t:primaryDataElement "PropertyValuationMethodType" ;
+    t:ruleId "UAD1222" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_VALUATIONS/m:PROPERTY_VALUATION/m:PROPERTY_VALUATION_DETAIL/m:PropertyValuationMethodType" .
+
+# Valuation reconciliation
+
+case:1300.0012-UAD1257
+    a t:TestCase ;
+    t:inSuite suite:required-data-53 ;
+    t:fixturePath "tests/1300.0012-UAD1257-missing-AppraisalReportEffectiveDate.xml" ;
+    t:rowId "1300.0012" ;
+    t:primaryDataElement "AppraisalReportEffectiveDate" ;
+    t:ruleId "UAD1257" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_RECONCILIATION/m:VALUATION_RECONCILIATION_SUMMARY/m:VALUATION_RECONCILIATION_SUMMARY_DETAIL/m:AppraisalReportEffectiveDate" .
+
+case:1300.0017-UAD1262
+    a t:TestCase ;
+    t:inSuite suite:required-data-53 ;
+    t:fixturePath "tests/1300.0017-UAD1262-missing-OpinionOfValueAmount.xml" ;
+    t:rowId "1300.0017" ;
+    t:primaryDataElement "OpinionOfValueAmount" ;
+    t:ruleId "UAD1262" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_RECONCILIATION/m:VALUATION_RECONCILIATION_SUMMARY/m:VALUATION_RECONCILIATION_SUMMARY_DETAIL/m:OpinionOfValueAmount" .
+
+case:1300.0021-UAD1266
+    a t:TestCase ;
+    t:inSuite suite:required-data-53 ;
+    t:fixturePath "tests/1300.0021-UAD1266-missing-ValuationReconciliationSummaryCommentDescription.xml" ;
+    t:rowId "1300.0021" ;
+    t:primaryDataElement "ValuationReconciliationSummaryCommentDescription" ;
+    t:ruleId "UAD1266" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_RECONCILIATION/m:VALUATION_RECONCILIATION_DETAIL/m:ValuationReconciliationSummaryCommentDescription" .
+
+# Site and property condition
+
+case:1500.0054-UAD1317
+    a t:TestCase ;
+    t:inSuite suite:required-data-53 ;
+    t:fixturePath "tests/1500.0054-UAD1317-missing-PropertyAccessTypicalToMarketIndicator.xml" ;
+    t:rowId "1500.0054" ;
+    t:primaryDataElement "PropertyAccessTypicalToMarketIndicator" ;
+    t:ruleId "UAD1317" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SITE/m:PROPERTY_ACCESS/m:PROPERTY_ACCESS_DETAIL/m:PropertyAccessTypicalToMarketIndicator" .
+
+case:1500.0055-UAD1318
+    a t:TestCase ;
+    t:inSuite suite:required-data-53 ;
+    t:fixturePath "tests/1500.0055-UAD1318-missing-PropertyPrimaryEntryExitMethodType.xml" ;
+    t:rowId "1500.0055" ;
+    t:primaryDataElement "PropertyPrimaryEntryExitMethodType" ;
+    t:ruleId "UAD1318" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SITE/m:PROPERTY_ACCESS/m:PROPERTY_ACCESS_DETAIL/m:PropertyPrimaryEntryExitMethodType" .
+
+case:1500.0125-UAD1369
+    a t:TestCase ;
+    t:inSuite suite:required-data-53 ;
+    t:fixturePath "tests/1500.0125-UAD1369-missing-SiteZoningComplianceType.xml" ;
+    t:rowId "1500.0125" ;
+    t:primaryDataElement "SiteZoningComplianceType" ;
+    t:ruleId "UAD1369" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SITE/m:SITE_ZONING/m:SITE_ZONING_DETAIL/m:SiteZoningComplianceType" .
+
+case:1500.0178-UAD1373
+    a t:TestCase ;
+    t:inSuite suite:required-data-53 ;
+    t:fixturePath "tests/1500.0178-UAD1373-missing-SiteDefectsExistIndicator.xml" ;
+    t:rowId "1500.0178" ;
+    t:primaryDataElement "SiteDefectsExistIndicator" ;
+    t:ruleId "UAD1373" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SITE/m:SITE_DETAIL/m:SiteDefectsExistIndicator" .
+
+case:1600.0006-UAD1384
+    a t:TestCase ;
+    t:inSuite suite:required-data-53 ;
+    t:fixturePath "tests/1600.0006-UAD1384-missing-OverallConditionRatingCode.xml" ;
+    t:rowId "1600.0006" ;
+    t:primaryDataElement "OverallConditionRatingCode" ;
+    t:ruleId "UAD1384" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:OverallConditionRatingCode" .
+
+case:1600.0007-UAD1385
+    a t:TestCase ;
+    t:inSuite suite:required-data-53 ;
+    t:fixturePath "tests/1600.0007-UAD1385-missing-OverallQualityRatingCode.xml" ;
+    t:rowId "1600.0007" ;
+    t:primaryDataElement "OverallQualityRatingCode" ;
+    t:ruleId "UAD1385" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:OverallQualityRatingCode" .
+
+# Report details
+
+case:2200.0017-UAD1508
+    a t:TestCase ;
+    t:inSuite suite:required-data-53 ;
+    t:fixturePath "tests/2200.0017-UAD1508-missing-AppraiserPriorServicesPerformedIndicator.xml" ;
+    t:rowId "2200.0017" ;
+    t:primaryDataElement "AppraiserPriorServicesPerformedIndicator" ;
+    t:ruleId "UAD1508" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_REPORT_DETAIL/m:AppraiserPriorServicesPerformedIndicator" .
+
+case:2200.0038-UAD1511
+    a t:TestCase ;
+    t:inSuite suite:required-data-53 ;
+    t:fixturePath "tests/2200.0038-UAD1511-missing-ValuationReportInspectionCertificationType.xml" ;
+    t:rowId "2200.0038" ;
+    t:primaryDataElement "ValuationReportInspectionCertificationType" ;
+    t:ruleId "UAD1511" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_REPORT_DETAIL/m:ValuationReportInspectionCertificationType" .
+
+case:1000.0043-UAD1519
+    a t:TestCase ;
+    t:inSuite suite:required-data-53 ;
+    t:fixturePath "tests/1000.0043-UAD1519-missing-PropertyDataReportIndicator.xml" ;
+    t:rowId "1000.0043" ;
+    t:primaryDataElement "PropertyDataReportIndicator" ;
+    t:ruleId "UAD1519" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_REPORT_DETAIL/m:PropertyDataReportIndicator" .
+
+# Energy efficiency and green features
+
+case:2600.0003-UAD1616
+    a t:TestCase ;
+    t:inSuite suite:required-data-53 ;
+    t:fixturePath "tests/2600.0003-UAD1616-missing-EfficiencyRatingExistsIndicator.xml" ;
+    t:rowId "2600.0003" ;
+    t:primaryDataElement "EfficiencyRatingExistsIndicator" ;
+    t:ruleId "UAD1616" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:ENERGY_EFFICIENCY_AND_GREEN/m:ENERGY_EFFICIENCY_AND_GREEN_DETAIL/m:EfficiencyRatingExistsIndicator" .
+
+case:2600.0004-UAD1617
+    a t:TestCase ;
+    t:inSuite suite:required-data-53 ;
+    t:fixturePath "tests/2600.0004-UAD1617-missing-GreenCertificationExistsIndicator.xml" ;
+    t:rowId "2600.0004" ;
+    t:primaryDataElement "GreenCertificationExistsIndicator" ;
+    t:ruleId "UAD1617" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:ENERGY_EFFICIENCY_AND_GREEN/m:ENERGY_EFFICIENCY_AND_GREEN_DETAIL/m:GreenCertificationExistsIndicator" .
+
+case:2600.0005-UAD1618
+    a t:TestCase ;
+    t:inSuite suite:required-data-53 ;
+    t:fixturePath "tests/2600.0005-UAD1618-missing-RenewableEnergyComponentExistsIndicator.xml" ;
+    t:rowId "2600.0005" ;
+    t:primaryDataElement "RenewableEnergyComponentExistsIndicator" ;
+    t:ruleId "UAD1618" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:ENERGY_EFFICIENCY_AND_GREEN/m:ENERGY_EFFICIENCY_AND_GREEN_DETAIL/m:RenewableEnergyComponentExistsIndicator" .
+
+# Market
+
+case:3000.0008-UAD1626
+    a t:TestCase ;
+    t:inSuite suite:required-data-53 ;
+    t:fixturePath "tests/3000.0008-UAD1626-missing-MarketBoundariesDescription.xml" ;
+    t:rowId "3000.0008" ;
+    t:primaryDataElement "MarketBoundariesDescription" ;
+    t:ruleId "UAD1626" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:MARKET/m:MARKET_DETAIL/m:MarketBoundariesDescription" .
+
+case:3000.0009-UAD1627
+    a t:TestCase ;
+    t:inSuite suite:required-data-53 ;
+    t:fixturePath "tests/3000.0009-UAD1627-missing-MarketInventoryLookbackMonthsCount.xml" ;
+    t:rowId "3000.0009" ;
+    t:primaryDataElement "MarketInventoryLookbackMonthsCount" ;
+    t:ruleId "UAD1627" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:MARKET/m:MARKET_DETAIL/m:MarketInventoryLookbackMonthsCount" .
+
+case:3000.0033-UAD1652
+    a t:TestCase ;
+    t:inSuite suite:required-data-53 ;
+    t:fixturePath "tests/3000.0033-UAD1652-missing-MarketSupplyTrendType.xml" ;
+    t:rowId "3000.0033" ;
+    t:primaryDataElement "MarketSupplyTrendType" ;
+    t:ruleId "UAD1652" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:MARKET/m:MARKET_TREND/m:MarketSupplyTrendType" .
+
+case:3000.0034-UAD1653
+    a t:TestCase ;
+    t:inSuite suite:required-data-53 ;
+    t:fixturePath "tests/3000.0034-UAD1653-missing-MarketTrendsForeclosureActivityIndicator.xml" ;
+    t:rowId "3000.0034" ;
+    t:primaryDataElement "MarketTrendsForeclosureActivityIndicator" ;
+    t:ruleId "UAD1653" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:MARKET/m:MARKET_TREND/m:MarketTrendsForeclosureActivityIndicator" .
+
+# Highest and best use
+
+case:3100.0003-UAD1659
+    a t:TestCase ;
+    t:inSuite suite:required-data-53 ;
+    t:fixturePath "tests/3100.0003-UAD1659-missing-FinanciallyFeasibleIndicator.xml" ;
+    t:rowId "3100.0003" ;
+    t:primaryDataElement "FinanciallyFeasibleIndicator" ;
+    t:ruleId "UAD1659" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SITE/m:HIGHEST_AND_BEST_USE/m:FinanciallyFeasibleIndicator" .
+
+case:3100.0004-UAD1660
+    a t:TestCase ;
+    t:inSuite suite:required-data-53 ;
+    t:fixturePath "tests/3100.0004-UAD1660-missing-LegallyPermissibleIndicator.xml" ;
+    t:rowId "3100.0004" ;
+    t:primaryDataElement "LegallyPermissibleIndicator" ;
+    t:ruleId "UAD1660" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SITE/m:HIGHEST_AND_BEST_USE/m:LegallyPermissibleIndicator" .
+
+case:3100.0005-UAD1661
+    a t:TestCase ;
+    t:inSuite suite:required-data-53 ;
+    t:fixturePath "tests/3100.0005-UAD1661-missing-MaximallyProductiveIndicator.xml" ;
+    t:rowId "3100.0005" ;
+    t:primaryDataElement "MaximallyProductiveIndicator" ;
+    t:ruleId "UAD1661" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SITE/m:HIGHEST_AND_BEST_USE/m:MaximallyProductiveIndicator" .
+
+case:3100.0006-UAD1662
+    a t:TestCase ;
+    t:inSuite suite:required-data-53 ;
+    t:fixturePath "tests/3100.0006-UAD1662-missing-PhysicallyPossibleIndicator.xml" ;
+    t:rowId "3100.0006" ;
+    t:primaryDataElement "PhysicallyPossibleIndicator" ;
+    t:ruleId "UAD1662" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SITE/m:HIGHEST_AND_BEST_USE/m:PhysicallyPossibleIndicator" .
+
+case:3100.0007-UAD1663
+    a t:TestCase ;
+    t:inSuite suite:required-data-53 ;
+    t:fixturePath "tests/3100.0007-UAD1663-missing-SiteHighestBestUseIndicator.xml" ;
+    t:rowId "3100.0007" ;
+    t:primaryDataElement "SiteHighestBestUseIndicator" ;
+    t:ruleId "UAD1663" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SITE/m:HIGHEST_AND_BEST_USE/m:SiteHighestBestUseIndicator" .
+
+# Sketch and reconsideration of value
+
+case:3300.0002-UAD1676
+    a t:TestCase ;
+    t:inSuite suite:required-data-53 ;
+    t:fixturePath "tests/3300.0002-UAD1676-missing-SketchExistsIndicator.xml" ;
+    t:rowId "3300.0002" ;
+    t:primaryDataElement "SketchExistsIndicator" ;
+    t:ruleId "UAD1676" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_REPORT_DETAIL/m:SketchExistsIndicator" .
+
+case:4000.0004-UAD1750
+    a t:TestCase ;
+    t:inSuite suite:required-data-53 ;
+    t:fixturePath "tests/4000.0004-UAD1750-missing-ReconsiderationOfValueIndicator.xml" ;
+    t:rowId "4000.0004" ;
+    t:primaryDataElement "ReconsiderationOfValueIndicator" ;
+    t:ruleId "UAD1750" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_REPORT_DETAIL/m:ReconsiderationOfValueIndicator" .
+
+# Conditional-required test definitions.
+#
+# These cases require a conditional-case runner extension.
+# The existing required-data runner does not execute them.
+#
+# Execution contract:
+# - Start each case from a fresh copy of baselinePath.
+# - Locate exactly one contextPath occurrence.
+# - Set the existing trigger element to triggerValue.
+# - Remove existing target elements in that context.
+# - Apply targetState:
+#     Absent     = do not create a target element.
+#     Present    = create a target with targetValue.
+#     Empty      = create a target with no text.
+#     Whitespace = create a target with targetValue.
+#     Nil        = create a target with xsi:nil="true", without text.
+# - Call the production validator using the modified XML.
+# - Count findings for the declared rule ID.
+# - For expected findings, verify row ID, severity, and xmlContext.
+# - Verify that correction guidance explains the trigger and target.
+# - Never inject these expectations as production validation rules.
+# - Never modify the baseline file on disk.
+#
+# Source:
+# data/data-constraints.csv, row 0100.0053 / UAD1022.
+# Existing test:
+# tests/test_it_34_r1_s1_enforce_true_condition.py
+
+suite:conditional-required-UAD1022
+    a t:ConditionalTestSuite ;
+    rdfs:label "Conditional ownership description requirement" ;
+    t:definitionVersion "1" ;
+    t:baselinePath "baseline/SF1_Appraisal_v1.4.xml" ;
+    t:expectedCaseCount 6 ;
+    t:rowId "0100.0053" ;
+    t:ruleId "UAD1022" ;
+    t:primaryDataElement "PropertyEstateTypeOtherDescription" ;
+    t:expectedSeverity "fatal" ;
+    t:contextPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL" ;
+    t:expectedContextCount 1 ;
+    t:triggerElement "m:PropertyEstateType" ;
+    t:targetElement "m:PropertyEstateTypeOtherDescription" ;
+    t:xmlContext "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyEstateTypeOtherDescription" ;
+    t:conditionOperator t:Equals ;
+    t:conditionValue "Other" ;
+    t:namespaceBinding [
+        t:prefix "m" ;
+        t:namespaceIRI <http://www.mismo.org/residential/2009/schemas>
+    ] ;
+    t:namespaceBinding [
+        t:prefix "xsi" ;
+        t:namespaceIRI <http://www.w3.org/2001/XMLSchema-instance>
+    ] .
+
+# IT-34R1S1: true condition, missing dependent element.
+
+case:0100.0053-UAD1022-true-missing
+    a t:ConditionalTestCase ;
+    t:inSuite suite:conditional-required-UAD1022 ;
+    t:scenarioId "IT-34R1S1" ;
+    t:triggerValue "Other" ;
+    t:expectedConditionResult true ;
+    t:targetState t:Absent ;
+    t:expectedMatchingFindingCount 1 .
+
+# IT-34R1S1: true condition, supplied dependent value.
+# This checks presence, not every possible value-domain constraint.
+
+case:0100.0053-UAD1022-true-present
+    a t:ConditionalTestCase ;
+    t:inSuite suite:conditional-required-UAD1022 ;
+    t:scenarioId "IT-34R1S1" ;
+    t:triggerValue "Other" ;
+    t:expectedConditionResult true ;
+    t:targetState t:Present ;
+    t:targetValue "Description of the other ownership interest" ;
+    t:expectedMatchingFindingCount 0 .
+
+# IT-34R1S2: false condition, missing dependent element.
+# FeeSimple is present in the existing baseline.
+
+case:0100.0053-UAD1022-false-missing
+    a t:ConditionalTestCase ;
+    t:inSuite suite:conditional-required-UAD1022 ;
+    t:scenarioId "IT-34R1S2" ;
+    t:triggerValue "FeeSimple" ;
+    t:expectedConditionResult false ;
+    t:targetState t:Absent ;
+    t:expectedMatchingFindingCount 0 .
+
+# IT-34R1S1: an empty element does not satisfy the requirement.
+
+case:0100.0053-UAD1022-true-empty
+    a t:ConditionalTestCase ;
+    t:inSuite suite:conditional-required-UAD1022 ;
+    t:scenarioId "IT-34R1S1" ;
+    t:triggerValue "Other" ;
+    t:expectedConditionResult true ;
+    t:targetState t:Empty ;
+    t:expectedMatchingFindingCount 1 .
+
+# IT-34R1S1: whitespace does not satisfy the requirement.
+
+case:0100.0053-UAD1022-true-whitespace
+    a t:ConditionalTestCase ;
+    t:inSuite suite:conditional-required-UAD1022 ;
+    t:scenarioId "IT-34R1S1" ;
+    t:triggerValue "Other" ;
+    t:expectedConditionResult true ;
+    t:targetState t:Whitespace ;
+    t:targetValue " \t\n " ;
+    t:expectedMatchingFindingCount 1 .
+
+# IT-34R1S1: xsi:nil does not satisfy the requirement.
+
+case:0100.0053-UAD1022-true-nil
+    a t:ConditionalTestCase ;
+    t:inSuite suite:conditional-required-UAD1022 ;
+    t:scenarioId "IT-34R1S1" ;
+    t:triggerValue "Other" ;
+    t:expectedConditionResult true ;
+    t:targetState t:Nil ;
+    t:expectedMatchingFindingCount 1 .

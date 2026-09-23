@@ -1,4 +1,8 @@
-"""Evaluate unconditional Fatal required-data rules from the production CSV."""
+"""Evaluate Fatal required-data rules from the production CSV.
+
+Supports unconditional required-data rules and the explicitly mapped
+UAD1022 conditional requirement. Test definitions are not read here.
+"""
 
 import csv
 import logging
@@ -18,19 +22,57 @@ NAMESPACE = "http://www.mismo.org/residential/2009/schemas"
 NS = {"m": NAMESPACE}
 logger = logging.getLogger(__name__)
 
+# Explicitly supported governed condition.
+# The trigger is a sibling of the dependent element in PROPERTY_DETAIL.
+CONDITIONAL_ROW_ID = "0100.0053"
+CONDITIONAL_RULE_ID = "UAD1022"
+CONDITIONAL_ELEMENT = "PropertyEstateTypeOtherDescription"
+CONDITIONAL_TRIGGER = "PropertyEstateType"
+CONDITIONAL_VALUE = "Other"
+CONDITIONAL_PARENT_PATH = (
+    "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/"
+)
+CONDITIONAL_LOGIC = (
+    'If PropertyEstateType = "Other" and '
+    "PropertyEstateTypeOtherDescription is not provided"
+)
+
+
+def is_conditional_rule(rule: dict[str, str]) -> bool:
+    return (
+        rule.get("Unique ID") == CONDITIONAL_ROW_ID
+        and rule.get("Message ID") == CONDITIONAL_RULE_ID
+    )
+
 
 @lru_cache(maxsize=1)
 def load_required_rules() -> tuple[dict[str, str], ...]:
     with RULE_FILE.open(encoding="utf-8-sig", newline="") as stream:
         rows = list(csv.DictReader(stream))
 
-    rules = tuple(
-        row
-        for row in rows
-        if row["Severity"] == "Fatal"
-        and row["Rule Logic"]
-        == f"If {row['Primary Data Element']} is not provided"
-    )
+    rules = []
+    for row in rows:
+        if is_conditional_rule(row):
+            expected = {
+                "Primary Data Element": CONDITIONAL_ELEMENT,
+                "Rule Logic": CONDITIONAL_LOGIC,
+                "Severity": "Fatal",
+                "Property Affected": "Subject",
+                " xPath": CONDITIONAL_PARENT_PATH,
+            }
+            for field, value in expected.items():
+                if row.get(field) != value:
+                    raise ValueError(
+                        f"{CONDITIONAL_ROW_ID}/{CONDITIONAL_RULE_ID}: "
+                        f"unsupported governed definition for {field}"
+                    )
+            rules.append(row)
+        elif (
+            row["Severity"] == "Fatal"
+            and row["Rule Logic"]
+            == f"If {row['Primary Data Element']} is not provided"
+        ):
+            rules.append(row)
 
     if len({rule["Message ID"] for rule in rules}) != len(rules):
         raise ValueError("Required-data rule IDs must be unique.")
@@ -98,6 +140,60 @@ def has_value(element: Element) -> bool:
     )
 
 
+def conditional_elements(
+    context: Element | None,
+    remaining: list[str],
+    rule: dict[str, str],
+) -> list[Element] | None:
+    """Return dependent elements when true; None when explicitly false.
+
+    Missing or ambiguous condition input is an evaluation error, never
+    silently interpreted as a false condition.
+    """
+    identity = f"{rule['Unique ID']}/{rule['Message ID']}"
+
+    if context is None:
+        raise ValueError(
+            f"{identity}: cannot evaluate condition without subject context"
+        )
+
+    parent_path = "/".join("m:" + part for part in remaining)
+    containers = (
+        context.findall(parent_path, NS)
+        if parent_path
+        else [context]
+    )
+    if len(containers) != 1:
+        raise ValueError(
+            f"{identity}: expected one condition context, "
+            f"found {len(containers)}"
+        )
+
+    container = containers[0]
+    triggers = container.findall(
+        f"{{{NAMESPACE}}}{CONDITIONAL_TRIGGER}"
+    )
+    if len(triggers) != 1:
+        raise ValueError(
+            f"{identity}: expected one {CONDITIONAL_TRIGGER}, "
+            f"found {len(triggers)}"
+        )
+
+    trigger = triggers[0]
+    if list(trigger) or not has_value(trigger):
+        raise ValueError(
+            f"{identity}: {CONDITIONAL_TRIGGER} must have "
+            "one nonblank, non-nil scalar value"
+        )
+
+    if (trigger.text or "").strip() != CONDITIONAL_VALUE:
+        return None
+
+    return container.findall(
+        f"{{{NAMESPACE}}}{rule['Primary Data Element']}"
+    )
+
+
 def nearest_existing_ancestor_path(
     root: Element,
     analysis: Element,
@@ -105,7 +201,6 @@ def nearest_existing_ancestor_path(
     parents: dict[Element, Element],
 ) -> str:
     """Find the deepest existing parent along the expected data path."""
-    # Resolve within this analysis, excluding the missing/value element.
     steps = data_location.removeprefix("//").split("/")[1:-1]
     ancestor = analysis
 
@@ -120,8 +215,6 @@ def nearest_existing_ancestor_path(
             break
         steps.pop()
 
-    # Build a root-relative path to the actual node. Sibling positions
-    # keep the ancestor identifiable even when surrounding nodes repeat.
     path_parts = []
     node = ancestor
 
@@ -149,7 +242,7 @@ def evaluate_required_data(
     root: Element,
     investor: Investor,
 ) -> list[Finding]:
-    """Evaluate each rule separately for each valuation/property context."""
+    """Evaluate rules within each valuation and subject-property context."""
     findings: list[Finding] = []
 
     analyses = list(root.iter(f"{{{NAMESPACE}}}VALUATION_ANALYSIS"))
@@ -167,8 +260,11 @@ def evaluate_required_data(
     for rule in sorted(
         load_required_rules(), key=lambda row: row["Unique ID"]
     ):
-        parts = rule[" xPath"].removeprefix("../").strip("/").split("/")
+        parts = (
+            rule[" xPath"].removeprefix("../").strip("/").split("/")
+        )
         element_name = rule["Primary Data Element"]
+        conditional = is_conditional_rule(rule)
 
         for analysis in analyses:
             if rule["Property Affected"] == "Subject":
@@ -191,14 +287,20 @@ def evaluate_required_data(
                 "m:" + part for part in remaining + [element_name]
             )
 
-            # A missing subject container also means its required data
-            # was not supplied.
             for context in contexts or [None]:
-                elements = (
-                    context.findall(relative_path, NS)
-                    if context is not None
-                    else []
-                )
+                if conditional:
+                    elements = conditional_elements(
+                        context, remaining, rule
+                    )
+                    if elements is None:
+                        # Explicitly false condition: no dependent check.
+                        continue
+                else:
+                    elements = (
+                        context.findall(relative_path, NS)
+                        if context is not None
+                        else []
+                    )
 
                 if elements and all(has_value(node) for node in elements):
                     continue
@@ -210,8 +312,7 @@ def evaluate_required_data(
                     and context is not None
                     and len(contexts) > 1
                 ):
-                    # XPath positions count all PROPERTY siblings,
-                    # including properties outside the subject scope.
+                    # Count all PROPERTY siblings, including comparables.
                     siblings = [
                         child
                         for child in parents[context]
@@ -231,6 +332,16 @@ def evaluate_required_data(
                         root, analysis, data_location, parents
                     )
 
+                expected_condition = (
+                    f"{element_name} must be provided."
+                )
+                if conditional:
+                    expected_condition = (
+                        f'{element_name} must be provided when '
+                        f'{CONDITIONAL_TRIGGER} = "{CONDITIONAL_VALUE}" '
+                        "in the same subject-property context."
+                    )
+
                 findings.append(
                     Finding(
                         finding_id=f"F-{uuid4().hex[:8]}",
@@ -245,9 +356,7 @@ def evaluate_required_data(
                         data_location=data_location,
                         nearest_existing_ancestor=ancestor_path,
                         observed_value="missing, empty, or nil",
-                        expected_condition=(
-                            f"{element_name} must be provided."
-                        ),
+                        expected_condition=expected_condition,
                         source=Provenance(
                             source_document="data/data-constraints.csv",
                             source_version="UAD 3.6",
