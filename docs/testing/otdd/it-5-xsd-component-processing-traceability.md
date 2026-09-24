@@ -1,6 +1,6 @@
 # IT-5 XSD Component Processing Traceability
 
-Feature File: `features/xsd_component_processing.feature`
+Feature File: `../../../features/xsd_component_processing.feature`
 Acceptance Baseline: `specs/samples/xsd_extraction/it-5-master-list.txt`
 
 | ID       | BDD Rule                                                     | BDD Scenario                                                  | Status      |

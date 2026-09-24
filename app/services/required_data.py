@@ -1,7 +1,10 @@
-"""Evaluate Fatal required-data rules from the production CSV.
+"""Evaluate supported required-data rules from the production CSV.
 
-Supports unconditional requirements and explicitly mapped conditional
-requirements. RDF test definitions are never read by this module.
+Supports Fatal unconditional requirements, explicitly mapped
+single-equality requirements, and selected conditional/scoped rules
+with their governed severity.
+
+RDF test definitions are never read by this module.
 """
 
 import csv
@@ -15,6 +18,11 @@ from xml.etree.ElementTree import Element
 from app.models.common import Provenance
 from app.models.enums import Investor, RuleType, Severity
 from app.models.validation import Finding
+from app.services.scoped_required_data import (
+    evaluate_scoped_rule,
+    scoped_spec,
+    verify_definition,
+)
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -92,7 +100,10 @@ def conditional_spec(
 
 
 def is_conditional_rule(rule: dict[str, str]) -> bool:
-    return conditional_spec(rule) is not None
+    return (
+        conditional_spec(rule) is not None
+        or scoped_spec(rule) is not None
+    )
 
 
 @lru_cache(maxsize=1)
@@ -102,6 +113,11 @@ def load_required_rules() -> tuple[dict[str, str], ...]:
 
     rules = []
     for row in rows:
+        if scoped_spec(row) is not None:
+            verify_definition(row)
+            rules.append(row)
+            continue
+
         specification = conditional_spec(row)
 
         if specification is not None:
@@ -291,7 +307,11 @@ def nearest_existing_ancestor_path(
         path_parts.append(name)
         node = parent
 
-    return "./" + "/".join(reversed(path_parts)) if path_parts else "."
+    return (
+        "./" + "/".join(reversed(path_parts))
+        if path_parts
+        else "."
+    )
 
 
 def evaluate_required_data(
@@ -316,6 +336,12 @@ def evaluate_required_data(
     for rule in sorted(
         load_required_rules(), key=lambda row: row["Unique ID"]
     ):
+        if scoped_spec(rule) is not None:
+            findings.extend(
+                evaluate_scoped_rule(root, investor, rule)
+            )
+            continue
+
         parts = (
             rule[" xPath"].removeprefix("../").strip("/").split("/")
         )

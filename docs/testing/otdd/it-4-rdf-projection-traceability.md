@@ -1,6 +1,6 @@
 # IT-4 RDF Projection Traceability
 
-Feature File: `features/rdf_projection.feature`
+Feature File: `../../../features/rdf_projection.feature`
 
 | ID       | BDD Rule                                       | BDD Scenario                                                       | Status   |
 |----------|------------------------------------------------|--------------------------------------------------------------------|----------|

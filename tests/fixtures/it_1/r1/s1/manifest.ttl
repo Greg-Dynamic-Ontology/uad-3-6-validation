@@ -1,0 +1,787 @@
+@prefix case: <urn:uad36:test-manifest:IT-1R1S1:> .
+@prefix m: <urn:uad36:test-manifest:vocab:> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+case:manifest a m:Manifest ;
+    m:baseline case:baseline ;
+    m:case case:UAD1021-both-missing,
+        case:UAD1021-both-supplied,
+        case:UAD1021-left-only-missing,
+        case:UAD1021-left-only-supplied,
+        case:UAD1021-neither-missing,
+        case:UAD1021-right-only-missing,
+        case:UAD1021-right-only-supplied,
+        case:UAD1024-both-missing,
+        case:UAD1024-both-supplied,
+        case:UAD1024-left-only-missing,
+        case:UAD1024-neither-missing,
+        case:UAD1024-right-only-missing,
+        case:UAD1054-dwelling-missing,
+        case:UAD1054-dwelling-supplied,
+        case:UAD1054-first-dwelling-missing-second-supplied,
+        case:UAD1054-first-dwelling-supplied-second-missing,
+        case:UAD1054-outbuilding-missing ;
+    m:caseCount 17 ;
+    m:coverage "Initial three-rule slice; not full R1 coverage." ;
+    m:inventory case:inventory ;
+    m:limitation "Copied improvements may repeat identifiers not constrained by this XSD.",
+        "Focused fixtures isolate the selected source rule.",
+        "Other business rules may be violated by deliberate case changes.",
+        "XSD validity does not establish external endpoint acceptance." ;
+    m:scenarioId "IT-1R1S1" ;
+    m:schemaVersion 1 ;
+    m:sourceWorkbook case:workbook ;
+    m:validationSchema case:schema .
+
+case:UAD1021-both-missing a m:TestCase ;
+    m:baseline case:baseline ;
+    m:caseId "IT-1R1S1-UAD1021-both-missing" ;
+    m:change ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_DETAIL/m:ProjectLegalStructureType: set to Condominium",
+        ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyEstateType: removed",
+        ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyInProjectIndicator: set to false",
+        "Replace stale schema reference with a relative URI." ;
+    m:endpointReadiness "not_verified" ;
+    m:expectedFinding case:UAD1021-both-missing-finding-1 ;
+    m:expectedFindingCount 1 ;
+    m:fixtureCheck case:UAD1021-both-missing-check-1,
+        case:UAD1021-both-missing-check-2,
+        case:UAD1021-both-missing-check-3 ;
+    m:fixtureKind "focused_validator_fixture" ;
+    m:purpose "both missing" ;
+    m:ruleId "UAD1021" ;
+    m:sourceRow 21 ;
+    m:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1021> ;
+    m:sourceRuleLogic "If (PropertyInProjectIndicator = \"false\" or ProjectLegalStructureType = \"Condominium\"), and PropertyEstateType is not provided" ;
+    m:sourceUniqueId "0100.0024" ;
+    m:state "applicable_missing" ;
+    m:validationSchema case:schema ;
+    m:xmlFile "UAD1021/both-missing.xml" ;
+    m:xmlSha256 "f62947279388841917473b9fb8c85f8381701ea935c475e8f1e0953c15f06aa5" ;
+    m:xsdValid true .
+
+case:UAD1021-both-missing-check-1 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "false" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyInProjectIndicator" .
+
+case:UAD1021-both-missing-check-2 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Condominium" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_DETAIL/m:ProjectLegalStructureType" .
+
+case:UAD1021-both-missing-check-3 a m:FixtureCheck ;
+    m:count 0 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyEstateType" .
+
+case:UAD1021-both-missing-finding-1 a m:ExpectedFinding ;
+    m:dataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyEstateType" ;
+    m:ruleId "UAD1021" ;
+    m:severity "fatal" ;
+    m:violationKind "MissingRequiredValue" .
+
+case:UAD1021-both-supplied a m:TestCase ;
+    m:baseline case:baseline ;
+    m:caseId "IT-1R1S1-UAD1021-both-supplied" ;
+    m:change ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_DETAIL/m:ProjectLegalStructureType: set to Condominium",
+        ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyEstateType: set to FeeSimple",
+        ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyInProjectIndicator: set to false",
+        "Replace stale schema reference with a relative URI." ;
+    m:endpointReadiness "not_verified" ;
+    m:expectedFindingCount 0 ;
+    m:fixtureCheck case:UAD1021-both-supplied-check-1,
+        case:UAD1021-both-supplied-check-2,
+        case:UAD1021-both-supplied-check-3 ;
+    m:fixtureKind "focused_validator_fixture" ;
+    m:purpose "both supplied" ;
+    m:ruleId "UAD1021" ;
+    m:sourceRow 21 ;
+    m:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1021> ;
+    m:sourceRuleLogic "If (PropertyInProjectIndicator = \"false\" or ProjectLegalStructureType = \"Condominium\"), and PropertyEstateType is not provided" ;
+    m:sourceUniqueId "0100.0024" ;
+    m:state "applicable_supplied" ;
+    m:validationSchema case:schema ;
+    m:xmlFile "UAD1021/both-supplied.xml" ;
+    m:xmlSha256 "a2a99690c488ffedad358d6bf4932f4571c8533ff2b01f367e419499f594642f" ;
+    m:xsdValid true .
+
+case:UAD1021-both-supplied-check-1 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "false" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyInProjectIndicator" .
+
+case:UAD1021-both-supplied-check-2 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Condominium" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_DETAIL/m:ProjectLegalStructureType" .
+
+case:UAD1021-both-supplied-check-3 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "FeeSimple" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyEstateType" .
+
+case:UAD1021-left-only-missing a m:TestCase ;
+    m:baseline case:baseline ;
+    m:caseId "IT-1R1S1-UAD1021-left-only-missing" ;
+    m:change ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_DETAIL/m:ProjectLegalStructureType: set to Cooperative",
+        ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyEstateType: removed",
+        ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyInProjectIndicator: set to false",
+        "Replace stale schema reference with a relative URI." ;
+    m:endpointReadiness "not_verified" ;
+    m:expectedFinding case:UAD1021-left-only-missing-finding-1 ;
+    m:expectedFindingCount 1 ;
+    m:fixtureCheck case:UAD1021-left-only-missing-check-1,
+        case:UAD1021-left-only-missing-check-2,
+        case:UAD1021-left-only-missing-check-3 ;
+    m:fixtureKind "focused_validator_fixture" ;
+    m:purpose "left only missing" ;
+    m:ruleId "UAD1021" ;
+    m:sourceRow 21 ;
+    m:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1021> ;
+    m:sourceRuleLogic "If (PropertyInProjectIndicator = \"false\" or ProjectLegalStructureType = \"Condominium\"), and PropertyEstateType is not provided" ;
+    m:sourceUniqueId "0100.0024" ;
+    m:state "applicable_missing" ;
+    m:validationSchema case:schema ;
+    m:xmlFile "UAD1021/left-only-missing.xml" ;
+    m:xmlSha256 "83ab85824019c4fa3c176d64e5a5ac17a492f1dbe56a23e29eae39432891fd54" ;
+    m:xsdValid true .
+
+case:UAD1021-left-only-missing-check-1 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "false" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyInProjectIndicator" .
+
+case:UAD1021-left-only-missing-check-2 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Cooperative" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_DETAIL/m:ProjectLegalStructureType" .
+
+case:UAD1021-left-only-missing-check-3 a m:FixtureCheck ;
+    m:count 0 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyEstateType" .
+
+case:UAD1021-left-only-missing-finding-1 a m:ExpectedFinding ;
+    m:dataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyEstateType" ;
+    m:ruleId "UAD1021" ;
+    m:severity "fatal" ;
+    m:violationKind "MissingRequiredValue" .
+
+case:UAD1021-left-only-supplied a m:TestCase ;
+    m:baseline case:baseline ;
+    m:caseId "IT-1R1S1-UAD1021-left-only-supplied" ;
+    m:change ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_DETAIL/m:ProjectLegalStructureType: set to Cooperative",
+        ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyEstateType: set to FeeSimple",
+        ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyInProjectIndicator: set to false",
+        "Replace stale schema reference with a relative URI." ;
+    m:endpointReadiness "not_verified" ;
+    m:expectedFindingCount 0 ;
+    m:fixtureCheck case:UAD1021-left-only-supplied-check-1,
+        case:UAD1021-left-only-supplied-check-2,
+        case:UAD1021-left-only-supplied-check-3 ;
+    m:fixtureKind "focused_validator_fixture" ;
+    m:purpose "left only supplied" ;
+    m:ruleId "UAD1021" ;
+    m:sourceRow 21 ;
+    m:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1021> ;
+    m:sourceRuleLogic "If (PropertyInProjectIndicator = \"false\" or ProjectLegalStructureType = \"Condominium\"), and PropertyEstateType is not provided" ;
+    m:sourceUniqueId "0100.0024" ;
+    m:state "applicable_supplied" ;
+    m:validationSchema case:schema ;
+    m:xmlFile "UAD1021/left-only-supplied.xml" ;
+    m:xmlSha256 "f14667289c9ec719bcc3f59a589c44504ae2ee494cce56140e214a3c72418d56" ;
+    m:xsdValid true .
+
+case:UAD1021-left-only-supplied-check-1 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "false" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyInProjectIndicator" .
+
+case:UAD1021-left-only-supplied-check-2 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Cooperative" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_DETAIL/m:ProjectLegalStructureType" .
+
+case:UAD1021-left-only-supplied-check-3 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "FeeSimple" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyEstateType" .
+
+case:UAD1021-neither-missing a m:TestCase ;
+    m:baseline case:baseline ;
+    m:caseId "IT-1R1S1-UAD1021-neither-missing" ;
+    m:change ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_DETAIL/m:ProjectLegalStructureType: set to Cooperative",
+        ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyEstateType: removed",
+        ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyInProjectIndicator: set to true",
+        "Replace stale schema reference with a relative URI." ;
+    m:endpointReadiness "not_verified" ;
+    m:expectedFindingCount 0 ;
+    m:fixtureCheck case:UAD1021-neither-missing-check-1,
+        case:UAD1021-neither-missing-check-2,
+        case:UAD1021-neither-missing-check-3 ;
+    m:fixtureKind "focused_validator_fixture" ;
+    m:purpose "neither missing" ;
+    m:ruleId "UAD1021" ;
+    m:sourceRow 21 ;
+    m:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1021> ;
+    m:sourceRuleLogic "If (PropertyInProjectIndicator = \"false\" or ProjectLegalStructureType = \"Condominium\"), and PropertyEstateType is not provided" ;
+    m:sourceUniqueId "0100.0024" ;
+    m:state "not_applicable" ;
+    m:validationSchema case:schema ;
+    m:xmlFile "UAD1021/neither-missing.xml" ;
+    m:xmlSha256 "760fdd7db54673c9756eb7a99fee8dbf97c4a0b31d8641add9bafacdd71e361c" ;
+    m:xsdValid true .
+
+case:UAD1021-neither-missing-check-1 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "true" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyInProjectIndicator" .
+
+case:UAD1021-neither-missing-check-2 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Cooperative" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_DETAIL/m:ProjectLegalStructureType" .
+
+case:UAD1021-neither-missing-check-3 a m:FixtureCheck ;
+    m:count 0 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyEstateType" .
+
+case:UAD1021-right-only-missing a m:TestCase ;
+    m:baseline case:baseline ;
+    m:caseId "IT-1R1S1-UAD1021-right-only-missing" ;
+    m:change ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_DETAIL/m:ProjectLegalStructureType: set to Condominium",
+        ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyEstateType: removed",
+        ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyInProjectIndicator: set to true",
+        "Replace stale schema reference with a relative URI." ;
+    m:endpointReadiness "not_verified" ;
+    m:expectedFinding case:UAD1021-right-only-missing-finding-1 ;
+    m:expectedFindingCount 1 ;
+    m:fixtureCheck case:UAD1021-right-only-missing-check-1,
+        case:UAD1021-right-only-missing-check-2,
+        case:UAD1021-right-only-missing-check-3 ;
+    m:fixtureKind "focused_validator_fixture" ;
+    m:purpose "right only missing" ;
+    m:ruleId "UAD1021" ;
+    m:sourceRow 21 ;
+    m:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1021> ;
+    m:sourceRuleLogic "If (PropertyInProjectIndicator = \"false\" or ProjectLegalStructureType = \"Condominium\"), and PropertyEstateType is not provided" ;
+    m:sourceUniqueId "0100.0024" ;
+    m:state "applicable_missing" ;
+    m:validationSchema case:schema ;
+    m:xmlFile "UAD1021/right-only-missing.xml" ;
+    m:xmlSha256 "de5b4d4db2c77cec4107abfc916275ba561b2d9f1335f09e9929014741b2e056" ;
+    m:xsdValid true .
+
+case:UAD1021-right-only-missing-check-1 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "true" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyInProjectIndicator" .
+
+case:UAD1021-right-only-missing-check-2 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Condominium" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_DETAIL/m:ProjectLegalStructureType" .
+
+case:UAD1021-right-only-missing-check-3 a m:FixtureCheck ;
+    m:count 0 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyEstateType" .
+
+case:UAD1021-right-only-missing-finding-1 a m:ExpectedFinding ;
+    m:dataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyEstateType" ;
+    m:ruleId "UAD1021" ;
+    m:severity "fatal" ;
+    m:violationKind "MissingRequiredValue" .
+
+case:UAD1021-right-only-supplied a m:TestCase ;
+    m:baseline case:baseline ;
+    m:caseId "IT-1R1S1-UAD1021-right-only-supplied" ;
+    m:change ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_DETAIL/m:ProjectLegalStructureType: set to Condominium",
+        ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyEstateType: set to FeeSimple",
+        ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyInProjectIndicator: set to true",
+        "Replace stale schema reference with a relative URI." ;
+    m:endpointReadiness "not_verified" ;
+    m:expectedFindingCount 0 ;
+    m:fixtureCheck case:UAD1021-right-only-supplied-check-1,
+        case:UAD1021-right-only-supplied-check-2,
+        case:UAD1021-right-only-supplied-check-3 ;
+    m:fixtureKind "focused_validator_fixture" ;
+    m:purpose "right only supplied" ;
+    m:ruleId "UAD1021" ;
+    m:sourceRow 21 ;
+    m:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1021> ;
+    m:sourceRuleLogic "If (PropertyInProjectIndicator = \"false\" or ProjectLegalStructureType = \"Condominium\"), and PropertyEstateType is not provided" ;
+    m:sourceUniqueId "0100.0024" ;
+    m:state "applicable_supplied" ;
+    m:validationSchema case:schema ;
+    m:xmlFile "UAD1021/right-only-supplied.xml" ;
+    m:xmlSha256 "b3c7d7f0d5847221ff9d51432f1d54c55fccbcc63e2112f2a6e4f409a8d27232" ;
+    m:xsdValid true .
+
+case:UAD1021-right-only-supplied-check-1 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "true" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyInProjectIndicator" .
+
+case:UAD1021-right-only-supplied-check-2 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Condominium" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_DETAIL/m:ProjectLegalStructureType" .
+
+case:UAD1021-right-only-supplied-check-3 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "FeeSimple" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyEstateType" .
+
+case:UAD1024-both-missing a m:TestCase ;
+    m:baseline case:baseline ;
+    m:caseId "IT-1R1S1-UAD1024-both-missing" ;
+    m:change ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyEstateType: set to Leasehold",
+        ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_GROUND_RENT/m:PropertyGroundLeaseAnnualAmount: removed",
+        ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SITE/m:SITE_DETAIL/m:LandOwnedInCommonIndicator: set to false",
+        "Replace stale schema reference with a relative URI." ;
+    m:endpointReadiness "not_verified" ;
+    m:expectedFinding case:UAD1024-both-missing-finding-1 ;
+    m:expectedFindingCount 1 ;
+    m:fixtureCheck case:UAD1024-both-missing-check-1,
+        case:UAD1024-both-missing-check-2,
+        case:UAD1024-both-missing-check-3 ;
+    m:fixtureKind "focused_validator_fixture" ;
+    m:purpose "both missing" ;
+    m:ruleId "UAD1024" ;
+    m:sourceRow 24 ;
+    m:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1024> ;
+    m:sourceRuleLogic "If PropertyEstateType = \"Leasehold\" and LandOwnedInCommonIndicator = \"false\", and PropertyGroundLeaseAnnualAmount is not provided" ;
+    m:sourceUniqueId "0100.0028" ;
+    m:state "applicable_missing" ;
+    m:validationSchema case:schema ;
+    m:xmlFile "UAD1024/both-missing.xml" ;
+    m:xmlSha256 "7ec16d88eac792b88be3ad20358b579c4c7fd2398c57e7c81f011d47cb28a0eb" ;
+    m:xsdValid true .
+
+case:UAD1024-both-missing-check-1 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Leasehold" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyEstateType" .
+
+case:UAD1024-both-missing-check-2 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "false" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SITE/m:SITE_DETAIL/m:LandOwnedInCommonIndicator" .
+
+case:UAD1024-both-missing-check-3 a m:FixtureCheck ;
+    m:count 0 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_GROUND_RENT/m:PropertyGroundLeaseAnnualAmount" .
+
+case:UAD1024-both-missing-finding-1 a m:ExpectedFinding ;
+    m:dataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_GROUND_RENT/m:PropertyGroundLeaseAnnualAmount" ;
+    m:ruleId "UAD1024" ;
+    m:severity "fatal" ;
+    m:violationKind "MissingRequiredValue" .
+
+case:UAD1024-both-supplied a m:TestCase ;
+    m:baseline case:baseline ;
+    m:caseId "IT-1R1S1-UAD1024-both-supplied" ;
+    m:change ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyEstateType: set to Leasehold",
+        ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_GROUND_RENT/m:PropertyGroundLeaseAnnualAmount: set to 1200",
+        ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SITE/m:SITE_DETAIL/m:LandOwnedInCommonIndicator: set to false",
+        "Replace stale schema reference with a relative URI." ;
+    m:endpointReadiness "not_verified" ;
+    m:expectedFindingCount 0 ;
+    m:fixtureCheck case:UAD1024-both-supplied-check-1,
+        case:UAD1024-both-supplied-check-2,
+        case:UAD1024-both-supplied-check-3 ;
+    m:fixtureKind "focused_validator_fixture" ;
+    m:purpose "both supplied" ;
+    m:ruleId "UAD1024" ;
+    m:sourceRow 24 ;
+    m:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1024> ;
+    m:sourceRuleLogic "If PropertyEstateType = \"Leasehold\" and LandOwnedInCommonIndicator = \"false\", and PropertyGroundLeaseAnnualAmount is not provided" ;
+    m:sourceUniqueId "0100.0028" ;
+    m:state "applicable_supplied" ;
+    m:validationSchema case:schema ;
+    m:xmlFile "UAD1024/both-supplied.xml" ;
+    m:xmlSha256 "fce0de1acd257feb86347bcd7a58c326e8fb2fd3b455bdab206bab4a61bcb54c" ;
+    m:xsdValid true .
+
+case:UAD1024-both-supplied-check-1 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Leasehold" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyEstateType" .
+
+case:UAD1024-both-supplied-check-2 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "false" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SITE/m:SITE_DETAIL/m:LandOwnedInCommonIndicator" .
+
+case:UAD1024-both-supplied-check-3 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "1200" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_GROUND_RENT/m:PropertyGroundLeaseAnnualAmount" .
+
+case:UAD1024-left-only-missing a m:TestCase ;
+    m:baseline case:baseline ;
+    m:caseId "IT-1R1S1-UAD1024-left-only-missing" ;
+    m:change ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyEstateType: set to Leasehold",
+        ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_GROUND_RENT/m:PropertyGroundLeaseAnnualAmount: removed",
+        ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SITE/m:SITE_DETAIL/m:LandOwnedInCommonIndicator: set to true",
+        "Replace stale schema reference with a relative URI." ;
+    m:endpointReadiness "not_verified" ;
+    m:expectedFindingCount 0 ;
+    m:fixtureCheck case:UAD1024-left-only-missing-check-1,
+        case:UAD1024-left-only-missing-check-2,
+        case:UAD1024-left-only-missing-check-3 ;
+    m:fixtureKind "focused_validator_fixture" ;
+    m:purpose "left only missing" ;
+    m:ruleId "UAD1024" ;
+    m:sourceRow 24 ;
+    m:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1024> ;
+    m:sourceRuleLogic "If PropertyEstateType = \"Leasehold\" and LandOwnedInCommonIndicator = \"false\", and PropertyGroundLeaseAnnualAmount is not provided" ;
+    m:sourceUniqueId "0100.0028" ;
+    m:state "not_applicable" ;
+    m:validationSchema case:schema ;
+    m:xmlFile "UAD1024/left-only-missing.xml" ;
+    m:xmlSha256 "24f40fe39c50ecd132e060d87223df2c4ac979bf5beb6b17a05ddcbd01c23d2e" ;
+    m:xsdValid true .
+
+case:UAD1024-left-only-missing-check-1 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Leasehold" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyEstateType" .
+
+case:UAD1024-left-only-missing-check-2 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "true" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SITE/m:SITE_DETAIL/m:LandOwnedInCommonIndicator" .
+
+case:UAD1024-left-only-missing-check-3 a m:FixtureCheck ;
+    m:count 0 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_GROUND_RENT/m:PropertyGroundLeaseAnnualAmount" .
+
+case:UAD1024-neither-missing a m:TestCase ;
+    m:baseline case:baseline ;
+    m:caseId "IT-1R1S1-UAD1024-neither-missing" ;
+    m:change ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyEstateType: set to FeeSimple",
+        ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_GROUND_RENT/m:PropertyGroundLeaseAnnualAmount: removed",
+        ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SITE/m:SITE_DETAIL/m:LandOwnedInCommonIndicator: set to true",
+        "Replace stale schema reference with a relative URI." ;
+    m:endpointReadiness "not_verified" ;
+    m:expectedFindingCount 0 ;
+    m:fixtureCheck case:UAD1024-neither-missing-check-1,
+        case:UAD1024-neither-missing-check-2,
+        case:UAD1024-neither-missing-check-3 ;
+    m:fixtureKind "focused_validator_fixture" ;
+    m:purpose "neither missing" ;
+    m:ruleId "UAD1024" ;
+    m:sourceRow 24 ;
+    m:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1024> ;
+    m:sourceRuleLogic "If PropertyEstateType = \"Leasehold\" and LandOwnedInCommonIndicator = \"false\", and PropertyGroundLeaseAnnualAmount is not provided" ;
+    m:sourceUniqueId "0100.0028" ;
+    m:state "not_applicable" ;
+    m:validationSchema case:schema ;
+    m:xmlFile "UAD1024/neither-missing.xml" ;
+    m:xmlSha256 "80995ff3e6965ef02128ce8ddcc057b78d4c2fce25da3cd54c21dda24e8411e2" ;
+    m:xsdValid true .
+
+case:UAD1024-neither-missing-check-1 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "FeeSimple" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyEstateType" .
+
+case:UAD1024-neither-missing-check-2 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "true" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SITE/m:SITE_DETAIL/m:LandOwnedInCommonIndicator" .
+
+case:UAD1024-neither-missing-check-3 a m:FixtureCheck ;
+    m:count 0 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_GROUND_RENT/m:PropertyGroundLeaseAnnualAmount" .
+
+case:UAD1024-right-only-missing a m:TestCase ;
+    m:baseline case:baseline ;
+    m:caseId "IT-1R1S1-UAD1024-right-only-missing" ;
+    m:change ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyEstateType: set to FeeSimple",
+        ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_GROUND_RENT/m:PropertyGroundLeaseAnnualAmount: removed",
+        ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SITE/m:SITE_DETAIL/m:LandOwnedInCommonIndicator: set to false",
+        "Replace stale schema reference with a relative URI." ;
+    m:endpointReadiness "not_verified" ;
+    m:expectedFindingCount 0 ;
+    m:fixtureCheck case:UAD1024-right-only-missing-check-1,
+        case:UAD1024-right-only-missing-check-2,
+        case:UAD1024-right-only-missing-check-3 ;
+    m:fixtureKind "focused_validator_fixture" ;
+    m:purpose "right only missing" ;
+    m:ruleId "UAD1024" ;
+    m:sourceRow 24 ;
+    m:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1024> ;
+    m:sourceRuleLogic "If PropertyEstateType = \"Leasehold\" and LandOwnedInCommonIndicator = \"false\", and PropertyGroundLeaseAnnualAmount is not provided" ;
+    m:sourceUniqueId "0100.0028" ;
+    m:state "not_applicable" ;
+    m:validationSchema case:schema ;
+    m:xmlFile "UAD1024/right-only-missing.xml" ;
+    m:xmlSha256 "830a829bed162e191b5c11b7706bfbbb23c7527ae33ea5025bcf1b2bf3e521be" ;
+    m:xsdValid true .
+
+case:UAD1024-right-only-missing-check-1 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "FeeSimple" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyEstateType" .
+
+case:UAD1024-right-only-missing-check-2 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "false" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SITE/m:SITE_DETAIL/m:LandOwnedInCommonIndicator" .
+
+case:UAD1024-right-only-missing-check-3 a m:FixtureCheck ;
+    m:count 0 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_GROUND_RENT/m:PropertyGroundLeaseAnnualAmount" .
+
+case:UAD1054-dwelling-missing a m:TestCase ;
+    m:baseline case:baseline ;
+    m:caseId "IT-1R1S1-UAD1054-dwelling-missing" ;
+    m:change "Instance 1: type=Dwelling; estimated-year indicator=None.",
+        "Replace stale schema reference with a relative URI.",
+        "Replace subject improvements with copies of the first baseline improvement." ;
+    m:endpointReadiness "not_verified" ;
+    m:expectedFinding case:UAD1054-dwelling-missing-finding-1 ;
+    m:expectedFindingCount 1 ;
+    m:fixtureCheck case:UAD1054-dwelling-missing-check-1,
+        case:UAD1054-dwelling-missing-check-2,
+        case:UAD1054-dwelling-missing-check-3 ;
+    m:fixtureKind "focused_validator_fixture" ;
+    m:purpose "dwelling missing" ;
+    m:ruleId "UAD1054" ;
+    m:sourceRow 54 ;
+    m:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1054> ;
+    m:sourceRuleLogic "If ImprovementType = \"Dwelling\", and PropertyStructureBuiltYearEstimatedIndicator is not provided in a given instance of IMPROVEMENT_DETAIL" ;
+    m:sourceUniqueId "0300.0012" ;
+    m:state "applicable_missing" ;
+    m:validationSchema case:schema ;
+    m:xmlFile "UAD1054/dwelling-missing.xml" ;
+    m:xmlSha256 "e2bd78ae536195a8759243fdd3a32895905aa00586a9d073f3864a4aa0c4d667" ;
+    m:xsdValid true .
+
+case:UAD1054-dwelling-missing-check-1 a m:FixtureCheck ;
+    m:count 1 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT" .
+
+case:UAD1054-dwelling-missing-check-2 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Dwelling" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1054-dwelling-missing-check-3 a m:FixtureCheck ;
+    m:count 0 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT/m:IMPROVEMENT_DETAIL/m:PropertyStructureBuiltYearEstimatedIndicator" .
+
+case:UAD1054-dwelling-missing-finding-1 a m:ExpectedFinding ;
+    m:dataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT/m:IMPROVEMENT_DETAIL/m:PropertyStructureBuiltYearEstimatedIndicator" ;
+    m:ruleId "UAD1054" ;
+    m:severity "warning" ;
+    m:violationKind "MissingRequiredValue" .
+
+case:UAD1054-dwelling-supplied a m:TestCase ;
+    m:baseline case:baseline ;
+    m:caseId "IT-1R1S1-UAD1054-dwelling-supplied" ;
+    m:change "Instance 1: type=Dwelling; estimated-year indicator='false'.",
+        "Replace stale schema reference with a relative URI.",
+        "Replace subject improvements with copies of the first baseline improvement." ;
+    m:endpointReadiness "not_verified" ;
+    m:expectedFindingCount 0 ;
+    m:fixtureCheck case:UAD1054-dwelling-supplied-check-1,
+        case:UAD1054-dwelling-supplied-check-2,
+        case:UAD1054-dwelling-supplied-check-3 ;
+    m:fixtureKind "focused_validator_fixture" ;
+    m:purpose "dwelling supplied" ;
+    m:ruleId "UAD1054" ;
+    m:sourceRow 54 ;
+    m:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1054> ;
+    m:sourceRuleLogic "If ImprovementType = \"Dwelling\", and PropertyStructureBuiltYearEstimatedIndicator is not provided in a given instance of IMPROVEMENT_DETAIL" ;
+    m:sourceUniqueId "0300.0012" ;
+    m:state "applicable_supplied" ;
+    m:validationSchema case:schema ;
+    m:xmlFile "UAD1054/dwelling-supplied.xml" ;
+    m:xmlSha256 "b443b52b4b70dd21900e0b8bfe2362d319345a3fb17ac30076c7bbd6d2d55c40" ;
+    m:xsdValid true .
+
+case:UAD1054-dwelling-supplied-check-1 a m:FixtureCheck ;
+    m:count 1 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT" .
+
+case:UAD1054-dwelling-supplied-check-2 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Dwelling" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1054-dwelling-supplied-check-3 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "false" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT/m:IMPROVEMENT_DETAIL/m:PropertyStructureBuiltYearEstimatedIndicator" .
+
+case:UAD1054-first-dwelling-missing-second-supplied a m:TestCase ;
+    m:baseline case:baseline ;
+    m:caseId "IT-1R1S1-UAD1054-first-dwelling-missing-second-supplied" ;
+    m:change "Instance 1: type=Dwelling; estimated-year indicator=None.",
+        "Instance 2: type=Dwelling; estimated-year indicator='false'.",
+        "Replace stale schema reference with a relative URI.",
+        "Replace subject improvements with copies of the first baseline improvement." ;
+    m:endpointReadiness "not_verified" ;
+    m:expectedFinding case:UAD1054-first-dwelling-missing-second-supplied-finding-1 ;
+    m:expectedFindingCount 1 ;
+    m:fixtureCheck case:UAD1054-first-dwelling-missing-second-supplied-check-1,
+        case:UAD1054-first-dwelling-missing-second-supplied-check-2,
+        case:UAD1054-first-dwelling-missing-second-supplied-check-3,
+        case:UAD1054-first-dwelling-missing-second-supplied-check-4,
+        case:UAD1054-first-dwelling-missing-second-supplied-check-5 ;
+    m:fixtureKind "focused_validator_fixture" ;
+    m:purpose "first dwelling missing second supplied" ;
+    m:ruleId "UAD1054" ;
+    m:sourceRow 54 ;
+    m:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1054> ;
+    m:sourceRuleLogic "If ImprovementType = \"Dwelling\", and PropertyStructureBuiltYearEstimatedIndicator is not provided in a given instance of IMPROVEMENT_DETAIL" ;
+    m:sourceUniqueId "0300.0012" ;
+    m:state "applicable_missing" ;
+    m:validationSchema case:schema ;
+    m:xmlFile "UAD1054/first-dwelling-missing-second-supplied.xml" ;
+    m:xmlSha256 "3ec14cf7794d5344122be429ae33c33abe6180c5bbcb144cbd548ed619bcab2d" ;
+    m:xsdValid true .
+
+case:UAD1054-first-dwelling-missing-second-supplied-check-1 a m:FixtureCheck ;
+    m:count 2 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT" .
+
+case:UAD1054-first-dwelling-missing-second-supplied-check-2 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Dwelling" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1054-first-dwelling-missing-second-supplied-check-3 a m:FixtureCheck ;
+    m:count 0 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:PropertyStructureBuiltYearEstimatedIndicator" .
+
+case:UAD1054-first-dwelling-missing-second-supplied-check-4 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Dwelling" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1054-first-dwelling-missing-second-supplied-check-5 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "false" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:PropertyStructureBuiltYearEstimatedIndicator" .
+
+case:UAD1054-first-dwelling-missing-second-supplied-finding-1 a m:ExpectedFinding ;
+    m:dataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:PropertyStructureBuiltYearEstimatedIndicator" ;
+    m:ruleId "UAD1054" ;
+    m:severity "warning" ;
+    m:violationKind "MissingRequiredValue" .
+
+case:UAD1054-first-dwelling-supplied-second-missing a m:TestCase ;
+    m:baseline case:baseline ;
+    m:caseId "IT-1R1S1-UAD1054-first-dwelling-supplied-second-missing" ;
+    m:change "Instance 1: type=Dwelling; estimated-year indicator='false'.",
+        "Instance 2: type=Dwelling; estimated-year indicator=None.",
+        "Replace stale schema reference with a relative URI.",
+        "Replace subject improvements with copies of the first baseline improvement." ;
+    m:endpointReadiness "not_verified" ;
+    m:expectedFinding case:UAD1054-first-dwelling-supplied-second-missing-finding-1 ;
+    m:expectedFindingCount 1 ;
+    m:fixtureCheck case:UAD1054-first-dwelling-supplied-second-missing-check-1,
+        case:UAD1054-first-dwelling-supplied-second-missing-check-2,
+        case:UAD1054-first-dwelling-supplied-second-missing-check-3,
+        case:UAD1054-first-dwelling-supplied-second-missing-check-4,
+        case:UAD1054-first-dwelling-supplied-second-missing-check-5 ;
+    m:fixtureKind "focused_validator_fixture" ;
+    m:purpose "first dwelling supplied second missing" ;
+    m:ruleId "UAD1054" ;
+    m:sourceRow 54 ;
+    m:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1054> ;
+    m:sourceRuleLogic "If ImprovementType = \"Dwelling\", and PropertyStructureBuiltYearEstimatedIndicator is not provided in a given instance of IMPROVEMENT_DETAIL" ;
+    m:sourceUniqueId "0300.0012" ;
+    m:state "applicable_missing" ;
+    m:validationSchema case:schema ;
+    m:xmlFile "UAD1054/first-dwelling-supplied-second-missing.xml" ;
+    m:xmlSha256 "61c465c2a2104d3818a2e772e88482668cfec6efc00131cf7f8092d19abc2d18" ;
+    m:xsdValid true .
+
+case:UAD1054-first-dwelling-supplied-second-missing-check-1 a m:FixtureCheck ;
+    m:count 2 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT" .
+
+case:UAD1054-first-dwelling-supplied-second-missing-check-2 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Dwelling" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1054-first-dwelling-supplied-second-missing-check-3 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "false" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:PropertyStructureBuiltYearEstimatedIndicator" .
+
+case:UAD1054-first-dwelling-supplied-second-missing-check-4 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Dwelling" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1054-first-dwelling-supplied-second-missing-check-5 a m:FixtureCheck ;
+    m:count 0 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:PropertyStructureBuiltYearEstimatedIndicator" .
+
+case:UAD1054-first-dwelling-supplied-second-missing-finding-1 a m:ExpectedFinding ;
+    m:dataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:PropertyStructureBuiltYearEstimatedIndicator" ;
+    m:ruleId "UAD1054" ;
+    m:severity "warning" ;
+    m:violationKind "MissingRequiredValue" .
+
+case:UAD1054-outbuilding-missing a m:TestCase ;
+    m:baseline case:baseline ;
+    m:caseId "IT-1R1S1-UAD1054-outbuilding-missing" ;
+    m:change "Instance 1: type=Outbuilding; estimated-year indicator=None.",
+        "Replace stale schema reference with a relative URI.",
+        "Replace subject improvements with copies of the first baseline improvement." ;
+    m:endpointReadiness "not_verified" ;
+    m:expectedFindingCount 0 ;
+    m:fixtureCheck case:UAD1054-outbuilding-missing-check-1,
+        case:UAD1054-outbuilding-missing-check-2,
+        case:UAD1054-outbuilding-missing-check-3 ;
+    m:fixtureKind "focused_validator_fixture" ;
+    m:purpose "outbuilding missing" ;
+    m:ruleId "UAD1054" ;
+    m:sourceRow 54 ;
+    m:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1054> ;
+    m:sourceRuleLogic "If ImprovementType = \"Dwelling\", and PropertyStructureBuiltYearEstimatedIndicator is not provided in a given instance of IMPROVEMENT_DETAIL" ;
+    m:sourceUniqueId "0300.0012" ;
+    m:state "not_applicable" ;
+    m:validationSchema case:schema ;
+    m:xmlFile "UAD1054/outbuilding-missing.xml" ;
+    m:xmlSha256 "673c0376f3789b07c4b46f49d2ccbf51c256a277d8896be9f7765016d5ef5c62" ;
+    m:xsdValid true .
+
+case:UAD1054-outbuilding-missing-check-1 a m:FixtureCheck ;
+    m:count 1 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT" .
+
+case:UAD1054-outbuilding-missing-check-2 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Outbuilding" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1054-outbuilding-missing-check-3 a m:FixtureCheck ;
+    m:count 0 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT/m:IMPROVEMENT_DETAIL/m:PropertyStructureBuiltYearEstimatedIndicator" .
+
+case:inventory a m:SourceArtifact ;
+    m:path "data/spreadsheet-rule-category-tracking.ttl" ;
+    m:sha256 "1ad0e77c73be8fc1597962f9e55134012ac2a26880194fed991f9fd8646e7e69" .
+
+case:workbook a m:SourceWorkbook ;
+    m:path "specs/FannieMae/appendix-h-1-uad-compliance-rules-urar.xlsx" ;
+    m:sha256 "df94cfb44b7460a619786a2e4f8c68ef472b167926ed0a3377ff6fb43ac283e8" ;
+    m:sheet "UAD Compliance Rules v1.5" ;
+    m:sourceResource <urn:uad36:work-tracking:appendixH> ;
+    m:version "1.5" .
+
+case:baseline a m:SourceArtifact ;
+    m:path "data/uad36-test-suite/tests/fixtures/required_data/baseline/SF1_Appraisal_v1.4.xml" ;
+    m:sha256 "47509c23bcf28c3abb9c57e00a3f93cf52ed38fec3862d7cda24bffd6bca5be9" .
+
+case:schema a m:SourceArtifact ;
+    m:path "specs/UAD/GSE_UAD_3.6.0_v1.3/Combined/GSE_UAD_3.6.0_v1.3.xsd" ;
+    m:sha256 "0bb6650ab465753fe2023be14d414ad6db45820201b7fdee1d90023e49cbf129" .
+
