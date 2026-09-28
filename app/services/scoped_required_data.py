@@ -1,10 +1,13 @@
-"""Explicit conditional/scoped requirements for IT-1R1's first slice.
+"""Explicit conditional/scoped requirements for IT-1R1 slices 01 and 02.
 
 Production definitions are checked against the governed CSV.
 No fixture, test manifest, or expected-result graph is read here.
 """
 
+import hashlib
+import json
 from dataclasses import dataclass
+from decimal import Decimal, InvalidOperation
 from uuid import uuid4
 from xml.etree.ElementTree import Element
 
@@ -24,6 +27,7 @@ class ScopedRule:
     logic: str
     severity: str
     parent_path: str
+    condition: tuple | None = None
 
 
 SCOPED_RULES = {
@@ -63,9 +67,255 @@ SCOPED_RULES = {
 }
 
 
+# Source hashes pin these fields in order; changing a governed definition
+# requires review of its predicate mapping before the hash is updated.
+SOURCE_COLUMNS = (
+    "Unique ID", "Message ID", "Primary Data Element", "Rule Logic",
+    "Severity", "Property Affected", " xPath",
+)
+
+# Predicates are evaluated only within the source-declared parent instance.
+# No test case definitions, manifests, or RDF graphs are used at runtime.
+LOCAL_RULES = {
+    # OutbuildingDefectsExistIndicator
+    ("0300.0111", "UAD1094"): (
+        "8df7fecf905ff0b8dfbd3aed38a79b7cd37414d354da4a3685a3825590a920f9",
+        (
+            "all",
+            ("in", "ImprovementType", "Outbuilding"),
+            ("in", "OutbuildingRealPropertyIndicator", "true"),
+        ),
+    ),
+    # ManufacturedHomeFinancingProgramEligibilityType
+    ("0500.0005", "UAD1100"): (
+        "247758e2db3642b8f4bd3cb5289159f1dc3697410aad1dffb27f0c5cd620438d",
+        ("present", "ManufacturedHomeFinancingProgramEligibilityIdentifier"),
+    ),
+    # ManufacturedHomeFinancingProgramEligibilityIdentifier
+    ("0500.0004", "UAD1101"): (
+        "401508a99d05fbb98ea753cd00af33f42d42b8d9a2735a82f6a0b164ff02b105",
+        ("present", "ManufacturedHomeFinancingProgramEligibilityType"),
+    ),
+    # RoomUpdatedTimeframeType
+    ("0700.0034", "UAD1147"): (
+        "8f4939f493d1d067f97c8b97e2043f5f4713dd326173d1d1de557c3901f05479",
+        (
+            "all",
+            ("in", "RoomType", "FullBathroom", "HalfBathroom", "Kitchen"),
+            ("in", "RoomUpdateStatusType", "FullyUpdated", "PartiallyUpdated"),
+        ),
+    ),
+    # ImprovementComponentConditionStatusType
+    ("0700.0045", "UAD1156"): (
+        "6714621ab5aacd4ae1b2c80920a2c3c5127805014e05bfba492d3c8a988bdb0f",
+        ("in", "ImprovementComponentType", "WallsAndCeiling", "Other"),
+    ),
+    # DistanceFromPropertyLinearMeasure
+    ("1500.0015", "UAD1294"): (
+        "969294f63c3bc44c63f1c4522bc0ce916a5d10ae178000e26c586327315ad80f",
+        (
+            "all",
+            ("ne", "EnvironmentalConditionType", "None"),
+            ("in", "EnvironmentalConditionProximityType", "Bordering", "Offsite"),
+        ),
+    ),
+    # EnvironmentalConditionProximityType
+    ("1500.0018", "UAD1298"): (
+        "0178763681fd3305523d09a9fb356a705c543ec675dd2f0bac15b607f9b8eb42",
+        ("ne", "EnvironmentalConditionType", "None"),
+    ),
+    # SiteInfluenceProximityType
+    ("1500.0086", "UAD1330"): (
+        "5af0ca3f4ec2128161cbbcf3a1615972a5c262d8c172f0de617e3a88093fb1b4",
+        ("ne", "SiteInfluenceType", "BodyOfWater"),
+    ),
+    # InspectionDate
+    ("2400.0080; 2400.0502", "UAD1556"): (
+        "1103b979300e395a29a0aec0b4988062730d19adb1cc1f64ca9d50a8da6c7f4d",
+        (
+            "any",
+            ("in", "PropertyExteriorInspectionMethodType", "Physical", "Virtual"),
+            ("in", "PropertyInteriorInspectionMethodType", "Physical", "Virtual"),
+        ),
+    ),
+    # AmenityOwnershipType
+    ("2500.0002", "UAD1568"): (
+        "437ec9152057d64ec2d4b4c238af24cdf7dc23b70ecb7249c119b1c143192c64",
+        ("in", "AmenityType", "BoatSlip", "UnitStorage"),
+    ),
+    # AssociationChargeAmount
+    ("2500.0007", "UAD1573"): (
+        "93ab2459f38b718523005bf3145450a409948e889a5c65cf82f204201f02adc1",
+        ("in", "AssociationChargeType", "AssociationDues"),
+    ),
+    # AssociationChargeBalanceAmount
+    ("2500.0013", "UAD1578"): (
+        "e197c236e7f07b4ee59de20ba543b3b38137ab0183d7e54648aec1b83772ddd2",
+        (
+            "all",
+            ("in", "AssociationChargeType", "AssociationSpecialAssessment"),
+            ("in", "AssociationSpecialAssessmentStatusType", "Existing"),
+        ),
+    ),
+    # AssociationSpecialAssessmentStatusType
+    ("2500.0163", "UAD1613"): (
+        "867ac5300fac21f4858ef4f7995464c7ad51f3c72e770dde66617d04844dc359",
+        ("in", "AssociationChargeType", "AssociationSpecialAssessment"),
+    ),
+    # MarketInventoryCount
+    ("3000.0018", "UAD1629"): (
+        "f5c8d2cb7f82bfc07d21a49d06a9f3d13ed582b4782823ec2091bb8f7593be6f",
+        ("in", "MarketInventoryType", "ActiveListings"),
+    ),
+    # MarketInventoryHighestPriceAmount
+    ("3000.0019", "UAD1630"): (
+        "5671da55d1a06756c66d83fdd4bce630de3279e643078091a5ab82317d8b3f0e",
+        (
+            "all",
+            ("in", "MarketInventoryType", "ActiveListings"),
+            ("gt", "MarketInventoryCount", "0"),
+        ),
+    ),
+    # MarketInventoryLowestPriceAmount
+    ("3000.0020", "UAD1632"): (
+        "56fdccffac621536c953fdc1719f4ae8e22bdc4edde3bcfc306b411cd5613a49",
+        (
+            "all",
+            ("in", "MarketInventoryType", "ActiveListings"),
+            ("gt", "MarketInventoryCount", "0"),
+        ),
+    ),
+    # MarketInventoryMedianDaysOnMarketCount
+    ("3000.0021", "UAD1634"): (
+        "0ef713855c217e0e912fcb77d52a3ea3598bd37884e299eee550a8f7d2119e0a",
+        (
+            "all",
+            ("in", "MarketInventoryType", "ActiveListings"),
+            ("gt", "MarketInventoryCount", "0"),
+        ),
+    ),
+    # MarketInventoryMedianPriceAmount
+    ("3000.0022", "UAD1635"): (
+        "4107ce995192b5ca1cc567f63627be4f88e6a97ede0a305e4d46a76a24196f23",
+        (
+            "all",
+            ("in", "MarketInventoryType", "ActiveListings"),
+            ("gt", "MarketInventoryCount", "0"),
+        ),
+    ),
+    # MarketInventoryCount
+    ("3000.0024", "UAD1639"): (
+        "501a93cbd7aced1b3d9331104285997e22d4544f65c68200f3fac376e6ff2222",
+        ("in", "MarketInventoryType", "PendingSales"),
+    ),
+    # MarketInventoryCount
+    ("3000.0026", "UAD1642"): (
+        "e5fe326015486f89a790353d4be76e02742d58a21546c2499b979445d003c9e1",
+        ("in", "MarketInventoryType", "TotalSales"),
+    ),
+    # MarketInventoryHighestPriceAmount
+    ("3000.0027", "UAD1643"): (
+        "788c326aeeb8ee0f1e37891c60bc6bab712e0b797260638f438b368899f4278c",
+        (
+            "all",
+            ("in", "MarketInventoryType", "TotalSales"),
+            ("gt", "MarketInventoryCount", "0"),
+        ),
+    ),
+    # MarketInventoryLowestPriceAmount
+    ("3000.0028", "UAD1645"): (
+        "ae94eaf300dcbb42dd4a85036ef0920231cafc81c807481fe7002404178775bc",
+        (
+            "all",
+            ("in", "MarketInventoryType", "TotalSales"),
+            ("gt", "MarketInventoryCount", "0"),
+        ),
+    ),
+    # MarketInventoryMedianPriceAmount
+    ("3000.0029", "UAD1647"): (
+        "fc01d6f63bb1fedcca66a8696461627692d1d13976bd2d2f720da0c0dd6ae95d",
+        (
+            "all",
+            ("in", "MarketInventoryType", "TotalSales"),
+            ("gt", "MarketInventoryCount", "0"),
+        ),
+    ),
+    # CarStorageAreaMeasure
+    ("3200.0004", "UAD1664"): (
+        "f3926fb62059be88da2b94a7fcdc42a74edd156cf51138591ae6d74a923dbadf",
+        ("in", "CarStorageType", "Carport", "Garage"),
+    ),
+    # CarStorageAttachmentType
+    ("3200.0005", "UAD1665"): (
+        "6856cfe8c94102057e03c0ca07d2b47732bf2a8041c33805a3fbe5a521754cc7",
+        ("in", "CarStorageType", "Carport", "Garage"),
+    ),
+    # ImprovedSurfaceMaterialType
+    ("3200.0008", "UAD1669"): (
+        "2d19d10f04d90b152c063fb8d964b0e8359974068709a49a3eeb1ef4f9ac1033",
+        ("in", "CarStorageType", "Driveway", "SharedDriveway"),
+    ),
+    # ParkingSpacesCount
+    ("3200.0010", "UAD1671"): (
+        "c40001df791a0b61b1ad6801e2cad168c4506ce34ff1c13bc772efeaad74dd3f",
+        (
+            "any",
+            (
+                "all",
+                ("in", "CarStorageType", "Driveway", "SharedDriveway"),
+                ("in", "TenOrMoreParkingSpacesIndicator", "false"),
+            ),
+            (
+                "in", "CarStorageType", "Carport", "CommonCarport",
+                "Garage", "OpenLot", "Other", "ParkingGarage",
+            ),
+        ),
+    ),
+    # TenOrMoreParkingSpacesIndicator
+    ("3200.0011", "UAD1672"): (
+        "e76292b02e98c75b303b3726de81ebe6094f60ed207638836089db729bc0464a",
+        ("in", "CarStorageType", "Driveway", "SharedDriveway"),
+    ),
+    # ProjectParkingSpaceAssignmentType
+    ("3200.0012", "UAD1673"): (
+        "57b7b5ea155cb770e3441de31cb53fe95287cb93d712b85b32bfcf12923f8765",
+        ("in", "CarStorageType", "CommonCarport", "OpenLot", "ParkingGarage"),
+    ),
+    # DwellingExteriorDefectsExistIndicator
+    ("3900.0097", "UAD1687"): (
+        "f361ebd8aca81138c70b63e2808898661d9638b8fe60e862f11e62e8a30a0edf",
+        ("in", "ImprovementType", "Dwelling"),
+    ),
+}
+
+
 def scoped_spec(rule: dict[str, str]) -> ScopedRule | None:
-    return SCOPED_RULES.get(
-        (rule.get("Unique ID"), rule.get("Message ID"))
+    key = (rule.get("Unique ID"), rule.get("Message ID"))
+    existing = SCOPED_RULES.get(key)
+    if existing is not None:
+        return existing
+    local = LOCAL_RULES.get(key)
+    if local is None:
+        return None
+
+    expected_hash, condition = local
+    values = [rule.get(column) for column in SOURCE_COLUMNS]
+    actual_hash = hashlib.sha256(
+        json.dumps(
+            values, ensure_ascii=False, separators=(",", ":")
+        ).encode("utf-8")
+    ).hexdigest()
+    if actual_hash != expected_hash:
+        raise ValueError(
+            f"{key[0]}/{key[1]}: governed definition changed; "
+            "review the local condition mapping"
+        )
+    return ScopedRule(
+        element=rule["Primary Data Element"],
+        logic=rule["Rule Logic"],
+        severity=rule["Severity"],
+        parent_path=rule[" xPath"],
+        condition=condition,
     )
 
 
@@ -143,6 +393,56 @@ def _combine(
     raise ValueError(
         f"{identity}: missing input prevents condition evaluation"
     )
+
+
+def _local_condition(
+    context: Element,
+    condition: tuple,
+    identity: str,
+) -> bool | None:
+    """Evaluate an explicit predicate without crossing instance boundaries."""
+    operator = condition[0]
+    if operator in {"all", "any"}:
+        unknown = False
+        for child in condition[1:]:
+            result = _local_condition(context, child, identity)
+            if operator == "all" and result is False:
+                return False
+            if operator == "any" and result is True:
+                return True
+            unknown |= result is None
+        if unknown:
+            return None
+        return operator == "all"
+
+    field = condition[1]
+    nodes = context.findall(f"m:{field}", NS)
+    if len(nodes) > 1:
+        raise ValueError(f"{identity}: ambiguous condition input at {field}")
+    if nodes and list(nodes[0]):
+        raise ValueError(f"{identity}: nonscalar condition input at {field}")
+    if operator == "present":
+        return bool(nodes) and _has_value(nodes[0])
+    if not nodes:
+        return None
+    if not _has_value(nodes[0]):
+        raise ValueError(f"{identity}: invalid condition input at {field}")
+    value = (nodes[0].text or "").strip()
+    if operator == "in":
+        return value in condition[2:]
+    if operator == "ne":
+        return value != condition[2]
+    if operator == "gt":
+        try:
+            number = Decimal(value)
+        except InvalidOperation as error:
+            raise ValueError(
+                f"{identity}: nonnumeric input at {field}"
+            ) from error
+        if not number.is_finite():
+            raise ValueError(f"{identity}: nonfinite input at {field}")
+        return number > Decimal(condition[2])
+    raise ValueError(f"{identity}: unsupported condition operator {operator}")
 
 
 def _path_from(
@@ -277,25 +577,28 @@ def evaluate_scoped_rule(
 
             else:
                 applies = None
-                parent_path = (
-                    "m:IMPROVEMENTS/m:IMPROVEMENT/"
-                    "m:IMPROVEMENT_DETAIL"
+                parent_path = "/".join(
+                    "m:" + part
+                    for part in specification.parent_path.removeprefix(
+                        PROPERTY_PATH
+                    ).strip("/").split("/")
                 )
 
             if applies is False:
                 continue
 
             containers = subject.findall(parent_path, NS)
-            if rule_id != "UAD1054" and len(containers) > 1:
+            property_level = rule_id in {"UAD1021", "UAD1024"}
+            if property_level and len(containers) > 1:
                 raise ValueError(
                     f"{identity}: ambiguous dependent context"
                 )
 
             # Missing property-level containers still mean missing data.
-            # UAD1054 applies within existing improvement-detail instances.
+            # Local rules apply within existing source-declared instances.
             contexts = (
                 containers
-                if rule_id == "UAD1054"
+                if not property_level
                 else (containers or [None])
             )
 
@@ -325,6 +628,17 @@ def evaluate_scoped_rule(
                     _has_value(node) for node in elements
                 ):
                     continue
+
+                if specification.condition is not None:
+                    applies = _local_condition(
+                        container, specification.condition, identity
+                    )
+                    if applies is None:
+                        raise ValueError(
+                            f"{identity}: missing input prevents condition evaluation"
+                        )
+                    if not applies:
+                        continue
 
                 existing = (
                     container if container is not None else subject

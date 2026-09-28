@@ -7,6 +7,7 @@ Default: verify in memory only.
 
 import argparse
 import hashlib
+import json
 import os
 from copy import deepcopy
 from pathlib import Path
@@ -15,6 +16,8 @@ from urllib.parse import quote, unquote
 from lxml import etree as ET
 from rdflib import Graph, Literal, Namespace, RDF
 from rdflib.compare import isomorphic
+
+from it_1_r1_s1_slice_02_cases import case_plans, rule_plans
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -41,6 +44,34 @@ C = Namespace("urn:uad36:test-manifest:IT-1R1S1:")
 T = Namespace("urn:uad36:work-tracking:vocab:")
 S = Namespace("urn:uad36:work-tracking:scenario:")
 B = Namespace("urn:uad36:work-tracking:")
+R1 = Namespace("urn:uad36:work-tracking:r1-classification:")
+
+# Fingerprint of the 30 reviewed source definitions, not the whole TTL.
+SLICE_SOURCE_HASH = (
+    "97665dc2a174c3993c7e6c24b2bba5fccd"
+    "6a821b2ef04dcecb13d207f6ff88d4"
+)
+SOURCE_FIELDS = (
+    "ruleId", "sourceRow", "sourceUniqueIdCell", "primaryDataElement",
+    "ruleLogic", "xpath", "severity", "propertyAffected",
+)
+MEASURE_ATTRIBUTES = {
+    "DistanceFromPropertyLinearMeasure": {"LinearUnitOfMeasureType": "Feet"},
+    "CarStorageAreaMeasure": {"AreaUnitOfMeasureType": "SquareFeet"},
+}
+REPEATED_CONTEXT = {
+    "IMPROVEMENT_DETAIL": "IMPROVEMENT",
+    "MANUFACTURED_HOME_FINANCING_PROGRAM": "MANUFACTURED_HOME_FINANCING_PROGRAM",
+    "ROOM_DETAIL": "ROOM",
+    "INTERIOR_COMPONENT_DETAIL": "INTERIOR_COMPONENT",
+    "ENVIRONMENTAL_CONDITION": "ENVIRONMENTAL_CONDITION",
+    "SITE_INFLUENCE_DETAIL": "SITE_INFLUENCE",
+    "INSPECTION_DETAIL": "INSPECTION",
+    "PROJECT_AMENITY": "PROJECT_AMENITY",
+    "ASSOCIATION_CHARGE_DETAIL": "ASSOCIATION_CHARGE",
+    "MARKET_INVENTORY": "MARKET_INVENTORY",
+    "CAR_STORAGE_DETAIL": "CAR_STORAGE",
+}
 
 SUBJECT = (
     ".//m:VALUATION_ANALYSIS/m:PROPERTIES/"
@@ -142,8 +173,11 @@ def build():
     schema = ET.XMLSchema(schema_doc)
     xs = {"x": "http://www.w3.org/2001/XMLSchema"}
 
-    # Obtain order from the schema rather than guessing insertion points.
+    # Obtain order and cardinality from the schema.
     orders = {}
+    occurrences = {}
+    minimums = {}
+    required_children = {}
     for definition in schema_doc.xpath(
         "//x:complexType[@name]", namespaces=xs
     ):
@@ -151,6 +185,17 @@ def build():
             "./x:sequence/x:element[@name]", namespaces=xs
         )
         if children:
+            required_children[definition.get("name")] = [
+                child for child in children
+                if int(child.get("minOccurs", "1")) > 0
+            ]
+            for child in children:
+                minimums[(definition.get("name"), child.get("name"))] = int(
+                    child.get("minOccurs", "1")
+                )
+                occurrences[(definition.get("name"), child.get("name"))] = (
+                    child.get("maxOccurs", "1")
+                )
             orders[definition.get("name")] = {
                 child.get("name"): index
                 for index, child in enumerate(children)
@@ -202,7 +247,27 @@ def build():
         if value is not None:
             node = ET.Element(f"{{{URI}}}{name}")
             node.text = value
+            for attribute, unit in MEASURE_ATTRIBUTES.get(name, {}).items():
+                node.set(attribute, unit)
             insert(parent, node)
+
+    def complete_required_containers(parent):
+        parent_name = ET.QName(parent).localname
+        for declaration in required_children.get(parent_name, []):
+            name = declaration.get("name")
+            minimum = int(declaration.get("minOccurs", "1"))
+            existing = parent.findall(f"{{{URI}}}{name}")
+            while len(existing) < minimum:
+                if not name.isupper() or declaration.get("type") != name:
+                    raise ValueError(
+                        f"Required value needs explicit fixture data: {parent_name}/{name}"
+                    )
+                node = ET.Element(f"{{{URI}}}{name}")
+                insert(parent, node)
+                existing.append(node)
+        for child in list(parent):
+            if isinstance(child.tag, str):
+                complete_required_containers(child)
 
     raw = BASELINE.read_bytes()
     if digest(raw) != BASELINE_HASH:
@@ -230,6 +295,43 @@ def build():
             raise ValueError(f"Source logic changed: {rule_id}")
         sources[rule_id] = row
 
+    plans = {plan.rule_id: plan for plan in rule_plans()}
+    cases = case_plans()
+    if len(plans) != 30 or len(cases) != 333:
+        raise ValueError("Slice-02 coverage changed; review the case matrix.")
+    selected = set(inventory.objects(R1.nextSlice, T.proposedSliceRule))
+    selected_ids = {
+        str(single(inventory, row, T.ruleId)): row for row in selected
+    }
+    if len(selected) != 30 or set(selected_ids) != set(plans):
+        raise ValueError("Slice-02 plans do not match the TTL selection.")
+    records = []
+    for rule_id, row in sorted(selected_ids.items()):
+        if row not in members:
+            raise ValueError(f"Rule is outside R1: {rule_id}")
+        record = {
+            key: str(single(inventory, row, T[key]))
+            for key in SOURCE_FIELDS
+        }
+        records.append(record)
+        plan = plans[rule_id]
+        if record["primaryDataElement"] != plan.target:
+            raise ValueError(f"Dependent field mismatch: {rule_id}")
+        if record["propertyAffected"] != "Subject":
+            raise ValueError(f"Unsupported property scope: {rule_id}")
+        fields = set(map(str, inventory.objects(row, T.conditionField)))
+        for branch in plan.applicable + plan.nonapplicable + plan.split:
+            if set(dict(branch.values)) != fields:
+                raise ValueError(f"Condition fields mismatch: {rule_id}")
+        sources[rule_id] = row
+    fingerprint = digest(
+        json.dumps(records, sort_keys=True, ensure_ascii=False).encode("utf-8")
+    )
+    if fingerprint != SLICE_SOURCE_HASH:
+        raise ValueError("Reviewed slice-02 source definitions changed.")
+    if {case.rule_id for case in cases} != set(plans):
+        raise ValueError("Missing or unexpected slice-02 case rules.")
+
     graph = Graph()
     graph.bind("m", M)
     graph.bind("case", C)
@@ -240,16 +342,21 @@ def build():
     graph.add((C.manifest, RDF.type, M.Manifest))
     put(C.manifest, M.schemaVersion, 1)
     put(C.manifest, M.scenarioId, "IT-1R1S1")
-    put(C.manifest, M.caseCount, 17)
+    put(C.manifest, M.caseCount, 17 + len(cases))
     put(
         C.manifest, M.coverage,
-        "Initial three-rule slice; not full R1 coverage.",
+        "Slices 01 and 02: 33 source rules; not full R1 coverage.",
     )
 
     for predicate, node, path in [
         (M.baseline, C.baseline, BASELINE),
         (M.inventory, C.inventory, INVENTORY),
         (M.validationSchema, C.schema, SCHEMA),
+        (M.generator, C.generator, Path(__file__).resolve()),
+        (
+            M.caseDefinitions, C.caseDefinitions,
+            Path(__file__).resolve().with_name("it_1_r1_s1_slice_02_cases.py"),
+        ),
     ]:
         graph.add((C.manifest, predicate, node))
         graph.add((node, RDF.type, M.SourceArtifact))
@@ -270,13 +377,17 @@ def build():
         "Other business rules may be violated by deliberate case changes.",
         "XSD validity does not establish external endpoint acceptance.",
         "Copied improvements may repeat identifiers not constrained by this XSD.",
+        "Slice-02 cases replace one subject branch with focused contexts.",
+        "Baseline relationships outside that branch are not repaired.",
+        "XSD checks do not establish business-level relationship integrity.",
     ]:
         put(C.manifest, M.limitation, limitation)
 
     artifacts = {}
 
     def add(
-        rule_id, name, root, facts, paths, supplied, changes
+        rule_id, name, root, facts, paths, supplied, changes,
+        slice_id="01", purpose=None,
     ):
         relative = f"{rule_id}/{name}.xml"
         target = target_path(relative)
@@ -354,9 +465,10 @@ def build():
                 M.sourceUniqueId,
                 str(single(inventory, source, T.sourceUniqueIdCell)),
             ),
-            (M.sourceRuleLogic, LOGIC[rule_id]),
+            (M.sourceRuleLogic, str(single(inventory, source, T.ruleLogic))),
+            (M.sliceId, slice_id),
             (M.state, state),
-            (M.purpose, name.replace("-", " ")),
+            (M.purpose, purpose or name.replace("-", " ")),
             (M.xmlFile, relative),
             (M.xmlSha256, digest(content)),
             (M.expectedFindingCount, len(paths)),
@@ -511,6 +623,104 @@ def build():
     if len(artifacts) != 17:
         raise ValueError("Expected 17 XML fixtures.")
 
+    for case in cases:
+        plan = plans[case.rule_id]
+        source = sources[case.rule_id]
+        source_path = str(single(inventory, source, T.xpath))
+        prefix = "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/"
+        if not source_path.startswith(prefix):
+            raise ValueError(f"Unsupported source path: {source_path}")
+        parts = source_path[len(prefix):].strip("/").split("/")
+        if any(not part.replace("_", "").isalnum() for part in parts):
+            raise ValueError(f"Unsupported source path components: {source_path}")
+        repeat_name = REPEATED_CONTEXT[parts[-1]]
+        if parts.count(repeat_name) != 1:
+            raise ValueError(f"Ambiguous repeating context: {source_path}")
+        repeat_index = parts.index(repeat_name)
+        if repeat_index == 0:
+            raise ValueError("Repeating context requires an explicit container.")
+        declaration_key = (parts[repeat_index - 1], repeat_name)
+        instances = list(case.instances)
+        supporting = plan.nonapplicable[0].values + ((plan.target, None),)
+        while len(instances) < minimums[declaration_key]:
+            instances.append(supporting)
+        limit = occurrences[declaration_key]
+        if limit != "unbounded" and len(instances) > int(limit):
+            raise ValueError(f"Too many instances for schema: {case.case_id}")
+
+        root = deepcopy(baseline)
+        prop = one(root, SUBJECT)
+        # Replace only the selected subject branch with explicit minimal contexts.
+        # Other subject branches and other properties remain from the baseline.
+        for child in list(prop.findall(f"{{{URI}}}{parts[0]}")):
+            prop.remove(child)
+        parent = ensure(prop, "/".join(parts[:repeat_index]))
+        repeat_path = SUBJECT + "/" + "/".join(
+            "m:" + part for part in parts[:repeat_index + 1]
+        )
+        full_context = SUBJECT + "/" + "/".join("m:" + part for part in parts)
+        facts = [
+            (repeat_path, len(instances), None),
+            (full_context, len(instances), None),
+        ]
+        paths = []
+        changes = [
+            f"Append {len(instances) - len(case.instances)} nonapplicable "
+            "supporting instance(s) to satisfy XSD minimum cardinality.",
+            f"Replace subject {parts[0]} with {len(instances)} "
+            f"focused {repeat_name} instance(s)."
+        ]
+        for position, values in enumerate(instances, 1):
+            repeated = ET.Element(f"{{{URI}}}{repeat_name}")
+            insert(parent, repeated)
+            tail = parts[repeat_index + 1:]
+            context = ensure(repeated, "/".join(tail)) if tail else repeated
+            path_parts = ["m:" + part for part in parts]
+            if len(instances) > 1:
+                path_parts[repeat_index] += f"[{position}]"
+            context_path = SUBJECT + "/" + "/".join(path_parts)
+            values_by_name = dict(values)
+            expected_fields = set(
+                map(str, inventory.objects(source, T.conditionField))
+            ) | {plan.target}
+            if len(values_by_name) != len(values) or set(values_by_name) != expected_fields:
+                raise ValueError(f"Invalid case fields: {case.case_id}")
+            for name, value in values:
+                scalar(context, name, value)
+                facts.append(fact(context_path + "/m:" + name, value))
+                if value is not None:
+                    for attribute, unit in MEASURE_ATTRIBUTES.get(name, {}).items():
+                        facts.append(fact(
+                            context_path + "/m:" + name
+                            + f"[@{attribute}='{unit}']", value,
+                        ))
+                        changes.append(f"Instance {position}: {name}/@{attribute}={unit}")
+                changes.append(
+                    f"Instance {position}: {name}="
+                    + ("absent" if value is None else repr(value))
+                )
+            if position in case.missing_positions:
+                if values_by_name[plan.target] is not None:
+                    raise ValueError(f"Expected missing target is supplied: {case.case_id}")
+                paths.append((context_path + "/m:" + plan.target)[1:])
+        complete_required_containers(one(prop, "m:" + parts[0]))
+        changes.append("Add required empty structural containers from the XSD.")
+        if len(paths) != len(case.missing_positions):
+            raise ValueError(f"Invalid expected positions: {case.case_id}")
+        if bool(paths) != (case.state == "applicable_missing"):
+            raise ValueError(f"Case state disagrees with findings: {case.case_id}")
+        add(
+            case.rule_id, case.name, root, facts, paths,
+            case.state == "applicable_supplied", changes,
+            slice_id="02", purpose=case.purpose,
+        )
+
+    if len(artifacts) != 17 + len(cases):
+        raise ValueError("Unexpected total XML fixture count.")
+    case_nodes = set(graph.objects(C.manifest, M.case))
+    if len(case_nodes) != len(artifacts):
+        raise ValueError("Manifest case coverage differs from generated XML.")
+
     turtle = graph.serialize(format="turtle", encoding="utf-8")
     parsed_graph = Graph().parse(data=turtle, format="turtle")
     if not isomorphic(graph, parsed_graph):
@@ -529,9 +739,10 @@ def main():
 
     # Build and validate the entire corpus before any output is written.
     artifacts = build()
+    xml_count = len(artifacts) - 1
     if not args.write:
         print(
-            "PASS: 17 XSD-valid XML cases, fixture checks, "
+            f"PASS: {xml_count} XSD-valid XML cases, fixture checks, "
             "relative schema references, and Turtle."
         )
         print(
@@ -554,6 +765,10 @@ def main():
                     f"Duplicate old manifest filename: {name}"
                 )
             known_hashes[name] = str(single(old, case, M.xmlSha256))
+
+    removed = set(known_hashes) - set(artifacts)
+    if removed:
+        raise ValueError(f"Generation would omit prior cases: {sorted(removed)}")
 
     # Preflight every replacement before writing anything.
     for name, content in artifacts.items():
@@ -585,7 +800,7 @@ def main():
         if target_path(name).read_bytes() != content:
             raise ValueError(f"Saved artifact differs: {name}")
 
-    print("Saved and verified 17 XSD-valid XML fixtures and manifest.ttl.")
+    print(f"Saved and verified {xml_count} XSD-valid XML fixtures and manifest.ttl.")
     print("Validator RED/GREEN tests were not run.")
 
 

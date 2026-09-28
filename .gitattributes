@@ -1,0 +1,3 @@
+# Keep the combined UAD schema's content-addressed source bytes
+# consistent across operating systems and Git checkout settings.
+/specs/UAD/GSE_UAD_3.6.0_v1.3/Combined/*.xsd text eol=lf
