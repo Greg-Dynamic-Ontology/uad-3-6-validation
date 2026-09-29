@@ -1,7 +1,3 @@
-# IT-1R2S1: 174 governed records; 36 bound, 138 awaiting bindings.
-# UAD1153 and UAD1155 target the SF3 wet-bar interior component using sibling positions.
-# All six new XML variations are schema-valid; unrelated components remain unchanged.
-
 @prefix case: <urn:uad36:test-case:IT-1R2S1:> .
 @prefix suite: <urn:uad36:test-suite:> .
 @prefix t: <urn:uad36:test-suite:vocab:> .
@@ -1262,7 +1258,11 @@ case:UAD1326 a t:TestCase ;
     t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SITE/SITE_FEATURES/SITE_FEATURE/TOPOGRAPHIES/TOPOGRAPHY/" .
 
 case:UAD1329 a t:TestCase ;
+    t:baselinePath "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 Condo2_Appraisal/Condo2_Appraisal_v1.4.xml" ;
+    t:dependentXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SITE/m:SITE_INFLUENCES/m:SITE_INFLUENCE[2]/m:SITE_INFLUENCE_DETAIL/m:SiteInfluenceTypeOtherDescription" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SITE/m:SITE_INFLUENCES/m:SITE_INFLUENCE[2]/m:SITE_INFLUENCE_DETAIL/m:SiteInfluenceTypeOtherDescription" ;
     t:messageText "Provide a description when site influence = 'Other'." ;
+    t:nonmatchingValue "GolfCourse" ;
     t:primaryDataElement "SiteInfluenceTypeOtherDescription" ;
     t:propertyAffected "Subject" ;
     t:ruleId "UAD1329" ;
@@ -1270,6 +1270,7 @@ case:UAD1329 a t:TestCase ;
     t:severity "Fatal" ;
     t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1329> ;
     t:sourceUniqueIdCell "1500.0088" ;
+    t:triggerXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SITE/m:SITE_INFLUENCES/m:SITE_INFLUENCE[2]/m:SITE_INFLUENCE_DETAIL/m:SiteInfluenceType" ;
     t:uniqueId "1500.0088" ;
     t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SITE/SITE_INFLUENCES/SITE_INFLUENCE/SITE_INFLUENCE_DETAIL/" .
 
@@ -1430,7 +1431,11 @@ case:UAD1359 a t:TestCase ;
     t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SITE/SITE_UTILITIES/SITE_UTILITY/SITE_UTILITY_SERVICES/SITE_UTILITY_SERVICE/" .
 
 case:UAD1362 a t:TestCase ;
+    t:baselinePath "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 MH1_Appraisal/MH1_Appraisal_v1.4.xml" ;
+    t:dependentXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SITE/m:SITE_VIEWS/m:SITE_VIEW[3]/m:ViewTypeOtherDescription" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SITE/m:SITE_VIEWS/m:SITE_VIEW[3]/m:ViewTypeOtherDescription" ;
     t:messageText "Provide a description when view type = 'Other'." ;
+    t:nonmatchingValue "Lake" ;
     t:primaryDataElement "ViewTypeOtherDescription" ;
     t:propertyAffected "Subject" ;
     t:ruleId "UAD1362" ;
@@ -1438,6 +1443,7 @@ case:UAD1362 a t:TestCase ;
     t:severity "Fatal" ;
     t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1362> ;
     t:sourceUniqueIdCell "1500.0121" ;
+    t:triggerXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SITE/m:SITE_VIEWS/m:SITE_VIEW[3]/m:ViewType" ;
     t:uniqueId "1500.0121" ;
     t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SITE/SITE_VIEWS/SITE_VIEW/" .
 

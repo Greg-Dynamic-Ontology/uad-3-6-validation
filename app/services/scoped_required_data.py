@@ -33,6 +33,20 @@ class ScopedRule:
 
 
 SCOPED_RULES = {
+    ("1500.0088", "UAD1329"): ScopedRule(
+        element="SiteInfluenceTypeOtherDescription",
+        logic='If SiteInfluenceType = "Other" and SiteInfluenceTypeOtherDescription is not provided in a given instance of SITE_INFLUENCE_DETAIL',
+        severity="Fatal",
+        parent_path=PROPERTY_PATH + "SITE/SITE_INFLUENCES/SITE_INFLUENCE/SITE_INFLUENCE_DETAIL/",
+        equality_trigger=("m:SiteInfluenceType", "Other"),
+    ),
+    ("1500.0121", "UAD1362"): ScopedRule(
+        element="ViewTypeOtherDescription",
+        logic='If ViewType = "Other" and ViewTypeOtherDescription is not provided in a given instance of SITE_VIEW',
+        severity="Fatal",
+        parent_path=PROPERTY_PATH + "SITE/SITE_VIEWS/SITE_VIEW/",
+        equality_trigger=("m:ViewType", "Other"),
+    ),
     ("0700.0047", "UAD1153"): ScopedRule(
         element="ImprovementComponentTypeOtherDescription",
         logic=(
