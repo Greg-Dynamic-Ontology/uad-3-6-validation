@@ -1,6 +1,6 @@
-# IT-1R2S1: 174 governed records; 28 bound, 146 awaiting bindings.
-# UAD1242, UAD1243 and UAD1762 reuse the published 2-to-4-unit sample.
-# Trigger and dependent paths remain within the same valuation report.
+# IT-1R2S1: 174 governed records; 31 bound, 143 awaiting bindings.
+# UAD1204, UAD1205 and UAD1208 reuse the published Condo2 sample.
+# This slice exercises one listing occurrence; repeated-listing isolation is additional coverage.
 # All nine new XML variations were schema-validated.
 
 @prefix case: <urn:uad36:test-case:IT-1R2S1:> .
@@ -778,7 +778,11 @@ case:UAD1198 a t:TestCase ;
     t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SALES_HISTORIES/SALES_HISTORY/" .
 
 case:UAD1204 a t:TestCase ;
+    t:baselinePath "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 Condo2_Appraisal/Condo2_Appraisal_v1.4.xml" ;
+    t:dependentXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:LISTING_INFORMATIONS/m:LISTING_INFORMATION/m:LISTING_INFORMATION_DETAIL/m:DaysOnMarketCount" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:LISTING_INFORMATIONS/m:LISTING_INFORMATION/m:LISTING_INFORMATION_DETAIL/m:DaysOnMarketCount" ;
     t:messageText "Provide the total number of days the property has been on the market." ;
+    t:nonmatchingValue "false" ;
     t:primaryDataElement "DaysOnMarketCount" ;
     t:propertyAffected "Subject" ;
     t:ruleId "UAD1204" ;
@@ -786,11 +790,16 @@ case:UAD1204 a t:TestCase ;
     t:severity "Fatal" ;
     t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1204> ;
     t:sourceUniqueIdCell "0900.0007" ;
+    t:triggerXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:LISTING_INFORMATION_SUMMARY/m:ListedWithinPreviousYearIndicator" ;
     t:uniqueId "0900.0007" ;
     t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/LISTING_INFORMATIONS/LISTING_INFORMATION/LISTING_INFORMATION_DETAIL/" .
 
 case:UAD1205 a t:TestCase ;
+    t:baselinePath "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 Condo2_Appraisal/Condo2_Appraisal_v1.4.xml" ;
+    t:dependentXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:LISTING_INFORMATIONS/m:LISTING_INFORMATION/m:LISTING_INFORMATION_DETAIL/m:FinalListPriceAmount" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:LISTING_INFORMATIONS/m:LISTING_INFORMATION/m:LISTING_INFORMATION_DETAIL/m:FinalListPriceAmount" ;
     t:messageText "Provide the 'Current or Final List Price'." ;
+    t:nonmatchingValue "false" ;
     t:primaryDataElement "FinalListPriceAmount" ;
     t:propertyAffected "Subject" ;
     t:ruleId "UAD1205" ;
@@ -798,11 +807,16 @@ case:UAD1205 a t:TestCase ;
     t:severity "Fatal" ;
     t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1205> ;
     t:sourceUniqueIdCell "0900.0008" ;
+    t:triggerXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:LISTING_INFORMATION_SUMMARY/m:ListedWithinPreviousYearIndicator" ;
     t:uniqueId "0900.0008" ;
     t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/LISTING_INFORMATIONS/LISTING_INFORMATION/LISTING_INFORMATION_DETAIL/" .
 
 case:UAD1208 a t:TestCase ;
+    t:baselinePath "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 Condo2_Appraisal/Condo2_Appraisal_v1.4.xml" ;
+    t:dependentXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:LISTING_INFORMATIONS/m:LISTING_INFORMATION/m:LISTING_INFORMATION_DETAIL/m:ListingTypeOtherDescription" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:LISTING_INFORMATIONS/m:LISTING_INFORMATION/m:LISTING_INFORMATION_DETAIL/m:ListingTypeOtherDescription" ;
     t:messageText "Provide a description when 'Listing Type' = 'Other'." ;
+    t:nonmatchingValue "MLS" ;
     t:primaryDataElement "ListingTypeOtherDescription" ;
     t:propertyAffected "Subject" ;
     t:ruleId "UAD1208" ;
@@ -810,6 +824,7 @@ case:UAD1208 a t:TestCase ;
     t:severity "Fatal" ;
     t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1208> ;
     t:sourceUniqueIdCell "0900.0016" ;
+    t:triggerXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:LISTING_INFORMATIONS/m:LISTING_INFORMATION/m:LISTING_INFORMATION_DETAIL/m:ListingType" ;
     t:uniqueId "0900.0016" ;
     t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/LISTING_INFORMATIONS/LISTING_INFORMATION/LISTING_INFORMATION_DETAIL/" .
 

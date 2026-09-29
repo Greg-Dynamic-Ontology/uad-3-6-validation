@@ -1,4 +1,4 @@
-"""Explicit conditional/scoped requirements for IT-1R1 slices 01 and 02.
+"""Explicit conditional/scoped requirements, including repeated listing rules.
 
 Production definitions are checked against the governed CSV.
 No fixture, test manifest, or expected-result graph is read here.
@@ -28,9 +28,56 @@ class ScopedRule:
     severity: str
     parent_path: str
     condition: tuple | None = None
+    equality_trigger: tuple[str, str] | None = None
+    trigger_at_subject: bool = False
 
 
 SCOPED_RULES = {
+    ("0900.0007", "UAD1204"): ScopedRule(
+        element="DaysOnMarketCount",
+        logic=(
+            'If ListedWithinPreviousYearIndicator = "true" and '
+            "DaysOnMarketCount is not provided "
+            "in a given instance of LISTING_INFORMATION_DETAIL"
+        ),
+        severity="Fatal",
+        parent_path=(
+            PROPERTY_PATH
+            + "LISTING_INFORMATIONS/LISTING_INFORMATION/LISTING_INFORMATION_DETAIL/"
+        ),
+        equality_trigger=("m:LISTING_INFORMATION_SUMMARY/m:ListedWithinPreviousYearIndicator", "true"),
+        trigger_at_subject=True,
+    ),
+    ("0900.0008", "UAD1205"): ScopedRule(
+        element="FinalListPriceAmount",
+        logic=(
+            'If ListedWithinPreviousYearIndicator = "true" and '
+            "FinalListPriceAmount is not provided "
+            "in a given instance of LISTING_INFORMATION_DETAIL"
+        ),
+        severity="Fatal",
+        parent_path=(
+            PROPERTY_PATH
+            + "LISTING_INFORMATIONS/LISTING_INFORMATION/LISTING_INFORMATION_DETAIL/"
+        ),
+        equality_trigger=("m:LISTING_INFORMATION_SUMMARY/m:ListedWithinPreviousYearIndicator", "true"),
+        trigger_at_subject=True,
+    ),
+    ("0900.0016", "UAD1208"): ScopedRule(
+        element="ListingTypeOtherDescription",
+        logic=(
+            'If ListingType = "Other" and '
+            "ListingTypeOtherDescription is not provided "
+            "in a given instance of LISTING_INFORMATION_DETAIL"
+        ),
+        severity="Fatal",
+        parent_path=(
+            PROPERTY_PATH
+            + "LISTING_INFORMATIONS/LISTING_INFORMATION/LISTING_INFORMATION_DETAIL/"
+        ),
+        equality_trigger=("m:ListingType", "Other"),
+        trigger_at_subject=False,
+    ),
     ("0100.0024", "UAD1021"): ScopedRule(
         element="PropertyEstateType",
         logic=(
@@ -638,6 +685,29 @@ def evaluate_scoped_rule(
                     _has_value(node) for node in elements
                 ):
                     continue
+
+                if specification.equality_trigger is not None:
+                    trigger_path, matching_value = specification.equality_trigger
+                    trigger_context = (
+                        subject if specification.trigger_at_subject else container
+                    )
+                    triggers = trigger_context.findall(trigger_path, NS)
+                    if len(triggers) > 1:
+                        raise ValueError(
+                            f"{identity}: ambiguous condition input at {trigger_path}"
+                        )
+                    if triggers and list(triggers[0]):
+                        raise ValueError(
+                            f"{identity}: nonscalar condition input at {trigger_path}"
+                        )
+                    # Absent, blank, or nil inputs cannot match this equality.
+                    # Requirements for the trigger itself remain independent.
+                    if (
+                        not triggers
+                        or not _has_value(triggers[0])
+                        or (triggers[0].text or "").strip() != matching_value
+                    ):
+                        continue
 
                 if specification.condition is not None:
                     applies = _local_condition(
