@@ -33,6 +33,48 @@ class ScopedRule:
 
 
 SCOPED_RULES = {
+    ("0300.0011", "UAD1050"): ScopedRule(
+        element="PropertyStructureBuiltYear",
+        logic=(
+            'If ImprovementType = "Dwelling" and '
+            "PropertyStructureBuiltYear is not provided "
+            "in a given instance of IMPROVEMENT_DETAIL"
+        ),
+        severity="Fatal",
+        parent_path=(
+            PROPERTY_PATH
+            + "IMPROVEMENTS/IMPROVEMENT/IMPROVEMENT_DETAIL/"
+        ),
+        equality_trigger=("m:ImprovementType", "Dwelling"),
+    ),
+    ("0300.0025", "UAD1056"): ScopedRule(
+        element="OutbuildingType",
+        logic=(
+            'If ImprovementType = "Outbuilding" and '
+            "OutbuildingType is not provided "
+            "in a given instance of IMPROVEMENT_DETAIL"
+        ),
+        severity="Fatal",
+        parent_path=(
+            PROPERTY_PATH
+            + "IMPROVEMENTS/IMPROVEMENT/IMPROVEMENT_DETAIL/"
+        ),
+        equality_trigger=("m:ImprovementType", "Outbuilding"),
+    ),
+    ("0300.0026", "UAD1057"): ScopedRule(
+        element="OutbuildingTypeOtherDescription",
+        logic=(
+            'If OutbuildingType = "Other" and '
+            "OutbuildingTypeOtherDescription is not provided "
+            "in a given instance of IMPROVEMENT_DETAIL"
+        ),
+        severity="Fatal",
+        parent_path=(
+            PROPERTY_PATH
+            + "IMPROVEMENTS/IMPROVEMENT/IMPROVEMENT_DETAIL/"
+        ),
+        equality_trigger=("m:OutbuildingType", "Other"),
+    ),
     ("0900.0007", "UAD1204"): ScopedRule(
         element="DaysOnMarketCount",
         logic=(

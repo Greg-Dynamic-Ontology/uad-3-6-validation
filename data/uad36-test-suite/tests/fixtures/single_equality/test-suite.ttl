@@ -1,7 +1,6 @@
-# IT-1R2S1: 174 governed records; 31 bound, 143 awaiting bindings.
-# UAD1204, UAD1205 and UAD1208 reuse the published Condo2 sample.
-# This slice exercises one listing occurrence; repeated-listing isolation is additional coverage.
-# All nine new XML variations were schema-validated.
+# IT-1R2S1: 174 governed records; 34 bound, 140 awaiting bindings.
+# UAD1050, UAD1056 and UAD1057 reuse MH1 with exact improvement occurrence paths.
+# Unrelated improvement occurrences remain unchanged; all nine new variants are schema-valid.
 
 @prefix case: <urn:uad36:test-case:IT-1R2S1:> .
 @prefix suite: <urn:uad36:test-suite:> .
@@ -270,7 +269,11 @@ case:UAD1046 a t:TestCase ;
     t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/" .
 
 case:UAD1050 a t:TestCase ;
+    t:baselinePath "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 MH1_Appraisal/MH1_Appraisal_v1.4.xml" ;
+    t:dependentXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:PropertyStructureBuiltYear" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:PropertyStructureBuiltYear" ;
     t:messageText "Provide 'Year Built' for each dwelling." ;
+    t:nonmatchingValue "Outbuilding" ;
     t:primaryDataElement "PropertyStructureBuiltYear" ;
     t:propertyAffected "Subject" ;
     t:ruleId "UAD1050" ;
@@ -278,11 +281,16 @@ case:UAD1050 a t:TestCase ;
     t:severity "Fatal" ;
     t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1050> ;
     t:sourceUniqueIdCell "0300.0011" ;
+    t:triggerXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:ImprovementType" ;
     t:uniqueId "0300.0011" ;
     t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/IMPROVEMENT_DETAIL/" .
 
 case:UAD1056 a t:TestCase ;
+    t:baselinePath "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 MH1_Appraisal/MH1_Appraisal_v1.4.xml" ;
+    t:dependentXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:OutbuildingType" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:OutbuildingType" ;
     t:messageText "Provide the intended functional design for each outbuilding (e.g., barn, standalone ADU, pool house)." ;
+    t:nonmatchingValue "Dwelling" ;
     t:primaryDataElement "OutbuildingType" ;
     t:propertyAffected "Subject" ;
     t:ruleId "UAD1056" ;
@@ -290,11 +298,16 @@ case:UAD1056 a t:TestCase ;
     t:severity "Fatal" ;
     t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1056> ;
     t:sourceUniqueIdCell "0300.0025" ;
+    t:triggerXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:ImprovementType" ;
     t:uniqueId "0300.0025" ;
     t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/IMPROVEMENT_DETAIL/" .
 
 case:UAD1057 a t:TestCase ;
+    t:baselinePath "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 MH1_Appraisal/MH1_Appraisal_v1.4.xml" ;
+    t:dependentXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:OutbuildingTypeOtherDescription" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:OutbuildingTypeOtherDescription" ;
     t:messageText "Provide a description when 'Outbuilding Type' = 'Other'." ;
+    t:nonmatchingValue "Barn" ;
     t:primaryDataElement "OutbuildingTypeOtherDescription" ;
     t:propertyAffected "Subject" ;
     t:ruleId "UAD1057" ;
@@ -302,6 +315,7 @@ case:UAD1057 a t:TestCase ;
     t:severity "Fatal" ;
     t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1057> ;
     t:sourceUniqueIdCell "0300.0026" ;
+    t:triggerXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:OutbuildingType" ;
     t:uniqueId "0300.0026" ;
     t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/IMPROVEMENT_DETAIL/" .
 
