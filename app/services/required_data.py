@@ -40,6 +40,7 @@ class ConditionalRule:
     parent_path: str
     # Optional trigger path relative to the same subject property.
     trigger_subject_path: str | None = None
+    severity: str = "Fatal"
 
     @property
     def logic(self) -> str:
@@ -65,6 +66,50 @@ PROJECT_DETAIL_PATH = (
 # bindings remain relative to the same subject property.
 # Keys preserve both source row identity and source rule identity.
 CONDITIONAL_RULES = {
+    ("2500.0031", "UAD1583"): ConditionalRule(
+        element="ProjectAnalysisGroundRentIndicator",
+        trigger="PropertyInProjectIndicator",
+        value="true",
+        parent_path=(
+            "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROJECT/"
+            "PROJECT_ANALYSIS/"
+        ),
+        trigger_subject_path="m:PROPERTY_DETAIL/m:PropertyInProjectIndicator",
+        severity="Fatal",
+    ),
+    ("2500.0032", "UAD1584"): ConditionalRule(
+        element="ProjectConditionAndQualityDescription",
+        trigger="ProjectDeficiencyObservedIndicator",
+        value="true",
+        parent_path=(
+            "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROJECT/"
+            "PROJECT_ANALYSIS/"
+        ),
+        trigger_subject_path="m:PROJECT/m:PROJECT_ANALYSIS/m:ProjectDeficiencyObservedIndicator",
+        severity="Warning",
+    ),
+    ("2500.0033", "UAD1585"): ConditionalRule(
+        element="ProjectDeficiencyObservedIndicator",
+        trigger="PropertyInProjectIndicator",
+        value="true",
+        parent_path=(
+            "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROJECT/"
+            "PROJECT_ANALYSIS/"
+        ),
+        trigger_subject_path="m:PROPERTY_DETAIL/m:PropertyInProjectIndicator",
+        severity="Fatal",
+    ),
+    ("2500.0048", "UAD1590"): ConditionalRule(
+        element="ProjectConversionIndicator",
+        trigger="PropertyInProjectIndicator",
+        value="true",
+        parent_path=(
+            "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROJECT/"
+            "PROJECT_CONVERSION/"
+        ),
+        trigger_subject_path="m:PROPERTY_DETAIL/m:PropertyInProjectIndicator",
+        severity="Fatal",
+    ),
     ("2500.0055", "UAD1594"): ConditionalRule(
         element="ProjectCommercialSpaceIndicator",
         trigger="PropertyInProjectIndicator",
@@ -217,7 +262,7 @@ def load_required_rules() -> tuple[dict[str, str], ...]:
             expected = {
                 "Primary Data Element": specification.element,
                 "Rule Logic": specification.logic,
-                "Severity": "Fatal",
+                "Severity": specification.severity,
                 "Property Affected": "Subject",
                 " xPath": specification.parent_path,
             }
@@ -544,7 +589,7 @@ def evaluate_required_data(
                 findings.append(
                     Finding(
                         finding_id=f"F-{uuid4().hex[:8]}",
-                        severity=Severity.FATAL,
+                        severity=Severity(rule["Severity"].casefold()),
                         investor=investor,
                         rule_type=RuleType.APPENDIX_H,
                         rule_id=rule["Message ID"],

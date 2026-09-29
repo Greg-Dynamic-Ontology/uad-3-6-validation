@@ -1,7 +1,7 @@
-# IT-1R2S1: 174 governed records; 17 bound, 157 awaiting bindings.
-# Seven project-detail rules reuse the published Condo1 sample.
-# Their trigger and dependent values are bound within the same subject property.
-# All 21 project-detail XML variations were schema-validated in memory.
+# IT-1R2S1: 174 governed records; 21 bound, 153 awaiting bindings.
+# UAD1583, UAD1584, UAD1585 and UAD1590 reuse the published Condo1 sample.
+# UAD1584 retains governed Warning severity; the other three are Fatal.
+# All 12 new XML variations were schema-validated in memory.
 
 @prefix case: <urn:uad36:test-case:IT-1R2S1:> .
 @prefix suite: <urn:uad36:test-suite:> .
@@ -1870,7 +1870,11 @@ case:UAD1582 a t:TestCase ;
     t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/" .
 
 case:UAD1583 a t:TestCase ;
+    t:baselinePath "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 Condo1_Appraisal/Condo1_Appraisal_v1.4.xml" ;
+    t:dependentXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_ANALYSIS/m:ProjectAnalysisGroundRentIndicator" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_ANALYSIS/m:ProjectAnalysisGroundRentIndicator" ;
     t:messageText "Indicate whether the project is subject to ground rent." ;
+    t:nonmatchingValue "false" ;
     t:primaryDataElement "ProjectAnalysisGroundRentIndicator" ;
     t:propertyAffected "Subject" ;
     t:ruleId "UAD1583" ;
@@ -1878,11 +1882,16 @@ case:UAD1583 a t:TestCase ;
     t:severity "Fatal" ;
     t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1583> ;
     t:sourceUniqueIdCell "2500.0031" ;
+    t:triggerXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyInProjectIndicator" ;
     t:uniqueId "2500.0031" ;
     t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROJECT/PROJECT_ANALYSIS/" .
 
 case:UAD1584 a t:TestCase ;
+    t:baselinePath "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 Condo1_Appraisal/Condo1_Appraisal_v1.4.xml" ;
+    t:dependentXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_ANALYSIS/m:ProjectConditionAndQualityDescription" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_ANALYSIS/m:ProjectConditionAndQualityDescription" ;
     t:messageText "Provide a description of the deficiencies observed in the project." ;
+    t:nonmatchingValue "false" ;
     t:primaryDataElement "ProjectConditionAndQualityDescription" ;
     t:propertyAffected "Subject" ;
     t:ruleId "UAD1584" ;
@@ -1890,11 +1899,16 @@ case:UAD1584 a t:TestCase ;
     t:severity "Warning" ;
     t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1584> ;
     t:sourceUniqueIdCell "2500.0032" ;
+    t:triggerXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_ANALYSIS/m:ProjectDeficiencyObservedIndicator" ;
     t:uniqueId "2500.0032" ;
     t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROJECT/PROJECT_ANALYSIS/" .
 
 case:UAD1585 a t:TestCase ;
+    t:baselinePath "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 Condo1_Appraisal/Condo1_Appraisal_v1.4.xml" ;
+    t:dependentXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_ANALYSIS/m:ProjectDeficiencyObservedIndicator" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_ANALYSIS/m:ProjectDeficiencyObservedIndicator" ;
     t:messageText "Indicate whether any deficiencies that impact value / marketability have been observed in the project." ;
+    t:nonmatchingValue "false" ;
     t:primaryDataElement "ProjectDeficiencyObservedIndicator" ;
     t:propertyAffected "Subject" ;
     t:ruleId "UAD1585" ;
@@ -1902,6 +1916,7 @@ case:UAD1585 a t:TestCase ;
     t:severity "Fatal" ;
     t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1585> ;
     t:sourceUniqueIdCell "2500.0033" ;
+    t:triggerXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyInProjectIndicator" ;
     t:uniqueId "2500.0033" ;
     t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROJECT/PROJECT_ANALYSIS/" .
 
@@ -1930,7 +1945,11 @@ case:UAD1587 a t:TestCase ;
     t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROJECT/PROJECT_BLANKET_FINANCINGS/PROJECT_BLANKET_FINANCING/" .
 
 case:UAD1590 a t:TestCase ;
+    t:baselinePath "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 Condo1_Appraisal/Condo1_Appraisal_v1.4.xml" ;
+    t:dependentXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_CONVERSION/m:ProjectConversionIndicator" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_CONVERSION/m:ProjectConversionIndicator" ;
     t:messageText "Indicate whether the property has been converted from its prior use." ;
+    t:nonmatchingValue "false" ;
     t:primaryDataElement "ProjectConversionIndicator" ;
     t:propertyAffected "Subject" ;
     t:ruleId "UAD1590" ;
@@ -1938,6 +1957,7 @@ case:UAD1590 a t:TestCase ;
     t:severity "Fatal" ;
     t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1590> ;
     t:sourceUniqueIdCell "2500.0048" ;
+    t:triggerXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyInProjectIndicator" ;
     t:uniqueId "2500.0048" ;
     t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROJECT/PROJECT_CONVERSION/" .
 
