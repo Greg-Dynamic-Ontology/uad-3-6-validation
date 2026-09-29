@@ -1,7 +1,7 @@
-# IT-1R2S1: 174 governed rule records; 8 have executable XML bindings.
-# Bindings use the existing SF1 baseline and the source-declared Subject context.
-# All three XML variants for each bound case were checked against the UAD XSD.
-# Remaining records need reviewed bindings; no placeholder fixtures are supplied.
+# IT-1R2S1: 174 governed rule records; 10 have executable XML bindings.
+# UAD1028 binds SITE_DETAIL and SALES_CONTRACT_DETAIL in the same subject.
+# UAD1136 uses the published UAD 2-to-4-unit sample with Other / Private Sale.
+# Existing records and bindings are preserved; 164 records still need bindings.
 
 @prefix case: <urn:uad36:test-case:IT-1R2S1:> .
 @prefix suite: <urn:uad36:test-suite:> .
@@ -200,7 +200,11 @@ case:UAD1022 a t:TestCase ;
     t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/" .
 
 case:UAD1028 a t:TestCase ;
+    t:baselinePath "data/uad36-test-suite/tests/fixtures/required_data/baseline/SF1_Appraisal_v1.4.xml" ;
+    t:dependentXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SALES_CONTRACTS/m:SALES_CONTRACT/m:SALES_CONTRACT_DETAIL/m:AllPropertyRightsAppraisedIndicator" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SALES_CONTRACTS/m:SALES_CONTRACT/m:SALES_CONTRACT_DETAIL/m:AllPropertyRightsAppraisedIndicator" ;
     t:messageText "Indicate whether all ownership rights of the property are included as part of the valuation." ;
+    t:nonmatchingValue "true" ;
     t:primaryDataElement "AllPropertyRightsAppraisedIndicator" ;
     t:propertyAffected "Subject" ;
     t:ruleId "UAD1028" ;
@@ -208,6 +212,7 @@ case:UAD1028 a t:TestCase ;
     t:severity "Fatal" ;
     t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1028> ;
     t:sourceUniqueIdCell "0100.0034" ;
+    t:triggerXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SITE/m:SITE_DETAIL/m:LandOwnedInCommonIndicator" ;
     t:uniqueId "0100.0034" ;
     t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SALES_CONTRACTS/SALES_CONTRACT/SALES_CONTRACT_DETAIL/" .
 
@@ -564,7 +569,11 @@ case:UAD1135 a t:TestCase ;
     t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SALES_CONTRACTS/SALES_CONTRACT/SALES_CONTRACT_DETAIL/" .
 
 case:UAD1136 a t:TestCase ;
+    t:baselinePath "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 2- to 4-unit_Appraisal/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:dependentXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SALES_CONTRACTS/m:SALES_CONTRACT/m:SALES_CONTRACT_DETAIL/m:SaleTypeOtherDescription" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SALES_CONTRACTS/m:SALES_CONTRACT/m:SALES_CONTRACT_DETAIL/m:SaleTypeOtherDescription" ;
     t:messageText "Provide a description when 'Transfer Terms' = 'Other'." ;
+    t:nonmatchingValue "TypicallyMotivated" ;
     t:primaryDataElement "SaleTypeOtherDescription" ;
     t:propertyAffected "Subject" ;
     t:ruleId "UAD1136" ;
@@ -572,6 +581,7 @@ case:UAD1136 a t:TestCase ;
     t:severity "Fatal" ;
     t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1136> ;
     t:sourceUniqueIdCell "0600.0018" ;
+    t:triggerXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SALES_CONTRACTS/m:SALES_CONTRACT/m:SALES_CONTRACT_DETAIL/m:SaleType" ;
     t:uniqueId "0600.0018" ;
     t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SALES_CONTRACTS/SALES_CONTRACT/SALES_CONTRACT_DETAIL/" .
 

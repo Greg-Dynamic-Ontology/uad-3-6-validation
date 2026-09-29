@@ -38,6 +38,8 @@ class ConditionalRule:
     trigger: str
     value: str
     parent_path: str
+    # Optional trigger path relative to the same subject property.
+    trigger_subject_path: str | None = None
 
     @property
     def logic(self) -> str:
@@ -55,9 +57,23 @@ SALES_CONTRACT_DETAIL_PATH = (
     "SALES_CONTRACTS/SALES_CONTRACT/SALES_CONTRACT_DETAIL/"
 )
 
-# Each trigger and dependent element share the declared parent context.
+# Triggers default to the dependent container. Explicit cross-container
+# bindings remain relative to the same subject property.
 # Keys preserve both source row identity and source rule identity.
 CONDITIONAL_RULES = {
+    ("0100.0034", "UAD1028"): ConditionalRule(
+        element="AllPropertyRightsAppraisedIndicator",
+        trigger="LandOwnedInCommonIndicator",
+        value="false",
+        parent_path=SALES_CONTRACT_DETAIL_PATH,
+        trigger_subject_path="m:SITE/m:SITE_DETAIL/m:LandOwnedInCommonIndicator",
+    ),
+    ("0600.0018", "UAD1136"): ConditionalRule(
+        element="SaleTypeOtherDescription",
+        trigger="SaleType",
+        value="Other",
+        parent_path=SALES_CONTRACT_DETAIL_PATH,
+    ),
     ("0200.0053", "UAD1046"): ConditionalRule(
         element="SubjectPropertyAmenitiesDefectsExistIndicator",
         trigger="PropertyAmenityExistsIndicator",
@@ -240,9 +256,9 @@ def conditional_elements(
 ) -> list[Element] | None:
     """Return dependent elements when true; None when false.
 
-    When dependent data is not supplied, missing or ambiguous condition inputs
-    raise an evaluation error.
-    They are not silently interpreted as false.
+    An absent, blank, or nil trigger cannot satisfy a scalar equality.
+    Requirements governing the trigger itself are evaluated independently.
+    Ambiguous or structured condition inputs still raise an evaluation error.
     """
     identity = f"{rule['Unique ID']}/{rule['Message ID']}"
     specification = conditional_spec(rule)
@@ -272,16 +288,23 @@ def conditional_elements(
     )
     # Supplied dependent data satisfies this presence requirement regardless
     # of the trigger. Missing/invalid triggers belong to their own rules.
-    # If the dependent is absent, retain the strict condition checks below.
+    # Otherwise evaluate the equality without assuming a missing trigger value.
     if (
         len(dependents) == 1
         and not list(dependents[0])
         and has_value(dependents[0])
     ):
         return dependents
-    triggers = container.findall(
-        f"{{{NAMESPACE}}}{specification.trigger}"
-    )
+    if specification.trigger_subject_path is not None:
+        # Never search the document globally: another property's trigger
+        # cannot satisfy this subject property's applicability condition.
+        triggers = context.findall(specification.trigger_subject_path, NS)
+    else:
+        triggers = container.findall(
+            f"{{{NAMESPACE}}}{specification.trigger}"
+        )
+    if not triggers:
+        return None
     if len(triggers) != 1:
         raise ValueError(
             f"{identity}: expected one {specification.trigger}, "
@@ -289,11 +312,12 @@ def conditional_elements(
         )
 
     trigger = triggers[0]
-    if list(trigger) or not has_value(trigger):
+    if list(trigger):
         raise ValueError(
-            f"{identity}: {specification.trigger} must have "
-            "one nonblank, non-nil scalar value"
+            f"{identity}: {specification.trigger} must have a scalar value"
         )
+    if not has_value(trigger):
+        return None
 
     if (trigger.text or "").strip() != specification.value:
         return None
@@ -457,7 +481,7 @@ def evaluate_required_data(
                     expected_condition = (
                         f'{element_name} must be provided when '
                         f'{specification.trigger} = "{specification.value}" '
-                        "in the same subject-property XML context."
+                        "within the same subject property."
                     )
 
                 findings.append(
