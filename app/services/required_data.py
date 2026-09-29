@@ -69,6 +69,42 @@ PROJECT_DETAIL_PATH = (
 # bindings remain relative to the same subject property or valuation report.
 # Keys preserve both source row identity and source rule identity.
 CONDITIONAL_RULES = {
+    ("1200.0003", "UAD1242"): ConditionalRule(
+        element="GrossRentMultiplierFactorNumber",
+        trigger="IncomeApproachIndicator",
+        value="true",
+        parent_path=(
+            "../VALUATION_ANALYSIS/VALUATION_REPORT/APPROACH_TO_VALUE/"
+            "INCOME_APPROACH/INCOME_APPROACH_DETAIL/"
+        ),
+        trigger_report_path="m:SCOPE_OF_WORK/m:SCOPE_OF_WORK_DETAIL/m:IncomeApproachIndicator",
+        property_affected="N/A",
+        severity="Fatal",
+    ),
+    ("1200.0004", "UAD1243"): ConditionalRule(
+        element="ValueIndicatedByIncomeApproachAmount",
+        trigger="IncomeApproachIndicator",
+        value="true",
+        parent_path=(
+            "../VALUATION_ANALYSIS/VALUATION_REPORT/APPROACH_TO_VALUE/"
+            "INCOME_APPROACH/INCOME_APPROACH_DETAIL/"
+        ),
+        trigger_report_path="m:SCOPE_OF_WORK/m:SCOPE_OF_WORK_DETAIL/m:IncomeApproachIndicator",
+        property_affected="N/A",
+        severity="Fatal",
+    ),
+    ("1200.0007", "UAD1762"): ConditionalRule(
+        element="IncomeAnalysisCommentDescription",
+        trigger="IncomeApproachIndicator",
+        value="true",
+        parent_path=(
+            "../VALUATION_ANALYSIS/VALUATION_REPORT/APPROACH_TO_VALUE/"
+            "INCOME_APPROACH/INCOME_APPROACH_DETAIL/"
+        ),
+        trigger_report_path="m:SCOPE_OF_WORK/m:SCOPE_OF_WORK_DETAIL/m:IncomeApproachIndicator",
+        property_affected="N/A",
+        severity="Fatal",
+    ),
     ("1100.0026", "UAD1227"): ConditionalRule(
         element="DepreciatedCostDwellingsTotalAmount",
         trigger="CostApproachIndicator",

@@ -1,7 +1,7 @@
-# IT-1R2S1: 174 governed records; 25 bound, 149 awaiting bindings.
-# Four cost-approach cases reuse the published MH1 sample.
-# Bindings keep SCOPE_OF_WORK and COST_APPROACH within the same valuation report.
-# All 12 new XML variations were schema-validated; UAD1227 retains Warning severity.
+# IT-1R2S1: 174 governed records; 28 bound, 146 awaiting bindings.
+# UAD1242, UAD1243 and UAD1762 reuse the published 2-to-4-unit sample.
+# Trigger and dependent paths remain within the same valuation report.
+# All nine new XML variations were schema-validated.
 
 @prefix case: <urn:uad36:test-case:IT-1R2S1:> .
 @prefix suite: <urn:uad36:test-suite:> .
@@ -896,7 +896,11 @@ case:UAD1232 a t:TestCase ;
     t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/APPROACH_TO_VALUE/COST_APPROACH/COST_APPROACH_DETAIL/" .
 
 case:UAD1242 a t:TestCase ;
+    t:baselinePath "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 2- to 4-unit_Appraisal/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:dependentXPath "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:APPROACH_TO_VALUE/m:INCOME_APPROACH/m:INCOME_APPROACH_DETAIL/m:GrossRentMultiplierFactorNumber" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:APPROACH_TO_VALUE/m:INCOME_APPROACH/m:INCOME_APPROACH_DETAIL/m:GrossRentMultiplierFactorNumber" ;
     t:messageText "Provide the 'Gross Rent Multiplier'." ;
+    t:nonmatchingValue "false" ;
     t:primaryDataElement "GrossRentMultiplierFactorNumber" ;
     t:propertyAffected "N/A" ;
     t:ruleId "UAD1242" ;
@@ -904,11 +908,16 @@ case:UAD1242 a t:TestCase ;
     t:severity "Fatal" ;
     t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1242> ;
     t:sourceUniqueIdCell "1200.0003" ;
+    t:triggerXPath "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:SCOPE_OF_WORK/m:SCOPE_OF_WORK_DETAIL/m:IncomeApproachIndicator" ;
     t:uniqueId "1200.0003" ;
     t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/APPROACH_TO_VALUE/INCOME_APPROACH/INCOME_APPROACH_DETAIL/" .
 
 case:UAD1243 a t:TestCase ;
+    t:baselinePath "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 2- to 4-unit_Appraisal/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:dependentXPath "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:APPROACH_TO_VALUE/m:INCOME_APPROACH/m:INCOME_APPROACH_DETAIL/m:ValueIndicatedByIncomeApproachAmount" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:APPROACH_TO_VALUE/m:INCOME_APPROACH/m:INCOME_APPROACH_DETAIL/m:ValueIndicatedByIncomeApproachAmount" ;
     t:messageText "Provide the value of the subject property as determined by the Income Approach method of property valuation." ;
+    t:nonmatchingValue "false" ;
     t:primaryDataElement "ValueIndicatedByIncomeApproachAmount" ;
     t:propertyAffected "N/A" ;
     t:ruleId "UAD1243" ;
@@ -916,6 +925,7 @@ case:UAD1243 a t:TestCase ;
     t:severity "Fatal" ;
     t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1243> ;
     t:sourceUniqueIdCell "1200.0004" ;
+    t:triggerXPath "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:SCOPE_OF_WORK/m:SCOPE_OF_WORK_DETAIL/m:IncomeApproachIndicator" ;
     t:uniqueId "1200.0004" ;
     t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/APPROACH_TO_VALUE/INCOME_APPROACH/INCOME_APPROACH_DETAIL/" .
 
@@ -2376,7 +2386,11 @@ case:UAD1761 a t:TestCase ;
     t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/APPROACH_TO_VALUE/COST_APPROACH/COST_APPROACH_DETAIL/" .
 
 case:UAD1762 a t:TestCase ;
+    t:baselinePath "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 2- to 4-unit_Appraisal/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:dependentXPath "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:APPROACH_TO_VALUE/m:INCOME_APPROACH/m:INCOME_APPROACH_DETAIL/m:IncomeAnalysisCommentDescription" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:APPROACH_TO_VALUE/m:INCOME_APPROACH/m:INCOME_APPROACH_DETAIL/m:IncomeAnalysisCommentDescription" ;
     t:messageText "Provide 'Income Approach Commentary' when income approach is included in the appraisal." ;
+    t:nonmatchingValue "false" ;
     t:primaryDataElement "IncomeAnalysisCommentDescription" ;
     t:propertyAffected "N/A" ;
     t:ruleId "UAD1762" ;
@@ -2384,6 +2398,7 @@ case:UAD1762 a t:TestCase ;
     t:severity "Fatal" ;
     t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1762> ;
     t:sourceUniqueIdCell "1200.0007" ;
+    t:triggerXPath "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:SCOPE_OF_WORK/m:SCOPE_OF_WORK_DETAIL/m:IncomeApproachIndicator" ;
     t:uniqueId "1200.0007" ;
     t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/APPROACH_TO_VALUE/INCOME_APPROACH/INCOME_APPROACH_DETAIL/" .
 
