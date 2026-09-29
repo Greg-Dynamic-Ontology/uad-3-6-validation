@@ -1,0 +1,2316 @@
+# IT-1R2S1: 174 governed rule records; 8 have executable XML bindings.
+# Bindings use the existing SF1 baseline and the source-declared Subject context.
+# All three XML variants for each bound case were checked against the UAD XSD.
+# Remaining records need reviewed bindings; no placeholder fixtures are supplied.
+
+@prefix case: <urn:uad36:test-case:IT-1R2S1:> .
+@prefix suite: <urn:uad36:test-suite:> .
+@prefix t: <urn:uad36:test-suite:vocab:> .
+
+suite:single-equality a t:TestSuite ;
+    t:category <urn:uad36:work-tracking:scenario:single_equality_conditional> ;
+    t:categoryInventoryPath "data/spreadsheet-rule-category-tracking.ttl" ;
+    t:hasCase case:UAD1022,
+        case:UAD1028,
+        case:UAD1031,
+        case:UAD1041,
+        case:UAD1044,
+        case:UAD1046,
+        case:UAD1050,
+        case:UAD1056,
+        case:UAD1057,
+        case:UAD1061,
+        case:UAD1063,
+        case:UAD1066,
+        case:UAD1069,
+        case:UAD1071,
+        case:UAD1076,
+        case:UAD1081,
+        case:UAD1082,
+        case:UAD1090,
+        case:UAD1102,
+        case:UAD1122,
+        case:UAD1124,
+        case:UAD1127,
+        case:UAD1128,
+        case:UAD1129,
+        case:UAD1130,
+        case:UAD1132,
+        case:UAD1133,
+        case:UAD1135,
+        case:UAD1136,
+        case:UAD1140,
+        case:UAD1144,
+        case:UAD1151,
+        case:UAD1153,
+        case:UAD1155,
+        case:UAD1163,
+        case:UAD1165,
+        case:UAD1166,
+        case:UAD1167,
+        case:UAD1168,
+        case:UAD1178,
+        case:UAD1181,
+        case:UAD1182,
+        case:UAD1194,
+        case:UAD1195,
+        case:UAD1198,
+        case:UAD1204,
+        case:UAD1205,
+        case:UAD1208,
+        case:UAD1212,
+        case:UAD1220,
+        case:UAD1225,
+        case:UAD1227,
+        case:UAD1230,
+        case:UAD1232,
+        case:UAD1242,
+        case:UAD1243,
+        case:UAD1244,
+        case:UAD1245,
+        case:UAD1246,
+        case:UAD1249,
+        case:UAD1252,
+        case:UAD1253,
+        case:UAD1276,
+        case:UAD1281,
+        case:UAD1288,
+        case:UAD1290,
+        case:UAD1293,
+        case:UAD1297,
+        case:UAD1300,
+        case:UAD1303,
+        case:UAD1305,
+        case:UAD1308,
+        case:UAD1311,
+        case:UAD1314,
+        case:UAD1315,
+        case:UAD1316,
+        case:UAD1319,
+        case:UAD1321,
+        case:UAD1324,
+        case:UAD1326,
+        case:UAD1329,
+        case:UAD1332,
+        case:UAD1334,
+        case:UAD1336,
+        case:UAD1338,
+        case:UAD1341,
+        case:UAD1342,
+        case:UAD1348,
+        case:UAD1350,
+        case:UAD1351,
+        case:UAD1354,
+        case:UAD1356,
+        case:UAD1358,
+        case:UAD1359,
+        case:UAD1362,
+        case:UAD1365,
+        case:UAD1371,
+        case:UAD1380,
+        case:UAD1381,
+        case:UAD1390,
+        case:UAD1391,
+        case:UAD1392,
+        case:UAD1393,
+        case:UAD1396,
+        case:UAD1402,
+        case:UAD1415,
+        case:UAD1428,
+        case:UAD1429,
+        case:UAD1430,
+        case:UAD1431,
+        case:UAD1433,
+        case:UAD1434,
+        case:UAD1435,
+        case:UAD1436,
+        case:UAD1452,
+        case:UAD1456,
+        case:UAD1459,
+        case:UAD1460,
+        case:UAD1471,
+        case:UAD1473,
+        case:UAD1474,
+        case:UAD1479,
+        case:UAD1480,
+        case:UAD1486,
+        case:UAD1493,
+        case:UAD1494,
+        case:UAD1527,
+        case:UAD1555,
+        case:UAD1561,
+        case:UAD1562,
+        case:UAD1563,
+        case:UAD1569,
+        case:UAD1571,
+        case:UAD1576,
+        case:UAD1579,
+        case:UAD1582,
+        case:UAD1583,
+        case:UAD1584,
+        case:UAD1585,
+        case:UAD1586,
+        case:UAD1587,
+        case:UAD1590,
+        case:UAD1592,
+        case:UAD1594,
+        case:UAD1596,
+        case:UAD1597,
+        case:UAD1598,
+        case:UAD1599,
+        case:UAD1600,
+        case:UAD1604,
+        case:UAD1609,
+        case:UAD1612,
+        case:UAD1615,
+        case:UAD1619,
+        case:UAD1620,
+        case:UAD1623,
+        case:UAD1668,
+        case:UAD1670,
+        case:UAD1677,
+        case:UAD1678,
+        case:UAD1681,
+        case:UAD1684,
+        case:UAD1708,
+        case:UAD1713,
+        case:UAD1716,
+        case:UAD1735,
+        case:UAD1751,
+        case:UAD1752,
+        case:UAD1753,
+        case:UAD1754,
+        case:UAD1760,
+        case:UAD1761,
+        case:UAD1762,
+        case:UAD1770 ;
+    t:ruleInventoryPath "data/data-constraints.csv" ;
+    t:scenarioId "IT-1R2S1" .
+
+case:UAD1022 a t:TestCase ;
+    t:messageText "Provide a description when 'Property Rights Appraised' = 'Other'." ;
+    t:primaryDataElement "PropertyEstateTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1022" ;
+    t:ruleLogic "If PropertyEstateType = \"Other\" and PropertyEstateTypeOtherDescription is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1022> ;
+    t:sourceUniqueIdCell "0100.0053" ;
+    t:uniqueId "0100.0053" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/" .
+
+case:UAD1028 a t:TestCase ;
+    t:messageText "Indicate whether all ownership rights of the property are included as part of the valuation." ;
+    t:primaryDataElement "AllPropertyRightsAppraisedIndicator" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1028" ;
+    t:ruleLogic "If LandOwnedInCommonIndicator = \"false\" and AllPropertyRightsAppraisedIndicator is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1028> ;
+    t:sourceUniqueIdCell "0100.0034" ;
+    t:uniqueId "0100.0034" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SALES_CONTRACTS/SALES_CONTRACT/SALES_CONTRACT_DETAIL/" .
+
+case:UAD1031 a t:TestCase ;
+    t:messageText "Provide a description when 'Rights Not Included' = 'Other'." ;
+    t:primaryDataElement "PropertyPartialInterestTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1031" ;
+    t:ruleLogic "If PropertyPartialInterestType = \"Other\" and PropertyPartialInterestTypeOtherDescription is not provided in a given instance of REAL_PROPERTY_INTEREST" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1031> ;
+    t:sourceUniqueIdCell "0100.0037" ;
+    t:uniqueId "0100.0037" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/REAL_PROPERTY_INTERESTS/REAL_PROPERTY_INTEREST/" .
+
+case:UAD1041 a t:TestCase ;
+    t:messageText "Provide the total number of ADUs in the sales comparable." ;
+    t:primaryDataElement "AccessoryDwellingUnitTotalCount" ;
+    t:propertyAffected "Sales Comparable #n" ;
+    t:ruleId "UAD1041" ;
+    t:ruleLogic "If @ValuationUseType = \"SalesComparable\" and AccessoryDwellingUnitTotalCount is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1041> ;
+    t:sourceUniqueIdCell "0100.0059" ;
+    t:uniqueId "0100.0059" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/" .
+
+case:UAD1044 a t:TestCase ;
+    t:messageText "Indicate whether the structure is a 'Dwelling' or 'Outbuilding'." ;
+    t:primaryDataElement "ImprovementType" ;
+    t:propertyAffected "Rental Comparable #n" ;
+    t:ruleId "UAD1044" ;
+    t:ruleLogic "If @ValuationUseType = \"RentalComparable\" and ImprovementType is not provided in a given instance of IMPROVEMENT_DETAIL" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1044> ;
+    t:sourceUniqueIdCell "0100.0068" ;
+    t:uniqueId "0100.0068" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/IMPROVEMENT_DETAIL/" .
+
+case:UAD1046 a t:TestCase ;
+    t:baselinePath "data/uad36-test-suite/tests/fixtures/required_data/baseline/SF1_Appraisal_v1.4.xml" ;
+    t:dependentXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:SubjectPropertyAmenitiesDefectsExistIndicator" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:SubjectPropertyAmenitiesDefectsExistIndicator" ;
+    t:messageText "Indicate whether the subject property amenities have any defects, damages, or deficiencies." ;
+    t:nonmatchingValue "false" ;
+    t:primaryDataElement "SubjectPropertyAmenitiesDefectsExistIndicator" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1046" ;
+    t:ruleLogic "If PropertyAmenityExistsIndicator = \"true\" and SubjectPropertyAmenitiesDefectsExistIndicator is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1046> ;
+    t:sourceUniqueIdCell "0200.0053" ;
+    t:triggerXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyAmenityExistsIndicator" ;
+    t:uniqueId "0200.0053" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/" .
+
+case:UAD1050 a t:TestCase ;
+    t:messageText "Provide 'Year Built' for each dwelling." ;
+    t:primaryDataElement "PropertyStructureBuiltYear" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1050" ;
+    t:ruleLogic "If ImprovementType = \"Dwelling\" and PropertyStructureBuiltYear is not provided in a given instance of IMPROVEMENT_DETAIL" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1050> ;
+    t:sourceUniqueIdCell "0300.0011" ;
+    t:uniqueId "0300.0011" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/IMPROVEMENT_DETAIL/" .
+
+case:UAD1056 a t:TestCase ;
+    t:messageText "Provide the intended functional design for each outbuilding (e.g., barn, standalone ADU, pool house)." ;
+    t:primaryDataElement "OutbuildingType" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1056" ;
+    t:ruleLogic "If ImprovementType = \"Outbuilding\" and OutbuildingType is not provided in a given instance of IMPROVEMENT_DETAIL" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1056> ;
+    t:sourceUniqueIdCell "0300.0025" ;
+    t:uniqueId "0300.0025" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/IMPROVEMENT_DETAIL/" .
+
+case:UAD1057 a t:TestCase ;
+    t:messageText "Provide a description when 'Outbuilding Type' = 'Other'." ;
+    t:primaryDataElement "OutbuildingTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1057" ;
+    t:ruleLogic "If OutbuildingType = \"Other\" and OutbuildingTypeOtherDescription is not provided in a given instance of IMPROVEMENT_DETAIL" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1057> ;
+    t:sourceUniqueIdCell "0300.0026" ;
+    t:uniqueId "0300.0026" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/IMPROVEMENT_DETAIL/" .
+
+case:UAD1061 a t:TestCase ;
+    t:messageText "Provide a description when 'Structure Design' = 'Other'." ;
+    t:primaryDataElement "StructuralDesignTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1061" ;
+    t:ruleLogic "If StructuralDesignType = \"Other\" and StructuralDesignTypeOtherDescription is not provided in a given instance of ARCHITECTURAL_DESIGN" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1061> ;
+    t:sourceUniqueIdCell "0300.0033" ;
+    t:uniqueId "0300.0033" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/STRUCTURE/ARCHITECTURAL_DESIGN/" .
+
+case:UAD1063 a t:TestCase ;
+    t:messageText "Provide a description when 'Construction Method' = 'Other'." ;
+    t:primaryDataElement "ConstructionMethodTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1063" ;
+    t:ruleLogic "If ConstructionMethodType = \"Other\" and ConstructionMethodTypeOtherDescription is not provided in a given instance of CONSTRUCTION_METHOD" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1063> ;
+    t:sourceUniqueIdCell "0300.0035" ;
+    t:uniqueId "0300.0035" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/STRUCTURE/CONSTRUCTION_METHODS/CONSTRUCTION_METHOD/" .
+
+case:UAD1066 a t:TestCase ;
+    t:messageText "Provide a description when 'Feature Type' = 'Other'." ;
+    t:primaryDataElement "ImprovementComponentTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1066" ;
+    t:ruleLogic "If ImprovementComponentType = \"Other\" and ImprovementComponentTypeOtherDescription is not provided in a given instance of STRUCTURE_COMPONENT_DETAIL" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1066> ;
+    t:sourceUniqueIdCell "0300.0056" ;
+    t:uniqueId "0300.0056" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/STRUCTURE/STRUCTURE_COMPONENTS/STRUCTURE_COMPONENT/STRUCTURE_COMPONENT_DETAIL/" .
+
+case:UAD1069 a t:TestCase ;
+    t:messageText "Provide a description when foundation material = 'Other'." ;
+    t:primaryDataElement "FoundationMaterialTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1069" ;
+    t:ruleLogic "If FoundationMaterialType = \"Other\" and FoundationMaterialTypeOtherDescription is not provided in a given instance of FOUNDATION_MATERIAL" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1069> ;
+    t:sourceUniqueIdCell "0300.0045" ;
+    t:uniqueId "0300.0045" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/STRUCTURE/STRUCTURE_COMPONENTS/STRUCTURE_COMPONENT/FOUNDATIONS/FOUNDATION/FOUNDATION_MATERIALS/FOUNDATION_MATERIAL/" .
+
+case:UAD1071 a t:TestCase ;
+    t:messageText "Provide a description when foundation type = 'Other'." ;
+    t:primaryDataElement "FoundationTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1071" ;
+    t:ruleLogic "If FoundationType = \"Other\" and FoundationTypeOtherDescription is not provided in a given instance of FOUNDATION_STYLE" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1071> ;
+    t:sourceUniqueIdCell "0300.0047" ;
+    t:uniqueId "0300.0047" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/STRUCTURE/STRUCTURE_COMPONENTS/STRUCTURE_COMPONENT/FOUNDATIONS/FOUNDATION/FOUNDATION_STYLES/FOUNDATION_STYLE/" .
+
+case:UAD1076 a t:TestCase ;
+    t:messageText "Provide a description when roof material = 'Other'." ;
+    t:primaryDataElement "RoofMaterialTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1076" ;
+    t:ruleLogic "If RoofMaterialType = \"Other\" and RoofMaterialTypeOtherDescription is not provided in a given instance of ROOF_MATERIAL" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1076> ;
+    t:sourceUniqueIdCell "0300.0051" ;
+    t:uniqueId "0300.0051" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/STRUCTURE/STRUCTURE_COMPONENTS/STRUCTURE_COMPONENT/ROOF/ROOF_MATERIALS/ROOF_MATERIAL/" .
+
+case:UAD1081 a t:TestCase ;
+    t:messageText "Provide a description when exterior wall material = 'Other'." ;
+    t:primaryDataElement "WallMaterialTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1081" ;
+    t:ruleLogic "If WallMaterialType = \"Other\" and WallMaterialTypeOtherDescription is not provided in a given instance of EXTERIOR_WALL" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1081> ;
+    t:sourceUniqueIdCell "0300.0099" ;
+    t:uniqueId "0300.0099" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/STRUCTURE/STRUCTURE_COMPONENTS/STRUCTURE_COMPONENT/EXTERIOR_WALLS/EXTERIOR_WALL/" .
+
+case:UAD1082 a t:TestCase ;
+    t:messageText "Indicate whether the rowhouse / townhouse is an end unit." ;
+    t:primaryDataElement "RowhouseTownhouseEndUnitIndicator" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1082" ;
+    t:ruleLogic "If StructuralDesignType = \"RowhouseTownhouse\" and RowhouseTownhouseEndUnitIndicator is not provided in a given instance of STRUCTURE_DETAIL" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1082> ;
+    t:sourceUniqueIdCell "0300.0059" ;
+    t:uniqueId "0300.0059" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/STRUCTURE/STRUCTURE_DETAIL/" .
+
+case:UAD1090 a t:TestCase ;
+    t:messageText "Provide a description when heating system type = 'Other'." ;
+    t:primaryDataElement "HeatingSystemTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1090" ;
+    t:ruleLogic "If HeatingSystemType = \"Other\" and HeatingSystemTypeOtherDescription is not provided in a given instance of HEATING_SYSTEM" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1090> ;
+    t:sourceUniqueIdCell "0300.0089" ;
+    t:uniqueId "0300.0089" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/SYSTEM/HEATING_SYSTEMS/HEATING_SYSTEM/" .
+
+case:UAD1102 a t:TestCase ;
+    t:messageText "Provide a description when 'Manufactured Home Certification Program' = 'Other'." ;
+    t:primaryDataElement "ManufacturedHomeFinancingProgramEligibilityTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1102" ;
+    t:ruleLogic "If ManufacturedHomeFinancingProgramEligibilityType = \"Other\" and ManufacturedHomeFinancingProgramEligibilityTypeOtherDescription is not provided in a given instance of MANUFACTURED_HOME_FINANCING_PROGRAM" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1102> ;
+    t:sourceUniqueIdCell "0500.0006" ;
+    t:uniqueId "0500.0006" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/MANUFACTURED_HOME/MANUFACTURED_HOME_FINANCING_PROGRAMS/MANUFACTURED_HOME_FINANCING_PROGRAM/" .
+
+case:UAD1122 a t:TestCase ;
+    t:messageText "Provide a description when 'Modification, Attachment, or Addition' = 'Other'." ;
+    t:primaryDataElement "ManufacturedHomeModificationTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1122" ;
+    t:ruleLogic "If ManufacturedHomeModificationType = \"Other\" and ManufacturedHomeModificationTypeOtherDescription is not provided in a given instance of MANUFACTURED_HOME_MODIFICATION" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1122> ;
+    t:sourceUniqueIdCell "0500.0036" ;
+    t:uniqueId "0500.0036" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/MANUFACTURED_HOME/MANUFACTURED_HOME_MODIFICATIONS/MANUFACTURED_HOME_MODIFICATION/" .
+
+case:UAD1124 a t:TestCase ;
+    t:messageText "Provide a description when skirting material = 'Other'." ;
+    t:primaryDataElement "SkirtingMaterialTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1124" ;
+    t:ruleLogic "If SkirtingMaterialType = \"Other\" and SkirtingMaterialTypeOtherDescription is not provided in a given instance of SKIRTING_MATERIAL" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1124> ;
+    t:sourceUniqueIdCell "0500.0040" ;
+    t:uniqueId "0500.0040" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/MANUFACTURED_HOME/SKIRTING_MATERIALS/SKIRTING_MATERIAL/" .
+
+case:UAD1127 a t:TestCase ;
+    t:baselinePath "data/uad36-test-suite/tests/fixtures/required_data/baseline/SF1_Appraisal_v1.4.xml" ;
+    t:dependentXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SALES_CONTRACTS/m:SALES_CONTRACT/m:SALES_CONTRACT_DETAIL/m:SalesConcessionAmountKnownIndicator" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SALES_CONTRACTS/m:SALES_CONTRACT/m:SALES_CONTRACT_DETAIL/m:SalesConcessionAmountKnownIndicator" ;
+    t:messageText "Indicate whether the total amount of sales concessions is known." ;
+    t:nonmatchingValue "false" ;
+    t:primaryDataElement "SalesConcessionAmountKnownIndicator" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1127" ;
+    t:ruleLogic "If SalesConcessionIndicator = \"true\" and SalesConcessionAmountKnownIndicator is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1127> ;
+    t:sourceUniqueIdCell "0600.0005" ;
+    t:triggerXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SALES_CONTRACTS/m:SALES_CONTRACT/m:SALES_CONTRACT_DETAIL/m:SalesConcessionIndicator" ;
+    t:uniqueId "0600.0005" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SALES_CONTRACTS/SALES_CONTRACT/SALES_CONTRACT_DETAIL/" .
+
+case:UAD1128 a t:TestCase ;
+    t:baselinePath "data/uad36-test-suite/tests/fixtures/required_data/baseline/SF1_Appraisal_v1.4.xml" ;
+    t:dependentXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SALES_CONTRACTS/m:SALES_CONTRACT/m:SALES_CONTRACT_DETAIL/m:SalesConcessionIndicator" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SALES_CONTRACTS/m:SALES_CONTRACT/m:SALES_CONTRACT_DETAIL/m:SalesConcessionIndicator" ;
+    t:messageText "Indicate the presence of sales concessions in the sales contract." ;
+    t:nonmatchingValue "false" ;
+    t:primaryDataElement "SalesConcessionIndicator" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1128" ;
+    t:ruleLogic "If SalesContractReviewedIndicator = \"true\" and SalesConcessionIndicator is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1128> ;
+    t:sourceUniqueIdCell "0600.0006" ;
+    t:triggerXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SALES_CONTRACTS/m:SALES_CONTRACT/m:SALES_CONTRACT_DETAIL/m:SalesContractReviewedIndicator" ;
+    t:uniqueId "0600.0006" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SALES_CONTRACTS/SALES_CONTRACT/SALES_CONTRACT_DETAIL/" .
+
+case:UAD1129 a t:TestCase ;
+    t:baselinePath "data/uad36-test-suite/tests/fixtures/required_data/baseline/SF1_Appraisal_v1.4.xml" ;
+    t:dependentXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SALES_CONTRACTS/m:SALES_CONTRACT/m:SALES_CONTRACT_DETAIL/m:SalesContractAmount" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SALES_CONTRACTS/m:SALES_CONTRACT/m:SALES_CONTRACT_DETAIL/m:SalesContractAmount" ;
+    t:messageText "Provide the 'Contract Price'." ;
+    t:nonmatchingValue "false" ;
+    t:primaryDataElement "SalesContractAmount" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1129" ;
+    t:ruleLogic "If SalesContractReviewedIndicator = \"true\" and SalesContractAmount is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1129> ;
+    t:sourceUniqueIdCell "0600.0008" ;
+    t:triggerXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SALES_CONTRACTS/m:SALES_CONTRACT/m:SALES_CONTRACT_DETAIL/m:SalesContractReviewedIndicator" ;
+    t:uniqueId "0600.0008" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SALES_CONTRACTS/SALES_CONTRACT/SALES_CONTRACT_DETAIL/" .
+
+case:UAD1130 a t:TestCase ;
+    t:baselinePath "data/uad36-test-suite/tests/fixtures/required_data/baseline/SF1_Appraisal_v1.4.xml" ;
+    t:dependentXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SALES_CONTRACTS/m:SALES_CONTRACT/m:SALES_CONTRACT_DETAIL/m:SalesContractDate" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SALES_CONTRACTS/m:SALES_CONTRACT/m:SALES_CONTRACT_DETAIL/m:SalesContractDate" ;
+    t:messageText "Provide the date the sales contract was fully executed." ;
+    t:nonmatchingValue "false" ;
+    t:primaryDataElement "SalesContractDate" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1130" ;
+    t:ruleLogic "If SalesContractReviewedIndicator = \"true\" and SalesContractDate is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1130> ;
+    t:sourceUniqueIdCell "0600.0009" ;
+    t:triggerXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SALES_CONTRACTS/m:SALES_CONTRACT/m:SALES_CONTRACT_DETAIL/m:SalesContractReviewedIndicator" ;
+    t:uniqueId "0600.0009" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SALES_CONTRACTS/SALES_CONTRACT/SALES_CONTRACT_DETAIL/" .
+
+case:UAD1132 a t:TestCase ;
+    t:baselinePath "data/uad36-test-suite/tests/fixtures/required_data/baseline/SF1_Appraisal_v1.4.xml" ;
+    t:dependentXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SALES_CONTRACTS/m:SALES_CONTRACT/m:SALES_CONTRACT_DETAIL/m:SalesContractReviewedIndicator" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SALES_CONTRACTS/m:SALES_CONTRACT/m:SALES_CONTRACT_DETAIL/m:SalesContractReviewedIndicator" ;
+    t:messageText "Indicate whether the Appraiser has reviewed and analyzed the sales contract." ;
+    t:nonmatchingValue "false" ;
+    t:primaryDataElement "SalesContractReviewedIndicator" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1132" ;
+    t:ruleLogic "If SalesContractExistsIndicator = \"true\" and SalesContractReviewedIndicator is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1132> ;
+    t:sourceUniqueIdCell "0600.0010" ;
+    t:triggerXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SALES_CONTRACTS/m:SALES_CONTRACT/m:SALES_CONTRACT_DETAIL/m:SalesContractExistsIndicator" ;
+    t:uniqueId "0600.0010" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SALES_CONTRACTS/SALES_CONTRACT/SALES_CONTRACT_DETAIL/" .
+
+case:UAD1133 a t:TestCase ;
+    t:baselinePath "data/uad36-test-suite/tests/fixtures/required_data/baseline/SF1_Appraisal_v1.4.xml" ;
+    t:dependentXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SALES_CONTRACTS/m:SALES_CONTRACT/m:SALES_CONTRACT_DETAIL/m:TotalSalesConcessionAmount" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SALES_CONTRACTS/m:SALES_CONTRACT/m:SALES_CONTRACT_DETAIL/m:TotalSalesConcessionAmount" ;
+    t:messageText "Provide the 'Total Sales Concessions' amount." ;
+    t:nonmatchingValue "false" ;
+    t:primaryDataElement "TotalSalesConcessionAmount" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1133" ;
+    t:ruleLogic "If SalesConcessionAmountKnownIndicator = \"true\" and TotalSalesConcessionAmount is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1133> ;
+    t:sourceUniqueIdCell "0600.0011" ;
+    t:triggerXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SALES_CONTRACTS/m:SALES_CONTRACT/m:SALES_CONTRACT_DETAIL/m:SalesConcessionAmountKnownIndicator" ;
+    t:uniqueId "0600.0011" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SALES_CONTRACTS/SALES_CONTRACT/SALES_CONTRACT_DETAIL/" .
+
+case:UAD1135 a t:TestCase ;
+    t:baselinePath "data/uad36-test-suite/tests/fixtures/required_data/baseline/SF1_Appraisal_v1.4.xml" ;
+    t:dependentXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SALES_CONTRACTS/m:SALES_CONTRACT/m:SALES_CONTRACT_DETAIL/m:SaleType" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SALES_CONTRACTS/m:SALES_CONTRACT/m:SALES_CONTRACT_DETAIL/m:SaleType" ;
+    t:messageText "Provide the 'Transfer Terms'." ;
+    t:nonmatchingValue "false" ;
+    t:primaryDataElement "SaleType" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1135" ;
+    t:ruleLogic "If SalesContractReviewedIndicator = \"true\" and SaleType is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1135> ;
+    t:sourceUniqueIdCell "0600.0017" ;
+    t:triggerXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SALES_CONTRACTS/m:SALES_CONTRACT/m:SALES_CONTRACT_DETAIL/m:SalesContractReviewedIndicator" ;
+    t:uniqueId "0600.0017" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SALES_CONTRACTS/SALES_CONTRACT/SALES_CONTRACT_DETAIL/" .
+
+case:UAD1136 a t:TestCase ;
+    t:messageText "Provide a description when 'Transfer Terms' = 'Other'." ;
+    t:primaryDataElement "SaleTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1136" ;
+    t:ruleLogic "If SaleType = \"Other\" and SaleTypeOtherDescription is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1136> ;
+    t:sourceUniqueIdCell "0600.0018" ;
+    t:uniqueId "0600.0018" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SALES_CONTRACTS/SALES_CONTRACT/SALES_CONTRACT_DETAIL/" .
+
+case:UAD1140 a t:TestCase ;
+    t:messageText "Provide a description when 'Grade Level' = 'Other'." ;
+    t:primaryDataElement "BelowGradeExteriorAccessTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1140" ;
+    t:ruleLogic "If BelowGradeExteriorAccessType = \"Other\" and BelowGradeExteriorAccessTypeOtherDescription is not provided in a given instance of LEVEL" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1140> ;
+    t:sourceUniqueIdCell "0700.0028" ;
+    t:uniqueId "0700.0028" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/PROPERTY_UNITS/PROPERTY_UNIT/LEVELS/LEVEL/" .
+
+case:UAD1144 a t:TestCase ;
+    t:messageText "Provide a description when room type = 'Other'." ;
+    t:primaryDataElement "RoomTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1144" ;
+    t:ruleLogic "If RoomType = \"Other\" and RoomTypeOtherDescription is not provided in a given instance of ROOM_DETAIL" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1144> ;
+    t:sourceUniqueIdCell "0700.0087" ;
+    t:uniqueId "0700.0087" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/PROPERTY_UNITS/PROPERTY_UNIT/ROOMS/ROOM/ROOM_DETAIL/" .
+
+case:UAD1151 a t:TestCase ;
+    t:messageText "Provide a description when flooring material = 'Other'." ;
+    t:primaryDataElement "FlooringTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1151" ;
+    t:ruleLogic "If FlooringType = \"Other\" and FlooringTypeOtherDescription is not provided in a given instance of FLOOR_COVERING" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1151> ;
+    t:sourceUniqueIdCell "0700.0042" ;
+    t:uniqueId "0700.0042" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/PROPERTY_UNITS/PROPERTY_UNIT/INTERIOR_COMPONENTS/INTERIOR_COMPONENT/FLOOR_COVERINGS/FLOOR_COVERING/" .
+
+case:UAD1153 a t:TestCase ;
+    t:messageText "Provide a description when 'Feature Type' = 'Other'." ;
+    t:primaryDataElement "ImprovementComponentTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1153" ;
+    t:ruleLogic "If ImprovementComponentType = \"Other\" and ImprovementComponentTypeOtherDescription is not provided in a given instance of INTERIOR_COMPONENT_DETAIL" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1153> ;
+    t:sourceUniqueIdCell "0700.0047" ;
+    t:uniqueId "0700.0047" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/PROPERTY_UNITS/PROPERTY_UNIT/INTERIOR_COMPONENTS/INTERIOR_COMPONENT/INTERIOR_COMPONENT_DETAIL/" .
+
+case:UAD1155 a t:TestCase ;
+    t:messageText "Provide additional description for the interior feature being referenced." ;
+    t:primaryDataElement "ImprovementComponentTypeAdditionalDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1155" ;
+    t:ruleLogic "If ImprovementComponentType = \"Other\" and ImprovementComponentTypeAdditionalDescription is not provided in a given instance of INTERIOR_COMPONENT_DETAIL" ;
+    t:severity "Warning" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1155> ;
+    t:sourceUniqueIdCell "0700.0043" ;
+    t:uniqueId "0700.0043" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/PROPERTY_UNITS/PROPERTY_UNIT/INTERIOR_COMPONENTS/INTERIOR_COMPONENT/INTERIOR_COMPONENT_DETAIL/" .
+
+case:UAD1163 a t:TestCase ;
+    t:messageText "Indicate whether ADUs are typical to the market." ;
+    t:primaryDataElement "AccessoryDwellingUnitTypicalToMarketIndicator" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1163" ;
+    t:ruleLogic "If AccessoryDwellingUnitIndicator = \"true\" and AccessoryDwellingUnitTypicalToMarketIndicator is not provided in a given instance of PROPERTY_UNIT_DETAIL" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1163> ;
+    t:sourceUniqueIdCell "0700.0088" ;
+    t:uniqueId "0700.0088" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/PROPERTY_UNITS/PROPERTY_UNIT/PROPERTY_UNIT_DETAIL/" .
+
+case:UAD1165 a t:TestCase ;
+    t:messageText "Indicate whether the ADU has a separate postal address." ;
+    t:primaryDataElement "SeparatePostalAddressIndicator" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1165" ;
+    t:ruleLogic "If AccessoryDwellingUnitIndicator = \"true\" and SeparatePostalAddressIndicator is not provided in a given instance of PROPERTY_UNIT_DETAIL" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1165> ;
+    t:sourceUniqueIdCell "0700.0090" ;
+    t:uniqueId "0700.0090" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/PROPERTY_UNITS/PROPERTY_UNIT/PROPERTY_UNIT_DETAIL/" .
+
+case:UAD1166 a t:TestCase ;
+    t:messageText "Provide ingress/egress to the ADU (i.e., Interior Access Only, Exterior Access Only, Interior and Exterior Access)." ;
+    t:primaryDataElement "AccessType" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1166" ;
+    t:ruleLogic "If AccessoryDwellingUnitIndicator = \"true\" and AccessType is not provided in a given instance of PROPERTY_UNIT_DETAIL" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1166> ;
+    t:sourceUniqueIdCell "0700.0091" ;
+    t:uniqueId "0700.0091" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/PROPERTY_UNITS/PROPERTY_UNIT/PROPERTY_UNIT_DETAIL/" .
+
+case:UAD1167 a t:TestCase ;
+    t:messageText "Indicate whether the ADU is legally rentable." ;
+    t:primaryDataElement "AccessoryDwellingUnitLegallyRentableIndicator" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1167" ;
+    t:ruleLogic "If AccessoryDwellingUnitIndicator = \"true\" and AccessoryDwellingUnitLegallyRentableIndicator is not provided in a given instance of PROPERTY_UNIT_DETAIL" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1167> ;
+    t:sourceUniqueIdCell "0700.0098" ;
+    t:uniqueId "0700.0098" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/PROPERTY_UNITS/PROPERTY_UNIT/PROPERTY_UNIT_DETAIL/" .
+
+case:UAD1168 a t:TestCase ;
+    t:messageText "Indicate whether the living unit has any Live/Work space." ;
+    t:primaryDataElement "AllowableLiveWorkSpaceIndicator" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1168" ;
+    t:ruleLogic "If LandOwnedInCommonIndicator = \"true\" and AllowableLiveWorkSpaceIndicator is not provided in a given instance of PROPERTY_UNIT_DETAIL" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1168> ;
+    t:sourceUniqueIdCell "0700.0100" ;
+    t:uniqueId "0700.0100" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/PROPERTY_UNITS/PROPERTY_UNIT/PROPERTY_UNIT_DETAIL/" .
+
+case:UAD1178 a t:TestCase ;
+    t:messageText "Provide the 'Overall Update Status for Flooring'." ;
+    t:primaryDataElement "OverallFlooringUpdateStatusType" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1178" ;
+    t:ruleLogic "If ImprovementComponentType = \"Flooring\" and OverallFlooringUpdateStatusType is not provided in a given instance of INTERIOR_COMPONENT_DETAIL" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1178> ;
+    t:sourceUniqueIdCell "0700.0122" ;
+    t:uniqueId "0700.0122" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/PROPERTY_UNITS/PROPERTY_UNIT/INTERIOR_COMPONENTS/INTERIOR_COMPONENT/INTERIOR_COMPONENT_DETAIL/" .
+
+case:UAD1181 a t:TestCase ;
+    t:messageText "Provide a description when data source type = 'Other'." ;
+    t:primaryDataElement "DataSourceTypeOtherDescription" ;
+    t:propertyAffected "N/A" ;
+    t:ruleId "UAD1181" ;
+    t:ruleLogic "If DataSourceType = \"Other\" and DataSourceTypeOtherDescription is not provided in a given instance of DATA_SOURCE" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1181> ;
+    t:sourceUniqueIdCell "0700.0126" ;
+    t:uniqueId "0700.0126" ;
+    t:xpath "../VALUATION_ANALYSIS/DATA_SOURCES/DATA_SOURCE/" .
+
+case:UAD1182 a t:TestCase ;
+    t:messageText "Indicate whether the living unit has any non-residential uses." ;
+    t:primaryDataElement "UnitMixedUsageIndicator" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1182" ;
+    t:ruleLogic "If LandOwnedInCommonIndicator = \"true\" and UnitMixedUsageIndicator is not provided in a given instance of PROPERTY_UNIT_DETAIL" ;
+    t:severity "Warning" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1182> ;
+    t:sourceUniqueIdCell "0700.0130" ;
+    t:uniqueId "0700.0130" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/PROPERTY_UNITS/PROPERTY_UNIT/PROPERTY_UNIT_DETAIL/" .
+
+case:UAD1194 a t:TestCase ;
+    t:messageText "Provide a description when 'Transfer Terms' = 'Other'." ;
+    t:primaryDataElement "SaleTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1194" ;
+    t:ruleLogic "If SaleType = \"Other\" and SaleTypeOtherDescription is not provided in a given instance of SALES_HISTORY" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1194> ;
+    t:sourceUniqueIdCell "0800.0014" ;
+    t:uniqueId "0800.0014" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SALES_HISTORIES/SALES_HISTORY/" .
+
+case:UAD1195 a t:TestCase ;
+    t:messageText "Provide the ownership transfer date." ;
+    t:primaryDataElement "OwnershipTransferDate" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1195" ;
+    t:ruleLogic "IF PriorSalesOrTransfersIndicator = \"true\" and OwnershipTransferDate is not provided in a given instance of SALES_HISTORY" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1195> ;
+    t:sourceUniqueIdCell "0800.0011" ;
+    t:uniqueId "0800.0011" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SALES_HISTORIES/SALES_HISTORY/" .
+
+case:UAD1198 a t:TestCase ;
+    t:messageText "Provide a description when 'Ownership Transfer Amount Not Available Reason Type' = 'Other'." ;
+    t:primaryDataElement "OwnershipTransferAmountNotAvailableReasonTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1198" ;
+    t:ruleLogic "If OwnershipTransferAmountNotAvailableReasonType = \"Other\" and OwnershipTransferAmountNotAvailableReasonTypeOtherDescription is not provided in a given instance of SALES_HISTORY" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1198> ;
+    t:sourceUniqueIdCell "0800.0010" ;
+    t:uniqueId "0800.0010" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SALES_HISTORIES/SALES_HISTORY/" .
+
+case:UAD1204 a t:TestCase ;
+    t:messageText "Provide the total number of days the property has been on the market." ;
+    t:primaryDataElement "DaysOnMarketCount" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1204" ;
+    t:ruleLogic "If ListedWithinPreviousYearIndicator = \"true\" and DaysOnMarketCount is not provided in a given instance of LISTING_INFORMATION_DETAIL" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1204> ;
+    t:sourceUniqueIdCell "0900.0007" ;
+    t:uniqueId "0900.0007" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/LISTING_INFORMATIONS/LISTING_INFORMATION/LISTING_INFORMATION_DETAIL/" .
+
+case:UAD1205 a t:TestCase ;
+    t:messageText "Provide the 'Current or Final List Price'." ;
+    t:primaryDataElement "FinalListPriceAmount" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1205" ;
+    t:ruleLogic "If ListedWithinPreviousYearIndicator = \"true\" and FinalListPriceAmount is not provided in a given instance of LISTING_INFORMATION_DETAIL" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1205> ;
+    t:sourceUniqueIdCell "0900.0008" ;
+    t:uniqueId "0900.0008" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/LISTING_INFORMATIONS/LISTING_INFORMATION/LISTING_INFORMATION_DETAIL/" .
+
+case:UAD1208 a t:TestCase ;
+    t:messageText "Provide a description when 'Listing Type' = 'Other'." ;
+    t:primaryDataElement "ListingTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1208" ;
+    t:ruleLogic "If ListingType = \"Other\" and ListingTypeOtherDescription is not provided in a given instance of LISTING_INFORMATION_DETAIL" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1208> ;
+    t:sourceUniqueIdCell "0900.0016" ;
+    t:uniqueId "0900.0016" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/LISTING_INFORMATIONS/LISTING_INFORMATION/LISTING_INFORMATION_DETAIL/" .
+
+case:UAD1212 a t:TestCase ;
+    t:messageText "Provide the federal agency (i.e., VA, USDA, FHA) for which the appraisal has been prepared." ;
+    t:primaryDataElement "GovernmentAgencyAppraisalType" ;
+    t:propertyAffected "N/A" ;
+    t:ruleId "UAD1212" ;
+    t:ruleLogic "If GovernmentAgencyAppraisalIndicator = \"true\" and GovernmentAgencyAppraisalType is not provided" ;
+    t:severity "Warning" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1212> ;
+    t:sourceUniqueIdCell "1000.0029" ;
+    t:uniqueId "1000.0029" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/SCOPE_OF_WORK/SCOPE_OF_WORK_DETAIL/" .
+
+case:UAD1220 a t:TestCase ;
+    t:messageText "Provide a description when 'Assignment Reason' = 'Other'." ;
+    t:primaryDataElement "ValuationAssignmentTypeOtherDescription" ;
+    t:propertyAffected "N/A" ;
+    t:ruleId "UAD1220" ;
+    t:ruleLogic "If ValuationAssignmentType = \"Other\" and ValuationAssignmentTypeOtherDescription is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1220> ;
+    t:sourceUniqueIdCell "1000.0035" ;
+    t:uniqueId "1000.0035" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/SCOPE_OF_WORK/SCOPE_OF_WORK_DETAIL/" .
+
+case:UAD1225 a t:TestCase ;
+    t:messageText "A numeric identifier ('Comparable #') must be assigned for each land comparable. For assistance with this message, contact the appraisal software vendor." ;
+    t:primaryDataElement "PropertyOrdinalNumber" ;
+    t:propertyAffected "Land Comparable" ;
+    t:ruleId "UAD1225" ;
+    t:ruleLogic "If @ValuationUseType = \"LandComparable\" and PropertyOrdinalNumber is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1225> ;
+    t:sourceUniqueIdCell "1100.0015" ;
+    t:uniqueId "1100.0015" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/COMPARABLE/COMPARABLE_DETAIL/" .
+
+case:UAD1227 a t:TestCase ;
+    t:messageText "The 'Depreciated Cost of Dwellings' must be provided." ;
+    t:primaryDataElement "DepreciatedCostDwellingsTotalAmount" ;
+    t:propertyAffected "N/A" ;
+    t:ruleId "UAD1227" ;
+    t:ruleLogic "If CostApproachIndicator = \"true\" and DepreciatedCostDwellingsTotalAmount is not provided" ;
+    t:severity "Warning" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1227> ;
+    t:sourceUniqueIdCell "1100.0026" ;
+    t:uniqueId "1100.0026" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/APPROACH_TO_VALUE/COST_APPROACH/COST_APPROACH_DETAIL/" .
+
+case:UAD1230 a t:TestCase ;
+    t:messageText "Provide the 'As Is Value of Site Improvements'." ;
+    t:primaryDataElement "SiteOtherImprovementsAsIsAmount" ;
+    t:propertyAffected "N/A" ;
+    t:ruleId "UAD1230" ;
+    t:ruleLogic "If CostApproachIndicator = \"true\" and SiteOtherImprovementsAsIsAmount is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1230> ;
+    t:sourceUniqueIdCell "1100.0032" ;
+    t:uniqueId "1100.0032" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/APPROACH_TO_VALUE/COST_APPROACH/COST_APPROACH_DETAIL/" .
+
+case:UAD1232 a t:TestCase ;
+    t:messageText "Provide a description when 'Primary Site Valuation Method' = 'Other'." ;
+    t:primaryDataElement "SiteValuationMethodTypeOtherDescription" ;
+    t:propertyAffected "N/A" ;
+    t:ruleId "UAD1232" ;
+    t:ruleLogic "If SiteValuationMethodType = \"Other\" and SiteValuationMethodTypeOtherDescription is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1232> ;
+    t:sourceUniqueIdCell "1100.0034" ;
+    t:uniqueId "1100.0034" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/APPROACH_TO_VALUE/COST_APPROACH/COST_APPROACH_DETAIL/" .
+
+case:UAD1242 a t:TestCase ;
+    t:messageText "Provide the 'Gross Rent Multiplier'." ;
+    t:primaryDataElement "GrossRentMultiplierFactorNumber" ;
+    t:propertyAffected "N/A" ;
+    t:ruleId "UAD1242" ;
+    t:ruleLogic "If IncomeApproachIndicator = \"true\" and GrossRentMultiplierFactorNumber is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1242> ;
+    t:sourceUniqueIdCell "1200.0003" ;
+    t:uniqueId "1200.0003" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/APPROACH_TO_VALUE/INCOME_APPROACH/INCOME_APPROACH_DETAIL/" .
+
+case:UAD1243 a t:TestCase ;
+    t:messageText "Provide the value of the subject property as determined by the Income Approach method of property valuation." ;
+    t:primaryDataElement "ValueIndicatedByIncomeApproachAmount" ;
+    t:propertyAffected "N/A" ;
+    t:ruleId "UAD1243" ;
+    t:ruleLogic "If IncomeApproachIndicator = \"true\" and ValueIndicatedByIncomeApproachAmount is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1243> ;
+    t:sourceUniqueIdCell "1200.0004" ;
+    t:uniqueId "1200.0004" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/APPROACH_TO_VALUE/INCOME_APPROACH/INCOME_APPROACH_DETAIL/" .
+
+case:UAD1244 a t:TestCase ;
+    t:messageText "Provide the 'Comparable Weight' for the GRM comparable." ;
+    t:primaryDataElement "ComparableWeightType" ;
+    t:propertyAffected "Gross Rent Multiplier Comparable #n" ;
+    t:ruleId "UAD1244" ;
+    t:ruleLogic "If @ValuationUseType = \"GrossRentMultiplierComparable\" and ComparableWeightType is not provided" ;
+    t:severity "Warning" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1244> ;
+    t:sourceUniqueIdCell "1200.0015" ;
+    t:uniqueId "1200.0015" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/COMPARABLE/COMPARABLE_DETAIL/" .
+
+case:UAD1245 a t:TestCase ;
+    t:messageText "Provide the 'Gross Rent Multiplier'." ;
+    t:primaryDataElement "GrossMonthlyRentMultiplierNumber" ;
+    t:propertyAffected "Gross Rent Multiplier Comparable #n" ;
+    t:ruleId "UAD1245" ;
+    t:ruleLogic "If @ValuationUseType = \"GrossRentMultiplierComparable\" and GrossMonthlyRentMultiplierNumber is not provided" ;
+    t:severity "Warning" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1245> ;
+    t:sourceUniqueIdCell "1200.0016" ;
+    t:uniqueId "1200.0016" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/COMPARABLE/COMPARABLE_DETAIL/" .
+
+case:UAD1246 a t:TestCase ;
+    t:messageText "A numeric identifier ('Comparable #') must be assigned for each GRM comparable. For assistance with this message, contact the appraisal software vendor." ;
+    t:primaryDataElement "PropertyOrdinalNumber" ;
+    t:propertyAffected "Gross Rent Multiplier Comparable" ;
+    t:ruleId "UAD1246" ;
+    t:ruleLogic "If @ValuationUseType = \"GrossRentMultiplierComparable\" and PropertyOrdinalNumber is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1246> ;
+    t:sourceUniqueIdCell "1200.0028" ;
+    t:uniqueId "1200.0028" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/COMPARABLE/COMPARABLE_DETAIL/" .
+
+case:UAD1249 a t:TestCase ;
+    t:messageText "Provide 'Gross Monthly Rent'." ;
+    t:primaryDataElement "TotalMonthlyActualRentAmount" ;
+    t:propertyAffected "Gross Rent Multiplier Comparable #n" ;
+    t:ruleId "UAD1249" ;
+    t:ruleLogic "If @ValuationUseType = \"GrossRentMultiplierComparable\" and TotalMonthlyActualRentAmount is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1249> ;
+    t:sourceUniqueIdCell "1200.0030" ;
+    t:uniqueId "1200.0030" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/RENTAL_INFORMATION_SUMMARY/RENTAL_INFORMATION_SUMMARY_DETAIL/" .
+
+case:UAD1252 a t:TestCase ;
+    t:messageText "Provide the value of the subject property as determined by the Cost Approach method of property valuation." ;
+    t:primaryDataElement "ValueIndicatedByCostApproachAmount" ;
+    t:propertyAffected "N/A" ;
+    t:ruleId "UAD1252" ;
+    t:ruleLogic "If CostApproachIndicator = \"true\" and ValueIndicatedByCostApproachAmount is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1252> ;
+    t:sourceUniqueIdCell "1300.0001" ;
+    t:uniqueId "1300.0001" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/APPROACH_TO_VALUE/COST_APPROACH/COST_APPROACH_DETAIL/" .
+
+case:UAD1253 a t:TestCase ;
+    t:messageText "Provide the value of the subject property as determined by the Sales Comparison Approach method of property valuation." ;
+    t:primaryDataElement "ValueIndicatedBySalesComparisonAmount" ;
+    t:propertyAffected "N/A" ;
+    t:ruleId "UAD1253" ;
+    t:ruleLogic "If SalesComparisonApproachIndicator = \"true\" and ValueIndicatedBySalesComparisonAmount is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1253> ;
+    t:sourceUniqueIdCell "1300.0006" ;
+    t:uniqueId "1300.0006" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/APPROACH_TO_VALUE/SALES_COMPARISON_APPROACH/SALES_COMPARISON_APPROACH_DETAIL/" .
+
+case:UAD1276 a t:TestCase ;
+    t:messageText "Provide the file name and location of the image within the .zip file (e.g.,\\\\Images\\SF1_Comp2.png). For assistance with this message, contact the appraisal software vendor." ;
+    t:primaryDataElement "ImageFileLocationIdentifier" ;
+    t:propertyAffected "Sales Comparable #n" ;
+    t:ruleId "UAD1276" ;
+    t:ruleLogic "If @ValuationUseType = \"SalesComparable\" and ImageFileLocationIdentifier is not provided in a given instance of IMAGE" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1276> ;
+    t:sourceUniqueIdCell "1400.0634" ;
+    t:uniqueId "1400.0634" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/INSPECTIONS/INSPECTION/IMAGES/IMAGE/" .
+
+case:UAD1281 a t:TestCase ;
+    t:messageText "Provide the file name and location of the image within the .zip file (e.g.,\\\\Images\\SF1_Comp2.png). For assistance with this message, contact the appraisal software vendor." ;
+    t:primaryDataElement "ImageFileLocationIdentifier" ;
+    t:propertyAffected "Gross Rent Multiplier Comparable #n" ;
+    t:ruleId "UAD1281" ;
+    t:ruleLogic "If @ValuationUseType = \"GrossRentMultiplierComparable\" and ImageFileLocationIdentifier is not provided in a given instance of IMAGE" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1281> ;
+    t:sourceUniqueIdCell "1400.0876" ;
+    t:uniqueId "1400.0876" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/INSPECTIONS/INSPECTION/IMAGES/IMAGE/" .
+
+case:UAD1288 a t:TestCase ;
+    t:messageText "Provide a description when property restriction = 'Other'." ;
+    t:primaryDataElement "RestrictionTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1288" ;
+    t:ruleLogic "If RestrictionType = \"Other\" and RestrictionTypeOtherDescription is not provided in a given instance of CONDITION_COVENANT_RESTRICTION" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1288> ;
+    t:sourceUniqueIdCell "1500.0003" ;
+    t:uniqueId "1500.0003" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/ENCUMBRANCES/ENCUMBRANCE/CONDITION_COVENANT_RESTRICTIONS/CONDITION_COVENANT_RESTRICTION/" .
+
+case:UAD1290 a t:TestCase ;
+    t:messageText "Provide a description when easement = 'Other'." ;
+    t:primaryDataElement "EasementTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1290" ;
+    t:ruleLogic "If EasementType = \"Other\" and EasementTypeOtherDescription is not provided in a given instance of EASEMENT" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1290> ;
+    t:sourceUniqueIdCell "1500.0005" ;
+    t:uniqueId "1500.0005" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/ENCUMBRANCES/ENCUMBRANCE/EASEMENTS/EASEMENT/" .
+
+case:UAD1293 a t:TestCase ;
+    t:messageText "Provide a description when encroachment = 'Other'." ;
+    t:primaryDataElement "EncroachmentTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1293" ;
+    t:ruleLogic "If EncroachmentType = \"Other\" and EncroachmentTypeOtherDescription is not provided in a given instance of ENCROACHMENT" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1293> ;
+    t:sourceUniqueIdCell "1500.0010" ;
+    t:uniqueId "1500.0010" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/ENCUMBRANCES/ENCUMBRANCE/ENCROACHMENTS/ENCROACHMENT/" .
+
+case:UAD1297 a t:TestCase ;
+    t:messageText "Provide a description when apparent environmental condition = 'Other'." ;
+    t:primaryDataElement "EnvironmentalConditionTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1297" ;
+    t:ruleLogic "If EnvironmentalConditionType = \"Other\" and EnvironmentalConditionTypeOtherDescription is not provided in a given instance of ENVIRONMENTAL_CONDITION" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1297> ;
+    t:sourceUniqueIdCell "1500.0017" ;
+    t:uniqueId "1500.0017" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/ENVIRONMENTAL_CONDITIONS/ENVIRONMENTAL_CONDITION/" .
+
+case:UAD1300 a t:TestCase ;
+    t:messageText "Provide a description when 'Elements Dividing Parcels' = 'Other'." ;
+    t:primaryDataElement "ParcelSeparatorTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1300" ;
+    t:ruleLogic "If ParcelSeparatorType = \"Other\" and ParcelSeparatorTypeOtherDescription is not provided in a given instance of NON_CONTIGUOUS_PARCEL_SEPARATOR" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1300> ;
+    t:sourceUniqueIdCell "1500.0021" ;
+    t:uniqueId "1500.0021" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PARCEL_SUMMARY/NON_CONTIGUOUS_PARCEL_SEPARATORS/NON_CONTIGUOUS_PARCEL_SEPARATOR/" .
+
+case:UAD1303 a t:TestCase ;
+    t:messageText "Provide a description when 'APN Description' = 'Other'." ;
+    t:primaryDataElement "ParcelDescriptionClassificationTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1303" ;
+    t:ruleLogic "If ParcelDescriptionClassificationType = \"Other\" and ParcelDescriptionClassificationTypeOtherDescription is not provided in a given instance of PARCEL_DETAIL" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1303> ;
+    t:sourceUniqueIdCell "1500.0024" ;
+    t:uniqueId "1500.0024" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PARCELS/PARCEL/PARCEL_DETAIL/" .
+
+case:UAD1305 a t:TestCase ;
+    t:messageText "Provide the 'Assessor Parcel Number (APN)'." ;
+    t:primaryDataElement "ParcelIdentifier" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1305" ;
+    t:ruleLogic "If ParcelIdentificationType = \"AssessorUnformattedIdentifier\" and ParcelIdentifier is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1305> ;
+    t:sourceUniqueIdCell "1500.0027" ;
+    t:uniqueId "1500.0027" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PARCELS/PARCEL/PARCEL_IDENTIFICATIONS/PARCEL_IDENTIFICATION/" .
+
+case:UAD1308 a t:TestCase ;
+    t:messageText "Indicate whether the property has any non-residential uses." ;
+    t:primaryDataElement "PropertyMixedUsageIndicator" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1308" ;
+    t:ruleLogic "If LandOwnedInCommonIndicator = \"false\" and PropertyMixedUsageIndicator is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1308> ;
+    t:sourceUniqueIdCell "1500.0034" ;
+    t:uniqueId "1500.0034" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_USE_SUMMARY/" .
+
+case:UAD1311 a t:TestCase ;
+    t:messageText "Provide a description when 'Non-Residential Use' = 'Other'." ;
+    t:primaryDataElement "NonResidentialUseTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1311" ;
+    t:ruleLogic "If NonResidentialUseType = \"Other\" and NonResidentialUseTypeOtherDescription is not provided in a given instance of PROPERTY_USE" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1311> ;
+    t:sourceUniqueIdCell "1500.0040" ;
+    t:uniqueId "1500.0040" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_USES/PROPERTY_USE/" .
+
+case:UAD1314 a t:TestCase ;
+    t:messageText "Provide a description when hazard zone type = 'Other'." ;
+    t:primaryDataElement "HazardZoneTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1314" ;
+    t:ruleLogic "If HazardZoneType = \"Other\" and HazardZoneTypeOtherDescription is not provided in a given instance of HAZARD_ZONE" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1314> ;
+    t:sourceUniqueIdCell "1500.0043" ;
+    t:uniqueId "1500.0043" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SITE/HAZARD_ZONES/HAZARD_ZONE/" .
+
+case:UAD1315 a t:TestCase ;
+    t:messageText "Provide the lava flow zone." ;
+    t:primaryDataElement "LavaFlowZoneCode" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1315" ;
+    t:ruleLogic "If HazardZoneType = \"USGSLavaFlowZone\" and LavaFlowZoneCode is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1315> ;
+    t:sourceUniqueIdCell "1500.0045" ;
+    t:uniqueId "1500.0045" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SITE/HAZARD_ZONES/HAZARD_ZONE/" .
+
+case:UAD1316 a t:TestCase ;
+    t:messageText "Indicate whether the private street maintenance agreement exists." ;
+    t:primaryDataElement "PrivateStreetMaintenanceAgreementExistIndicator" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1316" ;
+    t:ruleLogic "If PropertyPrimaryEntryExitMethodType = \"PrivateStreet\" and PrivateStreetMaintenanceAgreementExistIndicator is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1316> ;
+    t:sourceUniqueIdCell "1500.0052" ;
+    t:uniqueId "1500.0052" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SITE/PROPERTY_ACCESS/PROPERTY_ACCESS_DETAIL/" .
+
+case:UAD1319 a t:TestCase ;
+    t:messageText "Provide a description when 'Primary Access' = 'Other'." ;
+    t:primaryDataElement "PropertyPrimaryEntryExitMethodTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1319" ;
+    t:ruleLogic "If PropertyPrimaryEntryExitMethodType = \"Other\" and PropertyPrimaryEntryExitMethodTypeOtherDescription is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1319> ;
+    t:sourceUniqueIdCell "1500.0056" ;
+    t:uniqueId "1500.0056" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SITE/PROPERTY_ACCESS/PROPERTY_ACCESS_DETAIL/" .
+
+case:UAD1321 a t:TestCase ;
+    t:messageText "Provide a description when site drainage reason = 'Other'." ;
+    t:primaryDataElement "SiteDrainageReasonTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1321" ;
+    t:ruleLogic "If SiteDrainageReasonType = \"Other\" and SiteDrainageReasonTypeOtherDescription is not provided in a given instance of DRAINAGE_IMPACT_REASON" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1321> ;
+    t:sourceUniqueIdCell "1500.0061" ;
+    t:uniqueId "1500.0061" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SITE/SITE_FEATURES/SITE_FEATURE/DRAINAGE_IMPACT_REASONS/DRAINAGE_IMPACT_REASON/" .
+
+case:UAD1324 a t:TestCase ;
+    t:messageText "Provide a description when site characteristic = 'Other'." ;
+    t:primaryDataElement "SiteFeatureTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1324" ;
+    t:ruleLogic "If SiteFeatureType = \"Other\" and SiteFeatureTypeOtherDescription is not provided in a given instance of SITE_FEATURE_DETAIL" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1324> ;
+    t:sourceUniqueIdCell "1500.0063" ;
+    t:uniqueId "1500.0063" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SITE/SITE_FEATURES/SITE_FEATURE/SITE_FEATURE_DETAIL/" .
+
+case:UAD1326 a t:TestCase ;
+    t:messageText "Provide a description when topography = 'Other'." ;
+    t:primaryDataElement "TopographyTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1326" ;
+    t:ruleLogic "If TopographyType = \"Other\" and TopographyTypeOtherDescription is not provided in a given instance of TOPOGRAPHY" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1326> ;
+    t:sourceUniqueIdCell "1500.0066" ;
+    t:uniqueId "1500.0066" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SITE/SITE_FEATURES/SITE_FEATURE/TOPOGRAPHIES/TOPOGRAPHY/" .
+
+case:UAD1329 a t:TestCase ;
+    t:messageText "Provide a description when site influence = 'Other'." ;
+    t:primaryDataElement "SiteInfluenceTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1329" ;
+    t:ruleLogic "If SiteInfluenceType = \"Other\" and SiteInfluenceTypeOtherDescription is not provided in a given instance of SITE_INFLUENCE_DETAIL" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1329> ;
+    t:sourceUniqueIdCell "1500.0088" ;
+    t:uniqueId "1500.0088" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SITE/SITE_INFLUENCES/SITE_INFLUENCE/SITE_INFLUENCE_DETAIL/" .
+
+case:UAD1332 a t:TestCase ;
+    t:messageText "Provide a description when body of water = 'Other'." ;
+    t:primaryDataElement "BodyOfWaterTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1332" ;
+    t:ruleLogic "If BodyOfWaterType = \"Other\" and BodyOfWaterTypeOtherDescription is not provided in a given instance of BODY_OF_WATER" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1332> ;
+    t:sourceUniqueIdCell "1500.0074" ;
+    t:uniqueId "1500.0074" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SITE/SITE_INFLUENCES/SITE_INFLUENCE/BODIES_OF_WATER/BODY_OF_WATER/" .
+
+case:UAD1334 a t:TestCase ;
+    t:messageText "Provide a description when 'Waterfront Access Rights' = 'Other'." ;
+    t:primaryDataElement "WaterAccessRightTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1334" ;
+    t:ruleLogic "If WaterAccessRightType = \"Other\" and WaterAccessRightTypeOtherDescription is not provided in a given instance of BODY_OF_WATER" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1334> ;
+    t:sourceUniqueIdCell "1500.0080" ;
+    t:uniqueId "1500.0080" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SITE/SITE_INFLUENCES/SITE_INFLUENCE/BODIES_OF_WATER/BODY_OF_WATER/" .
+
+case:UAD1336 a t:TestCase ;
+    t:messageText "Provide a description when 'Permanent Waterfront Feature' = 'Other'." ;
+    t:primaryDataElement "WaterfrontFeatureTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1336" ;
+    t:ruleLogic "If WaterfrontFeatureType = \"Other\" and WaterfrontFeatureTypeOtherDescription is not provided in a given instance of WATER_FRONT_FEATURE" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1336> ;
+    t:sourceUniqueIdCell "1500.0083" ;
+    t:uniqueId "1500.0083" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SITE/SITE_INFLUENCES/SITE_INFLUENCE/BODIES_OF_WATER/WATER_FRONT_FEATURES/WATER_FRONT_FEATURE/" .
+
+case:UAD1338 a t:TestCase ;
+    t:messageText "Provide a description when 'Water Frontage Access Depth' = 'Other'." ;
+    t:primaryDataElement "WaterAccessDepthTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1338" ;
+    t:ruleLogic "If WaterAccessDepthType = \"Other\" and WaterAccessDepthTypeOtherDescription is not provided in a given instance of BODY_OF_WATER" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1338> ;
+    t:sourceUniqueIdCell "1500.0198" ;
+    t:uniqueId "1500.0198" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SITE/SITE_INFLUENCES/SITE_INFLUENCE/BODIES_OF_WATER/BODY_OF_WATER/" .
+
+case:UAD1341 a t:TestCase ;
+    t:messageText "Provide the total site (lot) size." ;
+    t:primaryDataElement "LotSizeAreaMeasure" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1341" ;
+    t:ruleLogic "If LandOwnedInCommonIndicator = \"false\" and LotSizeAreaMeasure is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1341> ;
+    t:sourceUniqueIdCell "1500.0093" ;
+    t:uniqueId "1500.0093" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SITE/SITE_SIZE_LAYOUT/" .
+
+case:UAD1342 a t:TestCase ;
+    t:messageText "Provide the 'Number of Parcels'." ;
+    t:primaryDataElement "ParcelCount" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1342" ;
+    t:ruleLogic "If LandOwnedInCommonIndicator = \"false\" and ParcelCount is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1342> ;
+    t:sourceUniqueIdCell "1500.0094" ;
+    t:uniqueId "1500.0094" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SITE/SITE_SIZE_LAYOUT/" .
+
+case:UAD1348 a t:TestCase ;
+    t:messageText "Provide a description when 'Utility Type' = 'Other'." ;
+    t:primaryDataElement "UtilityTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1348" ;
+    t:ruleLogic "If UtilityType = \"Other\" and UtilityTypeOtherDescription is not provided in a given instance of SITE_UTILITY_DETAIL" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1348> ;
+    t:sourceUniqueIdCell "1500.0105" ;
+    t:uniqueId "1500.0105" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SITE/SITE_UTILITIES/SITE_UTILITY/SITE_UTILITY_DETAIL/" .
+
+case:UAD1350 a t:TestCase ;
+    t:messageText "Indicate whether the utility is shared." ;
+    t:primaryDataElement "UtilitySharedIndicator" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1350" ;
+    t:ruleLogic "If SiteUtilityOwnershipType = \"NonPublic\" and UtilitySharedIndicator is not provided in a given instance of SITE_UTILITY_SERVICE" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1350> ;
+    t:sourceUniqueIdCell "1500.0103" ;
+    t:uniqueId "1500.0103" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SITE/SITE_UTILITIES/SITE_UTILITY/SITE_UTILITY_SERVICES/SITE_UTILITY_SERVICE/" .
+
+case:UAD1351 a t:TestCase ;
+    t:messageText "Provide the impact to value / marketability for the private utility." ;
+    t:primaryDataElement "ValueMarketabilityImpactType" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1351" ;
+    t:ruleLogic "If SiteUtilityOwnershipType = \"NonPublic\" and ValueMarketabilityImpactType is not provided in a given instance of SITE_UTILITY_DETAIL" ;
+    t:severity "Warning" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1351> ;
+    t:sourceUniqueIdCell "1500.0183" ;
+    t:uniqueId "1500.0183" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SITE/SITE_UTILITIES/SITE_UTILITY/SITE_UTILITY_DETAIL/" .
+
+case:UAD1354 a t:TestCase ;
+    t:messageText "Provide a description when private electricity source = 'Other'." ;
+    t:primaryDataElement "ElectricitySourceTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1354" ;
+    t:ruleLogic "If ElectricitySourceType = \"Other\" and ElectricitySourceTypeOtherDescription is not provided in a given instance of SITE_UTILITY_SERVICE" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1354> ;
+    t:sourceUniqueIdCell "1500.0107" ;
+    t:uniqueId "1500.0107" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SITE/SITE_UTILITIES/SITE_UTILITY/SITE_UTILITY_SERVICES/SITE_UTILITY_SERVICE/" .
+
+case:UAD1356 a t:TestCase ;
+    t:messageText "Provide a description when private sewer system = 'Other'." ;
+    t:primaryDataElement "SewerSystemTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1356" ;
+    t:ruleLogic "If SewerSystemType = \"Other\" and SewerSystemTypeOtherDescription is not provided in a given instance of SITE_UTILITY_SERVICE" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1356> ;
+    t:sourceUniqueIdCell "1500.0109" ;
+    t:uniqueId "1500.0109" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SITE/SITE_UTILITIES/SITE_UTILITY/SITE_UTILITY_SERVICES/SITE_UTILITY_SERVICE/" .
+
+case:UAD1358 a t:TestCase ;
+    t:messageText "Provide a description when water source = 'Other'." ;
+    t:primaryDataElement "WaterSourceTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1358" ;
+    t:ruleLogic "If WaterSourceType = \"Other\" and WaterSourceTypeOtherDescription is not provided in a given instance of SITE_UTILITY_SERVICE" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1358> ;
+    t:sourceUniqueIdCell "1500.0112" ;
+    t:uniqueId "1500.0112" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SITE/SITE_UTILITIES/SITE_UTILITY/SITE_UTILITY_SERVICES/SITE_UTILITY_SERVICE/" .
+
+case:UAD1359 a t:TestCase ;
+    t:messageText "Provide a description when water well type = 'Other'." ;
+    t:primaryDataElement "WaterWellTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1359" ;
+    t:ruleLogic "If WaterWellType = \"Other\" and WaterWellTypeOtherDescription is not provided in a given instance of SITE_UTILITY_SERVICE" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1359> ;
+    t:sourceUniqueIdCell "1500.0114" ;
+    t:uniqueId "1500.0114" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SITE/SITE_UTILITIES/SITE_UTILITY/SITE_UTILITY_SERVICES/SITE_UTILITY_SERVICE/" .
+
+case:UAD1362 a t:TestCase ;
+    t:messageText "Provide a description when view type = 'Other'." ;
+    t:primaryDataElement "ViewTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1362" ;
+    t:ruleLogic "If ViewType = \"Other\" and ViewTypeOtherDescription is not provided in a given instance of SITE_VIEW" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1362> ;
+    t:sourceUniqueIdCell "1500.0121" ;
+    t:uniqueId "1500.0121" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SITE/SITE_VIEWS/SITE_VIEW/" .
+
+case:UAD1365 a t:TestCase ;
+    t:messageText "Provide a description when range of view = 'Other'." ;
+    t:primaryDataElement "ViewRangeTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1365" ;
+    t:ruleLogic "If ViewRangeType = \"Other\" and ViewRangeTypeOtherDescription is not provided in a given instance of SITE_VIEW" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1365> ;
+    t:sourceUniqueIdCell "1500.0119" ;
+    t:uniqueId "1500.0119" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SITE/SITE_VIEWS/SITE_VIEW/" .
+
+case:UAD1371 a t:TestCase ;
+    t:messageText "Provide a description when 'Reasons Illegal' = 'Other'." ;
+    t:primaryDataElement "SiteZoningComplianceIllegalReasonTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1371" ;
+    t:ruleLogic "If SiteZoningComplianceIllegalReasonType = \"Other\" and SiteZoningComplianceIllegalReasonTypeOtherDescription is not provided in a given instance of ZONING_ILLEGAL_REASON" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1371> ;
+    t:sourceUniqueIdCell "1500.0129" ;
+    t:uniqueId "1500.0129" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SITE/SITE_ZONING/ZONING_ILLEGAL_REASONS/ZONING_ILLEGAL_REASON/" .
+
+case:UAD1380 a t:TestCase ;
+    t:messageText "Provide the native american land type (i.e., Alaska Native Corporation Land, Hawaiian Home Lands, Tribal Trust Land)." ;
+    t:primaryDataElement "NativeAmericanLandsType" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1380" ;
+    t:ruleLogic "If NativeAmericanLandsIndicator = \"true\" and NativeAmericanLandsType is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1380> ;
+    t:sourceUniqueIdCell "1500.0199" ;
+    t:uniqueId "1500.0199" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/" .
+
+case:UAD1381 a t:TestCase ;
+    t:messageText "Provide a description when 'Native American Lands' = 'Other'." ;
+    t:primaryDataElement "NativeAmericanLandsTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1381" ;
+    t:ruleLogic "If NativeAmericanLandsType = \"Other\" and NativeAmericanLandsTypeOtherDescription is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1381> ;
+    t:sourceUniqueIdCell "1500.0200" ;
+    t:uniqueId "1500.0200" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/" .
+
+case:UAD1390 a t:TestCase ;
+    t:messageText "Provide the address line for the sales comparable." ;
+    t:primaryDataElement "AddressLineText" ;
+    t:propertyAffected "Sales Comparable #n" ;
+    t:ruleId "UAD1390" ;
+    t:ruleLogic "If @ValuationUseType = \"SalesComparable\" and AddressLineText is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1390> ;
+    t:sourceUniqueIdCell "1800.0001" ;
+    t:uniqueId "1800.0001" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/ADDRESS/" .
+
+case:UAD1391 a t:TestCase ;
+    t:messageText "Provide the city name for the sales comparable." ;
+    t:primaryDataElement "CityName" ;
+    t:propertyAffected "Sales Comparable #n" ;
+    t:ruleId "UAD1391" ;
+    t:ruleLogic "If @ValuationUseType = \"SalesComparable\" and CityName is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1391> ;
+    t:sourceUniqueIdCell "1800.0003" ;
+    t:uniqueId "1800.0003" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/ADDRESS/" .
+
+case:UAD1392 a t:TestCase ;
+    t:messageText "Provide the ZIP code for the sales comparable." ;
+    t:primaryDataElement "PostalCode" ;
+    t:propertyAffected "Sales Comparable #n" ;
+    t:ruleId "UAD1392" ;
+    t:ruleLogic "If @ValuationUseType = \"SalesComparable\" and PostalCode is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1392> ;
+    t:sourceUniqueIdCell "1800.0004" ;
+    t:uniqueId "1800.0004" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/ADDRESS/" .
+
+case:UAD1393 a t:TestCase ;
+    t:messageText "Provide the state code for the sales comparable." ;
+    t:primaryDataElement "StateCode" ;
+    t:propertyAffected "Sales Comparable #n" ;
+    t:ruleId "UAD1393" ;
+    t:ruleLogic "If @ValuationUseType = \"SalesComparable\" and StateCode is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1393> ;
+    t:sourceUniqueIdCell "1800.0005" ;
+    t:uniqueId "1800.0005" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/ADDRESS/" .
+
+case:UAD1396 a t:TestCase ;
+    t:messageText "Provide the 'Proximity to Subject' distance for the sales comparable." ;
+    t:primaryDataElement "ProximityToSubjectDistanceLinearMeasure" ;
+    t:propertyAffected "Sales Comparable #n" ;
+    t:ruleId "UAD1396" ;
+    t:ruleLogic "If @ValuationUseType = \"SalesComparable\" and ProximityToSubjectDistanceLinearMeasure is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1396> ;
+    t:sourceUniqueIdCell "1800.0065" ;
+    t:uniqueId "1800.0065" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/COMPARABLE/COMPARABLE_DETAIL/" .
+
+case:UAD1402 a t:TestCase ;
+    t:messageText "Provide 'Listing Status' for the sales comparable." ;
+    t:primaryDataElement "ListingStatusType" ;
+    t:propertyAffected "Sales Comparable #n" ;
+    t:ruleId "UAD1402" ;
+    t:ruleLogic "If @ValuationUseType = \"SalesComparable\" and ListingStatusType is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1402> ;
+    t:sourceUniqueIdCell "1800.0075" ;
+    t:uniqueId "1800.0075" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/LISTING_INFORMATIONS/LISTING_INFORMATION/LISTING_INFORMATION_DETAIL/" .
+
+case:UAD1415 a t:TestCase ;
+    t:messageText "Indicate whether the structure is a 'Dwelling' or 'Outbuilding'." ;
+    t:primaryDataElement "ImprovementType" ;
+    t:propertyAffected "Sales Comparable #n" ;
+    t:ruleId "UAD1415" ;
+    t:ruleLogic "If @ValuationUseType = \"SalesComparable\" and ImprovementType is not provided in a given instance of IMPROVEMENT_DETAIL" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1415> ;
+    t:sourceUniqueIdCell "1800.0125" ;
+    t:uniqueId "1800.0125" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/IMPROVEMENT_DETAIL/" .
+
+case:UAD1428 a t:TestCase ;
+    t:messageText "Provide the total number of days the property has been on the market." ;
+    t:primaryDataElement "DaysOnMarketCount" ;
+    t:propertyAffected "Sales Comparable #n" ;
+    t:ruleId "UAD1428" ;
+    t:ruleLogic "If @ValuationUseType = \"SalesComparable\" and DaysOnMarketCount is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1428> ;
+    t:sourceUniqueIdCell "1800.0189" ;
+    t:uniqueId "1800.0189" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/LISTING_INFORMATIONS/LISTING_INFORMATION/LISTING_INFORMATION_DETAIL/" .
+
+case:UAD1429 a t:TestCase ;
+    t:messageText "Provide the latitude for the sales comparable. For assistance with this message, contact the appraisal software vendor." ;
+    t:primaryDataElement "LatitudeIdentifier" ;
+    t:propertyAffected "Sales Comparable #n" ;
+    t:ruleId "UAD1429" ;
+    t:ruleLogic "If @ValuationUseType = \"SalesComparable\" and LatitudeIdentifier is not provided" ;
+    t:severity "Warning" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1429> ;
+    t:sourceUniqueIdCell "1800.0190" ;
+    t:uniqueId "1800.0190" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/LOCATION_IDENTIFIER/GEOSPATIAL_INFORMATION/" .
+
+case:UAD1430 a t:TestCase ;
+    t:messageText "Provide the longitude for the sales comparable. For assistance with this message, contact the appraisal software vendor." ;
+    t:primaryDataElement "LongitudeIdentifier" ;
+    t:propertyAffected "Sales Comparable #n" ;
+    t:ruleId "UAD1430" ;
+    t:ruleLogic "If @ValuationUseType = \"SalesComparable\" and LongitudeIdentifier is not provided" ;
+    t:severity "Warning" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1430> ;
+    t:sourceUniqueIdCell "1800.0191" ;
+    t:uniqueId "1800.0191" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/LOCATION_IDENTIFIER/GEOSPATIAL_INFORMATION/" .
+
+case:UAD1431 a t:TestCase ;
+    t:messageText "A numeric identifier ('Comparable #') must be assigned for each sales comparable. For assistance with this message, contact the appraisal software vendor." ;
+    t:primaryDataElement "PropertyOrdinalNumber" ;
+    t:propertyAffected "Sales Comparable" ;
+    t:ruleId "UAD1431" ;
+    t:ruleLogic "If @ValuationUseType = \"SalesComparable\" and PropertyOrdinalNumber is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1431> ;
+    t:sourceUniqueIdCell "1800.0192" ;
+    t:uniqueId "1800.0192" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/COMPARABLE/COMPARABLE_DETAIL/" .
+
+case:UAD1433 a t:TestCase ;
+    t:messageText "Indicate whether the sales comparable is attached or detached." ;
+    t:primaryDataElement "AttachmentType" ;
+    t:propertyAffected "Sales Comparable #n" ;
+    t:ruleId "UAD1433" ;
+    t:ruleLogic "If @ValuationUseType = \"SalesComparable\" and AttachmentType is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1433> ;
+    t:sourceUniqueIdCell "1800.0195" ;
+    t:uniqueId "1800.0195" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/" .
+
+case:UAD1434 a t:TestCase ;
+    t:messageText "Provide the overall condition rating for the sales comparable." ;
+    t:primaryDataElement "OverallConditionRatingCode" ;
+    t:propertyAffected "Sales Comparable #n" ;
+    t:ruleId "UAD1434" ;
+    t:ruleLogic "If @ValuationUseType = \"SalesComparable\" and OverallConditionRatingCode is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1434> ;
+    t:sourceUniqueIdCell "1800.0196" ;
+    t:uniqueId "1800.0196" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/" .
+
+case:UAD1435 a t:TestCase ;
+    t:messageText "Provide the overall quality rating for the sales comparable." ;
+    t:primaryDataElement "OverallQualityRatingCode" ;
+    t:propertyAffected "Sales Comparable #n" ;
+    t:ruleId "UAD1435" ;
+    t:ruleLogic "If @ValuationUseType = \"SalesComparable\" and OverallQualityRatingCode is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1435> ;
+    t:sourceUniqueIdCell "1800.0197" ;
+    t:uniqueId "1800.0197" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/" .
+
+case:UAD1436 a t:TestCase ;
+    t:messageText "Indicate whether the sales comparable has a prior sale or transfer." ;
+    t:primaryDataElement "PriorSalesOrTransfersIndicator" ;
+    t:propertyAffected "Sales Comparable #n" ;
+    t:ruleId "UAD1436" ;
+    t:ruleLogic "If @ValuationUseType = \"SalesComparable\" and PriorSalesOrTransfersIndicator is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1436> ;
+    t:sourceUniqueIdCell "1800.0198" ;
+    t:uniqueId "1800.0198" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/" .
+
+case:UAD1452 a t:TestCase ;
+    t:messageText "Indicate whether the site is owned in common." ;
+    t:primaryDataElement "LandOwnedInCommonIndicator" ;
+    t:propertyAffected "Sales Comparable #n" ;
+    t:ruleId "UAD1452" ;
+    t:ruleLogic "If @ValuationUseType = \"SalesComparable\" and LandOwnedInCommonIndicator is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1452> ;
+    t:sourceUniqueIdCell "1800.0277" ;
+    t:uniqueId "1800.0277" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SITE/SITE_DETAIL/" .
+
+case:UAD1456 a t:TestCase ;
+    t:messageText "Provide the 'Adjusted Price' for the sales comparable." ;
+    t:primaryDataElement "AdjustedSalesPriceAmount" ;
+    t:propertyAffected "Sales Comparable #n" ;
+    t:ruleId "UAD1456" ;
+    t:ruleLogic "If @ValuationUseType = \"SalesComparable\" and AdjustedSalesPriceAmount is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1456> ;
+    t:sourceUniqueIdCell "1800.0309" ;
+    t:uniqueId "1800.0309" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/COMPARABLE/COMPARABLE_DETAIL/" .
+
+case:UAD1459 a t:TestCase ;
+    t:messageText "Provide the 'Comparable Weight' for the sales comparable." ;
+    t:primaryDataElement "ComparableWeightType" ;
+    t:propertyAffected "Sales Comparable #n" ;
+    t:ruleId "UAD1459" ;
+    t:ruleLogic "If @ValuationUseType = \"SalesComparable\" and ComparableWeightType is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1459> ;
+    t:sourceUniqueIdCell "1800.0312" ;
+    t:uniqueId "1800.0312" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/COMPARABLE/COMPARABLE_DETAIL/" .
+
+case:UAD1460 a t:TestCase ;
+    t:messageText "Provide the 'Net Adjustment Total'." ;
+    t:primaryDataElement "SalePriceNetTotalAdjustmentAmount" ;
+    t:propertyAffected "Sales Comparable #n" ;
+    t:ruleId "UAD1460" ;
+    t:ruleLogic "If @ValuationUseType = \"SalesComparable\" and SalePriceNetTotalAdjustmentAmount is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1460> ;
+    t:sourceUniqueIdCell "1800.0313" ;
+    t:uniqueId "1800.0313" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/COMPARABLE/COMPARABLE_DETAIL/" .
+
+case:UAD1471 a t:TestCase ;
+    t:messageText "Provide the total number of dwellings." ;
+    t:primaryDataElement "DwellingCount" ;
+    t:propertyAffected "Sales Comparable #n" ;
+    t:ruleId "UAD1471" ;
+    t:ruleLogic "If @ValuationUseType = \"SalesComparable\" and DwellingCount is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1471> ;
+    t:sourceUniqueIdCell "1800.0363" ;
+    t:uniqueId "1800.0363" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/" .
+
+case:UAD1473 a t:TestCase ;
+    t:messageText "Indicate whether the homeowner is responsible for the exterior maintenance." ;
+    t:primaryDataElement "HomeownerResponsibleForExteriorMaintenanceIndicator" ;
+    t:propertyAffected "Sales Comparable #n" ;
+    t:ruleId "UAD1473" ;
+    t:ruleLogic "If @ValuationUseType = \"SalesComparable\" and HomeownerResponsibleForExteriorMaintenanceIndicator is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1473> ;
+    t:sourceUniqueIdCell "1800.0364" ;
+    t:uniqueId "1800.0364" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/" .
+
+case:UAD1474 a t:TestCase ;
+    t:messageText "Provide the total number of living units, excluding any ADUs for the sales comparable." ;
+    t:primaryDataElement "LivingUnitExcludingADUCount" ;
+    t:propertyAffected "Sales Comparable #n" ;
+    t:ruleId "UAD1474" ;
+    t:ruleLogic "If @ValuationUseType = \"SalesComparable\" and LivingUnitExcludingADUCount is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1474> ;
+    t:sourceUniqueIdCell "1800.0365" ;
+    t:uniqueId "1800.0365" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/" .
+
+case:UAD1479 a t:TestCase ;
+    t:messageText "Indicate whether the sales comparable is located in a project." ;
+    t:primaryDataElement "PropertyInProjectIndicator" ;
+    t:propertyAffected "Sales Comparable #n" ;
+    t:ruleId "UAD1479" ;
+    t:ruleLogic "If @ValuationUseType = \"SalesComparable\" and PropertyInProjectIndicator is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1479> ;
+    t:sourceUniqueIdCell "1800.0378" ;
+    t:uniqueId "1800.0378" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/" .
+
+case:UAD1480 a t:TestCase ;
+    t:messageText "Indicate whether the sales comparable is located in a planned unit development (PUD)." ;
+    t:primaryDataElement "PUDIndicator" ;
+    t:propertyAffected "Sales Comparable #n" ;
+    t:ruleId "UAD1480" ;
+    t:ruleLogic "If @ValuationUseType = \"SalesComparable\" and PUDIndicator is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1480> ;
+    t:sourceUniqueIdCell "1800.0383" ;
+    t:uniqueId "1800.0383" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/" .
+
+case:UAD1486 a t:TestCase ;
+    t:messageText "Provide the 'Adjusted Rent' for the rental comparable." ;
+    t:primaryDataElement "RentalUnitAdjustedRentAmount" ;
+    t:propertyAffected "Rental Comparable #n" ;
+    t:ruleId "UAD1486" ;
+    t:ruleLogic "If @ValuationUseType = \"RentalComparable\" and RentalUnitAdjustedRentAmount is not provided in a given instance of RENTAL_COMPARISON_DETAIL" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1486> ;
+    t:sourceUniqueIdCell "2000.0012" ;
+    t:uniqueId "2000.0012" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/PROPERTY_UNITS/PROPERTY_UNIT/RENTAL_INFORMATIONS/RENTAL_INFORMATION/RENTAL_COMPARISON/RENTAL_COMPARISON_DETAIL/" .
+
+case:UAD1493 a t:TestCase ;
+    t:messageText "Provide the 'Proximity to Subject' distance for the rental comparable." ;
+    t:primaryDataElement "ProximityToSubjectDistanceLinearMeasure" ;
+    t:propertyAffected "Rental Comparable #n" ;
+    t:ruleId "UAD1493" ;
+    t:ruleLogic "If @ValuationUseType = \"RentalComparable\" and ProximityToSubjectDistanceLinearMeasure is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1493> ;
+    t:sourceUniqueIdCell "2000.0067" ;
+    t:uniqueId "2000.0067" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/COMPARABLE/COMPARABLE_DETAIL/" .
+
+case:UAD1494 a t:TestCase ;
+    t:messageText "A numeric identifier ('Comparable #') must be assigned for each rental comparable. For assistance with this message, contact the appraisal software vendor." ;
+    t:primaryDataElement "PropertyOrdinalNumber" ;
+    t:propertyAffected "Rental Comparable" ;
+    t:ruleId "UAD1494" ;
+    t:ruleLogic "If @ValuationUseType = \"RentalComparable\" and PropertyOrdinalNumber is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1494> ;
+    t:sourceUniqueIdCell "2000.0078" ;
+    t:uniqueId "2000.0078" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/COMPARABLE/COMPARABLE_DETAIL/" .
+
+case:UAD1527 a t:TestCase ;
+    t:messageText "Provide a description when the license type = 'Other'." ;
+    t:primaryDataElement "AppraiserLicenseTypeOtherDescription" ;
+    t:propertyAffected "N/A" ;
+    t:ruleId "UAD1527" ;
+    t:ruleLogic "If AppraiserLicenseType = \"Other\" and AppraiserLicenseTypeOtherDescription is not provided in a given instance of APPRAISER_LICENSE" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1527> ;
+    t:sourceUniqueIdCell "2200.0081; 2400.0052" ;
+    t:uniqueId "2200.0081",
+        "2400.0052" ;
+    t:xpath "../SERVICE/PARTIES/PARTY/ROLES/ROLE/LICENSES/LICENSE/APPRAISER_LICENSE/" .
+
+case:UAD1555 a t:TestCase ;
+    t:messageText "Provide a description when party role type = 'Other'." ;
+    t:primaryDataElement "PartyRoleTypeOtherDescription" ;
+    t:propertyAffected "N/A" ;
+    t:ruleId "UAD1555" ;
+    t:ruleLogic "If PartyRoleType = \"Other\" and PartyRoleTypeOtherDescription is not provided in a given instance of ROLE_DETAIL" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1555> ;
+    t:sourceUniqueIdCell "" ;
+    t:xpath "../SERVICE/PARTIES/PARTY/ROLES/ROLE/ROLE_DETAIL/" .
+
+case:UAD1561 a t:TestCase ;
+    t:messageText "Provide the first name of the person that has provided significant real property appraisal assistance." ;
+    t:primaryDataElement "FirstName" ;
+    t:propertyAffected "N/A" ;
+    t:ruleId "UAD1561" ;
+    t:ruleLogic "If PartyRoleType = \"SignificantRealPropertyAppraisalAssistance\" and FirstName is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1561> ;
+    t:sourceUniqueIdCell "2400.0405" ;
+    t:uniqueId "2400.0405" ;
+    t:xpath "../SERVICE/PARTIES/PARTY/INDIVIDUAL/NAME/" .
+
+case:UAD1562 a t:TestCase ;
+    t:messageText "Provide the last name of the person that has provided significant real property appraisal assistance." ;
+    t:primaryDataElement "LastName" ;
+    t:propertyAffected "N/A" ;
+    t:ruleId "UAD1562" ;
+    t:ruleLogic "If PartyRoleType = \"SignificantRealPropertyAppraisalAssistance\" and LastName is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1562> ;
+    t:sourceUniqueIdCell "2400.0406" ;
+    t:uniqueId "2400.0406" ;
+    t:xpath "../SERVICE/PARTIES/PARTY/INDIVIDUAL/NAME/" .
+
+case:UAD1563 a t:TestCase ;
+    t:messageText "Provide description of the significant real property appraisal assistance provided." ;
+    t:primaryDataElement "PartyRoleTypeAdditionalDescription" ;
+    t:propertyAffected "N/A" ;
+    t:ruleId "UAD1563" ;
+    t:ruleLogic "If PartyRoleType = \"SignificantRealPropertyAppraisalAssistance\" and PartyRoleTypeAdditionalDescription is not provided" ;
+    t:severity "Warning" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1563> ;
+    t:sourceUniqueIdCell "2400.0413" ;
+    t:uniqueId "2400.0413" ;
+    t:xpath "../SERVICE/PARTIES/PARTY/ROLES/ROLE/ROLE_DETAIL/" .
+
+case:UAD1569 a t:TestCase ;
+    t:messageText "Provide a description when amenity ownership type = 'Other'." ;
+    t:primaryDataElement "AmenityOwnershipTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1569" ;
+    t:ruleLogic "If AmenityOwnershipType = \"Other\" and AmenityOwnershipTypeOtherDescription is not provided in a given instance of PROJECT_AMENITY" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1569> ;
+    t:sourceUniqueIdCell "2500.0003" ;
+    t:uniqueId "2500.0003" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROJECT/PROJECT_AMENITIES/PROJECT_AMENITY/" .
+
+case:UAD1571 a t:TestCase ;
+    t:messageText "Provide a description when amenity type = 'Other'." ;
+    t:primaryDataElement "AmenityTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1571" ;
+    t:ruleLogic "If AmenityType = \"Other\" and AmenityTypeOtherDescription is not provided in a given instance of PROJECT_AMENITY" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1571> ;
+    t:sourceUniqueIdCell "2500.0005" ;
+    t:uniqueId "2500.0005" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROJECT/PROJECT_AMENITIES/PROJECT_AMENITY/" .
+
+case:UAD1576 a t:TestCase ;
+    t:messageText "Provide a description when the type of the utility / service included in the association charges = 'Other'." ;
+    t:primaryDataElement "AssociationChargeIncludesUtilityTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1576" ;
+    t:ruleLogic "If AssociationChargeIncludesUtilityType = \"Other\" and AssociationChargeIncludesUtilityTypeOtherDescription is not provided in a given instance of ASSOCIATION_CHARGE_INCLUDES_UTILITY" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1576> ;
+    t:sourceUniqueIdCell "2500.0010" ;
+    t:uniqueId "2500.0010" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/HOMEOWNERS_ASSOCIATIONS/HOMEOWNERS_ASSOCIATION/ASSOCIATION_CHARGES/ASSOCIATION_CHARGE/ASSOCIATION_CHARGE_INCLUDES_UTILITIES/ASSOCIATION_CHARGE_INCLUDES_UTILITY/" .
+
+case:UAD1579 a t:TestCase ;
+    t:messageText "Indicate whether transferring ownership incurs a fee with the association." ;
+    t:primaryDataElement "OwnershipTransferFeeIndicator" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1579" ;
+    t:ruleLogic "If PropertyInProjectIndicator = \"true\" and OwnershipTransferFeeIndicator is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1579> ;
+    t:sourceUniqueIdCell "2500.0019" ;
+    t:uniqueId "2500.0019" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/HOMEOWNERS_ASSOCIATIONS/HOMEOWNERS_ASSOCIATION/ASSOCIATION_CHARGES/ASSOCIATION_CHARGE/ASSOCIATION_CHARGE_DETAIL/" .
+
+case:UAD1582 a t:TestCase ;
+    t:messageText "Provide the 'Pro Rata Share' for the subject property." ;
+    t:primaryDataElement "ProRataSharePercent" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1582" ;
+    t:ruleLogic "If ProjectBlanketFinancingIndicator = \"true\" and ProRataSharePercent is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1582> ;
+    t:sourceUniqueIdCell "2500.0025" ;
+    t:uniqueId "2500.0025" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/" .
+
+case:UAD1583 a t:TestCase ;
+    t:messageText "Indicate whether the project is subject to ground rent." ;
+    t:primaryDataElement "ProjectAnalysisGroundRentIndicator" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1583" ;
+    t:ruleLogic "If PropertyInProjectIndicator = \"true\" and ProjectAnalysisGroundRentIndicator is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1583> ;
+    t:sourceUniqueIdCell "2500.0031" ;
+    t:uniqueId "2500.0031" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROJECT/PROJECT_ANALYSIS/" .
+
+case:UAD1584 a t:TestCase ;
+    t:messageText "Provide a description of the deficiencies observed in the project." ;
+    t:primaryDataElement "ProjectConditionAndQualityDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1584" ;
+    t:ruleLogic "If ProjectDeficiencyObservedIndicator = \"true\" and ProjectConditionAndQualityDescription is not provided" ;
+    t:severity "Warning" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1584> ;
+    t:sourceUniqueIdCell "2500.0032" ;
+    t:uniqueId "2500.0032" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROJECT/PROJECT_ANALYSIS/" .
+
+case:UAD1585 a t:TestCase ;
+    t:messageText "Indicate whether any deficiencies that impact value / marketability have been observed in the project." ;
+    t:primaryDataElement "ProjectDeficiencyObservedIndicator" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1585" ;
+    t:ruleLogic "If PropertyInProjectIndicator = \"true\" and ProjectDeficiencyObservedIndicator is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1585> ;
+    t:sourceUniqueIdCell "2500.0033" ;
+    t:uniqueId "2500.0033" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROJECT/PROJECT_ANALYSIS/" .
+
+case:UAD1586 a t:TestCase ;
+    t:messageText "Indicate whether a final balloon payment is required to fully pay off the loan." ;
+    t:primaryDataElement "BalloonIndicator" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1586" ;
+    t:ruleLogic "If ProjectBlanketFinancingIndicator = \"true\" and BalloonIndicator is not provided in a given instance of PROJECT_BLANKET_FINANCING" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1586> ;
+    t:sourceUniqueIdCell "2500.0036" ;
+    t:uniqueId "2500.0036" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROJECT/PROJECT_BLANKET_FINANCINGS/PROJECT_BLANKET_FINANCING/" .
+
+case:UAD1587 a t:TestCase ;
+    t:messageText "Provide the remaining maturity term for each lien of the project blanket financing." ;
+    t:primaryDataElement "LoanRemainingMaturityTermMonthsCount" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1587" ;
+    t:ruleLogic "If ProjectBlanketFinancingIndicator = \"true\" and LoanRemainingMaturityTermMonthsCount is not provided in a given instance of PROJECT_BLANKET_FINANCING" ;
+    t:severity "Warning" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1587> ;
+    t:sourceUniqueIdCell "2500.0041" ;
+    t:uniqueId "2500.0041" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROJECT/PROJECT_BLANKET_FINANCINGS/PROJECT_BLANKET_FINANCING/" .
+
+case:UAD1590 a t:TestCase ;
+    t:messageText "Indicate whether the property has been converted from its prior use." ;
+    t:primaryDataElement "ProjectConversionIndicator" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1590" ;
+    t:ruleLogic "If PropertyInProjectIndicator = \"true\" and ProjectConversionIndicator is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1590> ;
+    t:sourceUniqueIdCell "2500.0048" ;
+    t:uniqueId "2500.0048" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROJECT/PROJECT_CONVERSION/" .
+
+case:UAD1592 a t:TestCase ;
+    t:messageText "Provide a description when the project's original use = 'Other'." ;
+    t:primaryDataElement "ProjectConversionOriginalUseTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1592" ;
+    t:ruleLogic "If ProjectConversionOriginalUseType = \"Other\" and ProjectConversionOriginalUseTypeOtherDescription is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1592> ;
+    t:sourceUniqueIdCell "2500.0050" ;
+    t:uniqueId "2500.0050" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROJECT/PROJECT_CONVERSION/" .
+
+case:UAD1594 a t:TestCase ;
+    t:messageText "Indicate whether the project contains commercial space." ;
+    t:primaryDataElement "ProjectCommercialSpaceIndicator" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1594" ;
+    t:ruleLogic "If PropertyInProjectIndicator = \"true\" and ProjectCommercialSpaceIndicator is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1594> ;
+    t:sourceUniqueIdCell "2500.0055" ;
+    t:uniqueId "2500.0055" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROJECT/PROJECT_DETAIL/" .
+
+case:UAD1596 a t:TestCase ;
+    t:messageText "Indicate whether the construction of the units, common elements and amenities in the project are complete." ;
+    t:primaryDataElement "ProjectCompletedIndicator" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1596" ;
+    t:ruleLogic "If PropertyInProjectIndicator = \"true\" and ProjectCompletedIndicator is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1596> ;
+    t:sourceUniqueIdCell "2500.0058" ;
+    t:uniqueId "2500.0058" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROJECT/PROJECT_DETAIL/" .
+
+case:UAD1597 a t:TestCase ;
+    t:messageText "Provide the total number of units in the project." ;
+    t:primaryDataElement "ProjectDwellingUnitCount" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1597" ;
+    t:ruleLogic "If PropertyInProjectIndicator = \"true\" and ProjectDwellingUnitCount is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1597> ;
+    t:sourceUniqueIdCell "2500.0060" ;
+    t:uniqueId "2500.0060" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROJECT/PROJECT_DETAIL/" .
+
+case:UAD1598 a t:TestCase ;
+    t:messageText "Provide the total number of units in the project that are currently for sale." ;
+    t:primaryDataElement "ProjectDwellingUnitsForSaleCount" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1598" ;
+    t:ruleLogic "If PropertyInProjectIndicator = \"true\" and ProjectDwellingUnitsForSaleCount is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1598> ;
+    t:sourceUniqueIdCell "2500.0061" ;
+    t:uniqueId "2500.0061" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROJECT/PROJECT_DETAIL/" .
+
+case:UAD1599 a t:TestCase ;
+    t:messageText "Provide the total number of units in the project that are currently rented." ;
+    t:primaryDataElement "ProjectDwellingUnitsRentedCount" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1599" ;
+    t:ruleLogic "If PropertyInProjectIndicator = \"true\" and ProjectDwellingUnitsRentedCount is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1599> ;
+    t:sourceUniqueIdCell "2500.0062" ;
+    t:uniqueId "2500.0062" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROJECT/PROJECT_DETAIL/" .
+
+case:UAD1600 a t:TestCase ;
+    t:messageText "Provide the total number of units in the project that have been sold." ;
+    t:primaryDataElement "ProjectDwellingUnitsSoldCount" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1600" ;
+    t:ruleLogic "If PropertyInProjectIndicator = \"true\" and ProjectDwellingUnitsSoldCount is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1600> ;
+    t:sourceUniqueIdCell "2500.0064" ;
+    t:uniqueId "2500.0064" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROJECT/PROJECT_DETAIL/" .
+
+case:UAD1604 a t:TestCase ;
+    t:messageText "Provide a description when the incomplete project element = 'Other'." ;
+    t:primaryDataElement "ProjectComponentCategoryTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1604" ;
+    t:ruleLogic "If ProjectComponentCategoryType = \"Other\" and ProjectComponentCategoryTypeOtherDescription is not provided in a given instance of PROJECT_COMPONENT" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1604> ;
+    t:sourceUniqueIdCell "2500.0072" ;
+    t:uniqueId "2500.0072" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROJECT/PROJECT_COMPONENTS/PROJECT_COMPONENT/" .
+
+case:UAD1609 a t:TestCase ;
+    t:messageText "Provide the greatest number of units owned by a single entity in the condominium project." ;
+    t:primaryDataElement "SingleEntityGreatestNumberOfUnitsCount" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1609" ;
+    t:ruleLogic "If ProjectLegalStructureType = \"Condominium\" and SingleEntityGreatestNumberOfUnitsCount is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1609> ;
+    t:sourceUniqueIdCell "2500.0078" ;
+    t:uniqueId "2500.0078" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROJECT/PROJECT_FINANCIAL_INFORMATION/" .
+
+case:UAD1612 a t:TestCase ;
+    t:messageText "Indicate whether the given lien is a line of credit." ;
+    t:primaryDataElement "LineOfCreditIndicator" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1612" ;
+    t:ruleLogic "If ProjectBlanketFinancingIndicator = \"true\" and LineOfCreditIndicator is not provided in a given instance of PROJECT_BLANKET_FINANCING" ;
+    t:severity "Warning" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1612> ;
+    t:sourceUniqueIdCell "2500.0151" ;
+    t:uniqueId "2500.0151" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROJECT/PROJECT_BLANKET_FINANCINGS/PROJECT_BLANKET_FINANCING/" .
+
+case:UAD1615 a t:TestCase ;
+    t:messageText "Provide the project legal structure ( i.e., Condominium, Cooperative, Condop)." ;
+    t:primaryDataElement "ProjectLegalStructureType" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1615" ;
+    t:ruleLogic "If PropertyInProjectIndicator = \"true\" and ProjectLegalStructureType is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1615> ;
+    t:sourceUniqueIdCell "2500.0168" ;
+    t:uniqueId "2500.0168" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROJECT/PROJECT_DETAIL/" .
+
+case:UAD1619 a t:TestCase ;
+    t:messageText "Indicate whether the renewable energy component is subject to a financing arrangement." ;
+    t:primaryDataElement "RenewableEnergyComponentFinancedIndicator" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1619" ;
+    t:ruleLogic "If RenewableEnergyComponentOwnershipType = \"Owned\" and RenewableEnergyComponentFinancedIndicator is not provided in a given instance of RENEWABLE_ENERGY_COMPONENT" ;
+    t:severity "Warning" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1619> ;
+    t:sourceUniqueIdCell "2600.0016" ;
+    t:uniqueId "2600.0016" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/ENERGY_EFFICIENCY_AND_GREEN/RENEWABLE_ENERGY_COMPONENTS/RENEWABLE_ENERGY_COMPONENT/" .
+
+case:UAD1620 a t:TestCase ;
+    t:messageText "Provide a description when renewable energy component ownership type = 'Other'." ;
+    t:primaryDataElement "RenewableEnergyComponentOwnershipTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1620" ;
+    t:ruleLogic "If RenewableEnergyComponentOwnershipType = \"Other\" and RenewableEnergyComponentOwnershipTypeOtherDescription is not provided in a given instance of RENEWABLE_ENERGY_COMPONENT" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1620> ;
+    t:sourceUniqueIdCell "2600.0018" ;
+    t:uniqueId "2600.0018" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/ENERGY_EFFICIENCY_AND_GREEN/RENEWABLE_ENERGY_COMPONENTS/RENEWABLE_ENERGY_COMPONENT/" .
+
+case:UAD1623 a t:TestCase ;
+    t:messageText "Provide a description when renewable energy component type = 'Other'." ;
+    t:primaryDataElement "RenewableEnergyComponentTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1623" ;
+    t:ruleLogic "If RenewableEnergyComponentType = \"Other\" and RenewableEnergyComponentTypeOtherDescription is not provided in a given instance of RENEWABLE_ENERGY_COMPONENT" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1623> ;
+    t:sourceUniqueIdCell "2600.0020" ;
+    t:uniqueId "2600.0020" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/ENERGY_EFFICIENCY_AND_GREEN/RENEWABLE_ENERGY_COMPONENTS/RENEWABLE_ENERGY_COMPONENT/" .
+
+case:UAD1668 a t:TestCase ;
+    t:messageText "Provide a description when vehicle storage type = 'Other'." ;
+    t:primaryDataElement "CarStorageTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1668" ;
+    t:ruleLogic "If CarStorageType = \"Other\" and CarStorageTypeOtherDescription is not provided in a given instance of CAR_STORAGE_DETAIL" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1668> ;
+    t:sourceUniqueIdCell "3200.0007" ;
+    t:uniqueId "3200.0007" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/CAR_STORAGES/CAR_STORAGE/CAR_STORAGE_DETAIL/" .
+
+case:UAD1670 a t:TestCase ;
+    t:messageText "Provide a description when street surface material = 'Other'." ;
+    t:primaryDataElement "ImprovedSurfaceMaterialTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1670" ;
+    t:ruleLogic "If ImprovedSurfaceMaterialType = \"Other\" and ImprovedSurfaceMaterialTypeOtherDescription is not provided in a given instance of CAR_STORAGE_DETAIL" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1670> ;
+    t:sourceUniqueIdCell "3200.0009" ;
+    t:uniqueId "3200.0009" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/CAR_STORAGES/CAR_STORAGE/CAR_STORAGE_DETAIL/" .
+
+case:UAD1677 a t:TestCase ;
+    t:messageText "Provide the 'Measurement Standard' (i.e., ANSI, AMS) used for the appraisal." ;
+    t:primaryDataElement "MeasurementStandardPublisherType" ;
+    t:propertyAffected "N/A" ;
+    t:ruleId "UAD1677" ;
+    t:ruleLogic "If SketchExistsIndicator = \"true\" and MeasurementStandardPublisherType is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1677> ;
+    t:sourceUniqueIdCell "3300.0007" ;
+    t:uniqueId "3300.0007" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/VALUATION_REPORT_DETAIL/" .
+
+case:UAD1678 a t:TestCase ;
+    t:messageText "Provide a description when 'Measurement Standard' = 'Other'." ;
+    t:primaryDataElement "MeasurementStandardPublisherTypeOtherDescription" ;
+    t:propertyAffected "N/A" ;
+    t:ruleId "UAD1678" ;
+    t:ruleLogic "If MeasurementStandardPublisherType = \"Other\" and MeasurementStandardPublisherTypeOtherDescription is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1678> ;
+    t:sourceUniqueIdCell "3300.0008" ;
+    t:uniqueId "3300.0008" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/VALUATION_REPORT_DETAIL/" .
+
+case:UAD1681 a t:TestCase ;
+    t:messageText "Provide a description when 'Functional Issues' = 'Other'." ;
+    t:primaryDataElement "FunctionalIssueTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1681" ;
+    t:ruleLogic "If FunctionalIssueType = \"Other\" and FunctionalIssueTypeOtherDescription is not provided in a given instance of FUNCTIONAL_ISSUE" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1681> ;
+    t:sourceUniqueIdCell "3600.0003" ;
+    t:uniqueId "3600.0003" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/FUNCTIONAL_ISSUES/FUNCTIONAL_ISSUE/" .
+
+case:UAD1684 a t:TestCase ;
+    t:messageText "Provide a description when 'Mitigation Feature' = 'Other'." ;
+    t:primaryDataElement "DisasterMitigationFeatureTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1684" ;
+    t:ruleLogic "If DisasterMitigationFeatureType = \"Other\" and DisasterMitigationFeatureTypeOtherDescription is not provided in a given instance of DISASTER_MITIGATION_FEATURE" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1684> ;
+    t:sourceUniqueIdCell "3700.0003" ;
+    t:uniqueId "3700.0003" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/DISASTER_MITIGATION_FEATURES/DISASTER_MITIGATION_FEATURE/" .
+
+case:UAD1708 a t:TestCase ;
+    t:messageText "Provide the format of the image file. For assistance with this message, contact the appraisal software vendor." ;
+    t:primaryDataElement "MIMETypeIdentifier" ;
+    t:propertyAffected "Sales Comparable #n" ;
+    t:ruleId "UAD1708" ;
+    t:ruleLogic "If @ValuationUseType = \"SalesComparable\" and MIMETypeIdentifier is not provided in a given instance of IMAGE" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1708> ;
+    t:sourceUniqueIdCell "1400.0901" ;
+    t:uniqueId "1400.0901" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/INSPECTIONS/INSPECTION/IMAGES/IMAGE/" .
+
+case:UAD1713 a t:TestCase ;
+    t:messageText "Provide a description when the location of the defect, damage or deficiency = 'Other'." ;
+    t:primaryDataElement "DefectItemLocationTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1713" ;
+    t:ruleLogic "If DefectItemLocationType = \"Other\" and DefectItemLocationTypeOtherDescription is not provided in a given instance of DEFECT_DETAIL" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1713> ;
+    t:sourceUniqueIdCell "" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DEFECT/DEFECTS/DEFECT/DEFECT_DETAIL/" .
+
+case:UAD1716 a t:TestCase ;
+    t:messageText "Provide a description when label of the defect, damage or deficiency = 'Other'." ;
+    t:primaryDataElement "DefectComponentLabelTypeOtherDescription" ;
+    t:propertyAffected "Subject" ;
+    t:ruleId "UAD1716" ;
+    t:ruleLogic "If DefectComponentLabelType = \"Other\" and DefectComponentLabelTypeOtherDescription is not provided in a given instance of DEFECT_DETAIL" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1716> ;
+    t:sourceUniqueIdCell "" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DEFECT/DEFECTS/DEFECT/DEFECT_DETAIL/" .
+
+case:UAD1735 a t:TestCase ;
+    t:messageText "Provide the ownership transfer date." ;
+    t:primaryDataElement "OwnershipTransferDate" ;
+    t:propertyAffected "Sales Comparable #n" ;
+    t:ruleId "UAD1735" ;
+    t:ruleLogic "If @ValuationUseType = \"SalesComparable\" and OwnershipTransferDate is not provided in a given instance of SALES_HISTORY" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1735> ;
+    t:sourceUniqueIdCell "1800.0207; 1800.0342" ;
+    t:uniqueId "1800.0207",
+        "1800.0342" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SALES_HISTORIES/SALES_HISTORY/" .
+
+case:UAD1751 a t:TestCase ;
+    t:messageText "Provide the commentary on the outcome of the reconsideration of value." ;
+    t:primaryDataElement "ReconsiderationOfValueCommentDescription" ;
+    t:propertyAffected "N/A" ;
+    t:ruleId "UAD1751" ;
+    t:ruleLogic "If ReconsiderationOfValueIndicator = \"true\" and ReconsiderationOfValueCommentDescription is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1751> ;
+    t:sourceUniqueIdCell "4000.0005" ;
+    t:uniqueId "4000.0005" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/RECONSIDERATIONS_OF_VALUE/RECONSIDERATION_OF_VALUE/" .
+
+case:UAD1752 a t:TestCase ;
+    t:messageText "Provide the party that initiated the request for reconsideration of value." ;
+    t:primaryDataElement "ReconsiderationOfValueRequestedByType" ;
+    t:propertyAffected "N/A" ;
+    t:ruleId "UAD1752" ;
+    t:ruleLogic "If ReconsiderationOfValueIndicator = \"true\" and ReconsiderationOfValueRequestedByType is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1752> ;
+    t:sourceUniqueIdCell "4000.0006" ;
+    t:uniqueId "4000.0006" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/RECONSIDERATIONS_OF_VALUE/RECONSIDERATION_OF_VALUE/" .
+
+case:UAD1753 a t:TestCase ;
+    t:messageText "Indicate whether the reconsideration of value request resulted in a change to the Opinion of Market Value." ;
+    t:primaryDataElement "ReconsiderationOfValueResultType" ;
+    t:propertyAffected "N/A" ;
+    t:ruleId "UAD1753" ;
+    t:ruleLogic "If ReconsiderationOfValueIndicator = \"true\" and ReconsiderationOfValueResultType is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1753> ;
+    t:sourceUniqueIdCell "4000.0008" ;
+    t:uniqueId "4000.0008" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/RECONSIDERATIONS_OF_VALUE/RECONSIDERATION_OF_VALUE/" .
+
+case:UAD1754 a t:TestCase ;
+    t:messageText "Provide the date the appraiser completed the reconsideration of value." ;
+    t:primaryDataElement "ReconsiderationOfValueResultDate" ;
+    t:propertyAffected "N/A" ;
+    t:ruleId "UAD1754" ;
+    t:ruleLogic "If ReconsiderationOfValueIndicator = \"true\" and ReconsiderationOfValueResultDate is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1754> ;
+    t:sourceUniqueIdCell "4000.0007" ;
+    t:uniqueId "4000.0007" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/RECONSIDERATIONS_OF_VALUE/RECONSIDERATION_OF_VALUE/" .
+
+case:UAD1760 a t:TestCase ;
+    t:messageText "Provide 'Reconciliation of Sales Comparison Approach' when sales comparison approach is included in the appraisal." ;
+    t:primaryDataElement "SalesComparisonCommentDescription" ;
+    t:propertyAffected "N/A" ;
+    t:ruleId "UAD1760" ;
+    t:ruleLogic "If SalesComparisonApproachIndicator = \"true\" and SalesComparisonCommentDescription is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1760> ;
+    t:sourceUniqueIdCell "1800.0278" ;
+    t:uniqueId "1800.0278" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/APPROACH_TO_VALUE/SALES_COMPARISON_APPROACH/SALES_COMPARISON_APPROACH_DETAIL/" .
+
+case:UAD1761 a t:TestCase ;
+    t:messageText "Provide 'Cost Approach Commentary' when cost approach is included in the appraisal." ;
+    t:primaryDataElement "CostAnalysisCommentDescription" ;
+    t:propertyAffected "N/A" ;
+    t:ruleId "UAD1761" ;
+    t:ruleLogic "If CostApproachIndicator = \"true\" and CostAnalysisCommentDescription is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1761> ;
+    t:sourceUniqueIdCell "1100.0023" ;
+    t:uniqueId "1100.0023" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/APPROACH_TO_VALUE/COST_APPROACH/COST_APPROACH_DETAIL/" .
+
+case:UAD1762 a t:TestCase ;
+    t:messageText "Provide 'Income Approach Commentary' when income approach is included in the appraisal." ;
+    t:primaryDataElement "IncomeAnalysisCommentDescription" ;
+    t:propertyAffected "N/A" ;
+    t:ruleId "UAD1762" ;
+    t:ruleLogic "If IncomeApproachIndicator = \"true\" and IncomeAnalysisCommentDescription is not provided" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1762> ;
+    t:sourceUniqueIdCell "1200.0007" ;
+    t:uniqueId "1200.0007" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/APPROACH_TO_VALUE/INCOME_APPROACH/INCOME_APPROACH_DETAIL/" .
+
+case:UAD1770 a t:TestCase ;
+    t:messageText "Provide a description when 'Site Influence (Location)' = 'Other'." ;
+    t:primaryDataElement "SiteInfluenceTypeOtherDescription" ;
+    t:propertyAffected "Sales Comparable #n" ;
+    t:ruleId "UAD1770" ;
+    t:ruleLogic "If SiteInfluenceType = \"Other\" and SiteInfluenceTypeOtherDescription is not provided in a given instance of SITE_INFLUENCE_DETAIL" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1770> ;
+    t:sourceUniqueIdCell "1800.0234" ;
+    t:uniqueId "1800.0234" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SITE/SITE_INFLUENCES/SITE_INFLUENCE/SITE_INFLUENCE_DETAIL/" .
+

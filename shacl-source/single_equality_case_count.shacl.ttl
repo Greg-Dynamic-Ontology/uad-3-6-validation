@@ -1,0 +1,15 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix t: <urn:uad36:test-suite:vocab:> .
+@prefix suite: <urn:uad36:test-suite:> .
+@prefix shape: <urn:uad36:test-shape:> .
+
+# One case per governed rule, not one case per execution variant.
+# Explicit targeting ensures that an absent suite also violates the count.
+shape:SingleEqualityCaseCount a sh:NodeShape ;
+    sh:targetNode suite:single-equality ;
+    sh:property [
+        sh:path t:hasCase ;
+        sh:minCount 174 ;
+        sh:maxCount 174 ;
+        sh:message "The single-equality suite must contain exactly 174 distinct case records." ;
+    ] .

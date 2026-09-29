@@ -58,6 +58,30 @@ SALES_CONTRACT_DETAIL_PATH = (
 # Each trigger and dependent element share the declared parent context.
 # Keys preserve both source row identity and source rule identity.
 CONDITIONAL_RULES = {
+    ("0200.0053", "UAD1046"): ConditionalRule(
+        element="SubjectPropertyAmenitiesDefectsExistIndicator",
+        trigger="PropertyAmenityExistsIndicator",
+        value="true",
+        parent_path=PROPERTY_DETAIL_PATH,
+    ),
+    ("0600.0005", "UAD1127"): ConditionalRule(
+        element="SalesConcessionAmountKnownIndicator",
+        trigger="SalesConcessionIndicator",
+        value="true",
+        parent_path=SALES_CONTRACT_DETAIL_PATH,
+    ),
+    ("0600.0010", "UAD1132"): ConditionalRule(
+        element="SalesContractReviewedIndicator",
+        trigger="SalesContractExistsIndicator",
+        value="true",
+        parent_path=SALES_CONTRACT_DETAIL_PATH,
+    ),
+    ("0600.0011", "UAD1133"): ConditionalRule(
+        element="TotalSalesConcessionAmount",
+        trigger="SalesConcessionAmountKnownIndicator",
+        value="true",
+        parent_path=SALES_CONTRACT_DETAIL_PATH,
+    ),
     ("0100.0053", "UAD1022"): ConditionalRule(
         element="PropertyEstateTypeOtherDescription",
         trigger="PropertyEstateType",
@@ -216,7 +240,8 @@ def conditional_elements(
 ) -> list[Element] | None:
     """Return dependent elements when true; None when false.
 
-    Missing or ambiguous condition inputs raise an evaluation error.
+    When dependent data is not supplied, missing or ambiguous condition inputs
+    raise an evaluation error.
     They are not silently interpreted as false.
     """
     identity = f"{rule['Unique ID']}/{rule['Message ID']}"
@@ -242,6 +267,18 @@ def conditional_elements(
         )
 
     container = containers[0]
+    dependents = container.findall(
+        f"{{{NAMESPACE}}}{specification.element}"
+    )
+    # Supplied dependent data satisfies this presence requirement regardless
+    # of the trigger. Missing/invalid triggers belong to their own rules.
+    # If the dependent is absent, retain the strict condition checks below.
+    if (
+        len(dependents) == 1
+        and not list(dependents[0])
+        and has_value(dependents[0])
+    ):
+        return dependents
     triggers = container.findall(
         f"{{{NAMESPACE}}}{specification.trigger}"
     )
