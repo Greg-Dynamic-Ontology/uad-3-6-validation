@@ -57,10 +57,63 @@ SALES_CONTRACT_DETAIL_PATH = (
     "SALES_CONTRACTS/SALES_CONTRACT/SALES_CONTRACT_DETAIL/"
 )
 
+PROJECT_DETAIL_PATH = (
+    "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROJECT/PROJECT_DETAIL/"
+)
+
 # Triggers default to the dependent container. Explicit cross-container
 # bindings remain relative to the same subject property.
 # Keys preserve both source row identity and source rule identity.
 CONDITIONAL_RULES = {
+    ("2500.0055", "UAD1594"): ConditionalRule(
+        element="ProjectCommercialSpaceIndicator",
+        trigger="PropertyInProjectIndicator",
+        value="true",
+        parent_path=PROJECT_DETAIL_PATH,
+        trigger_subject_path="m:PROPERTY_DETAIL/m:PropertyInProjectIndicator",
+    ),
+    ("2500.0058", "UAD1596"): ConditionalRule(
+        element="ProjectCompletedIndicator",
+        trigger="PropertyInProjectIndicator",
+        value="true",
+        parent_path=PROJECT_DETAIL_PATH,
+        trigger_subject_path="m:PROPERTY_DETAIL/m:PropertyInProjectIndicator",
+    ),
+    ("2500.0060", "UAD1597"): ConditionalRule(
+        element="ProjectDwellingUnitCount",
+        trigger="PropertyInProjectIndicator",
+        value="true",
+        parent_path=PROJECT_DETAIL_PATH,
+        trigger_subject_path="m:PROPERTY_DETAIL/m:PropertyInProjectIndicator",
+    ),
+    ("2500.0061", "UAD1598"): ConditionalRule(
+        element="ProjectDwellingUnitsForSaleCount",
+        trigger="PropertyInProjectIndicator",
+        value="true",
+        parent_path=PROJECT_DETAIL_PATH,
+        trigger_subject_path="m:PROPERTY_DETAIL/m:PropertyInProjectIndicator",
+    ),
+    ("2500.0062", "UAD1599"): ConditionalRule(
+        element="ProjectDwellingUnitsRentedCount",
+        trigger="PropertyInProjectIndicator",
+        value="true",
+        parent_path=PROJECT_DETAIL_PATH,
+        trigger_subject_path="m:PROPERTY_DETAIL/m:PropertyInProjectIndicator",
+    ),
+    ("2500.0064", "UAD1600"): ConditionalRule(
+        element="ProjectDwellingUnitsSoldCount",
+        trigger="PropertyInProjectIndicator",
+        value="true",
+        parent_path=PROJECT_DETAIL_PATH,
+        trigger_subject_path="m:PROPERTY_DETAIL/m:PropertyInProjectIndicator",
+    ),
+    ("2500.0168", "UAD1615"): ConditionalRule(
+        element="ProjectLegalStructureType",
+        trigger="PropertyInProjectIndicator",
+        value="true",
+        parent_path=PROJECT_DETAIL_PATH,
+        trigger_subject_path="m:PROPERTY_DETAIL/m:PropertyInProjectIndicator",
+    ),
     ("0100.0034", "UAD1028"): ConditionalRule(
         element="AllPropertyRightsAppraisedIndicator",
         trigger="LandOwnedInCommonIndicator",
@@ -276,15 +329,21 @@ def conditional_elements(
         if parent_path
         else [context]
     )
-    if len(containers) != 1:
+    # A cross-container trigger can be evaluated even when the dependent
+    # container is absent. A false condition requires no container; a true
+    # condition still requires the missing dependent value.
+    if len(containers) > 1 or (
+        not containers and specification.trigger_subject_path is None
+    ):
         raise ValueError(
             f"{identity}: expected one condition context, "
             f"found {len(containers)}"
         )
 
-    container = containers[0]
-    dependents = container.findall(
-        f"{{{NAMESPACE}}}{specification.element}"
+    container = containers[0] if containers else None
+    dependents = (
+        container.findall(f"{{{NAMESPACE}}}{specification.element}")
+        if container is not None else []
     )
     # Supplied dependent data satisfies this presence requirement regardless
     # of the trigger. Missing/invalid triggers belong to their own rules.
@@ -322,9 +381,7 @@ def conditional_elements(
     if (trigger.text or "").strip() != specification.value:
         return None
 
-    return container.findall(
-        f"{{{NAMESPACE}}}{rule['Primary Data Element']}"
-    )
+    return dependents
 
 
 def nearest_existing_ancestor_path(

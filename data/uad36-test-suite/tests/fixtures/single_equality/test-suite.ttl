@@ -1,7 +1,7 @@
-# IT-1R2S1: 174 governed rule records; 10 have executable XML bindings.
-# UAD1028 binds SITE_DETAIL and SALES_CONTRACT_DETAIL in the same subject.
-# UAD1136 uses the published UAD 2-to-4-unit sample with Other / Private Sale.
-# Existing records and bindings are preserved; 164 records still need bindings.
+# IT-1R2S1: 174 governed records; 17 bound, 157 awaiting bindings.
+# Seven project-detail rules reuse the published Condo1 sample.
+# Their trigger and dependent values are bound within the same subject property.
+# All 21 project-detail XML variations were schema-validated in memory.
 
 @prefix case: <urn:uad36:test-case:IT-1R2S1:> .
 @prefix suite: <urn:uad36:test-suite:> .
@@ -1954,7 +1954,11 @@ case:UAD1592 a t:TestCase ;
     t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROJECT/PROJECT_CONVERSION/" .
 
 case:UAD1594 a t:TestCase ;
+    t:baselinePath "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 Condo1_Appraisal/Condo1_Appraisal_v1.4.xml" ;
+    t:dependentXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_DETAIL/m:ProjectCommercialSpaceIndicator" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_DETAIL/m:ProjectCommercialSpaceIndicator" ;
     t:messageText "Indicate whether the project contains commercial space." ;
+    t:nonmatchingValue "false" ;
     t:primaryDataElement "ProjectCommercialSpaceIndicator" ;
     t:propertyAffected "Subject" ;
     t:ruleId "UAD1594" ;
@@ -1962,11 +1966,16 @@ case:UAD1594 a t:TestCase ;
     t:severity "Fatal" ;
     t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1594> ;
     t:sourceUniqueIdCell "2500.0055" ;
+    t:triggerXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyInProjectIndicator" ;
     t:uniqueId "2500.0055" ;
     t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROJECT/PROJECT_DETAIL/" .
 
 case:UAD1596 a t:TestCase ;
+    t:baselinePath "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 Condo1_Appraisal/Condo1_Appraisal_v1.4.xml" ;
+    t:dependentXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_DETAIL/m:ProjectCompletedIndicator" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_DETAIL/m:ProjectCompletedIndicator" ;
     t:messageText "Indicate whether the construction of the units, common elements and amenities in the project are complete." ;
+    t:nonmatchingValue "false" ;
     t:primaryDataElement "ProjectCompletedIndicator" ;
     t:propertyAffected "Subject" ;
     t:ruleId "UAD1596" ;
@@ -1974,11 +1983,16 @@ case:UAD1596 a t:TestCase ;
     t:severity "Fatal" ;
     t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1596> ;
     t:sourceUniqueIdCell "2500.0058" ;
+    t:triggerXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyInProjectIndicator" ;
     t:uniqueId "2500.0058" ;
     t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROJECT/PROJECT_DETAIL/" .
 
 case:UAD1597 a t:TestCase ;
+    t:baselinePath "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 Condo1_Appraisal/Condo1_Appraisal_v1.4.xml" ;
+    t:dependentXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_DETAIL/m:ProjectDwellingUnitCount" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_DETAIL/m:ProjectDwellingUnitCount" ;
     t:messageText "Provide the total number of units in the project." ;
+    t:nonmatchingValue "false" ;
     t:primaryDataElement "ProjectDwellingUnitCount" ;
     t:propertyAffected "Subject" ;
     t:ruleId "UAD1597" ;
@@ -1986,11 +2000,16 @@ case:UAD1597 a t:TestCase ;
     t:severity "Fatal" ;
     t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1597> ;
     t:sourceUniqueIdCell "2500.0060" ;
+    t:triggerXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyInProjectIndicator" ;
     t:uniqueId "2500.0060" ;
     t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROJECT/PROJECT_DETAIL/" .
 
 case:UAD1598 a t:TestCase ;
+    t:baselinePath "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 Condo1_Appraisal/Condo1_Appraisal_v1.4.xml" ;
+    t:dependentXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_DETAIL/m:ProjectDwellingUnitsForSaleCount" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_DETAIL/m:ProjectDwellingUnitsForSaleCount" ;
     t:messageText "Provide the total number of units in the project that are currently for sale." ;
+    t:nonmatchingValue "false" ;
     t:primaryDataElement "ProjectDwellingUnitsForSaleCount" ;
     t:propertyAffected "Subject" ;
     t:ruleId "UAD1598" ;
@@ -1998,11 +2017,16 @@ case:UAD1598 a t:TestCase ;
     t:severity "Fatal" ;
     t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1598> ;
     t:sourceUniqueIdCell "2500.0061" ;
+    t:triggerXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyInProjectIndicator" ;
     t:uniqueId "2500.0061" ;
     t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROJECT/PROJECT_DETAIL/" .
 
 case:UAD1599 a t:TestCase ;
+    t:baselinePath "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 Condo1_Appraisal/Condo1_Appraisal_v1.4.xml" ;
+    t:dependentXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_DETAIL/m:ProjectDwellingUnitsRentedCount" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_DETAIL/m:ProjectDwellingUnitsRentedCount" ;
     t:messageText "Provide the total number of units in the project that are currently rented." ;
+    t:nonmatchingValue "false" ;
     t:primaryDataElement "ProjectDwellingUnitsRentedCount" ;
     t:propertyAffected "Subject" ;
     t:ruleId "UAD1599" ;
@@ -2010,11 +2034,16 @@ case:UAD1599 a t:TestCase ;
     t:severity "Fatal" ;
     t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1599> ;
     t:sourceUniqueIdCell "2500.0062" ;
+    t:triggerXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyInProjectIndicator" ;
     t:uniqueId "2500.0062" ;
     t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROJECT/PROJECT_DETAIL/" .
 
 case:UAD1600 a t:TestCase ;
+    t:baselinePath "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 Condo1_Appraisal/Condo1_Appraisal_v1.4.xml" ;
+    t:dependentXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_DETAIL/m:ProjectDwellingUnitsSoldCount" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_DETAIL/m:ProjectDwellingUnitsSoldCount" ;
     t:messageText "Provide the total number of units in the project that have been sold." ;
+    t:nonmatchingValue "false" ;
     t:primaryDataElement "ProjectDwellingUnitsSoldCount" ;
     t:propertyAffected "Subject" ;
     t:ruleId "UAD1600" ;
@@ -2022,6 +2051,7 @@ case:UAD1600 a t:TestCase ;
     t:severity "Fatal" ;
     t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1600> ;
     t:sourceUniqueIdCell "2500.0064" ;
+    t:triggerXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyInProjectIndicator" ;
     t:uniqueId "2500.0064" ;
     t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROJECT/PROJECT_DETAIL/" .
 
@@ -2062,7 +2092,11 @@ case:UAD1612 a t:TestCase ;
     t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROJECT/PROJECT_BLANKET_FINANCINGS/PROJECT_BLANKET_FINANCING/" .
 
 case:UAD1615 a t:TestCase ;
+    t:baselinePath "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 Condo1_Appraisal/Condo1_Appraisal_v1.4.xml" ;
+    t:dependentXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_DETAIL/m:ProjectLegalStructureType" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_DETAIL/m:ProjectLegalStructureType" ;
     t:messageText "Provide the project legal structure ( i.e., Condominium, Cooperative, Condop)." ;
+    t:nonmatchingValue "false" ;
     t:primaryDataElement "ProjectLegalStructureType" ;
     t:propertyAffected "Subject" ;
     t:ruleId "UAD1615" ;
@@ -2070,6 +2104,7 @@ case:UAD1615 a t:TestCase ;
     t:severity "Fatal" ;
     t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1615> ;
     t:sourceUniqueIdCell "2500.0168" ;
+    t:triggerXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyInProjectIndicator" ;
     t:uniqueId "2500.0168" ;
     t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROJECT/PROJECT_DETAIL/" .
 
