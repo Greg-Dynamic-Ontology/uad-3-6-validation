@@ -41,6 +41,9 @@ class ConditionalRule:
     # Optional trigger path relative to the same subject property.
     trigger_subject_path: str | None = None
     severity: str = "Fatal"
+    property_affected: str = "Subject"
+    # Optional trigger path relative to the same valuation report.
+    trigger_report_path: str | None = None
 
     @property
     def logic(self) -> str:
@@ -63,9 +66,57 @@ PROJECT_DETAIL_PATH = (
 )
 
 # Triggers default to the dependent container. Explicit cross-container
-# bindings remain relative to the same subject property.
+# bindings remain relative to the same subject property or valuation report.
 # Keys preserve both source row identity and source rule identity.
 CONDITIONAL_RULES = {
+    ("1100.0026", "UAD1227"): ConditionalRule(
+        element="DepreciatedCostDwellingsTotalAmount",
+        trigger="CostApproachIndicator",
+        value="true",
+        parent_path=(
+            "../VALUATION_ANALYSIS/VALUATION_REPORT/APPROACH_TO_VALUE/"
+            "COST_APPROACH/COST_APPROACH_DETAIL/"
+        ),
+        trigger_report_path="m:SCOPE_OF_WORK/m:SCOPE_OF_WORK_DETAIL/m:CostApproachIndicator",
+        property_affected="N/A",
+        severity="Warning",
+    ),
+    ("1100.0032", "UAD1230"): ConditionalRule(
+        element="SiteOtherImprovementsAsIsAmount",
+        trigger="CostApproachIndicator",
+        value="true",
+        parent_path=(
+            "../VALUATION_ANALYSIS/VALUATION_REPORT/APPROACH_TO_VALUE/"
+            "COST_APPROACH/COST_APPROACH_DETAIL/"
+        ),
+        trigger_report_path="m:SCOPE_OF_WORK/m:SCOPE_OF_WORK_DETAIL/m:CostApproachIndicator",
+        property_affected="N/A",
+        severity="Fatal",
+    ),
+    ("1300.0001", "UAD1252"): ConditionalRule(
+        element="ValueIndicatedByCostApproachAmount",
+        trigger="CostApproachIndicator",
+        value="true",
+        parent_path=(
+            "../VALUATION_ANALYSIS/VALUATION_REPORT/APPROACH_TO_VALUE/"
+            "COST_APPROACH/COST_APPROACH_DETAIL/"
+        ),
+        trigger_report_path="m:SCOPE_OF_WORK/m:SCOPE_OF_WORK_DETAIL/m:CostApproachIndicator",
+        property_affected="N/A",
+        severity="Fatal",
+    ),
+    ("1100.0023", "UAD1761"): ConditionalRule(
+        element="CostAnalysisCommentDescription",
+        trigger="CostApproachIndicator",
+        value="true",
+        parent_path=(
+            "../VALUATION_ANALYSIS/VALUATION_REPORT/APPROACH_TO_VALUE/"
+            "COST_APPROACH/COST_APPROACH_DETAIL/"
+        ),
+        trigger_report_path="m:SCOPE_OF_WORK/m:SCOPE_OF_WORK_DETAIL/m:CostApproachIndicator",
+        property_affected="N/A",
+        severity="Fatal",
+    ),
     ("2500.0031", "UAD1583"): ConditionalRule(
         element="ProjectAnalysisGroundRentIndicator",
         trigger="PropertyInProjectIndicator",
@@ -263,7 +314,7 @@ def load_required_rules() -> tuple[dict[str, str], ...]:
                 "Primary Data Element": specification.element,
                 "Rule Logic": specification.logic,
                 "Severity": specification.severity,
-                "Property Affected": "Subject",
+                "Property Affected": specification.property_affected,
                 " xPath": specification.parent_path,
             }
             for field, value in expected.items():
@@ -365,9 +416,14 @@ def conditional_elements(
 
     if context is None:
         raise ValueError(
-            f"{identity}: cannot evaluate condition without subject context"
+            f"{identity}: cannot evaluate condition without its governed context"
         )
 
+    trigger_path = (
+        specification.trigger_report_path
+        if specification.property_affected == "N/A"
+        else specification.trigger_subject_path
+    )
     parent_path = "/".join("m:" + part for part in remaining)
     containers = (
         context.findall(parent_path, NS)
@@ -378,7 +434,7 @@ def conditional_elements(
     # container is absent. A false condition requires no container; a true
     # condition still requires the missing dependent value.
     if len(containers) > 1 or (
-        not containers and specification.trigger_subject_path is None
+        not containers and trigger_path is None
     ):
         raise ValueError(
             f"{identity}: expected one condition context, "
@@ -399,10 +455,10 @@ def conditional_elements(
         and has_value(dependents[0])
     ):
         return dependents
-    if specification.trigger_subject_path is not None:
-        # Never search the document globally: another property's trigger
-        # cannot satisfy this subject property's applicability condition.
-        triggers = context.findall(specification.trigger_subject_path, NS)
+    if trigger_path is not None:
+        # Never search globally: another property's or report's trigger
+        # cannot establish applicability for this context.
+        triggers = context.findall(trigger_path, NS)
     else:
         triggers = container.findall(
             f"{{{NAMESPACE}}}{specification.trigger}"
@@ -524,6 +580,13 @@ def evaluate_required_data(
                     NS,
                 )
                 remaining = parts[3:]
+            elif specification is not None and specification.property_affected == "N/A":
+                if parts[1] != "VALUATION_REPORT":
+                    raise ValueError(
+                        f"Unsupported report path: {rule['Message ID']}"
+                    )
+                contexts = analysis.findall("m:VALUATION_REPORT", NS)
+                remaining = parts[2:]
             else:
                 contexts = [analysis]
                 remaining = parts[1:]
@@ -583,7 +646,11 @@ def evaluate_required_data(
                     expected_condition = (
                         f'{element_name} must be provided when '
                         f'{specification.trigger} = "{specification.value}" '
-                        "within the same subject property."
+                        + (
+                            "within the same valuation report."
+                            if specification.property_affected == "N/A"
+                            else "within the same subject property."
+                        )
                     )
 
                 findings.append(

@@ -1,7 +1,7 @@
-# IT-1R2S1: 174 governed records; 21 bound, 153 awaiting bindings.
-# UAD1583, UAD1584, UAD1585 and UAD1590 reuse the published Condo1 sample.
-# UAD1584 retains governed Warning severity; the other three are Fatal.
-# All 12 new XML variations were schema-validated in memory.
+# IT-1R2S1: 174 governed records; 25 bound, 149 awaiting bindings.
+# Four cost-approach cases reuse the published MH1 sample.
+# Bindings keep SCOPE_OF_WORK and COST_APPROACH within the same valuation report.
+# All 12 new XML variations were schema-validated; UAD1227 retains Warning severity.
 
 @prefix case: <urn:uad36:test-case:IT-1R2S1:> .
 @prefix suite: <urn:uad36:test-suite:> .
@@ -850,7 +850,11 @@ case:UAD1225 a t:TestCase ;
     t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/COMPARABLE/COMPARABLE_DETAIL/" .
 
 case:UAD1227 a t:TestCase ;
+    t:baselinePath "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 MH1_Appraisal/MH1_Appraisal_v1.4.xml" ;
+    t:dependentXPath "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:APPROACH_TO_VALUE/m:COST_APPROACH/m:COST_APPROACH_DETAIL/m:DepreciatedCostDwellingsTotalAmount" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:APPROACH_TO_VALUE/m:COST_APPROACH/m:COST_APPROACH_DETAIL/m:DepreciatedCostDwellingsTotalAmount" ;
     t:messageText "The 'Depreciated Cost of Dwellings' must be provided." ;
+    t:nonmatchingValue "false" ;
     t:primaryDataElement "DepreciatedCostDwellingsTotalAmount" ;
     t:propertyAffected "N/A" ;
     t:ruleId "UAD1227" ;
@@ -858,11 +862,16 @@ case:UAD1227 a t:TestCase ;
     t:severity "Warning" ;
     t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1227> ;
     t:sourceUniqueIdCell "1100.0026" ;
+    t:triggerXPath "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:SCOPE_OF_WORK/m:SCOPE_OF_WORK_DETAIL/m:CostApproachIndicator" ;
     t:uniqueId "1100.0026" ;
     t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/APPROACH_TO_VALUE/COST_APPROACH/COST_APPROACH_DETAIL/" .
 
 case:UAD1230 a t:TestCase ;
+    t:baselinePath "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 MH1_Appraisal/MH1_Appraisal_v1.4.xml" ;
+    t:dependentXPath "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:APPROACH_TO_VALUE/m:COST_APPROACH/m:COST_APPROACH_DETAIL/m:SiteOtherImprovementsAsIsAmount" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:APPROACH_TO_VALUE/m:COST_APPROACH/m:COST_APPROACH_DETAIL/m:SiteOtherImprovementsAsIsAmount" ;
     t:messageText "Provide the 'As Is Value of Site Improvements'." ;
+    t:nonmatchingValue "false" ;
     t:primaryDataElement "SiteOtherImprovementsAsIsAmount" ;
     t:propertyAffected "N/A" ;
     t:ruleId "UAD1230" ;
@@ -870,6 +879,7 @@ case:UAD1230 a t:TestCase ;
     t:severity "Fatal" ;
     t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1230> ;
     t:sourceUniqueIdCell "1100.0032" ;
+    t:triggerXPath "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:SCOPE_OF_WORK/m:SCOPE_OF_WORK_DETAIL/m:CostApproachIndicator" ;
     t:uniqueId "1100.0032" ;
     t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/APPROACH_TO_VALUE/COST_APPROACH/COST_APPROACH_DETAIL/" .
 
@@ -958,7 +968,11 @@ case:UAD1249 a t:TestCase ;
     t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/RENTAL_INFORMATION_SUMMARY/RENTAL_INFORMATION_SUMMARY_DETAIL/" .
 
 case:UAD1252 a t:TestCase ;
+    t:baselinePath "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 MH1_Appraisal/MH1_Appraisal_v1.4.xml" ;
+    t:dependentXPath "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:APPROACH_TO_VALUE/m:COST_APPROACH/m:COST_APPROACH_DETAIL/m:ValueIndicatedByCostApproachAmount" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:APPROACH_TO_VALUE/m:COST_APPROACH/m:COST_APPROACH_DETAIL/m:ValueIndicatedByCostApproachAmount" ;
     t:messageText "Provide the value of the subject property as determined by the Cost Approach method of property valuation." ;
+    t:nonmatchingValue "false" ;
     t:primaryDataElement "ValueIndicatedByCostApproachAmount" ;
     t:propertyAffected "N/A" ;
     t:ruleId "UAD1252" ;
@@ -966,6 +980,7 @@ case:UAD1252 a t:TestCase ;
     t:severity "Fatal" ;
     t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1252> ;
     t:sourceUniqueIdCell "1300.0001" ;
+    t:triggerXPath "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:SCOPE_OF_WORK/m:SCOPE_OF_WORK_DETAIL/m:CostApproachIndicator" ;
     t:uniqueId "1300.0001" ;
     t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/APPROACH_TO_VALUE/COST_APPROACH/COST_APPROACH_DETAIL/" .
 
@@ -2344,7 +2359,11 @@ case:UAD1760 a t:TestCase ;
     t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/APPROACH_TO_VALUE/SALES_COMPARISON_APPROACH/SALES_COMPARISON_APPROACH_DETAIL/" .
 
 case:UAD1761 a t:TestCase ;
+    t:baselinePath "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 MH1_Appraisal/MH1_Appraisal_v1.4.xml" ;
+    t:dependentXPath "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:APPROACH_TO_VALUE/m:COST_APPROACH/m:COST_APPROACH_DETAIL/m:CostAnalysisCommentDescription" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:APPROACH_TO_VALUE/m:COST_APPROACH/m:COST_APPROACH_DETAIL/m:CostAnalysisCommentDescription" ;
     t:messageText "Provide 'Cost Approach Commentary' when cost approach is included in the appraisal." ;
+    t:nonmatchingValue "false" ;
     t:primaryDataElement "CostAnalysisCommentDescription" ;
     t:propertyAffected "N/A" ;
     t:ruleId "UAD1761" ;
@@ -2352,6 +2371,7 @@ case:UAD1761 a t:TestCase ;
     t:severity "Fatal" ;
     t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1761> ;
     t:sourceUniqueIdCell "1100.0023" ;
+    t:triggerXPath "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:SCOPE_OF_WORK/m:SCOPE_OF_WORK_DETAIL/m:CostApproachIndicator" ;
     t:uniqueId "1100.0023" ;
     t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/APPROACH_TO_VALUE/COST_APPROACH/COST_APPROACH_DETAIL/" .
 
