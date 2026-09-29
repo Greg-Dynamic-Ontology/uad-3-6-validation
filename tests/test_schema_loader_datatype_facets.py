@@ -11,7 +11,7 @@ from app.services.schema_loader import SchemaLoader
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 COMBINED_SCHEMA_PATH = (
     PROJECT_ROOT
-    / "specs"
+    / "chatgpt-sources" / "sources" / "schemas"
     / "UAD"
     / "GSE_UAD_3.6.0_v1.3"
     / "Combined"

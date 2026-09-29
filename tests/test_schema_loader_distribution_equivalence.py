@@ -23,7 +23,12 @@ from app.services.schema_loader.schema_closure import (
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 UAD_SCHEMA_DIRECTORY = (
-    PROJECT_ROOT / "specs" / "UAD" / "GSE_UAD_3.6.0_v1.3"
+    PROJECT_ROOT
+    / "chatgpt-sources"
+    / "sources"
+    / "schemas"
+    / "UAD"
+    / "GSE_UAD_3.6.0_v1.3"
 )
 COMBINED_DIRECTORY = UAD_SCHEMA_DIRECTORY / "Combined"
 INDIVIDUAL_DIRECTORY = UAD_SCHEMA_DIRECTORY / "Individual"

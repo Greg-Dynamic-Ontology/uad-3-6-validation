@@ -51,6 +51,16 @@ SCOPED_RULES = {
         severity="Fatal",
         parent_path=PROPERTY_PATH + "PROPERTY_GROUND_RENT/",
     ),
+    ("0100.0029", "UAD1025"): ScopedRule(
+        element="PropertyGroundLeaseExpirationDate",
+        logic=(
+            'If PropertyEstateType = "Leasehold" and '
+            'LandOwnedInCommonIndicator = "false", '
+            "and PropertyGroundLeaseExpirationDate is not provided"
+        ),
+        severity="Fatal",
+        parent_path=PROPERTY_PATH + "PROPERTY_GROUND_RENT/",
+    ),
     ("0300.0012", "UAD1054"): ScopedRule(
         element="PropertyStructureBuiltYearEstimatedIndicator",
         logic=(
@@ -512,7 +522,7 @@ def evaluate_scoped_rule(
 
             # A present dependent value cannot violate a missing-data rule.
             # Do not demand unrelated condition inputs to establish that.
-            if rule_id in {"UAD1021", "UAD1024"}:
+            if rule_id in {"UAD1021", "UAD1024", "UAD1025"}:
                 dependent_parent = specification.parent_path.removeprefix(
                     PROPERTY_PATH
                 ).strip("/")
@@ -553,7 +563,7 @@ def evaluate_scoped_rule(
                 )
                 parent_path = "m:PROPERTY_DETAIL"
 
-            elif rule_id == "UAD1024":
+            elif rule_id in {"UAD1024", "UAD1025"}:
                 applies = _combine(
                     (
                         _equals(
@@ -588,7 +598,7 @@ def evaluate_scoped_rule(
                 continue
 
             containers = subject.findall(parent_path, NS)
-            property_level = rule_id in {"UAD1021", "UAD1024"}
+            property_level = rule_id in {"UAD1021", "UAD1024", "UAD1025"}
             if property_level and len(containers) > 1:
                 raise ValueError(
                     f"{identity}: ambiguous dependent context"

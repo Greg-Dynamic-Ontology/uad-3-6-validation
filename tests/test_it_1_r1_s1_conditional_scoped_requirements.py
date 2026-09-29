@@ -30,7 +30,7 @@ M = Namespace("urn:uad36:test-manifest:vocab:")
 
 R1 = Namespace("urn:uad36:work-tracking:r1-classification:")
 SCHEMA = ROOT / (
-    "specs/UAD/GSE_UAD_3.6.0_v1.3/Combined/GSE_UAD_3.6.0_v1.3.xsd"
+    "chatgpt-sources/sources/schemas/UAD/GSE_UAD_3.6.0_v1.3/Combined/GSE_UAD_3.6.0_v1.3.xsd"
 )
 NS = {"m": "http://www.mismo.org/residential/2009/schemas"}
 PRIOR_RULE_IDS = ("UAD1021", "UAD1024", "UAD1054")

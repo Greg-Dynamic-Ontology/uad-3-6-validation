@@ -26,7 +26,9 @@ from app.models.schema_validation import (
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 UAD36_SCHEMA_PATH = (
     PROJECT_ROOT
-    / "specs"
+    / "chatgpt-sources"
+    / "sources"
+    / "schemas"
     / "UAD"
     / "GSE_UAD_3.6.0_v1.3"
     / "Combined"

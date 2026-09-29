@@ -20,7 +20,9 @@ from app.services.schema_loader import SchemaLoader
 PROJECT_ROOT = Path(app.__file__).resolve().parents[1]
 UAD_SCHEMA_FILE = (
     PROJECT_ROOT
-    / "specs"
+    / "chatgpt-sources"
+    / "sources"
+    / "schemas"
     / "UAD"
     / "GSE_UAD_3.6.0_v1.3"
     / "Combined"
@@ -28,7 +30,9 @@ UAD_SCHEMA_FILE = (
 )
 SAMPLE_APPRAISAL = (
     PROJECT_ROOT
-    / "specs"
+    / "chatgpt-sources"
+    / "sources"
+    / "samples"
     / "UAD"
     / "Appendix D-1 URAR Sample Use Cases and XML Files"
     / "Appendix D-1 SF1_Appraisal"

@@ -24615,6 +24615,6 @@ case:baseline a m:SourceArtifact ;
     m:sha256 "47509c23bcf28c3abb9c57e00a3f93cf52ed38fec3862d7cda24bffd6bca5be9" .
 
 case:schema a m:SourceArtifact ;
-    m:path "specs/UAD/GSE_UAD_3.6.0_v1.3/Combined/GSE_UAD_3.6.0_v1.3.xsd" ;
+    m:path "chatgpt-sources/sources/schemas/UAD/GSE_UAD_3.6.0_v1.3/Combined/GSE_UAD_3.6.0_v1.3.xsd" ;
     m:sha256 "0bb6650ab465753fe2023be14d414ad6db45820201b7fdee1d90023e49cbf129" .
 
