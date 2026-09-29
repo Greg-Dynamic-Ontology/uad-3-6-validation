@@ -1,6 +1,6 @@
-# IT-1R2S1: 174 governed records; 34 bound, 140 awaiting bindings.
-# UAD1050, UAD1056 and UAD1057 reuse MH1 with exact improvement occurrence paths.
-# Unrelated improvement occurrences remain unchanged; all nine new variants are schema-valid.
+# IT-1R2S1: 174 governed records; 36 bound, 138 awaiting bindings.
+# UAD1153 and UAD1155 target the SF3 wet-bar interior component using sibling positions.
+# All six new XML variations are schema-valid; unrelated components remain unchanged.
 
 @prefix case: <urn:uad36:test-case:IT-1R2S1:> .
 @prefix suite: <urn:uad36:test-suite:> .
@@ -636,7 +636,11 @@ case:UAD1151 a t:TestCase ;
     t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/PROPERTY_UNITS/PROPERTY_UNIT/INTERIOR_COMPONENTS/INTERIOR_COMPONENT/FLOOR_COVERINGS/FLOOR_COVERING/" .
 
 case:UAD1153 a t:TestCase ;
+    t:baselinePath "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 SF3_Appraisal/SF3_Appraisal_v1.4.xml" ;
+    t:dependentXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:PROPERTY_UNITS/m:PROPERTY_UNIT/m:INTERIOR_COMPONENTS/m:INTERIOR_COMPONENT[3]/m:INTERIOR_COMPONENT_DETAIL/m:ImprovementComponentTypeOtherDescription" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:PROPERTY_UNITS/m:PROPERTY_UNIT/m:INTERIOR_COMPONENTS/m:INTERIOR_COMPONENT[3]/m:INTERIOR_COMPONENT_DETAIL/m:ImprovementComponentTypeOtherDescription" ;
     t:messageText "Provide a description when 'Feature Type' = 'Other'." ;
+    t:nonmatchingValue "Flooring" ;
     t:primaryDataElement "ImprovementComponentTypeOtherDescription" ;
     t:propertyAffected "Subject" ;
     t:ruleId "UAD1153" ;
@@ -644,11 +648,16 @@ case:UAD1153 a t:TestCase ;
     t:severity "Fatal" ;
     t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1153> ;
     t:sourceUniqueIdCell "0700.0047" ;
+    t:triggerXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:PROPERTY_UNITS/m:PROPERTY_UNIT/m:INTERIOR_COMPONENTS/m:INTERIOR_COMPONENT[3]/m:INTERIOR_COMPONENT_DETAIL/m:ImprovementComponentType" ;
     t:uniqueId "0700.0047" ;
     t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/PROPERTY_UNITS/PROPERTY_UNIT/INTERIOR_COMPONENTS/INTERIOR_COMPONENT/INTERIOR_COMPONENT_DETAIL/" .
 
 case:UAD1155 a t:TestCase ;
+    t:baselinePath "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 SF3_Appraisal/SF3_Appraisal_v1.4.xml" ;
+    t:dependentXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:PROPERTY_UNITS/m:PROPERTY_UNIT/m:INTERIOR_COMPONENTS/m:INTERIOR_COMPONENT[3]/m:INTERIOR_COMPONENT_DETAIL/m:ImprovementComponentTypeAdditionalDescription" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:PROPERTY_UNITS/m:PROPERTY_UNIT/m:INTERIOR_COMPONENTS/m:INTERIOR_COMPONENT[3]/m:INTERIOR_COMPONENT_DETAIL/m:ImprovementComponentTypeAdditionalDescription" ;
     t:messageText "Provide additional description for the interior feature being referenced." ;
+    t:nonmatchingValue "Flooring" ;
     t:primaryDataElement "ImprovementComponentTypeAdditionalDescription" ;
     t:propertyAffected "Subject" ;
     t:ruleId "UAD1155" ;
@@ -656,6 +665,7 @@ case:UAD1155 a t:TestCase ;
     t:severity "Warning" ;
     t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1155> ;
     t:sourceUniqueIdCell "0700.0043" ;
+    t:triggerXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:PROPERTY_UNITS/m:PROPERTY_UNIT/m:INTERIOR_COMPONENTS/m:INTERIOR_COMPONENT[3]/m:INTERIOR_COMPONENT_DETAIL/m:ImprovementComponentType" ;
     t:uniqueId "0700.0043" ;
     t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/PROPERTY_UNITS/PROPERTY_UNIT/INTERIOR_COMPONENTS/INTERIOR_COMPONENT/INTERIOR_COMPONENT_DETAIL/" .
 

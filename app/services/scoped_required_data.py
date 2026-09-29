@@ -33,6 +33,36 @@ class ScopedRule:
 
 
 SCOPED_RULES = {
+    ("0700.0047", "UAD1153"): ScopedRule(
+        element="ImprovementComponentTypeOtherDescription",
+        logic=(
+            'If ImprovementComponentType = "Other" and '
+            "ImprovementComponentTypeOtherDescription is not provided "
+            "in a given instance of INTERIOR_COMPONENT_DETAIL"
+        ),
+        severity="Fatal",
+        parent_path=(
+            PROPERTY_PATH
+            + "IMPROVEMENTS/IMPROVEMENT/PROPERTY_UNITS/PROPERTY_UNIT/"
+            "INTERIOR_COMPONENTS/INTERIOR_COMPONENT/INTERIOR_COMPONENT_DETAIL/"
+        ),
+        equality_trigger=("m:ImprovementComponentType", "Other"),
+    ),
+    ("0700.0043", "UAD1155"): ScopedRule(
+        element="ImprovementComponentTypeAdditionalDescription",
+        logic=(
+            'If ImprovementComponentType = "Other" and '
+            "ImprovementComponentTypeAdditionalDescription is not provided "
+            "in a given instance of INTERIOR_COMPONENT_DETAIL"
+        ),
+        severity="Warning",
+        parent_path=(
+            PROPERTY_PATH
+            + "IMPROVEMENTS/IMPROVEMENT/PROPERTY_UNITS/PROPERTY_UNIT/"
+            "INTERIOR_COMPONENTS/INTERIOR_COMPONENT/INTERIOR_COMPONENT_DETAIL/"
+        ),
+        equality_trigger=("m:ImprovementComponentType", "Other"),
+    ),
     ("0300.0011", "UAD1050"): ScopedRule(
         element="PropertyStructureBuiltYear",
         logic=(
