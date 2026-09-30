@@ -20,7 +20,7 @@
     rdfs:label "Spreadsheet rule category implementation tracker" ;
     t:feature :feature ;
     t:source :appendixH ;
-    t:statusBasis :scopeAudit ;
+    t:statusBasis :scopeAudit, :singleEqualityCompletion ;
     t:sourceRuleCount 728 ;
     t:featureTaggedRuleCount 731 ;
     t:scenarioCount 13 ;
@@ -475,7 +475,7 @@ row:UAD1022 a t:RuleWork ;
     t:uniqueId "0100.0053" ;
     t:primaryDataElement "PropertyEstateTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:Partial ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1023 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 23 ;
@@ -529,7 +529,7 @@ row:UAD1028 a t:RuleWork ;
     t:uniqueId "0100.0034" ;
     t:primaryDataElement "AllPropertyRightsAppraisedIndicator" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1029 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 29 ;
@@ -556,7 +556,7 @@ row:UAD1031 a t:RuleWork ;
     t:uniqueId "0100.0037" ;
     t:primaryDataElement "PropertyPartialInterestTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1032 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 32 ;
@@ -646,7 +646,7 @@ row:UAD1041 a t:RuleWork ;
     t:uniqueId "0100.0059" ;
     t:primaryDataElement "AccessoryDwellingUnitTotalCount" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1042 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 42 ;
@@ -673,7 +673,7 @@ row:UAD1044 a t:RuleWork ;
     t:uniqueId "0100.0068" ;
     t:primaryDataElement "ImprovementType" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1045 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 45 ;
@@ -691,7 +691,7 @@ row:UAD1046 a t:RuleWork ;
     t:uniqueId "0200.0053" ;
     t:primaryDataElement "SubjectPropertyAmenitiesDefectsExistIndicator" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1047 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 47 ;
@@ -727,7 +727,7 @@ row:UAD1050 a t:RuleWork ;
     t:uniqueId "0300.0011" ;
     t:primaryDataElement "PropertyStructureBuiltYear" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1051 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 51 ;
@@ -781,7 +781,7 @@ row:UAD1056 a t:RuleWork ;
     t:uniqueId "0300.0025" ;
     t:primaryDataElement "OutbuildingType" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1057 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 57 ;
@@ -790,7 +790,7 @@ row:UAD1057 a t:RuleWork ;
     t:uniqueId "0300.0026" ;
     t:primaryDataElement "OutbuildingTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1058 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 58 ;
@@ -826,7 +826,7 @@ row:UAD1061 a t:RuleWork ;
     t:uniqueId "0300.0033" ;
     t:primaryDataElement "StructuralDesignTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1062 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 62 ;
@@ -844,7 +844,7 @@ row:UAD1063 a t:RuleWork ;
     t:uniqueId "0300.0035" ;
     t:primaryDataElement "ConstructionMethodTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1064 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 64 ;
@@ -871,7 +871,7 @@ row:UAD1066 a t:RuleWork ;
     t:uniqueId "0300.0056" ;
     t:primaryDataElement "ImprovementComponentTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1067 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 67 ;
@@ -898,7 +898,7 @@ row:UAD1069 a t:RuleWork ;
     t:uniqueId "0300.0045" ;
     t:primaryDataElement "FoundationMaterialTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1070 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 70 ;
@@ -916,7 +916,7 @@ row:UAD1071 a t:RuleWork ;
     t:uniqueId "0300.0047" ;
     t:primaryDataElement "FoundationTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1072 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 72 ;
@@ -961,7 +961,7 @@ row:UAD1076 a t:RuleWork ;
     t:uniqueId "0300.0051" ;
     t:primaryDataElement "RoofMaterialTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1077 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 77 ;
@@ -1006,7 +1006,7 @@ row:UAD1081 a t:RuleWork ;
     t:uniqueId "0300.0099" ;
     t:primaryDataElement "WallMaterialTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1082 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 82 ;
@@ -1015,7 +1015,7 @@ row:UAD1082 a t:RuleWork ;
     t:uniqueId "0300.0059" ;
     t:primaryDataElement "RowhouseTownhouseEndUnitIndicator" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1083 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 83 ;
@@ -1087,7 +1087,7 @@ row:UAD1090 a t:RuleWork ;
     t:uniqueId "0300.0089" ;
     t:primaryDataElement "HeatingSystemTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1091 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 91 ;
@@ -1195,7 +1195,7 @@ row:UAD1102 a t:RuleWork ;
     t:uniqueId "0500.0006" ;
     t:primaryDataElement "ManufacturedHomeFinancingProgramEligibilityTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1103 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 103 ;
@@ -1366,7 +1366,7 @@ row:UAD1122 a t:RuleWork ;
     t:uniqueId "0500.0036" ;
     t:primaryDataElement "ManufacturedHomeModificationTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1123 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 122 ;
@@ -1384,7 +1384,7 @@ row:UAD1124 a t:RuleWork ;
     t:uniqueId "0500.0040" ;
     t:primaryDataElement "SkirtingMaterialTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1125 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 124 ;
@@ -1411,7 +1411,7 @@ row:UAD1127 a t:RuleWork ;
     t:uniqueId "0600.0005" ;
     t:primaryDataElement "SalesConcessionAmountKnownIndicator" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1128 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 127 ;
@@ -1420,7 +1420,7 @@ row:UAD1128 a t:RuleWork ;
     t:uniqueId "0600.0006" ;
     t:primaryDataElement "SalesConcessionIndicator" ;
     t:severity "Fatal" ;
-    t:status t:Partial ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1129 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 128 ;
@@ -1429,7 +1429,7 @@ row:UAD1129 a t:RuleWork ;
     t:uniqueId "0600.0008" ;
     t:primaryDataElement "SalesContractAmount" ;
     t:severity "Fatal" ;
-    t:status t:Partial ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1130 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 129 ;
@@ -1438,7 +1438,7 @@ row:UAD1130 a t:RuleWork ;
     t:uniqueId "0600.0009" ;
     t:primaryDataElement "SalesContractDate" ;
     t:severity "Fatal" ;
-    t:status t:Partial ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1131 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 130 ;
@@ -1456,7 +1456,7 @@ row:UAD1132 a t:RuleWork ;
     t:uniqueId "0600.0010" ;
     t:primaryDataElement "SalesContractReviewedIndicator" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1133 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 132 ;
@@ -1465,7 +1465,7 @@ row:UAD1133 a t:RuleWork ;
     t:uniqueId "0600.0011" ;
     t:primaryDataElement "TotalSalesConcessionAmount" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1134 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 133 ;
@@ -1483,7 +1483,7 @@ row:UAD1135 a t:RuleWork ;
     t:uniqueId "0600.0017" ;
     t:primaryDataElement "SaleType" ;
     t:severity "Fatal" ;
-    t:status t:Partial ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1136 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 135 ;
@@ -1492,7 +1492,7 @@ row:UAD1136 a t:RuleWork ;
     t:uniqueId "0600.0018" ;
     t:primaryDataElement "SaleTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1138 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 136 ;
@@ -1519,7 +1519,7 @@ row:UAD1140 a t:RuleWork ;
     t:uniqueId "0700.0028" ;
     t:primaryDataElement "BelowGradeExteriorAccessTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1141 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 139 ;
@@ -1555,7 +1555,7 @@ row:UAD1144 a t:RuleWork ;
     t:uniqueId "0700.0087" ;
     t:primaryDataElement "RoomTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1145 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 143 ;
@@ -1618,7 +1618,7 @@ row:UAD1151 a t:RuleWork ;
     t:uniqueId "0700.0042" ;
     t:primaryDataElement "FlooringTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1152 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 150 ;
@@ -1636,7 +1636,7 @@ row:UAD1153 a t:RuleWork ;
     t:uniqueId "0700.0047" ;
     t:primaryDataElement "ImprovementComponentTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1154 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 152 ;
@@ -1654,7 +1654,7 @@ row:UAD1155 a t:RuleWork ;
     t:uniqueId "0700.0043" ;
     t:primaryDataElement "ImprovementComponentTypeAdditionalDescription" ;
     t:severity "Warning" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1156 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 154 ;
@@ -1726,7 +1726,7 @@ row:UAD1163 a t:RuleWork ;
     t:uniqueId "0700.0088" ;
     t:primaryDataElement "AccessoryDwellingUnitTypicalToMarketIndicator" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1164 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 162 ;
@@ -1744,7 +1744,7 @@ row:UAD1165 a t:RuleWork ;
     t:uniqueId "0700.0090" ;
     t:primaryDataElement "SeparatePostalAddressIndicator" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1166 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 164 ;
@@ -1753,7 +1753,7 @@ row:UAD1166 a t:RuleWork ;
     t:uniqueId "0700.0091" ;
     t:primaryDataElement "AccessType" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1167 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 165 ;
@@ -1762,7 +1762,7 @@ row:UAD1167 a t:RuleWork ;
     t:uniqueId "0700.0098" ;
     t:primaryDataElement "AccessoryDwellingUnitLegallyRentableIndicator" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1168 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 166 ;
@@ -1771,7 +1771,7 @@ row:UAD1168 a t:RuleWork ;
     t:uniqueId "0700.0100" ;
     t:primaryDataElement "AllowableLiveWorkSpaceIndicator" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1169 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 167 ;
@@ -1861,7 +1861,7 @@ row:UAD1178 a t:RuleWork ;
     t:uniqueId "0700.0122" ;
     t:primaryDataElement "OverallFlooringUpdateStatusType" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1179 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 177 ;
@@ -1879,7 +1879,7 @@ row:UAD1181 a t:RuleWork ;
     t:uniqueId "0700.0126" ;
     t:primaryDataElement "DataSourceTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1182 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 179 ;
@@ -1888,7 +1888,7 @@ row:UAD1182 a t:RuleWork ;
     t:uniqueId "0700.0130" ;
     t:primaryDataElement "UnitMixedUsageIndicator" ;
     t:severity "Warning" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1183 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 180 ;
@@ -1996,7 +1996,7 @@ row:UAD1194 a t:RuleWork ;
     t:uniqueId "0800.0014" ;
     t:primaryDataElement "SaleTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1195 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 192 ;
@@ -2005,7 +2005,7 @@ row:UAD1195 a t:RuleWork ;
     t:uniqueId "0800.0011" ;
     t:primaryDataElement "OwnershipTransferDate" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1196 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 193 ;
@@ -2032,7 +2032,7 @@ row:UAD1198 a t:RuleWork ;
     t:uniqueId "0800.0010" ;
     t:primaryDataElement "OwnershipTransferAmountNotAvailableReasonTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1199 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 196 ;
@@ -2086,7 +2086,7 @@ row:UAD1204 a t:RuleWork ;
     t:uniqueId "0900.0007" ;
     t:primaryDataElement "DaysOnMarketCount" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1205 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 202 ;
@@ -2095,7 +2095,7 @@ row:UAD1205 a t:RuleWork ;
     t:uniqueId "0900.0008" ;
     t:primaryDataElement "FinalListPriceAmount" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1206 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 203 ;
@@ -2122,7 +2122,7 @@ row:UAD1208 a t:RuleWork ;
     t:uniqueId "0900.0016" ;
     t:primaryDataElement "ListingTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1209 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 206 ;
@@ -2158,7 +2158,7 @@ row:UAD1212 a t:RuleWork ;
     t:uniqueId "1000.0029" ;
     t:primaryDataElement "GovernmentAgencyAppraisalType" ;
     t:severity "Warning" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1213 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 210 ;
@@ -2230,7 +2230,7 @@ row:UAD1220 a t:RuleWork ;
     t:uniqueId "1000.0035" ;
     t:primaryDataElement "ValuationAssignmentTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1221 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 218 ;
@@ -2275,7 +2275,7 @@ row:UAD1225 a t:RuleWork ;
     t:uniqueId "1100.0015" ;
     t:primaryDataElement "PropertyOrdinalNumber" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1226 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 223 ;
@@ -2293,7 +2293,7 @@ row:UAD1227 a t:RuleWork ;
     t:uniqueId "1100.0026" ;
     t:primaryDataElement "DepreciatedCostDwellingsTotalAmount" ;
     t:severity "Warning" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1228 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 225 ;
@@ -2320,7 +2320,7 @@ row:UAD1230 a t:RuleWork ;
     t:uniqueId "1100.0032" ;
     t:primaryDataElement "SiteOtherImprovementsAsIsAmount" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1231 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 228 ;
@@ -2338,7 +2338,7 @@ row:UAD1232 a t:RuleWork ;
     t:uniqueId "1100.0034" ;
     t:primaryDataElement "SiteValuationMethodTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1233 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 230 ;
@@ -2428,7 +2428,7 @@ row:UAD1242 a t:RuleWork ;
     t:uniqueId "1200.0003" ;
     t:primaryDataElement "GrossRentMultiplierFactorNumber" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1243 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 240 ;
@@ -2437,7 +2437,7 @@ row:UAD1243 a t:RuleWork ;
     t:uniqueId "1200.0004" ;
     t:primaryDataElement "ValueIndicatedByIncomeApproachAmount" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1244 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 241 ;
@@ -2446,7 +2446,7 @@ row:UAD1244 a t:RuleWork ;
     t:uniqueId "1200.0015" ;
     t:primaryDataElement "ComparableWeightType" ;
     t:severity "Warning" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1245 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 242 ;
@@ -2455,7 +2455,7 @@ row:UAD1245 a t:RuleWork ;
     t:uniqueId "1200.0016" ;
     t:primaryDataElement "GrossMonthlyRentMultiplierNumber" ;
     t:severity "Warning" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1246 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 243 ;
@@ -2464,7 +2464,7 @@ row:UAD1246 a t:RuleWork ;
     t:uniqueId "1200.0028" ;
     t:primaryDataElement "PropertyOrdinalNumber" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1247 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 244 ;
@@ -2491,7 +2491,7 @@ row:UAD1249 a t:RuleWork ;
     t:uniqueId "1200.0030" ;
     t:primaryDataElement "TotalMonthlyActualRentAmount" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1250 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 247 ;
@@ -2518,7 +2518,7 @@ row:UAD1252 a t:RuleWork ;
     t:uniqueId "1300.0001" ;
     t:primaryDataElement "ValueIndicatedByCostApproachAmount" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1253 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 250 ;
@@ -2527,7 +2527,7 @@ row:UAD1253 a t:RuleWork ;
     t:uniqueId "1300.0006" ;
     t:primaryDataElement "ValueIndicatedBySalesComparisonAmount" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1255 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 251 ;
@@ -2707,7 +2707,7 @@ row:UAD1276 a t:RuleWork ;
     t:uniqueId "1400.0634" ;
     t:primaryDataElement "ImageFileLocationIdentifier" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1278 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 271 ;
@@ -2743,7 +2743,7 @@ row:UAD1281 a t:RuleWork ;
     t:uniqueId "1400.0876" ;
     t:primaryDataElement "ImageFileLocationIdentifier" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1282 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 275 ;
@@ -2797,7 +2797,7 @@ row:UAD1288 a t:RuleWork ;
     t:uniqueId "1500.0003" ;
     t:primaryDataElement "RestrictionTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1289 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 281 ;
@@ -2815,7 +2815,7 @@ row:UAD1290 a t:RuleWork ;
     t:uniqueId "1500.0005" ;
     t:primaryDataElement "EasementTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1291 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 283 ;
@@ -2842,7 +2842,7 @@ row:UAD1293 a t:RuleWork ;
     t:uniqueId "1500.0010" ;
     t:primaryDataElement "EncroachmentTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1294 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 286 ;
@@ -2869,7 +2869,7 @@ row:UAD1297 a t:RuleWork ;
     t:uniqueId "1500.0017" ;
     t:primaryDataElement "EnvironmentalConditionTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1298 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 289 ;
@@ -2896,7 +2896,7 @@ row:UAD1300 a t:RuleWork ;
     t:uniqueId "1500.0021" ;
     t:primaryDataElement "ParcelSeparatorTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1301 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 292 ;
@@ -2923,7 +2923,7 @@ row:UAD1303 a t:RuleWork ;
     t:uniqueId "1500.0024" ;
     t:primaryDataElement "ParcelDescriptionClassificationTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1304 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 295 ;
@@ -2941,7 +2941,7 @@ row:UAD1305 a t:RuleWork ;
     t:uniqueId "1500.0027" ;
     t:primaryDataElement "ParcelIdentifier" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1306 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 297 ;
@@ -2968,7 +2968,7 @@ row:UAD1308 a t:RuleWork ;
     t:uniqueId "1500.0034" ;
     t:primaryDataElement "PropertyMixedUsageIndicator" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1309 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 300 ;
@@ -2995,7 +2995,7 @@ row:UAD1311 a t:RuleWork ;
     t:uniqueId "1500.0040" ;
     t:primaryDataElement "NonResidentialUseTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1313 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 303 ;
@@ -3013,7 +3013,7 @@ row:UAD1314 a t:RuleWork ;
     t:uniqueId "1500.0043" ;
     t:primaryDataElement "HazardZoneTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1315 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 305 ;
@@ -3022,7 +3022,7 @@ row:UAD1315 a t:RuleWork ;
     t:uniqueId "1500.0045" ;
     t:primaryDataElement "LavaFlowZoneCode" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1316 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 306 ;
@@ -3031,7 +3031,7 @@ row:UAD1316 a t:RuleWork ;
     t:uniqueId "1500.0052" ;
     t:primaryDataElement "PrivateStreetMaintenanceAgreementExistIndicator" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1317 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 307 ;
@@ -3058,7 +3058,7 @@ row:UAD1319 a t:RuleWork ;
     t:uniqueId "1500.0056" ;
     t:primaryDataElement "PropertyPrimaryEntryExitMethodTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1320 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 310 ;
@@ -3076,7 +3076,7 @@ row:UAD1321 a t:RuleWork ;
     t:uniqueId "1500.0061" ;
     t:primaryDataElement "SiteDrainageReasonTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1323 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 312 ;
@@ -3094,7 +3094,7 @@ row:UAD1324 a t:RuleWork ;
     t:uniqueId "1500.0063" ;
     t:primaryDataElement "SiteFeatureTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1325 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 314 ;
@@ -3112,7 +3112,7 @@ row:UAD1326 a t:RuleWork ;
     t:uniqueId "1500.0066" ;
     t:primaryDataElement "TopographyTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1328 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 316 ;
@@ -3130,7 +3130,7 @@ row:UAD1329 a t:RuleWork ;
     t:uniqueId "1500.0088" ;
     t:primaryDataElement "SiteInfluenceTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1330 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 318 ;
@@ -3157,7 +3157,7 @@ row:UAD1332 a t:RuleWork ;
     t:uniqueId "1500.0074" ;
     t:primaryDataElement "BodyOfWaterTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1333 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 321 ;
@@ -3175,7 +3175,7 @@ row:UAD1334 a t:RuleWork ;
     t:uniqueId "1500.0080" ;
     t:primaryDataElement "WaterAccessRightTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1335 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 323 ;
@@ -3193,7 +3193,7 @@ row:UAD1336 a t:RuleWork ;
     t:uniqueId "1500.0083" ;
     t:primaryDataElement "WaterfrontFeatureTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1337 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 325 ;
@@ -3211,7 +3211,7 @@ row:UAD1338 a t:RuleWork ;
     t:uniqueId "1500.0198" ;
     t:primaryDataElement "WaterAccessDepthTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1339 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 327 ;
@@ -3238,7 +3238,7 @@ row:UAD1341 a t:RuleWork ;
     t:uniqueId "1500.0093" ;
     t:primaryDataElement "LotSizeAreaMeasure" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1342 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 330 ;
@@ -3247,7 +3247,7 @@ row:UAD1342 a t:RuleWork ;
     t:uniqueId "1500.0094" ;
     t:primaryDataElement "ParcelCount" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1343 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 331 ;
@@ -3301,7 +3301,7 @@ row:UAD1348 a t:RuleWork ;
     t:uniqueId "1500.0105" ;
     t:primaryDataElement "UtilityTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1349 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 337 ;
@@ -3319,7 +3319,7 @@ row:UAD1350 a t:RuleWork ;
     t:uniqueId "1500.0103" ;
     t:primaryDataElement "UtilitySharedIndicator" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1351 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 339 ;
@@ -3328,7 +3328,7 @@ row:UAD1351 a t:RuleWork ;
     t:uniqueId "1500.0183" ;
     t:primaryDataElement "ValueMarketabilityImpactType" ;
     t:severity "Warning" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1352 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 340 ;
@@ -3355,7 +3355,7 @@ row:UAD1354 a t:RuleWork ;
     t:uniqueId "1500.0107" ;
     t:primaryDataElement "ElectricitySourceTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1355 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 343 ;
@@ -3373,7 +3373,7 @@ row:UAD1356 a t:RuleWork ;
     t:uniqueId "1500.0109" ;
     t:primaryDataElement "SewerSystemTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1357 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 345 ;
@@ -3391,7 +3391,7 @@ row:UAD1358 a t:RuleWork ;
     t:uniqueId "1500.0112" ;
     t:primaryDataElement "WaterSourceTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1359 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 347 ;
@@ -3400,7 +3400,7 @@ row:UAD1359 a t:RuleWork ;
     t:uniqueId "1500.0114" ;
     t:primaryDataElement "WaterWellTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1361 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 348 ;
@@ -3418,7 +3418,7 @@ row:UAD1362 a t:RuleWork ;
     t:uniqueId "1500.0121" ;
     t:primaryDataElement "ViewTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1363 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 350 ;
@@ -3445,7 +3445,7 @@ row:UAD1365 a t:RuleWork ;
     t:uniqueId "1500.0119" ;
     t:primaryDataElement "ViewRangeTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1366 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 353 ;
@@ -3499,7 +3499,7 @@ row:UAD1371 a t:RuleWork ;
     t:uniqueId "1500.0129" ;
     t:primaryDataElement "SiteZoningComplianceIllegalReasonTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1372 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 359 ;
@@ -3562,7 +3562,7 @@ row:UAD1380 a t:RuleWork ;
     t:uniqueId "1500.0199" ;
     t:primaryDataElement "NativeAmericanLandsType" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1381 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 366 ;
@@ -3571,7 +3571,7 @@ row:UAD1381 a t:RuleWork ;
     t:uniqueId "1500.0200" ;
     t:primaryDataElement "NativeAmericanLandsTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1382 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 367 ;
@@ -3643,7 +3643,7 @@ row:UAD1390 a t:RuleWork ;
     t:uniqueId "1800.0001" ;
     t:primaryDataElement "AddressLineText" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1391 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 375 ;
@@ -3652,7 +3652,7 @@ row:UAD1391 a t:RuleWork ;
     t:uniqueId "1800.0003" ;
     t:primaryDataElement "CityName" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1392 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 376 ;
@@ -3661,7 +3661,7 @@ row:UAD1392 a t:RuleWork ;
     t:uniqueId "1800.0004" ;
     t:primaryDataElement "PostalCode" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1393 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 377 ;
@@ -3670,7 +3670,7 @@ row:UAD1393 a t:RuleWork ;
     t:uniqueId "1800.0005" ;
     t:primaryDataElement "StateCode" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1394 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 378 ;
@@ -3697,7 +3697,7 @@ row:UAD1396 a t:RuleWork ;
     t:uniqueId "1800.0065" ;
     t:primaryDataElement "ProximityToSubjectDistanceLinearMeasure" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1397 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 381 ;
@@ -3751,7 +3751,7 @@ row:UAD1402 a t:RuleWork ;
     t:uniqueId "1800.0075" ;
     t:primaryDataElement "ListingStatusType" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1403 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 387 ;
@@ -3850,7 +3850,7 @@ row:UAD1415 a t:RuleWork ;
     t:uniqueId "1800.0125" ;
     t:primaryDataElement "ImprovementType" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1416 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 398 ;
@@ -3958,7 +3958,7 @@ row:UAD1428 a t:RuleWork ;
     t:uniqueId "1800.0189" ;
     t:primaryDataElement "DaysOnMarketCount" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1429 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 410 ;
@@ -3967,7 +3967,7 @@ row:UAD1429 a t:RuleWork ;
     t:uniqueId "1800.0190" ;
     t:primaryDataElement "LatitudeIdentifier" ;
     t:severity "Warning" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1430 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 411 ;
@@ -3976,7 +3976,7 @@ row:UAD1430 a t:RuleWork ;
     t:uniqueId "1800.0191" ;
     t:primaryDataElement "LongitudeIdentifier" ;
     t:severity "Warning" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1431 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 412 ;
@@ -3985,7 +3985,7 @@ row:UAD1431 a t:RuleWork ;
     t:uniqueId "1800.0192" ;
     t:primaryDataElement "PropertyOrdinalNumber" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1432 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 413 ;
@@ -4003,7 +4003,7 @@ row:UAD1433 a t:RuleWork ;
     t:uniqueId "1800.0195" ;
     t:primaryDataElement "AttachmentType" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1434 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 415 ;
@@ -4012,7 +4012,7 @@ row:UAD1434 a t:RuleWork ;
     t:uniqueId "1800.0196" ;
     t:primaryDataElement "OverallConditionRatingCode" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1435 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 416 ;
@@ -4021,7 +4021,7 @@ row:UAD1435 a t:RuleWork ;
     t:uniqueId "1800.0197" ;
     t:primaryDataElement "OverallQualityRatingCode" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1436 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 417 ;
@@ -4030,7 +4030,7 @@ row:UAD1436 a t:RuleWork ;
     t:uniqueId "1800.0198" ;
     t:primaryDataElement "PriorSalesOrTransfersIndicator" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1439 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 418 ;
@@ -4138,7 +4138,7 @@ row:UAD1452 a t:RuleWork ;
     t:uniqueId "1800.0277" ;
     t:primaryDataElement "LandOwnedInCommonIndicator" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1453 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 430 ;
@@ -4165,7 +4165,7 @@ row:UAD1456 a t:RuleWork ;
     t:uniqueId "1800.0309" ;
     t:primaryDataElement "AdjustedSalesPriceAmount" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1457 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 433 ;
@@ -4192,7 +4192,7 @@ row:UAD1459 a t:RuleWork ;
     t:uniqueId "1800.0312" ;
     t:primaryDataElement "ComparableWeightType" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1460 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 436 ;
@@ -4201,7 +4201,7 @@ row:UAD1460 a t:RuleWork ;
     t:uniqueId "1800.0313" ;
     t:primaryDataElement "SalePriceNetTotalAdjustmentAmount" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1461 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 437 ;
@@ -4291,7 +4291,7 @@ row:UAD1471 a t:RuleWork ;
     t:uniqueId "1800.0363" ;
     t:primaryDataElement "DwellingCount" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1472 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 447 ;
@@ -4309,7 +4309,7 @@ row:UAD1473 a t:RuleWork ;
     t:uniqueId "1800.0364" ;
     t:primaryDataElement "HomeownerResponsibleForExteriorMaintenanceIndicator" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1474 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 449 ;
@@ -4318,7 +4318,7 @@ row:UAD1474 a t:RuleWork ;
     t:uniqueId "1800.0365" ;
     t:primaryDataElement "LivingUnitExcludingADUCount" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1475 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 450 ;
@@ -4363,7 +4363,7 @@ row:UAD1479 a t:RuleWork ;
     t:uniqueId "1800.0378" ;
     t:primaryDataElement "PropertyInProjectIndicator" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1480 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 455 ;
@@ -4372,7 +4372,7 @@ row:UAD1480 a t:RuleWork ;
     t:uniqueId "1800.0383" ;
     t:primaryDataElement "PUDIndicator" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1481 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 456 ;
@@ -4426,7 +4426,7 @@ row:UAD1486 a t:RuleWork ;
     t:uniqueId "2000.0012" ;
     t:primaryDataElement "RentalUnitAdjustedRentAmount" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1487 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 462 ;
@@ -4489,7 +4489,7 @@ row:UAD1493 a t:RuleWork ;
     t:uniqueId "2000.0067" ;
     t:primaryDataElement "ProximityToSubjectDistanceLinearMeasure" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1494 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 469 ;
@@ -4498,7 +4498,7 @@ row:UAD1494 a t:RuleWork ;
     t:uniqueId "2000.0078" ;
     t:primaryDataElement "PropertyOrdinalNumber" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1495 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 470 ;
@@ -4777,7 +4777,7 @@ row:UAD1527 a t:RuleWork ;
     t:uniqueId "2200.0081", "2400.0052" ;
     t:primaryDataElement "AppraiserLicenseTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1528 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 501 ;
@@ -4993,7 +4993,7 @@ row:UAD1555 a t:RuleWork ;
     t:uniqueIdAbsent true ;
     t:primaryDataElement "PartyRoleTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1556 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 525 ;
@@ -5047,7 +5047,7 @@ row:UAD1561 a t:RuleWork ;
     t:uniqueId "2400.0405" ;
     t:primaryDataElement "FirstName" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1562 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 531 ;
@@ -5056,7 +5056,7 @@ row:UAD1562 a t:RuleWork ;
     t:uniqueId "2400.0406" ;
     t:primaryDataElement "LastName" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1563 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 532 ;
@@ -5065,7 +5065,7 @@ row:UAD1563 a t:RuleWork ;
     t:uniqueId "2400.0413" ;
     t:primaryDataElement "PartyRoleTypeAdditionalDescription" ;
     t:severity "Warning" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1568 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 533 ;
@@ -5083,7 +5083,7 @@ row:UAD1569 a t:RuleWork ;
     t:uniqueId "2500.0003" ;
     t:primaryDataElement "AmenityOwnershipTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1570 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 535 ;
@@ -5101,7 +5101,7 @@ row:UAD1571 a t:RuleWork ;
     t:uniqueId "2500.0005" ;
     t:primaryDataElement "AmenityTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1572 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 537 ;
@@ -5146,7 +5146,7 @@ row:UAD1576 a t:RuleWork ;
     t:uniqueId "2500.0010" ;
     t:primaryDataElement "AssociationChargeIncludesUtilityTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1577 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 542 ;
@@ -5173,7 +5173,7 @@ row:UAD1579 a t:RuleWork ;
     t:uniqueId "2500.0019" ;
     t:primaryDataElement "OwnershipTransferFeeIndicator" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1580 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 545 ;
@@ -5200,7 +5200,7 @@ row:UAD1582 a t:RuleWork ;
     t:uniqueId "2500.0025" ;
     t:primaryDataElement "ProRataSharePercent" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1583 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 548 ;
@@ -5209,7 +5209,7 @@ row:UAD1583 a t:RuleWork ;
     t:uniqueId "2500.0031" ;
     t:primaryDataElement "ProjectAnalysisGroundRentIndicator" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1584 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 549 ;
@@ -5218,7 +5218,7 @@ row:UAD1584 a t:RuleWork ;
     t:uniqueId "2500.0032" ;
     t:primaryDataElement "ProjectConditionAndQualityDescription" ;
     t:severity "Warning" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1585 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 550 ;
@@ -5227,7 +5227,7 @@ row:UAD1585 a t:RuleWork ;
     t:uniqueId "2500.0033" ;
     t:primaryDataElement "ProjectDeficiencyObservedIndicator" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1586 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 551 ;
@@ -5236,7 +5236,7 @@ row:UAD1586 a t:RuleWork ;
     t:uniqueId "2500.0036" ;
     t:primaryDataElement "BalloonIndicator" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1587 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 552 ;
@@ -5245,7 +5245,7 @@ row:UAD1587 a t:RuleWork ;
     t:uniqueId "2500.0041" ;
     t:primaryDataElement "LoanRemainingMaturityTermMonthsCount" ;
     t:severity "Warning" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1588 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 553 ;
@@ -5272,7 +5272,7 @@ row:UAD1590 a t:RuleWork ;
     t:uniqueId "2500.0048" ;
     t:primaryDataElement "ProjectConversionIndicator" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1591 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 556 ;
@@ -5290,7 +5290,7 @@ row:UAD1592 a t:RuleWork ;
     t:uniqueId "2500.0050" ;
     t:primaryDataElement "ProjectConversionOriginalUseTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1593 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 558 ;
@@ -5308,7 +5308,7 @@ row:UAD1594 a t:RuleWork ;
     t:uniqueId "2500.0055" ;
     t:primaryDataElement "ProjectCommercialSpaceIndicator" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1595 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 560 ;
@@ -5326,7 +5326,7 @@ row:UAD1596 a t:RuleWork ;
     t:uniqueId "2500.0058" ;
     t:primaryDataElement "ProjectCompletedIndicator" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1597 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 562 ;
@@ -5335,7 +5335,7 @@ row:UAD1597 a t:RuleWork ;
     t:uniqueId "2500.0060" ;
     t:primaryDataElement "ProjectDwellingUnitCount" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1598 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 563 ;
@@ -5344,7 +5344,7 @@ row:UAD1598 a t:RuleWork ;
     t:uniqueId "2500.0061" ;
     t:primaryDataElement "ProjectDwellingUnitsForSaleCount" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1599 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 564 ;
@@ -5353,7 +5353,7 @@ row:UAD1599 a t:RuleWork ;
     t:uniqueId "2500.0062" ;
     t:primaryDataElement "ProjectDwellingUnitsRentedCount" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1600 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 565 ;
@@ -5362,7 +5362,7 @@ row:UAD1600 a t:RuleWork ;
     t:uniqueId "2500.0064" ;
     t:primaryDataElement "ProjectDwellingUnitsSoldCount" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1601 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 566 ;
@@ -5398,7 +5398,7 @@ row:UAD1604 a t:RuleWork ;
     t:uniqueId "2500.0072" ;
     t:primaryDataElement "ProjectComponentCategoryTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1605 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 570 ;
@@ -5443,7 +5443,7 @@ row:UAD1609 a t:RuleWork ;
     t:uniqueId "2500.0078" ;
     t:primaryDataElement "SingleEntityGreatestNumberOfUnitsCount" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1610 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 575 ;
@@ -5470,7 +5470,7 @@ row:UAD1612 a t:RuleWork ;
     t:uniqueId "2500.0151" ;
     t:primaryDataElement "LineOfCreditIndicator" ;
     t:severity "Warning" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1613 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 578 ;
@@ -5497,7 +5497,7 @@ row:UAD1615 a t:RuleWork ;
     t:uniqueId "2500.0168" ;
     t:primaryDataElement "ProjectLegalStructureType" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1616 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 581 ;
@@ -5533,7 +5533,7 @@ row:UAD1619 a t:RuleWork ;
     t:uniqueId "2600.0016" ;
     t:primaryDataElement "RenewableEnergyComponentFinancedIndicator" ;
     t:severity "Warning" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1620 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 585 ;
@@ -5542,7 +5542,7 @@ row:UAD1620 a t:RuleWork ;
     t:uniqueId "2600.0018" ;
     t:primaryDataElement "RenewableEnergyComponentOwnershipTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1622 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 586 ;
@@ -5560,7 +5560,7 @@ row:UAD1623 a t:RuleWork ;
     t:uniqueId "2600.0020" ;
     t:primaryDataElement "RenewableEnergyComponentTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1624 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 588 ;
@@ -5911,7 +5911,7 @@ row:UAD1668 a t:RuleWork ;
     t:uniqueId "3200.0007" ;
     t:primaryDataElement "CarStorageTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1669 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 627 ;
@@ -5929,7 +5929,7 @@ row:UAD1670 a t:RuleWork ;
     t:uniqueId "3200.0009" ;
     t:primaryDataElement "ImprovedSurfaceMaterialTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1671 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 629 ;
@@ -5983,7 +5983,7 @@ row:UAD1677 a t:RuleWork ;
     t:uniqueId "3300.0007" ;
     t:primaryDataElement "MeasurementStandardPublisherType" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1678 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 635 ;
@@ -5992,7 +5992,7 @@ row:UAD1678 a t:RuleWork ;
     t:uniqueId "3300.0008" ;
     t:primaryDataElement "MeasurementStandardPublisherTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1680 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 636 ;
@@ -6010,7 +6010,7 @@ row:UAD1681 a t:RuleWork ;
     t:uniqueId "3600.0003" ;
     t:primaryDataElement "FunctionalIssueTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1683 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 638 ;
@@ -6028,7 +6028,7 @@ row:UAD1684 a t:RuleWork ;
     t:uniqueId "3700.0003" ;
     t:primaryDataElement "DisasterMitigationFeatureTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1685 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 640 ;
@@ -6226,7 +6226,7 @@ row:UAD1708 a t:RuleWork ;
     t:uniqueId "1400.0901" ;
     t:primaryDataElement "MIMETypeIdentifier" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1710 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 662 ;
@@ -6262,7 +6262,7 @@ row:UAD1713 a t:RuleWork ;
     t:uniqueIdAbsent true ;
     t:primaryDataElement "DefectItemLocationTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1714 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 666 ;
@@ -6289,7 +6289,7 @@ row:UAD1716 a t:RuleWork ;
     t:uniqueIdAbsent true ;
     t:primaryDataElement "DefectComponentLabelTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1717 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 669 ;
@@ -6442,7 +6442,7 @@ row:UAD1735 a t:RuleWork ;
     t:uniqueId "1800.0207", "1800.0342" ;
     t:primaryDataElement "OwnershipTransferDate" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1736 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 686 ;
@@ -6586,7 +6586,7 @@ row:UAD1751 a t:RuleWork ;
     t:uniqueId "4000.0005" ;
     t:primaryDataElement "ReconsiderationOfValueCommentDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1752 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 702 ;
@@ -6595,7 +6595,7 @@ row:UAD1752 a t:RuleWork ;
     t:uniqueId "4000.0006" ;
     t:primaryDataElement "ReconsiderationOfValueRequestedByType" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1753 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 703 ;
@@ -6604,7 +6604,7 @@ row:UAD1753 a t:RuleWork ;
     t:uniqueId "4000.0008" ;
     t:primaryDataElement "ReconsiderationOfValueResultType" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1754 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 704 ;
@@ -6613,7 +6613,7 @@ row:UAD1754 a t:RuleWork ;
     t:uniqueId "4000.0007" ;
     t:primaryDataElement "ReconsiderationOfValueResultDate" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1755 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 705 ;
@@ -6667,7 +6667,7 @@ row:UAD1760 a t:RuleWork ;
     t:uniqueId "1800.0278" ;
     t:primaryDataElement "SalesComparisonCommentDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1761 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 711 ;
@@ -6676,7 +6676,7 @@ row:UAD1761 a t:RuleWork ;
     t:uniqueId "1100.0023" ;
     t:primaryDataElement "CostAnalysisCommentDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1762 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 712 ;
@@ -6685,7 +6685,7 @@ row:UAD1762 a t:RuleWork ;
     t:uniqueId "1200.0007" ;
     t:primaryDataElement "IncomeAnalysisCommentDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1763 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 713 ;
@@ -6757,7 +6757,7 @@ row:UAD1770 a t:RuleWork ;
     t:uniqueId "1800.0234" ;
     t:primaryDataElement "SiteInfluenceTypeOtherDescription" ;
     t:severity "Fatal" ;
-    t:status t:NotImplementedInCurrentPath ; t:statusBasis :scopeAudit .
+    t:status t:DoneInAgreedScope ; t:statusBasis :singleEqualityCompletion .
 
 row:UAD1771 a t:RuleWork ;
     t:source :appendixH ; t:sourceRow 721 ;
@@ -17836,3 +17836,12 @@ WHERE {
 GROUP BY ?subgroup
 ORDER BY DESC(?ruleCount) ?subgroup""" .
 
+
+# Executable evidence supersedes the initial audit only for IT-1R2.
+:singleEqualityCompletion a t:StatusAssessment ;
+    t:assessedOn "2026-09-29"^^xsd:date ;
+    t:evidence "docs/testing/single-equality-completion.md" ;
+    t:note "IT-1R2S1: all 174 rules execute matching-missing, nonmatching-missing, and matching-supplied checks (522 passed). Additional empty, whitespace, nil, occurrence-isolation, and missing-container tests pass. Completion is limited to this agreed scenario, not exhaustive UAD compliance." .
+
+scenario:single_equality_conditional t:status t:DoneInAgreedScope ;
+    t:statusBasis :singleEqualityCompletion .

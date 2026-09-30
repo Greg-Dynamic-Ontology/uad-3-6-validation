@@ -15,11 +15,9 @@ CONSTRAINT_FILE = (
 
 LOGICAL_SCHEMA_FILE = (
     PROJECT_ROOT
-    / "docs"
-    / "milestones"
-    / "milestone-1"
     / "artifacts"
-    / "logical-schema.ttl"
+    / "reference"
+    / "historical-logical-schema.ttl"
 )
 
 CONSTRAINT_VOCAB = Namespace(

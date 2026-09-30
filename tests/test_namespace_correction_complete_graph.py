@@ -19,11 +19,9 @@ from operators.namespace_correction.operator import (
 PROJECT_ROOT = Path(app.__file__).resolve().parents[1]
 COMPLETE_LOGICAL_SCHEMA_GRAPH = (
     PROJECT_ROOT
-    / "docs"
-    / "milestones"
-    / "milestone-1"
     / "artifacts"
-    / "logical-schema.ttl"
+    / "reference"
+    / "historical-logical-schema.ttl"
 )
 
 
@@ -58,17 +56,49 @@ def _governed_counterpart(term: Node) -> Node:
     return URIRef(GOVERNED_SCHEMA_SOURCE_NAMESPACE + digest)
 
 
+def _provisional_counterpart(term: Node) -> Node:
+    """Map one governed schema-source term to its provisional form."""
+
+    if not isinstance(term, URIRef):
+        return term
+
+    value = str(term)
+    if not value.startswith(GOVERNED_SCHEMA_SOURCE_NAMESPACE):
+        return term
+
+    digest = value.removeprefix(GOVERNED_SCHEMA_SOURCE_NAMESPACE)
+    return URIRef(PROVISIONAL_SCHEMA_SOURCE_NAMESPACE + digest)
+
+
 @pytest.mark.canonical_artifact
 def test_complete_logical_schema_graph_is_namespace_corrected() -> None:
-    """IT-9R2S3: Correct the complete Milestone 1 graph."""
+    """IT-9R2S3: Correct the complete reference graph's provisional form."""
 
     assert COMPLETE_LOGICAL_SCHEMA_GRAPH.is_file(), (
         "IT-9R2S3 requires the complete Milestone 1 Logical Schema "
         f"graph at {COMPLETE_LOGICAL_SCHEMA_GRAPH}."
     )
 
+    governed_reference = Graph()
+    governed_reference.parse(
+        COMPLETE_LOGICAL_SCHEMA_GRAPH,
+        format="turtle",
+    )
+
+    governed_reference_sources = _terms_under_namespace(
+        governed_reference,
+        GOVERNED_SCHEMA_SOURCE_NAMESPACE,
+    )
+    assert governed_reference_sources, (
+        "IT-9R2S3 requires governed schema-source IRIs in the "
+        "complete reference graph."
+    )
+
     kg_in = Graph()
-    kg_in.parse(COMPLETE_LOGICAL_SCHEMA_GRAPH, format="turtle")
+    for triple in governed_reference:
+        kg_in.add(
+            tuple(_provisional_counterpart(term) for term in triple)
+        )
 
     provisional_input = _terms_under_namespace(
         kg_in,
@@ -115,3 +145,4 @@ def test_complete_logical_schema_graph_is_namespace_corrected() -> None:
     )
     assert expected_corrected_triples <= set(kg_out)
     assert not provisional_output
+    assert set(kg_out) == set(governed_reference)

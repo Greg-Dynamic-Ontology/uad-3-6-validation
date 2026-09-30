@@ -21,11 +21,9 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
 CANONICAL_LOGICAL_SCHEMA_GRAPH = (
     PROJECT_ROOT
-    / "docs"
-    / "milestones"
-    / "milestone-1"
     / "artifacts"
-    / "logical-schema.ttl"
+    / "reference"
+    / "historical-logical-schema.ttl"
 )
 
 MINIMAL_SCHEMA = """<?xml version="1.0" encoding="UTF-8"?>
@@ -69,7 +67,7 @@ def _generate_minimal_graph(tmp_path: Path) -> Graph:
 
     schema_path = tmp_path / "minimal.xsd"
     schema_path.write_text(MINIMAL_SCHEMA, encoding="utf-8")
-    output_path = tmp_path / "logical-schema.ttl"
+    output_path = tmp_path / "historical-logical-schema.ttl"
 
     generated_file = generate_logical_schema_graph(
         schema_path=schema_path,
@@ -152,7 +150,7 @@ def test_complete_uad_graph_matches_canonical_artifact(
         CANONICAL_LOGICAL_SCHEMA_GRAPH
     )
 
-    generated_output = tmp_path / "logical-schema.ttl"
+    generated_output = tmp_path / "historical-logical-schema.ttl"
     generate_logical_schema_graph(output_file=generated_output)
 
     canonical_graph = _parse_graph(CANONICAL_LOGICAL_SCHEMA_GRAPH)

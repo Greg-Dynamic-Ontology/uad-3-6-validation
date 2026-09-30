@@ -32,9 +32,10 @@ def supported_rules():
     try:
         loaded = required_data.load_required_rules()
 
-        # All loaded rows must retain unique identities.
-        assert len({row["Unique ID"] for row in loaded}) == len(loaded), (
-            "Source row IDs must be unique."
+        # Message IDs identify rules. Unique IDs identify data entries and
+        # may be shared or blank in the governed source.
+        assert len({row["Message ID"] for row in loaded}) == len(loaded), (
+            "Source rule Message IDs must be unique."
         )
 
         # This manifest covers unconditional requirements.

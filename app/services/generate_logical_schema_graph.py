@@ -23,11 +23,9 @@ COMBINED_SCHEMA = (
 
 LOGICAL_SCHEMA_GRAPH = (
     PROJECT_ROOT
-    / "docs"
-    / "milestones"
-    / "milestone-1"
     / "artifacts"
-    / "logical-schema.ttl"
+    / "reference"
+    / "historical-logical-schema.ttl"
 )
 
 

@@ -268,7 +268,7 @@ Example:
     otdd:milestone <urn:otdd:milestone-2> ;
     otdd:inputSource otdd:IntermediateArtifact ;
     otdd:intermediateArtifact
-        "docs/milestones/milestone-1/artifacts/logical-schema.ttl" .
+        "docs/milestones/milestone-1/artifacts/historical-logical-schema.ttl" .
 ```
 The resulting execution is:
 ```text
@@ -296,7 +296,7 @@ Example:
     otdd:milestone <urn:otdd:milestone-1> ;
     otdd:saveIntermediate true ;
     otdd:intermediateArtifact
-        "docs/milestones/milestone-1/artifacts/logical-schema.ttl" .
+        "docs/milestones/milestone-1/artifacts/historical-logical-schema.ttl" .
 ```
 The milestone shall:
 
@@ -392,7 +392,7 @@ directly to Milestone 2.
     otdd:milestone <urn:otdd:milestone-1> ;
     otdd:saveIntermediate true ;
     otdd:intermediateArtifact
-        "docs/milestones/milestone-1/artifacts/logical-schema.ttl" .
+        "docs/milestones/milestone-1/artifacts/historical-logical-schema.ttl" .
 
 <urn:otdd:milestone-2-init>
     a otdd:MilestoneInitialization ;
@@ -433,7 +433,7 @@ This configuration starts Milestone 2 from the persistent Milestone 1 output.
     otdd:milestone <urn:otdd:milestone-2> ;
     otdd:inputSource otdd:IntermediateArtifact ;
     otdd:intermediateArtifact
-        "docs/milestones/milestone-1/artifacts/logical-schema.ttl" .
+        "docs/milestones/milestone-1/artifacts/historical-logical-schema.ttl" .
 ```
 Execution:
 ```text
@@ -476,14 +476,14 @@ initializes Milestone 2 from that saved artifact.
     otdd:milestone <urn:otdd:milestone-1> ;
     otdd:saveIntermediate true ;
     otdd:intermediateArtifact
-        "docs/milestones/milestone-1/artifacts/logical-schema.ttl" .
+        "docs/milestones/milestone-1/artifacts/historical-logical-schema.ttl" .
 
 <urn:otdd:milestone-2-init>
     a otdd:MilestoneInitialization ;
     otdd:milestone <urn:otdd:milestone-2> ;
     otdd:inputSource otdd:IntermediateArtifact ;
     otdd:intermediateArtifact
-        "docs/milestones/milestone-1/artifacts/logical-schema.ttl" .
+        "docs/milestones/milestone-1/artifacts/historical-logical-schema.ttl" .
 ```
 
 Execution:
@@ -537,7 +537,7 @@ The same pattern may be extended to later milestones.
     otdd:milestone <urn:otdd:milestone-1> ;
     otdd:saveIntermediate true ;
     otdd:intermediateArtifact
-        "docs/milestones/milestone-1/artifacts/logical-schema.ttl" .
+        "docs/milestones/milestone-1/artifacts/historical-logical-schema.ttl" .
 
 <urn:otdd:milestone-2-init>
     a otdd:MilestoneInitialization ;
@@ -605,7 +605,7 @@ Example:
 
 ```turtle
 otdd:intermediateArtifact
-    "docs/milestones/milestone-1/artifacts/logical-schema.ttl" .
+    "docs/milestones/milestone-1/artifacts/historical-logical-schema.ttl" .
 ```
 
 Relative paths shall be resolved from the project root unless a different base

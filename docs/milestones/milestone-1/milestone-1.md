@@ -143,7 +143,9 @@ Distributed Schema
 
 ### Generated Artifacts
 
-- `artifacts/logical-schema.ttl` *(pending)*
+- [`artifacts/reference/logical-schema.ttl`](../../../artifacts/reference/logical-schema.ttl)
+  — immutable UAD 3.6 Logical Schema reference artifact produced by
+  Milestone 1.
 
 ### Tests
 

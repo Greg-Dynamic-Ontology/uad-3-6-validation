@@ -18,6 +18,7 @@ from xml.etree.ElementTree import Element
 from app.models.common import Provenance
 from app.models.enums import Investor, RuleType, Severity
 from app.models.validation import Finding
+from app.services.single_equality_required_data import binding_for, evaluate_single_equality
 from app.services.scoped_required_data import (
     evaluate_scoped_rule,
     scoped_spec,
@@ -338,6 +339,9 @@ def load_required_rules() -> tuple[dict[str, str], ...]:
 
     rules = []
     for row in rows:
+        if binding_for(row) is not None:
+            rules.append(row)
+            continue
         if scoped_spec(row) is not None:
             verify_definition(row)
             rules.append(row)
@@ -374,6 +378,9 @@ def load_required_rules() -> tuple[dict[str, str], ...]:
     valid_rules = []
 
     for rule in rules:
+        if binding_for(rule) is not None:
+            valid_rules.append(rule)
+            continue
         problem = None
         field = None
         property_scope = rule.get("Property Affected")
@@ -591,6 +598,9 @@ def evaluate_required_data(
     for rule in sorted(
         load_required_rules(), key=lambda row: row["Unique ID"]
     ):
+        if binding_for(rule) is not None:
+            findings.extend(evaluate_single_equality(root, investor, rule))
+            continue
         if scoped_spec(rule) is not None:
             findings.extend(
                 evaluate_scoped_rule(root, investor, rule)

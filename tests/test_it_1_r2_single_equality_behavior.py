@@ -159,7 +159,7 @@ def test_it_1_r2_s1_single_equality_behavior(
 
     # Recognize the governed equality, without inventing its XML binding.
     condition = re.fullmatch(
-        r'If\s+(@?[A-Za-z_][A-Za-z0-9_]*)\s*=\s*"([^"]+)"\s*,?\s*and\s+'
+        r'(?i:if)\s+(@?[A-Za-z_][A-Za-z0-9_]*)\s*=\s*"([^"]+)"\s*,?\s*and\s+'
         + re.escape(rule["Primary Data Element"])
         + r' is not provided(?: in a given instance of [A-Z_0-9]+)?\s*',
         rule["Rule Logic"],
