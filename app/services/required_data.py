@@ -19,6 +19,10 @@ from app.models.common import Provenance
 from app.models.enums import Investor, RuleType, Severity
 from app.models.validation import Finding
 from app.services.single_equality_required_data import binding_for, evaluate_single_equality
+from app.services.required_structure_required_data import (
+    binding_for as required_structure_binding_for,
+    evaluate_required_structure,
+)
 from app.services.scoped_required_data import (
     evaluate_scoped_rule,
     scoped_spec,
@@ -342,6 +346,9 @@ def load_required_rules() -> tuple[dict[str, str], ...]:
         if binding_for(row) is not None:
             rules.append(row)
             continue
+        if required_structure_binding_for(row) is not None:
+            rules.append(row)
+            continue
         if scoped_spec(row) is not None:
             verify_definition(row)
             rules.append(row)
@@ -379,6 +386,9 @@ def load_required_rules() -> tuple[dict[str, str], ...]:
 
     for rule in rules:
         if binding_for(rule) is not None:
+            valid_rules.append(rule)
+            continue
+        if required_structure_binding_for(rule) is not None:
             valid_rules.append(rule)
             continue
         problem = None
@@ -600,6 +610,11 @@ def evaluate_required_data(
     ):
         if binding_for(rule) is not None:
             findings.extend(evaluate_single_equality(root, investor, rule))
+            continue
+        if required_structure_binding_for(rule) is not None:
+            findings.extend(
+                evaluate_required_structure(root, investor, rule)
+            )
             continue
         if scoped_spec(rule) is not None:
             findings.extend(

@@ -1,0 +1,785 @@
+@prefix b: <urn:uad36:required-structure-binding:> .
+
+<urn:uad36:required-structure-rule:UAD1030> a b:Binding ;
+    b:applicabilityXPath "//m:AllPropertyRightsAppraisedIndicator[.='false']" ;
+    b:element "PropertyPartialInterestType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:REAL_PROPERTY_INTERESTS/m:REAL_PROPERTY_INTEREST/m:PropertyPartialInterestType" ;
+    b:requiredStructureXPath "//m:PropertyPartialInterestType" ;
+    b:ruleId "UAD1030" ;
+    b:sourceFingerprint "0c2b04468160864164d8c0b82092ce03dee2c8e1f4076faad3d5d6e216ef45e6" .
+
+<urn:uad36:required-structure-rule:UAD1032> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "@ValuationUseType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/@ValuationUseType" ;
+    b:requiredStructureXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']" ;
+    b:ruleId "UAD1032" ;
+    b:sourceFingerprint "3565eeeaaf01950d4565ceded453e41850a4153d0bbface606b49f6a24ab7715" .
+
+<urn:uad36:required-structure-rule:UAD1038> a b:Binding ;
+    b:applicabilityXPath "//m:SpecialTaxAssessmentsIndicator[.='true']" ;
+    b:element "ValuationAnalysisCategoryType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_COMMENTARIES/m:VALUATION_COMMENTARY/m:ValuationAnalysisCategoryType" ;
+    b:requiredStructureXPath "//m:VALUATION_COMMENTARY[m:ValuationAnalysisCategoryType='PropertySpecialTaxAssessments']" ;
+    b:ruleId "UAD1038" ;
+    b:sourceFingerprint "decb9ef07f23ac74f85b30ece706ade96f219b6197828f6a3f8746b175718f50" .
+
+<urn:uad36:required-structure-rule:UAD1048> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "ImprovementType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:IMPROVEMENTS/m:IMPROVEMENT/m:IMPROVEMENT_DETAIL/m:ImprovementType" ;
+    b:requiredStructureXPath "//m:ImprovementType" ;
+    b:ruleId "UAD1048" ;
+    b:sourceFingerprint "481e5c8bb620fee65fa1583f7cdef882bbcbfb29ca7a60171bcef27428e2542d" .
+
+<urn:uad36:required-structure-rule:UAD1058> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "UtilityType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:IMPROVEMENTS/m:IMPROVEMENT/m:OUTBUILDING/m:OUTBUILDING_UTILITIES/m:OUTBUILDING_UTILITY/m:UtilityType" ;
+    b:requiredStructureXPath "//m:UtilityType" ;
+    b:ruleId "UAD1058" ;
+    b:sourceFingerprint "d0aab8052f9274c63efbc26d93e1198089ddc7d3b6d7cc247253b694344ac040" .
+
+<urn:uad36:required-structure-rule:UAD1062> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "ConstructionMethodType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:IMPROVEMENTS/m:IMPROVEMENT/m:STRUCTURE/m:CONSTRUCTION_METHODS/m:CONSTRUCTION_METHOD/m:ConstructionMethodType" ;
+    b:requiredStructureXPath "//m:ConstructionMethodType" ;
+    b:ruleId "UAD1062" ;
+    b:sourceFingerprint "1104844a6456d689194cfe17e9987711d3349bf8f5efbb81902b7f4d55ba5951" .
+
+<urn:uad36:required-structure-rule:UAD1067> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "ImprovementComponentType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:IMPROVEMENTS/m:IMPROVEMENT/m:STRUCTURE/m:STRUCTURE_COMPONENTS/m:STRUCTURE_COMPONENT/m:STRUCTURE_COMPONENT_DETAIL/m:ImprovementComponentType" ;
+    b:requiredStructureXPath "//m:ImprovementComponentType[.='Foundation']" ;
+    b:ruleId "UAD1067" ;
+    b:sourceFingerprint "aac31f0339b690268f4bcf50ddd1ba0aaca68ae3d88e706fdaa37e848850bba7" .
+
+<urn:uad36:required-structure-rule:UAD1068> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "FoundationMaterialType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:IMPROVEMENTS/m:IMPROVEMENT/m:STRUCTURE/m:STRUCTURE_COMPONENTS/m:STRUCTURE_COMPONENT/m:FOUNDATIONS/m:FOUNDATION/m:FOUNDATION_MATERIALS/m:FOUNDATION_MATERIAL/m:FoundationMaterialType" ;
+    b:requiredStructureXPath "//m:FoundationMaterialType" ;
+    b:ruleId "UAD1068" ;
+    b:sourceFingerprint "fd3585616870fe63742de26726ca590cc8c4742aaf5dfcc05deb59afbfa35d3a" .
+
+<urn:uad36:required-structure-rule:UAD1070> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "FoundationType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:IMPROVEMENTS/m:IMPROVEMENT/m:STRUCTURE/m:STRUCTURE_COMPONENTS/m:STRUCTURE_COMPONENT/m:FOUNDATIONS/m:FOUNDATION/m:FOUNDATION_STYLES/m:FOUNDATION_STYLE/m:FoundationType" ;
+    b:requiredStructureXPath "//m:FoundationType" ;
+    b:ruleId "UAD1070" ;
+    b:sourceFingerprint "58c38b4f20409a2f1523bd5875e91462bf63efef18e90483fd34ea14ee839275" .
+
+<urn:uad36:required-structure-rule:UAD1072> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "ImprovementComponentType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:IMPROVEMENTS/m:IMPROVEMENT/m:STRUCTURE/m:STRUCTURE_COMPONENTS/m:STRUCTURE_COMPONENT/m:STRUCTURE_COMPONENT_DETAIL/m:ImprovementComponentType" ;
+    b:requiredStructureXPath "//m:ImprovementComponentType[.='Roof']" ;
+    b:ruleId "UAD1072" ;
+    b:sourceFingerprint "27d09702db9d3b3d732de02f7367bccd09732f53746340d0d41d6efed9bee746" .
+
+<urn:uad36:required-structure-rule:UAD1075> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "RoofMaterialType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:IMPROVEMENTS/m:IMPROVEMENT/m:STRUCTURE/m:STRUCTURE_COMPONENTS/m:STRUCTURE_COMPONENT/m:ROOF/m:ROOF_MATERIALS/m:ROOF_MATERIAL/m:RoofMaterialType" ;
+    b:requiredStructureXPath "//m:RoofMaterialType" ;
+    b:ruleId "UAD1075" ;
+    b:sourceFingerprint "15424e26aeac5c10714e9d608edb7e08e92dc63c28dfd2e9de32041bcf64f090" .
+
+<urn:uad36:required-structure-rule:UAD1079> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "ImprovementComponentType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:IMPROVEMENTS/m:IMPROVEMENT/m:STRUCTURE/m:STRUCTURE_COMPONENTS/m:STRUCTURE_COMPONENT/m:STRUCTURE_COMPONENT_DETAIL/m:ImprovementComponentType" ;
+    b:requiredStructureXPath "//m:ImprovementComponentType[.='ExteriorWallsAndTrim']" ;
+    b:ruleId "UAD1079" ;
+    b:sourceFingerprint "d7e88e76278331b2d52c53246453ad84a641e02404fbef7a4f4d87929d60ce89" .
+
+<urn:uad36:required-structure-rule:UAD1080> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "WallMaterialType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:IMPROVEMENTS/m:IMPROVEMENT/m:STRUCTURE/m:STRUCTURE_COMPONENTS/m:STRUCTURE_COMPONENT/m:EXTERIOR_WALLS/m:EXTERIOR_WALL/m:WallMaterialType" ;
+    b:requiredStructureXPath "//m:WallMaterialType" ;
+    b:ruleId "UAD1080" ;
+    b:sourceFingerprint "cc40e76c65e8bad8130a2935cffb2cbeef6a95d2dd7556bef07c132db5a40c31" .
+
+<urn:uad36:required-structure-rule:UAD1089> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "HeatingSystemType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:IMPROVEMENTS/m:IMPROVEMENT/m:SYSTEM/m:HEATING_SYSTEMS/m:HEATING_SYSTEM/m:HeatingSystemType" ;
+    b:requiredStructureXPath "//m:HeatingSystemType" ;
+    b:ruleId "UAD1089" ;
+    b:sourceFingerprint "b5a70e52edf4aad53a3c802d3242ff30108b554361c742e8f95c46033380847f" .
+
+<urn:uad36:required-structure-rule:UAD1121> a b:Binding ;
+    b:applicabilityXPath "//m:MANUFACTURED_HOME_MODIFICATIONS" ;
+    b:element "ManufacturedHomeModificationType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:IMPROVEMENTS/m:IMPROVEMENT/m:MANUFACTURED_HOME/m:MANUFACTURED_HOME_MODIFICATIONS/m:MANUFACTURED_HOME_MODIFICATION/m:ManufacturedHomeModificationType" ;
+    b:requiredStructureXPath "//m:ManufacturedHomeModificationType" ;
+    b:ruleId "UAD1121" ;
+    b:sourceFingerprint "f9d615e9848f4eba89b38fa1fbede1893e5c852718f139c7f69fe87b37a4ff48" .
+
+<urn:uad36:required-structure-rule:UAD1123> a b:Binding ;
+    b:applicabilityXPath "//m:SkirtingExistsIndicator[.='true']" ;
+    b:element "SkirtingMaterialType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:IMPROVEMENTS/m:IMPROVEMENT/m:MANUFACTURED_HOME/m:SKIRTING_MATERIALS/m:SKIRTING_MATERIAL/m:SkirtingMaterialType" ;
+    b:requiredStructureXPath "//m:SkirtingMaterialType" ;
+    b:ruleId "UAD1123" ;
+    b:sourceFingerprint "ecb1d89dbb01505ca6c07f70679c58cb90c94b8cc328149f328764bab157d135" .
+
+<urn:uad36:required-structure-rule:UAD1138> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "AccessibilityFeatureType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:IMPROVEMENTS/m:IMPROVEMENT/m:PROPERTY_UNITS/m:PROPERTY_UNIT/m:ACCESSIBILITY_FEATURES/m:ACCESSIBILITY_FEATURE/m:AccessibilityFeatureType" ;
+    b:requiredStructureXPath "//m:AccessibilityFeatureType" ;
+    b:ruleId "UAD1138" ;
+    b:sourceFingerprint "348fa7dfcc7f083329ed67fa2ff8389671d3170615a1e2ca6d1818341b364a4a" .
+
+<urn:uad36:required-structure-rule:UAD1142> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "LevelType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:IMPROVEMENTS/m:IMPROVEMENT/m:PROPERTY_UNITS/m:PROPERTY_UNIT/m:LEVELS/m:LEVEL/m:LevelType" ;
+    b:requiredStructureXPath "//m:LevelType" ;
+    b:ruleId "UAD1142" ;
+    b:sourceFingerprint "06c96e12e0c08fd3f70e7039fe6fa86b3ab2063f37ff5be75e0a5304b758f83a" .
+
+<urn:uad36:required-structure-rule:UAD1143> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "RoomType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:IMPROVEMENTS/m:IMPROVEMENT/m:PROPERTY_UNITS/m:PROPERTY_UNIT/m:ROOMS/m:ROOM/m:ROOM_DETAIL/m:RoomType" ;
+    b:requiredStructureXPath "//m:ROOM_DETAIL[m:RoomType='Kitchen']" ;
+    b:ruleId "UAD1143" ;
+    b:sourceFingerprint "2153b95ec02653bb7a0fecd47da75b754f329df71e9a06f7f70c1f45c0e19284" .
+
+<urn:uad36:required-structure-rule:UAD1150> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "FlooringType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:IMPROVEMENTS/m:IMPROVEMENT/m:PROPERTY_UNITS/m:PROPERTY_UNIT/m:INTERIOR_COMPONENTS/m:INTERIOR_COMPONENT/m:FLOOR_COVERINGS/m:FLOOR_COVERING/m:FlooringType" ;
+    b:requiredStructureXPath "//m:FlooringType" ;
+    b:ruleId "UAD1150" ;
+    b:sourceFingerprint "8ffa2f3c90782951ebd882ab31a4b447b86d4962285052cfff76aa72dbcd82cb" .
+
+<urn:uad36:required-structure-rule:UAD1154> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "ApproximateCeilingHeightType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:IMPROVEMENTS/m:IMPROVEMENT/m:PROPERTY_UNITS/m:PROPERTY_UNIT/m:INTERIOR_COMPONENTS/m:INTERIOR_COMPONENT/m:WALLS_AND_CEILING/m:CEILING_HEIGHTS/m:CEILING_HEIGHT/m:ApproximateCeilingHeightType" ;
+    b:requiredStructureXPath "//m:ApproximateCeilingHeightType" ;
+    b:ruleId "UAD1154" ;
+    b:sourceFingerprint "f601534f96e83beacc7fa5705245937c7aea3765ec700aa0b48ad7922b00cb00" .
+
+<urn:uad36:required-structure-rule:UAD1179> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "DataSourceType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:DATA_SOURCES/m:DATA_SOURCE/m:DataSourceType" ;
+    b:requiredStructureXPath "//m:DataSourceType" ;
+    b:ruleId "UAD1179" ;
+    b:sourceFingerprint "9619f3de482756060bc4ddea54224f3643ab092b42801b157a6ee98826fb7ede" .
+
+<urn:uad36:required-structure-rule:UAD1192> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "OwnershipTransferTransactionType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:SALES_HISTORIES/m:SALES_HISTORY/m:OwnershipTransferTransactionType" ;
+    b:requiredStructureXPath "//m:OwnershipTransferTransactionType" ;
+    b:ruleId "UAD1192" ;
+    b:sourceFingerprint "02742c6164a645e2eab7b83ef0df6e0c218a78a3afde4058aa2c58bc59cb7473" .
+
+<urn:uad36:required-structure-rule:UAD1207> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "ListingStatusType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:LISTING_INFORMATIONS/m:LISTING_INFORMATION/m:LISTING_INFORMATION_DETAIL/m:ListingStatusType" ;
+    b:requiredStructureXPath "//m:ListingStatusType" ;
+    b:ruleId "UAD1207" ;
+    b:sourceFingerprint "f8e231a3c5cf0c6c7306f6b40cfa88d6ee12be3a9ff8f59fe740b04a9d20225d" .
+
+<urn:uad36:required-structure-rule:UAD1214> a b:Binding ;
+    b:applicabilityXPath "//m:IncomeApproachIndicator[.='true']" ;
+    b:element "IncomeApproachIndicator" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:SCOPE_OF_WORK/m:SCOPE_OF_WORK_DETAIL/m:IncomeApproachIndicator" ;
+    b:requiredStructureXPath "//m:PROPERTY[@ValuationUseType='GrossRentMultiplierComparable']" ;
+    b:ruleId "UAD1214" ;
+    b:sourceFingerprint "b188f173d46fe6f0172cf4304d07d2b809f7dd201031e40002e8bb45ed92cc30" .
+
+<urn:uad36:required-structure-rule:UAD1217> a b:Binding ;
+    b:applicabilityXPath "//m:RentScheduleIndicator[.='true']" ;
+    b:element "RentScheduleIndicator" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:SCOPE_OF_WORK/m:SCOPE_OF_WORK_DETAIL/m:RentScheduleIndicator" ;
+    b:requiredStructureXPath "//m:PROPERTY[@ValuationUseType='RentalComparable']" ;
+    b:ruleId "UAD1217" ;
+    b:sourceFingerprint "95cc119365d4f7c0a7fe99d3752ad2fa192b622c292495c8ef25afbc105e4095" .
+
+<urn:uad36:required-structure-rule:UAD1238> a b:Binding ;
+    b:applicabilityXPath "//m:SiteValuationMethodType[.='SalesComparison']" ;
+    b:element "SiteValuationMethodType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:APPROACH_TO_VALUE/m:COST_APPROACH/m:COST_APPROACH_DETAIL/m:SiteValuationMethodType" ;
+    b:requiredStructureXPath "//m:PROPERTY[@ValuationUseType='LandComparable']" ;
+    b:ruleId "UAD1238" ;
+    b:sourceFingerprint "576f02b06a3f8d78e2f4fa17835e71331515d0f9e921ed228cd519ff40322fd0" .
+
+<urn:uad36:required-structure-rule:UAD1255> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "PropertyValuationConditionalConclusionType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_RECONCILIATION/m:VALUATION_RECONCILIATION_SUMMARY/m:VALUATION_CONDITIONS/m:VALUATION_CONDITION/m:PropertyValuationConditionalConclusionType" ;
+    b:requiredStructureXPath "//m:PropertyValuationConditionalConclusionType" ;
+    b:ruleId "UAD1255" ;
+    b:sourceFingerprint "94dfa3963dec2e115ccb87abe1e46e639ffef00ab3a3f2acdec0c2521aa8a2d5" .
+
+<urn:uad36:required-structure-rule:UAD1274> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "ImageCategoryType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:INSPECTIONS/m:INSPECTION/m:IMAGES/m:IMAGE/m:ImageCategoryType" ;
+    b:requiredStructureXPath "//m:IMAGE[m:ImageCategoryType='DwellingFront']" ;
+    b:ruleId "UAD1274" ;
+    b:sourceFingerprint "7e695bb944d42a7f7170446635d249e5cc2f4087772e07b52332fc9f21970262" .
+
+<urn:uad36:required-structure-rule:UAD1275> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "ImageCategoryType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:INSPECTIONS/m:INSPECTION/m:IMAGES/m:IMAGE/m:ImageCategoryType" ;
+    b:requiredStructureXPath "//m:PROPERTY[@ValuationUseType='SalesComparable']//m:IMAGE[m:ImageCategoryType='PropertyPhoto']" ;
+    b:ruleId "UAD1275" ;
+    b:sourceFingerprint "2b07b33a3171ad717ffb0fede9f26d59d7446afba9bacd80ad4bb698d593539f" .
+
+<urn:uad36:required-structure-rule:UAD1278> a b:Binding ;
+    b:applicabilityXPath "//m:BODY_OF_WATER[.//m:PrivateAccessIndicator='true']" ;
+    b:element "ImageCategoryType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:INSPECTIONS/m:INSPECTION/m:IMAGES/m:IMAGE/m:ImageCategoryType" ;
+    b:requiredStructureXPath "//m:IMAGE[m:ImageCategoryType='WaterFrontage']" ;
+    b:ruleId "UAD1278" ;
+    b:sourceFingerprint "7467484e5204bf2289cd76cffd4cb42fed3644056439924fba5a160872be77e7" .
+
+<urn:uad36:required-structure-rule:UAD1279> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "IMAGE" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:IMPROVEMENTS/m:IMPROVEMENT/m:PROPERTY_UNITS/m:PROPERTY_UNIT/m:ROOMS/m:ROOM/m:IMAGES/m:IMAGE" ;
+    b:requiredStructureXPath "//m:ROOM[m:ROOM_DETAIL/m:RoomType='Kitchen' or m:ROOM_DETAIL/m:RoomType='HalfBathroom' or m:ROOM_DETAIL/m:RoomType='FullBathroom']/m:IMAGES/m:IMAGE" ;
+    b:ruleId "UAD1279" ;
+    b:sourceFingerprint "af12bd26ce948f8a48a86a9a7cc6bf7589443129c52b5825f15b903c22c37478" .
+
+<urn:uad36:required-structure-rule:UAD1280> a b:Binding ;
+    b:applicabilityXPath "//m:PROPERTY[@ValuationUseType='GrossRentMultiplierComparable']" ;
+    b:element "ImageCategoryType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:INSPECTIONS/m:INSPECTION/m:IMAGES/m:IMAGE/m:ImageCategoryType" ;
+    b:requiredStructureXPath "//m:PROPERTY[@ValuationUseType='GrossRentMultiplierComparable']//m:IMAGE[m:ImageCategoryType='PropertyPhoto']" ;
+    b:ruleId "UAD1280" ;
+    b:sourceFingerprint "fdc5b9bc69e01189affc5c3a20dda529720579ffaf4b7691642d96a1deda94e3" .
+
+<urn:uad36:required-structure-rule:UAD1283> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "ImageCategoryType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:INSPECTIONS/m:INSPECTION/m:IMAGES/m:IMAGE/m:ImageCategoryType" ;
+    b:requiredStructureXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:IMAGE[m:ImageCategoryType='SalesComparableMap']" ;
+    b:ruleId "UAD1283" ;
+    b:sourceFingerprint "362fab9abb141f452f2e551347fa6e56fc2d4e73e6f89a14699f76b43a60e3ac" .
+
+<urn:uad36:required-structure-rule:UAD1284> a b:Binding ;
+    b:applicabilityXPath "//m:ManufacturedHomeHUDCertificateLabelIndicator[.='true']" ;
+    b:element "ImageCategoryType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:INSPECTIONS/m:INSPECTION/m:IMAGES/m:IMAGE/m:ImageCategoryType" ;
+    b:requiredStructureXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:IMAGE[m:ImageCategoryType='ManufacturedHomeHUDCertificationLabel']" ;
+    b:ruleId "UAD1284" ;
+    b:sourceFingerprint "007db239d51669e4b4ee5baf1167233bdf585195395f0b9b96aa14dafd4a0d09" .
+
+<urn:uad36:required-structure-rule:UAD1285> a b:Binding ;
+    b:applicabilityXPath "//m:ManufacturedHomeHUDDataPlateAttachedIndicator[.='true']" ;
+    b:element "ImageCategoryType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:INSPECTIONS/m:INSPECTION/m:IMAGES/m:IMAGE/m:ImageCategoryType" ;
+    b:requiredStructureXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:IMAGE[m:ImageCategoryType='ManufacturedHomeHUDDataPlate']" ;
+    b:ruleId "UAD1285" ;
+    b:sourceFingerprint "35538da29bd1c597d3fd9ccc52b0cdc17f98809f251bc7f1fb1ba2563b5ee45c" .
+
+<urn:uad36:required-structure-rule:UAD1287> a b:Binding ;
+    b:applicabilityXPath "//m:EncumbranceType[.='ConditionsCovenantsRestrictions']" ;
+    b:element "RestrictionType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:ENCUMBRANCES/m:ENCUMBRANCE/m:CONDITION_COVENANT_RESTRICTIONS/m:CONDITION_COVENANT_RESTRICTION/m:RestrictionType" ;
+    b:requiredStructureXPath "//m:RestrictionType" ;
+    b:ruleId "UAD1287" ;
+    b:sourceFingerprint "9f36b1fdcc81f384519a5d71eff195e53a8e2c286571862731dfd691d77f74b3" .
+
+<urn:uad36:required-structure-rule:UAD1289> a b:Binding ;
+    b:applicabilityXPath "//m:EASEMENTS" ;
+    b:element "EasementType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:ENCUMBRANCES/m:ENCUMBRANCE/m:EASEMENTS/m:EASEMENT/m:EasementType" ;
+    b:requiredStructureXPath "//m:EasementType" ;
+    b:ruleId "UAD1289" ;
+    b:sourceFingerprint "de7ec64ad43ebe026cba081b4a649a26a8a10c73bc597a1f3a7035cbc69ddb0c" .
+
+<urn:uad36:required-structure-rule:UAD1292> a b:Binding ;
+    b:applicabilityXPath "//m:ENCROACHMENTS" ;
+    b:element "EncroachmentType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:ENCUMBRANCES/m:ENCUMBRANCE/m:ENCROACHMENTS/m:ENCROACHMENT/m:EncroachmentType" ;
+    b:requiredStructureXPath "//m:EncroachmentType" ;
+    b:ruleId "UAD1292" ;
+    b:sourceFingerprint "c44732f44a9e6718647d3a20126ce66ffd66090d3e03540e9387253d53a3662c" .
+
+<urn:uad36:required-structure-rule:UAD1296> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "EnvironmentalConditionType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:ENVIRONMENTAL_CONDITIONS/m:ENVIRONMENTAL_CONDITION/m:EnvironmentalConditionType" ;
+    b:requiredStructureXPath "//m:EnvironmentalConditionType" ;
+    b:ruleId "UAD1296" ;
+    b:sourceFingerprint "8cc4925d0bb286a946950ec1d80b1e84afb3ac97f51a3cd370fea535405110e5" .
+
+<urn:uad36:required-structure-rule:UAD1299> a b:Binding ;
+    b:applicabilityXPath "//m:ParcelsContiguousIndicator[.='false']" ;
+    b:element "ParcelSeparatorType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:PARCEL_SUMMARY/m:NON_CONTIGUOUS_PARCEL_SEPARATORS/m:NON_CONTIGUOUS_PARCEL_SEPARATOR/m:ParcelSeparatorType" ;
+    b:requiredStructureXPath "//m:ParcelSeparatorType" ;
+    b:ruleId "UAD1299" ;
+    b:sourceFingerprint "758ca1bd6ffee6a1c369c3f49ae5d3e3609158e99997c3eb4a678d3ea5a37249" .
+
+<urn:uad36:required-structure-rule:UAD1302> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "ParcelDescriptionClassificationType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:PARCELS/m:PARCEL/m:PARCEL_DETAIL/m:ParcelDescriptionClassificationType" ;
+    b:requiredStructureXPath "//m:ParcelDescriptionClassificationType" ;
+    b:ruleId "UAD1302" ;
+    b:sourceFingerprint "1c58689bc651f0b722414995550a948a124c10ad9e7807abf5d286a455a34852" .
+
+<urn:uad36:required-structure-rule:UAD1304> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "ParcelIdentificationType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:PARCELS/m:PARCEL/m:PARCEL_IDENTIFICATIONS/m:PARCEL_IDENTIFICATION/m:ParcelIdentificationType" ;
+    b:requiredStructureXPath "//m:PARCEL_IDENTIFICATION[m:ParcelIdentificationType='AssessorUnformattedIdentifier']" ;
+    b:ruleId "UAD1304" ;
+    b:sourceFingerprint "5070cb15517a803f37acbcf921d4231c0f8501a7c52bc7b85c18d030ca9ee0b8" .
+
+<urn:uad36:required-structure-rule:UAD1310> a b:Binding ;
+    b:applicabilityXPath "//m:PropertyMixedUsageIndicator[.='true']" ;
+    b:element "NonResidentialUseType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:PROPERTY_USES/m:PROPERTY_USE/m:NonResidentialUseType" ;
+    b:requiredStructureXPath "//m:NonResidentialUseType" ;
+    b:ruleId "UAD1310" ;
+    b:sourceFingerprint "b6d79aae6c9aba7384ba3742507337b709e2ec83ee544aeaa05d45b3657747be" .
+
+<urn:uad36:required-structure-rule:UAD1313> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "HazardZoneType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:SITE/m:HAZARD_ZONES/m:HAZARD_ZONE/m:HazardZoneType" ;
+    b:requiredStructureXPath "//m:HazardZoneType" ;
+    b:ruleId "UAD1313" ;
+    b:sourceFingerprint "6d2b882367fcf24ffe823a181db5d1c19e5a90387e91f8fe5a35d796845546f7" .
+
+<urn:uad36:required-structure-rule:UAD1320> a b:Binding ;
+    b:applicabilityXPath "//m:DRAINAGE_IMPACT_REASONS" ;
+    b:element "SiteDrainageReasonType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:SITE/m:SITE_FEATURES/m:SITE_FEATURE/m:DRAINAGE_IMPACT_REASONS/m:DRAINAGE_IMPACT_REASON/m:SiteDrainageReasonType" ;
+    b:requiredStructureXPath "//m:SiteDrainageReasonType" ;
+    b:ruleId "UAD1320" ;
+    b:sourceFingerprint "4410125b93de392c02cd7b370531edbea279b50f94cbd48ce7a1d8dd55e1ab96" .
+
+<urn:uad36:required-structure-rule:UAD1323> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "SiteFeatureType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:SITE/m:SITE_FEATURES/m:SITE_FEATURE/m:SITE_FEATURE_DETAIL/m:SiteFeatureType" ;
+    b:requiredStructureXPath "//m:SiteFeatureType" ;
+    b:ruleId "UAD1323" ;
+    b:sourceFingerprint "9ee91bc4166dabf9c13e640fabc062e72e2e48fff7676db561ec7ca72bffdc2b" .
+
+<urn:uad36:required-structure-rule:UAD1325> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "TopographyType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:SITE/m:SITE_FEATURES/m:SITE_FEATURE/m:TOPOGRAPHIES/m:TOPOGRAPHY/m:TopographyType" ;
+    b:requiredStructureXPath "//m:TopographyType" ;
+    b:ruleId "UAD1325" ;
+    b:sourceFingerprint "ef70502a0668232f565b4fa7fd3ecce0af7607daa48a87ecf54717a00b045dd6" .
+
+<urn:uad36:required-structure-rule:UAD1328> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "SiteInfluenceType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:SITE/m:SITE_INFLUENCES/m:SITE_INFLUENCE/m:SITE_INFLUENCE_DETAIL/m:SiteInfluenceType" ;
+    b:requiredStructureXPath "//m:SiteInfluenceType" ;
+    b:ruleId "UAD1328" ;
+    b:sourceFingerprint "f17869562bb746dc4fc7341cc368d112520113f21ce235d3ee2c4763b18b1c89" .
+
+<urn:uad36:required-structure-rule:UAD1331> a b:Binding ;
+    b:applicabilityXPath "//m:BODIES_OF_WATER" ;
+    b:element "BodyOfWaterType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:SITE/m:SITE_INFLUENCES/m:SITE_INFLUENCE/m:BODIES_OF_WATER/m:BODY_OF_WATER/m:BodyOfWaterType" ;
+    b:requiredStructureXPath "//m:BodyOfWaterType" ;
+    b:ruleId "UAD1331" ;
+    b:sourceFingerprint "c73f21958013293bbe193209b7c5a3ea0d4733798fc9fec43c437ea96d2d0d75" .
+
+<urn:uad36:required-structure-rule:UAD1335> a b:Binding ;
+    b:applicabilityXPath "//m:WATER_FRONT_FEATURES" ;
+    b:element "WaterfrontFeatureType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:SITE/m:SITE_INFLUENCES/m:SITE_INFLUENCE/m:BODIES_OF_WATER/m:WATER_FRONT_FEATURES/m:WATER_FRONT_FEATURE/m:WaterfrontFeatureType" ;
+    b:requiredStructureXPath "//m:WaterfrontFeatureType" ;
+    b:ruleId "UAD1335" ;
+    b:sourceFingerprint "c9d0378b7112ca8e735a8f8ecb24652bba659d5626454073a853f2e4c7363eaf" .
+
+<urn:uad36:required-structure-rule:UAD1344> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "UtilityType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:SITE/m:SITE_UTILITIES/m:SITE_UTILITY/m:SITE_UTILITY_DETAIL/m:UtilityType" ;
+    b:requiredStructureXPath "//m:UtilityType" ;
+    b:ruleId "UAD1344" ;
+    b:sourceFingerprint "099d0540b5452ec1e73a4afc71dd6f682396e644e5e6303254032aef25174b4b" .
+
+<urn:uad36:required-structure-rule:UAD1345> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "UtilityType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:SITE/m:SITE_UTILITIES/m:SITE_UTILITY/m:SITE_UTILITY_DETAIL/m:UtilityType" ;
+    b:requiredStructureXPath "//m:SITE_UTILITY_DETAIL[m:UtilityType='Electricity']" ;
+    b:ruleId "UAD1345" ;
+    b:sourceFingerprint "fdafab69c8b9013b140f9a823dbca5ecffce54b8746b60b146edb18a73ad7b3d" .
+
+<urn:uad36:required-structure-rule:UAD1346> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "UtilityType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:SITE/m:SITE_UTILITIES/m:SITE_UTILITY/m:SITE_UTILITY_DETAIL/m:UtilityType" ;
+    b:requiredStructureXPath "//m:SITE_UTILITY_DETAIL[m:UtilityType='Water']" ;
+    b:ruleId "UAD1346" ;
+    b:sourceFingerprint "05b09f3ac017e4797bb6f1bb883d261b8fa58751f3cf434db5a18c9bae18196f" .
+
+<urn:uad36:required-structure-rule:UAD1347> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "UtilityType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:SITE/m:SITE_UTILITIES/m:SITE_UTILITY/m:SITE_UTILITY_DETAIL/m:UtilityType" ;
+    b:requiredStructureXPath "//m:SITE_UTILITY_DETAIL[m:UtilityType='SanitarySewer']" ;
+    b:ruleId "UAD1347" ;
+    b:sourceFingerprint "a608500a3581c90420618a16871157343b33573c18d000bf3fe885fbdc087dea" .
+
+<urn:uad36:required-structure-rule:UAD1352> a b:Binding ;
+    b:applicabilityXPath "//m:SITE_UTILITY_SERVICES" ;
+    b:element "ElectricitySourceType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:SITE/m:SITE_UTILITIES/m:SITE_UTILITY/m:SITE_UTILITY_SERVICES/m:SITE_UTILITY_SERVICE/m:ElectricitySourceType" ;
+    b:requiredStructureXPath "//m:ElectricitySourceType" ;
+    b:ruleId "UAD1352" ;
+    b:sourceFingerprint "7ec2482dc5f9bdaaeef9d729e700f08ba5e412a71643517e41a94e9d3ef831d5" .
+
+<urn:uad36:required-structure-rule:UAD1353> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "ElectricitySourceType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:SITE/m:SITE_UTILITIES/m:SITE_UTILITY/m:SITE_UTILITY_SERVICES/m:SITE_UTILITY_SERVICE/m:ElectricitySourceType" ;
+    b:requiredStructureXPath "//m:SITE_UTILITY_DETAIL[m:UtilityType='Electricity' and m:SiteUtilityOwnershipType='Public']" ;
+    b:ruleId "UAD1353" ;
+    b:sourceFingerprint "a65f92a1f4fb342c9a92d5df42b99b3289612115bd4cbf198ec92f24c9ebe373" .
+
+<urn:uad36:required-structure-rule:UAD1355> a b:Binding ;
+    b:applicabilityXPath "//m:SITE_UTILITY_SERVICES" ;
+    b:element "SewerSystemType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:SITE/m:SITE_UTILITIES/m:SITE_UTILITY/m:SITE_UTILITY_SERVICES/m:SITE_UTILITY_SERVICE/m:SewerSystemType" ;
+    b:requiredStructureXPath "//m:SewerSystemType" ;
+    b:ruleId "UAD1355" ;
+    b:sourceFingerprint "aa7bbd6a74ea723fb04d216466631100eb9669cc2e8cfadc9354c1cfd0fdcc58" .
+
+<urn:uad36:required-structure-rule:UAD1357> a b:Binding ;
+    b:applicabilityXPath "//m:SITE_UTILITY_SERVICES" ;
+    b:element "WaterSourceType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:SITE/m:SITE_UTILITIES/m:SITE_UTILITY/m:SITE_UTILITY_SERVICES/m:SITE_UTILITY_SERVICE/m:WaterSourceType" ;
+    b:requiredStructureXPath "//m:WaterSourceType" ;
+    b:ruleId "UAD1357" ;
+    b:sourceFingerprint "612e5e6108eb8ad077a5034a5c671f847929902b3acf808b695a8669bcf6bbd9" .
+
+<urn:uad36:required-structure-rule:UAD1361> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "ViewType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:SITE/m:SITE_VIEWS/m:SITE_VIEW/m:ViewType" ;
+    b:requiredStructureXPath "//m:ViewType" ;
+    b:ruleId "UAD1361" ;
+    b:sourceFingerprint "5153d443196b23bcf1ea593748783caa882f0cff50399b2dbe2ac7962a520599" .
+
+<urn:uad36:required-structure-rule:UAD1370> a b:Binding ;
+    b:applicabilityXPath "//m:ZONING_ILLEGAL_REASONS" ;
+    b:element "SiteZoningComplianceIllegalReasonType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:SITE/m:SITE_ZONING/m:ZONING_ILLEGAL_REASONS/m:ZONING_ILLEGAL_REASON/m:SiteZoningComplianceIllegalReasonType" ;
+    b:requiredStructureXPath "//m:SiteZoningComplianceIllegalReasonType" ;
+    b:ruleId "UAD1370" ;
+    b:sourceFingerprint "876d6c693cb2b7c0f07fe6a0d0053452f33140119e9c11d94d924c0b466aea8e" .
+
+<urn:uad36:required-structure-rule:UAD1374> a b:Binding ;
+    b:applicabilityXPath "//m:HazardZoneType[.!='None']" ;
+    b:element "ValuationAnalysisCategoryType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_COMMENTARIES/m:VALUATION_COMMENTARY/m:ValuationAnalysisCategoryType" ;
+    b:requiredStructureXPath "//m:VALUATION_COMMENTARY[m:ValuationAnalysisCategoryType='HazardZones']" ;
+    b:ruleId "UAD1374" ;
+    b:sourceFingerprint "6744e8649c051cd253c7bcd1d2212726991655a05fd03622a0e30c46ea2f8796" .
+
+<urn:uad36:required-structure-rule:UAD1375> a b:Binding ;
+    b:applicabilityXPath "//m:HazardZoneType[.!='None']" ;
+    b:element "ValueMarketabilityImpactType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_COMMENTARIES/m:VALUATION_COMMENTARY/m:ValueMarketabilityImpactType" ;
+    b:requiredStructureXPath "//m:VALUATION_COMMENTARY[m:ValuationAnalysisCategoryType='HazardZones']/m:ValueMarketabilityImpactType" ;
+    b:ruleId "UAD1375" ;
+    b:sourceFingerprint "ffe949596f975ba2c3d1ee87e254fde200a01bf9b36b19c4f9525d384336408c" .
+
+<urn:uad36:required-structure-rule:UAD1377> a b:Binding ;
+    b:applicabilityXPath "//m:SiteZoningComplianceType[.!='Legal']" ;
+    b:element "ValuationAnalysisCategoryType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_COMMENTARIES/m:VALUATION_COMMENTARY/m:ValuationAnalysisCategoryType" ;
+    b:requiredStructureXPath "//m:VALUATION_COMMENTARY[m:ValuationAnalysisCategoryType='ZoningCompliance']" ;
+    b:ruleId "UAD1377" ;
+    b:sourceFingerprint "a5bc53102d6240479bed25aa30a4cbe81ad20dceccafe2424c18e7ccfe59cb63" .
+
+<urn:uad36:required-structure-rule:UAD1378> a b:Binding ;
+    b:applicabilityXPath "//m:SiteZoningComplianceType[.!='Legal']" ;
+    b:element "ValueMarketabilityImpactType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_COMMENTARIES/m:VALUATION_COMMENTARY/m:ValueMarketabilityImpactType" ;
+    b:requiredStructureXPath "//m:VALUATION_COMMENTARY[m:ValuationAnalysisCategoryType='ZoningCompliance']/m:ValueMarketabilityImpactType" ;
+    b:ruleId "UAD1378" ;
+    b:sourceFingerprint "d1bd52ae61b6f718bef59ffcbc83eaadf3e4b0125753fa0182d1444fa94821c4" .
+
+<urn:uad36:required-structure-rule:UAD1386> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "ValuationAnalysisCategoryType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_COMMENTARIES/m:VALUATION_COMMENTARY/m:ValuationAnalysisCategoryType" ;
+    b:requiredStructureXPath "//m:VALUATION_COMMENTARY[m:ValuationAnalysisCategoryType='OverallQualityAndCondition']" ;
+    b:ruleId "UAD1386" ;
+    b:sourceFingerprint "0a58bb0e6e709608fa1dad58ca8ed2d5dd2f14b754b8b30fdec6a627fceece14" .
+
+<urn:uad36:required-structure-rule:UAD1398> a b:Binding ;
+    b:applicabilityXPath "//m:CONDITION_COVENANT_RESTRICTIONS" ;
+    b:element "RestrictionType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:ENCUMBRANCES/m:ENCUMBRANCE/m:CONDITION_COVENANT_RESTRICTIONS/m:CONDITION_COVENANT_RESTRICTION/m:RestrictionType" ;
+    b:requiredStructureXPath "//m:RestrictionType" ;
+    b:ruleId "UAD1398" ;
+    b:sourceFingerprint "64f15330012b742c1c54e2eea9d7a98d249fd547abb24e3d01cb1ca1f568c2b4" .
+
+<urn:uad36:required-structure-rule:UAD1400> a b:Binding ;
+    b:applicabilityXPath "//m:EASEMENTS" ;
+    b:element "EasementType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:ENCUMBRANCES/m:ENCUMBRANCE/m:EASEMENTS/m:EASEMENT/m:EasementType" ;
+    b:requiredStructureXPath "//m:EasementType" ;
+    b:ruleId "UAD1400" ;
+    b:sourceFingerprint "4ef4a5db6b787ea3256f80c682bba9d8ad09c93f8b27afad359712d6f7391e1c" .
+
+<urn:uad36:required-structure-rule:UAD1404> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "SalesComparisonApproachIndicator" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:SCOPE_OF_WORK/m:SCOPE_OF_WORK_DETAIL/m:SalesComparisonApproachIndicator" ;
+    b:requiredStructureXPath "//m:SalesComparisonApproachIndicator" ;
+    b:ruleId "UAD1404" ;
+    b:sourceFingerprint "1560e1bcd4b5a0e68662c6f4b52b76c5dc8a837fc220d4bece7f318feffcf299" .
+
+<urn:uad36:required-structure-rule:UAD1405> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "CarStorageType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:CAR_STORAGES/m:CAR_STORAGE/m:CAR_STORAGE_DETAIL/m:CarStorageType" ;
+    b:requiredStructureXPath "//m:CarStorageType" ;
+    b:ruleId "UAD1405" ;
+    b:sourceFingerprint "e0cb45df5a447dafdf154f2d281b53eab16a2dcdea04b9c5ad8ac591efac7ab7" .
+
+<urn:uad36:required-structure-rule:UAD1421> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "HeatingSystemType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:IMPROVEMENTS/m:IMPROVEMENT/m:SYSTEM/m:HEATING_SYSTEMS/m:HEATING_SYSTEM/m:HeatingSystemType" ;
+    b:requiredStructureXPath "//m:HeatingSystemType" ;
+    b:ruleId "UAD1421" ;
+    b:sourceFingerprint "adb8f7311aa045afc6e3c71269fc2d275e6ea08b09b0eaa2e49f0721831ebcde" .
+
+<urn:uad36:required-structure-rule:UAD1445> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "HazardZoneType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:SITE/m:HAZARD_ZONES/m:HAZARD_ZONE/m:HazardZoneType" ;
+    b:requiredStructureXPath "//m:HazardZoneType" ;
+    b:ruleId "UAD1445" ;
+    b:sourceFingerprint "d73d35ac56b1689fa8a43178a890f2642b813481be626c8a2fb07c9a3e26e0a9" .
+
+<urn:uad36:required-structure-rule:UAD1450> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "ViewType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:SITE/m:SITE_VIEWS/m:SITE_VIEW/m:ViewType" ;
+    b:requiredStructureXPath "//m:ViewType" ;
+    b:ruleId "UAD1450" ;
+    b:sourceFingerprint "b5220add3f5ff7faeb0abffef78c804d3c1c4a0c4cffc1b80af1cb6e90cebd5c" .
+
+<urn:uad36:required-structure-rule:UAD1520> a b:Binding ;
+    b:applicabilityXPath "//m:PropertyDataReportIndicator[.='true']" ;
+    b:element "PartyRoleType" ;
+    b:expectedDataLocation "//m:SERVICE/m:PARTIES/m:PARTY/m:ROLES/m:ROLE/m:ROLE_DETAIL/m:PartyRoleType" ;
+    b:requiredStructureXPath "//m:ROLE_DETAIL[m:PartyRoleType='PropertyDataCollector']" ;
+    b:ruleId "UAD1520" ;
+    b:sourceFingerprint "8235f478111e970f0fa23945d079f884301b8d782aa0398a9a9a73d57ea10337" .
+
+<urn:uad36:required-structure-rule:UAD1534> a b:Binding ;
+    b:applicabilityXPath "//m:PARTY[.//m:PartyRoleType='Appraiser' and .//m:AppraiserLicenseType[.='None' or .='TraineeAppraiser']]" ;
+    b:element "PartyRoleType" ;
+    b:expectedDataLocation "//m:SERVICE/m:PARTIES/m:PARTY/m:ROLES/m:ROLE/m:ROLE_DETAIL/m:PartyRoleType" ;
+    b:requiredStructureXPath "//m:PARTY[.//m:PartyRoleType='AppraiserSupervisor']" ;
+    b:ruleId "UAD1534" ;
+    b:sourceFingerprint "23bde0b2066ac2feff6b737e798416117d9a4405b70df69e9dc6b7b4150db578" .
+
+<urn:uad36:required-structure-rule:UAD1542> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "PartyRoleType" ;
+    b:expectedDataLocation "//m:SERVICE/m:PARTIES/m:PARTY/m:ROLES/m:ROLE/m:ROLE_DETAIL/m:PartyRoleType" ;
+    b:requiredStructureXPath "//m:PARTY[.//m:PartyRoleType='Client']" ;
+    b:ruleId "UAD1542" ;
+    b:sourceFingerprint "b2e840d2f360e227d7e6b60f792c393cc52c8a6b970c6dfd83cf34123f150690" .
+
+<urn:uad36:required-structure-rule:UAD1543> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "PartyRoleType" ;
+    b:expectedDataLocation "//m:SERVICE/m:PARTIES/m:PARTY/m:ROLES/m:ROLE/m:ROLE_DETAIL/m:PartyRoleType" ;
+    b:requiredStructureXPath "//m:PARTY[.//m:PartyRoleType='Client']//m:ROLE_DETAIL[m:PartyRoleType='Attorney' or m:PartyRoleType='Investor' or m:PartyRoleType='Lender' or m:PartyRoleType='ManagementCompany' or m:PartyRoleType='Other']" ;
+    b:ruleId "UAD1543" ;
+    b:sourceFingerprint "1380335aab2c9e6b92b4f6aa5439d38247161d61ca09c4411367e60883921dd0" .
+
+<urn:uad36:required-structure-rule:UAD1554> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "PartyRoleType" ;
+    b:expectedDataLocation "//m:SERVICE/m:PARTIES/m:PARTY/m:ROLES/m:ROLE/m:ROLE_DETAIL/m:PartyRoleType" ;
+    b:requiredStructureXPath "//m:PARTY[.//m:PartyRoleType='Appraiser']" ;
+    b:ruleId "UAD1554" ;
+    b:sourceFingerprint "6867dfda2b81a06281abcd6290f48f1b61ed867373ace53f454f002ba19b5aef" .
+
+<urn:uad36:required-structure-rule:UAD1570> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "PROJECT_AMENITY" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:PROJECT/m:PROJECT_AMENITIES/m:PROJECT_AMENITY" ;
+    b:requiredStructureXPath "//m:PROJECT_AMENITY" ;
+    b:ruleId "UAD1570" ;
+    b:sourceFingerprint "24b4e1752616d0155c6f9175fc6c1e84a9733f394896c812f1691840b71a9322" .
+
+<urn:uad36:required-structure-rule:UAD1572> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "AssociationChargeType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:HOMEOWNERS_ASSOCIATIONS/m:HOMEOWNERS_ASSOCIATION/m:ASSOCIATION_CHARGES/m:ASSOCIATION_CHARGE/m:ASSOCIATION_CHARGE_DETAIL/m:AssociationChargeType" ;
+    b:requiredStructureXPath "//m:ASSOCIATION_CHARGE[m:ASSOCIATION_CHARGE_DETAIL/m:AssociationChargeType='AssociationDues']" ;
+    b:ruleId "UAD1572" ;
+    b:sourceFingerprint "7334d8c08da6ea12c9390717308af519ae331976927ffe00fbeb4ba35f11c6eb" .
+
+<urn:uad36:required-structure-rule:UAD1575> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "AssociationChargeIncludesUtilityType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:HOMEOWNERS_ASSOCIATIONS/m:HOMEOWNERS_ASSOCIATION/m:ASSOCIATION_CHARGES/m:ASSOCIATION_CHARGE/m:ASSOCIATION_CHARGE_INCLUDES_UTILITIES/m:ASSOCIATION_CHARGE_INCLUDES_UTILITY/m:AssociationChargeIncludesUtilityType" ;
+    b:requiredStructureXPath "//m:AssociationChargeIncludesUtilityType" ;
+    b:ruleId "UAD1575" ;
+    b:sourceFingerprint "a6f1010c89e5d0b5dd22a5eaf381cec246be28b0334e84427f1ceb96609083fb" .
+
+<urn:uad36:required-structure-rule:UAD1577> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "AssociationChargeType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:HOMEOWNERS_ASSOCIATIONS/m:HOMEOWNERS_ASSOCIATION/m:ASSOCIATION_CHARGES/m:ASSOCIATION_CHARGE/m:ASSOCIATION_CHARGE_DETAIL/m:AssociationChargeType" ;
+    b:requiredStructureXPath "//m:ASSOCIATION_CHARGE[m:ASSOCIATION_CHARGE_DETAIL/m:AssociationChargeType='AssociationSpecialAssessment']" ;
+    b:ruleId "UAD1577" ;
+    b:sourceFingerprint "a223738c974a0403b967525fe0c1cda319bf720d8108cbe452679ea3429d918c" .
+
+<urn:uad36:required-structure-rule:UAD1603> a b:Binding ;
+    b:applicabilityXPath "//m:PROJECT_COMPONENTS" ;
+    b:element "ProjectComponentCategoryType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:PROJECT/m:PROJECT_COMPONENTS/m:PROJECT_COMPONENT/m:ProjectComponentCategoryType" ;
+    b:requiredStructureXPath "//m:ProjectComponentCategoryType" ;
+    b:ruleId "UAD1603" ;
+    b:sourceFingerprint "8c0e589c877f181536eade3db5fd73138be1f5f5149ff28e237ef42a6281f45f" .
+
+<urn:uad36:required-structure-rule:UAD1622> a b:Binding ;
+    b:applicabilityXPath "//m:RenewableEnergyComponentExistsIndicator[.='true']" ;
+    b:element "RenewableEnergyComponentType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:ENERGY_EFFICIENCY_AND_GREEN/m:RENEWABLE_ENERGY_COMPONENTS/m:RENEWABLE_ENERGY_COMPONENT/m:RenewableEnergyComponentType" ;
+    b:requiredStructureXPath "//m:RenewableEnergyComponentType" ;
+    b:ruleId "UAD1622" ;
+    b:sourceFingerprint "a86e351af3dd9b6b6e380e25205afb4d97e4554666ef2cd41a442ed2a6bfcdbd" .
+
+<urn:uad36:required-structure-rule:UAD1624> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "PropertyValuationConditionalConclusionType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_RECONCILIATION/m:VALUATION_RECONCILIATION_SUMMARY/m:VALUATION_CONDITIONS/m:VALUATION_CONDITION/m:PropertyValuationConditionalConclusionType" ;
+    b:requiredStructureXPath "//m:DEFECT_DETAIL[m:DefectItemRecommendedActionType='Repair']" ;
+    b:ruleId "UAD1624" ;
+    b:sourceFingerprint "97fc0cd32895b5ad444a7773873750931e34c2f2178bd3f0c7302a9fed17460b" .
+
+<urn:uad36:required-structure-rule:UAD1638> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "MarketInventoryType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:MARKET/m:MARKET_INVENTORIES/m:MARKET_INVENTORY/m:MarketInventoryType" ;
+    b:requiredStructureXPath "//m:MARKET_INVENTORY[m:MarketInventoryType='ActiveListings']" ;
+    b:ruleId "UAD1638" ;
+    b:sourceFingerprint "ba39ba8dc7f098609e5ac236ad1ed4e05ced03352a126912b900a6da866d519b" .
+
+<urn:uad36:required-structure-rule:UAD1641> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "MarketInventoryType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:MARKET/m:MARKET_INVENTORIES/m:MARKET_INVENTORY/m:MarketInventoryType" ;
+    b:requiredStructureXPath "//m:MARKET_INVENTORY[m:MarketInventoryType='PendingSales']" ;
+    b:ruleId "UAD1641" ;
+    b:sourceFingerprint "7a2719fc8204f42883d4f232c1bed9706fc9cc82676bb5022ce7d83937cf709f" .
+
+<urn:uad36:required-structure-rule:UAD1650> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "MarketInventoryType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:MARKET/m:MARKET_INVENTORIES/m:MARKET_INVENTORY/m:MarketInventoryType" ;
+    b:requiredStructureXPath "//m:MARKET_INVENTORY[m:MarketInventoryType='TotalSales']" ;
+    b:ruleId "UAD1650" ;
+    b:sourceFingerprint "65c0a315bd30f0ff9d679de9deaf99b3a0e32fc3ecd8eb0069ea60e7aeb3451f" .
+
+<urn:uad36:required-structure-rule:UAD1667> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "CarStorageType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:CAR_STORAGES/m:CAR_STORAGE/m:CAR_STORAGE_DETAIL/m:CarStorageType" ;
+    b:requiredStructureXPath "//m:CarStorageType" ;
+    b:ruleId "UAD1667" ;
+    b:sourceFingerprint "e3f6191dfcc0a56be57596dcf8bf9e74c71deed12194039cfe405fc216c01f7a" .
+
+<urn:uad36:required-structure-rule:UAD1680> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "FunctionalIssueType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:FUNCTIONAL_ISSUES/m:FUNCTIONAL_ISSUE/m:FunctionalIssueType" ;
+    b:requiredStructureXPath "//m:FunctionalIssueType" ;
+    b:ruleId "UAD1680" ;
+    b:sourceFingerprint "2c46263f17afe08ad9880a20a7e01dbb6ff42366622a1c35fe88a806d6ce6833" .
+
+<urn:uad36:required-structure-rule:UAD1683> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "DisasterMitigationFeatureType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:DISASTER_MITIGATION_FEATURES/m:DISASTER_MITIGATION_FEATURE/m:DisasterMitigationFeatureType" ;
+    b:requiredStructureXPath "//m:DisasterMitigationFeatureType" ;
+    b:ruleId "UAD1683" ;
+    b:sourceFingerprint "4d11cace5ba65371e13c99177b10bb87fac7c9a30d63fbb53075939e80a831ee" .
+
+<urn:uad36:required-structure-rule:UAD1694> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "AccessoryDwellingUnitIndicator" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:IMPROVEMENTS/m:IMPROVEMENT/m:PROPERTY_UNITS/m:PROPERTY_UNIT/m:PROPERTY_UNIT_DETAIL/m:AccessoryDwellingUnitIndicator" ;
+    b:requiredStructureXPath "//m:PROPERTY_UNIT_DETAIL[m:AccessoryDwellingUnitIndicator='false']" ;
+    b:ruleId "UAD1694" ;
+    b:sourceFingerprint "1c426a0ac9bdd85f6bcd7b7f4e33387e95940ff3831fbdf16c8a8946d04d17a3" .
+
+<urn:uad36:required-structure-rule:UAD1732> a b:Binding ;
+    b:applicabilityXPath "//m:PropertyValuationConditionalConclusionType[.='SubjectToInspection']" ;
+    b:element "PropertyValuationConditionalConclusionType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_RECONCILIATION/m:VALUATION_RECONCILIATION_SUMMARY/m:VALUATION_CONDITIONS/m:VALUATION_CONDITION/m:PropertyValuationConditionalConclusionType" ;
+    b:requiredStructureXPath "//m:DEFECT_DETAIL[m:DefectItemRecommendedActionType='Inspection']" ;
+    b:ruleId "UAD1732" ;
+    b:sourceFingerprint "0ee5838426242011cb729a665ba54b06218d18ecdd2da4063f40354ab4640116" .
+
+<urn:uad36:required-structure-rule:UAD1734> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "OwnershipTransferTransactionType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:SALES_HISTORIES/m:SALES_HISTORY/m:OwnershipTransferTransactionType" ;
+    b:requiredStructureXPath "//m:OwnershipTransferTransactionType" ;
+    b:ruleId "UAD1734" ;
+    b:sourceFingerprint "382aeb298fd1573978d59ecf71f96c6f1d6b4703b99ab037a1ab8e11a598240f" .
+
+<urn:uad36:required-structure-rule:UAD1763> a b:Binding ;
+    b:applicabilityXPath "//m:RentScheduleIndicator[.='true']" ;
+    b:element "ValuationAnalysisCategoryType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_COMMENTARIES/m:VALUATION_COMMENTARY/m:ValuationAnalysisCategoryType" ;
+    b:requiredStructureXPath "//m:VALUATION_COMMENTARY[m:ValuationAnalysisCategoryType='ComparableRental' and m:ValuationCommentText]" ;
+    b:ruleId "UAD1763" ;
+    b:sourceFingerprint "076c38297db004c0293733aa80963097d918a0780089a16742186d98a55569d4" .
+
+<urn:uad36:required-structure-rule:UAD1764> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "PROPERTY_UNIT" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:IMPROVEMENTS/m:IMPROVEMENT/m:PROPERTY_UNITS/m:PROPERTY_UNIT" ;
+    b:requiredStructureXPath "//m:PROPERTY_UNIT" ;
+    b:ruleId "UAD1764" ;
+    b:sourceFingerprint "91ecf59b91017997679218263f4c7503dbaec5b0580499839779797a2114f169" .
+
+<urn:uad36:required-structure-rule:UAD1769> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "SiteInfluenceType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:SITE/m:SITE_INFLUENCES/m:SITE_INFLUENCE/m:SITE_INFLUENCE_DETAIL/m:SiteInfluenceType" ;
+    b:requiredStructureXPath "//m:SiteInfluenceType" ;
+    b:ruleId "UAD1769" ;
+    b:sourceFingerprint "f4ef8d260076f6bcd8da480c1e52926b9452b5a30f597c7bd23bf6ba8fa2386a" .
+
+<urn:uad36:required-structure-rule:UAD1774> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:element "ConstructionMethodType" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:IMPROVEMENTS/m:IMPROVEMENT/m:STRUCTURE/m:CONSTRUCTION_METHODS/m:CONSTRUCTION_METHOD/m:ConstructionMethodType" ;
+    b:requiredStructureXPath "//m:ConstructionMethodType" ;
+    b:ruleId "UAD1774" ;
+    b:sourceFingerprint "ea0bcef6a8b699805d4ef8e279caa396474be05d116dee7f14282744cc350933" .
