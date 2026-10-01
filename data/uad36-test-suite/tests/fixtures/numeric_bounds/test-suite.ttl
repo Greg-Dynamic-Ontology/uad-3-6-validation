@@ -1,0 +1,488 @@
+@prefix case: <urn:uad36:test-case:IT-1R6S1:> .
+@prefix suite: <urn:uad36:test-suite:> .
+@prefix t: <urn:uad36:test-suite:vocab:> .
+
+suite:numeric-bounds a t:TestSuite ;
+    t:category <urn:uad36:work-tracking:scenario:numeric_bounds> ;
+    t:hasCase case:UAD1014,
+        case:UAD1018,
+        case:UAD1052,
+        case:UAD1085,
+        case:UAD1111,
+        case:UAD1197,
+        case:UAD1233,
+        case:UAD1234,
+        case:UAD1235,
+        case:UAD1236,
+        case:UAD1248,
+        case:UAD1263,
+        case:UAD1264,
+        case:UAD1418,
+        case:UAD1442,
+        case:UAD1472,
+        case:UAD1475,
+        case:UAD1631,
+        case:UAD1633,
+        case:UAD1636,
+        case:UAD1644,
+        case:UAD1646,
+        case:UAD1648,
+        case:UAD1745 ;
+    t:ruleInventoryPath "data/data-constraints.csv" ;
+    t:scenarioId "IT-1R6S1" .
+
+case:UAD1014 a t:TestCase ;
+    t:ruleId "UAD1014" ;
+    t:sourceUniqueIdCell "0100.0021" ;
+    t:primaryDataElement "DwellingCount" ;
+    t:ruleLogic "If DwellingCount < 1" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/" ;
+    t:messageText "The total number of dwellings must be at least 1." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1014> ;
+    t:baselinePath "examples/xml/SF1_Appraisal_v1.4.xml" ;
+    t:mutationMode "replace-text" ;
+    t:mutationXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:PROPERTY_DETAIL/m:DwellingCount" ;
+    t:allowedValue "1" ;
+    t:outsideValue "0" ;
+    t:expectedViolationKind "NumericBoundViolation" ;
+    t:expectedDataLocation "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:PROPERTY_DETAIL/m:DwellingCount" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1018 a t:TestCase ;
+    t:ruleId "UAD1018" ;
+    t:sourceUniqueIdCell "0100.0022" ;
+    t:primaryDataElement "LivingUnitExcludingADUCount" ;
+    t:ruleLogic "If LivingUnitExcludingADUCount < 1" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/" ;
+    t:messageText "The total number of living units, excluding any ADUs, must be at least 1." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1018> ;
+    t:baselinePath "examples/xml/SF1_Appraisal_v1.4.xml" ;
+    t:mutationMode "replace-text" ;
+    t:mutationXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:PROPERTY_DETAIL/m:LivingUnitExcludingADUCount" ;
+    t:allowedValue "1" ;
+    t:outsideValue "0" ;
+    t:expectedViolationKind "NumericBoundViolation" ;
+    t:expectedDataLocation "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:PROPERTY_DETAIL/m:LivingUnitExcludingADUCount" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1052 a t:TestCase ;
+    t:ruleId "UAD1052" ;
+    t:sourceUniqueIdCell "0300.0011" ;
+    t:primaryDataElement "PropertyStructureBuiltYear" ;
+    t:ruleLogic "If PropertyStructureBuiltYear < 1800 in a given instance of IMPROVEMENT_DETAIL with ImprovementType = \"Dwelling\"" ;
+    t:severity "Warning" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/IMPROVEMENT_DETAIL/" ;
+    t:messageText "The 'Year Built' is prior to 1800. Please check for accuracy." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1052> ;
+    t:baselinePath "examples/xml/SF1_Appraisal_v1.4.xml" ;
+    t:mutationMode "replace-text" ;
+    t:mutationXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:IMPROVEMENT_DETAIL[m:ImprovementType='Dwelling']/m:PropertyStructureBuiltYear" ;
+    t:allowedValue "2004" ;
+    t:outsideValue "1799" ;
+    t:expectedViolationKind "NumericBoundViolation" ;
+    t:expectedDataLocation "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:IMPROVEMENT_DETAIL[m:ImprovementType='Dwelling']/m:PropertyStructureBuiltYear" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1085 a t:TestCase ;
+    t:ruleId "UAD1085" ;
+    t:sourceUniqueIdCell "0300.0063" ;
+    t:primaryDataElement "LivingUnitCount" ;
+    t:ruleLogic "If ImprovementType = \"Dwelling\" and LivingUnitCount = 0 in a given instance of STRUCTURE_DETAIL" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/STRUCTURE/STRUCTURE_DETAIL/" ;
+    t:messageText "The number of living units cannot be 0 for any dwelling." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1085> ;
+    t:baselinePath "examples/xml/SF1_Appraisal_v1.4.xml" ;
+    t:mutationMode "replace-text" ;
+    t:mutationXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:IMPROVEMENT[m:IMPROVEMENT_DETAIL/m:ImprovementType='Dwelling']//m:STRUCTURE_DETAIL/m:LivingUnitCount" ;
+    t:allowedValue "1" ;
+    t:outsideValue "0" ;
+    t:expectedViolationKind "NumericBoundViolation" ;
+    t:expectedDataLocation "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:IMPROVEMENT[m:IMPROVEMENT_DETAIL/m:ImprovementType='Dwelling']//m:STRUCTURE_DETAIL/m:LivingUnitCount" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1111 a t:TestCase ;
+    t:ruleId "UAD1111" ;
+    t:sourceUniqueIdCell "0500.0016" ;
+    t:primaryDataElement "ManufacturedHomeManufactureDate" ;
+    t:ruleLogic "If ManufacturedHomeManufactureDate < 1976 in a given instance of MANUFACTURED_HOME_DETAIL" ;
+    t:severity "Warning" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/MANUFACTURED_HOME/MANUFACTURED_HOME_DETAIL/" ;
+    t:messageText "The 'Date of Manufacture' is prior to 1976. Please check for accuracy." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1111> ;
+    t:baselinePath "examples/xml/MH1_Appraisal_v1.4.xml" ;
+    t:mutationMode "replace-text" ;
+    t:mutationXPath "//m:MANUFACTURED_HOME_DETAIL/m:ManufacturedHomeManufactureDate" ;
+    t:allowedValue "2019-01-15" ;
+    t:outsideValue "1975-12-31" ;
+    t:expectedViolationKind "NumericBoundViolation" ;
+    t:expectedDataLocation "//m:MANUFACTURED_HOME_DETAIL/m:ManufacturedHomeManufactureDate" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1197 a t:TestCase ;
+    t:ruleId "UAD1197" ;
+    t:sourceUniqueIdCell "0800.0012" ;
+    t:primaryDataElement "OwnershipTransferTransactionAmount" ;
+    t:ruleLogic "If OwnershipTransferTransactionAmount < 0 in a given instance of SALES_HISTORY" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SALES_HISTORIES/SALES_HISTORY/" ;
+    t:messageText "The amount related to the transfer of ownership of real property (typically the sale price) must be greater than or equal to $0." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1197> ;
+    t:baselinePath "examples/xml/Condo1_Appraisal_v1.4.xml" ;
+    t:mutationMode "replace-text" ;
+    t:mutationXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:SALES_HISTORY/m:OwnershipTransferTransactionAmount" ;
+    t:allowedValue "700000" ;
+    t:outsideValue "-1" ;
+    t:expectedViolationKind "NumericBoundViolation" ;
+    t:expectedDataLocation "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:SALES_HISTORY/m:OwnershipTransferTransactionAmount" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1233 a t:TestCase ;
+    t:ruleId "UAD1233" ;
+    t:sourceUniqueIdCell "" ;
+    t:primaryDataElement "DepreciationTotalAmount" ;
+    t:ruleLogic "If CostApproachIndicator = \"true\" and DepreciationTotalAmount < 0 in a given instance of IMPROVEMENT_COST_AND_DEPRECIATED_VALUE/IMPROVEMENT_DEPRECIATION" ;
+    t:severity "Warning" ;
+    t:propertyAffected "N/A" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/APPROACH_TO_VALUE/COST_APPROACH/IMPROVEMENT_COST_AND_DEPRECIATED_VALUES/IMPROVEMENT_COST_AND_DEPRECIATED_VALUE/IMPROVEMENT_DEPRECIATION/" ;
+    t:messageText "The 'Total Depreciation' displays as a negative number on the appraisal. However, it must be delivered as a positive number in the UAD XML. For assistance with this message, contact the appraisal software vendor." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1233> ;
+    t:baselinePath "examples/xml/MH2_Appraisal_v1.4.xml" ;
+    t:mutationMode "replace-text" ;
+    t:mutationXPath "//m:IMPROVEMENT_DEPRECIATION/m:DepreciationTotalAmount" ;
+    t:allowedValue "17710" ;
+    t:outsideValue "-1" ;
+    t:expectedViolationKind "NumericBoundViolation" ;
+    t:expectedDataLocation "//m:IMPROVEMENT_DEPRECIATION/m:DepreciationTotalAmount" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1234 a t:TestCase ;
+    t:ruleId "UAD1234" ;
+    t:sourceUniqueIdCell "" ;
+    t:primaryDataElement "DepreciationExternalAmount" ;
+    t:ruleLogic "If CostApproachIndicator = \"true\" and DepreciationExternalAmount < 0 in a given instance of IMPROVEMENT_COST_AND_DEPRECIATED_VALUE/IMPROVEMENT_DEPRECIATION" ;
+    t:severity "Warning" ;
+    t:propertyAffected "N/A" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/APPROACH_TO_VALUE/COST_APPROACH/IMPROVEMENT_COST_AND_DEPRECIATED_VALUES/IMPROVEMENT_COST_AND_DEPRECIATED_VALUE/IMPROVEMENT_DEPRECIATION/" ;
+    t:messageText "The 'External Depreciation' displays as a negative number on the appraisal. However, it must be delivered as a positive number in the UAD XML. For assistance with this message, contact the appraisal software vendor." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1234> ;
+    t:baselinePath "data/uad36-test-suite/tests/fixtures/numeric_bounds/baseline/UAD1234.xml" ;
+    t:mutationMode "replace-text" ;
+    t:mutationXPath "//m:IMPROVEMENT_DEPRECIATION/m:DepreciationExternalAmount" ;
+    t:allowedValue "0" ;
+    t:outsideValue "-1" ;
+    t:expectedViolationKind "NumericBoundViolation" ;
+    t:expectedDataLocation "//m:IMPROVEMENT_DEPRECIATION/m:DepreciationExternalAmount" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1235 a t:TestCase ;
+    t:ruleId "UAD1235" ;
+    t:sourceUniqueIdCell "" ;
+    t:primaryDataElement "DepreciationFunctionalAmount" ;
+    t:ruleLogic "If CostApproachIndicator = \"true\" and DepreciationFunctionalAmount < 0 in a given instance of IMPROVEMENT_COST_AND_DEPRECIATED_VALUE/IMPROVEMENT_DEPRECIATION" ;
+    t:severity "Warning" ;
+    t:propertyAffected "N/A" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/APPROACH_TO_VALUE/COST_APPROACH/IMPROVEMENT_COST_AND_DEPRECIATED_VALUES/IMPROVEMENT_COST_AND_DEPRECIATED_VALUE/IMPROVEMENT_DEPRECIATION/" ;
+    t:messageText "The 'Functional Depreciation' displays as a negative number on the appraisal. However, it must be delivered as a positive number in the UAD XML. For assistance with this message, contact the appraisal software vendor." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1235> ;
+    t:baselinePath "data/uad36-test-suite/tests/fixtures/numeric_bounds/baseline/UAD1235.xml" ;
+    t:mutationMode "replace-text" ;
+    t:mutationXPath "//m:IMPROVEMENT_DEPRECIATION/m:DepreciationFunctionalAmount" ;
+    t:allowedValue "0" ;
+    t:outsideValue "-1" ;
+    t:expectedViolationKind "NumericBoundViolation" ;
+    t:expectedDataLocation "//m:IMPROVEMENT_DEPRECIATION/m:DepreciationFunctionalAmount" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1236 a t:TestCase ;
+    t:ruleId "UAD1236" ;
+    t:sourceUniqueIdCell "" ;
+    t:primaryDataElement "DepreciationPhysicalAmount" ;
+    t:ruleLogic "If CostApproachIndicator = \"true\" and DepreciationPhysicalAmount < 0 in a given instance of IMPROVEMENT_COST_AND_DEPRECIATED_VALUE/IMPROVEMENT_DEPRECIATION" ;
+    t:severity "Warning" ;
+    t:propertyAffected "N/A" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/APPROACH_TO_VALUE/COST_APPROACH/IMPROVEMENT_COST_AND_DEPRECIATED_VALUES/IMPROVEMENT_COST_AND_DEPRECIATED_VALUE/IMPROVEMENT_DEPRECIATION/" ;
+    t:messageText "The 'Physical Depreciation' displays as a negative number on the appraisal. However, it must be delivered as a positive number in the UAD XML. For assistance with this message, contact the appraisal software vendor." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1236> ;
+    t:baselinePath "data/uad36-test-suite/tests/fixtures/numeric_bounds/baseline/UAD1236.xml" ;
+    t:mutationMode "replace-text" ;
+    t:mutationXPath "//m:IMPROVEMENT_DEPRECIATION/m:DepreciationPhysicalAmount" ;
+    t:allowedValue "0" ;
+    t:outsideValue "-1" ;
+    t:expectedViolationKind "NumericBoundViolation" ;
+    t:expectedDataLocation "//m:IMPROVEMENT_DEPRECIATION/m:DepreciationPhysicalAmount" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1248 a t:TestCase ;
+    t:ruleId "UAD1248" ;
+    t:sourceUniqueIdCell "1200.0029" ;
+    t:primaryDataElement "LivingUnitExcludingADUCount" ;
+    t:ruleLogic "If @ValuationUseType = \"GrossRentMultiplierComparable\" and LivingUnitExcludingADUCount < 1" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Gross Rent Multiplier Comparable #n" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/" ;
+    t:messageText "The total number of living units, excluding any ADUs, must be at least 1." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1248> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:mutationMode "replace-text" ;
+    t:mutationXPath "(//m:PROPERTY[@ValuationUseType='GrossRentMultiplierComparable']//m:PROPERTY_DETAIL/m:LivingUnitExcludingADUCount)[1]" ;
+    t:allowedValue "2" ;
+    t:outsideValue "0" ;
+    t:expectedViolationKind "NumericBoundViolation" ;
+    t:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='GrossRentMultiplierComparable']//m:PROPERTY_DETAIL/m:LivingUnitExcludingADUCount)[1]" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1263 a t:TestCase ;
+    t:ruleId "UAD1263" ;
+    t:sourceUniqueIdCell "1300.0017" ;
+    t:primaryDataElement "OpinionOfValueAmount" ;
+    t:ruleLogic "If OpinionOfValueAmount < 1" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "N/A" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/VALUATION_RECONCILIATION/VALUATION_RECONCILIATION_SUMMARY/VALUATION_RECONCILIATION_SUMMARY_DETAIL/" ;
+    t:messageText "'Opinion Of Market Value' must be at least one dollar, and cannot be negative." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1263> ;
+    t:baselinePath "examples/xml/SF1_Appraisal_v1.4.xml" ;
+    t:mutationMode "replace-text" ;
+    t:mutationXPath "//m:VALUATION_RECONCILIATION_SUMMARY_DETAIL/m:OpinionOfValueAmount" ;
+    t:allowedValue "491000" ;
+    t:outsideValue "0" ;
+    t:expectedViolationKind "NumericBoundViolation" ;
+    t:expectedDataLocation "//m:VALUATION_RECONCILIATION_SUMMARY_DETAIL/m:OpinionOfValueAmount" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1264 a t:TestCase ;
+    t:ruleId "UAD1264" ;
+    t:sourceUniqueIdCell "1300.0017" ;
+    t:primaryDataElement "OpinionOfValueAmount" ;
+    t:ruleLogic "If OpinionOfValueAmount > 1,000,000,000" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "N/A" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/VALUATION_RECONCILIATION/VALUATION_RECONCILIATION_SUMMARY/VALUATION_RECONCILIATION_SUMMARY_DETAIL/" ;
+    t:messageText "'Opinion Of Market Value' must be less than a billion dollars." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1264> ;
+    t:baselinePath "examples/xml/SF1_Appraisal_v1.4.xml" ;
+    t:mutationMode "replace-text" ;
+    t:mutationXPath "//m:VALUATION_RECONCILIATION_SUMMARY_DETAIL/m:OpinionOfValueAmount" ;
+    t:allowedValue "491000" ;
+    t:outsideValue "1000000001" ;
+    t:expectedViolationKind "NumericBoundViolation" ;
+    t:expectedDataLocation "//m:VALUATION_RECONCILIATION_SUMMARY_DETAIL/m:OpinionOfValueAmount" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1418 a t:TestCase ;
+    t:ruleId "UAD1418" ;
+    t:sourceUniqueIdCell "1800.0128" ;
+    t:primaryDataElement "PropertyStructureBuiltYear" ;
+    t:ruleLogic "If @ValuationUseType = \"SalesComparable\" and PropertyStructureBuiltYear < 1800 in a given instance of IMPROVEMENT_DETAIL with ImprovementType = \"Dwelling\"" ;
+    t:severity "Warning" ;
+    t:propertyAffected "Sales Comparable #n" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/IMPROVEMENT_DETAIL/" ;
+    t:messageText "The 'Year Built' is prior to 1800. Please check for accuracy." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1418> ;
+    t:baselinePath "examples/xml/SF1_Appraisal_v1.4.xml" ;
+    t:mutationMode "replace-text" ;
+    t:mutationXPath "(//m:PROPERTY[@ValuationUseType='SalesComparable']//m:IMPROVEMENT_DETAIL[m:ImprovementType='Dwelling']/m:PropertyStructureBuiltYear)[1]" ;
+    t:allowedValue "2004" ;
+    t:outsideValue "1799" ;
+    t:expectedViolationKind "NumericBoundViolation" ;
+    t:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='SalesComparable']//m:IMPROVEMENT_DETAIL[m:ImprovementType='Dwelling']/m:PropertyStructureBuiltYear)[1]" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1442 a t:TestCase ;
+    t:ruleId "UAD1442" ;
+    t:sourceUniqueIdCell "1800.0208; 1800.0272" ;
+    t:primaryDataElement "OwnershipTransferTransactionAmount" ;
+    t:ruleLogic "If @ValuationUseType = \"SalesComparable\" and OwnershipTransferTransactionAmount < 0 in a given instance of SALES_HISTORY" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Sales Comparable #n" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SALES_HISTORIES/SALES_HISTORY/" ;
+    t:messageText "The amount related to the transfer of ownership of real property (typically the sale price) must be greater than or equal to $0." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1442> ;
+    t:baselinePath "examples/xml/SF1_Appraisal_v1.4.xml" ;
+    t:mutationMode "replace-text" ;
+    t:mutationXPath "(//m:PROPERTY[@ValuationUseType='SalesComparable']//m:SALES_HISTORY/m:OwnershipTransferTransactionAmount)[1]" ;
+    t:allowedValue "460000" ;
+    t:outsideValue "-1" ;
+    t:expectedViolationKind "NumericBoundViolation" ;
+    t:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='SalesComparable']//m:SALES_HISTORY/m:OwnershipTransferTransactionAmount)[1]" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1472 a t:TestCase ;
+    t:ruleId "UAD1472" ;
+    t:sourceUniqueIdCell "1800.0363" ;
+    t:primaryDataElement "DwellingCount" ;
+    t:ruleLogic "If @ValuationUseType = \"SalesComparable\" and DwellingCount < 1" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Sales Comparable #n" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/" ;
+    t:messageText "The total number of dwellings must be at least 1." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1472> ;
+    t:baselinePath "examples/xml/SF1_Appraisal_v1.4.xml" ;
+    t:mutationMode "replace-text" ;
+    t:mutationXPath "(//m:PROPERTY[@ValuationUseType='SalesComparable']//m:PROPERTY_DETAIL/m:DwellingCount)[1]" ;
+    t:allowedValue "1" ;
+    t:outsideValue "0" ;
+    t:expectedViolationKind "NumericBoundViolation" ;
+    t:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='SalesComparable']//m:PROPERTY_DETAIL/m:DwellingCount)[1]" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1475 a t:TestCase ;
+    t:ruleId "UAD1475" ;
+    t:sourceUniqueIdCell "1800.0365" ;
+    t:primaryDataElement "LivingUnitExcludingADUCount" ;
+    t:ruleLogic "If @ValuationUseType = \"SalesComparable\" and LivingUnitExcludingADUCount < 1" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Sales Comparable #n" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/" ;
+    t:messageText "The total number of living units, excluding any ADUs, must be at least 1." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1475> ;
+    t:baselinePath "examples/xml/SF1_Appraisal_v1.4.xml" ;
+    t:mutationMode "replace-text" ;
+    t:mutationXPath "(//m:PROPERTY[@ValuationUseType='SalesComparable']//m:PROPERTY_DETAIL/m:LivingUnitExcludingADUCount)[1]" ;
+    t:allowedValue "1" ;
+    t:outsideValue "0" ;
+    t:expectedViolationKind "NumericBoundViolation" ;
+    t:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='SalesComparable']//m:PROPERTY_DETAIL/m:LivingUnitExcludingADUCount)[1]" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1631 a t:TestCase ;
+    t:ruleId "UAD1631" ;
+    t:sourceUniqueIdCell "3000.0019" ;
+    t:primaryDataElement "MarketInventoryHighestPriceAmount" ;
+    t:ruleLogic "If MarketInventoryHighestPriceAmount <= 0 for the instance of MARKET_INVENTORY with MarketInventoryType = \"ActiveListings\"" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/MARKET/MARKET_INVENTORIES/MARKET_INVENTORY/" ;
+    t:messageText "The 'Highest List Price' must be greater than $0." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1631> ;
+    t:baselinePath "examples/xml/SF1_Appraisal_v1.4.xml" ;
+    t:mutationMode "replace-text" ;
+    t:mutationXPath "//m:MARKET_INVENTORY[m:MarketInventoryType='ActiveListings']/m:MarketInventoryHighestPriceAmount" ;
+    t:allowedValue "445000" ;
+    t:outsideValue "0" ;
+    t:expectedViolationKind "NumericBoundViolation" ;
+    t:expectedDataLocation "//m:MARKET_INVENTORY[m:MarketInventoryType='ActiveListings']/m:MarketInventoryHighestPriceAmount" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1633 a t:TestCase ;
+    t:ruleId "UAD1633" ;
+    t:sourceUniqueIdCell "3000.0020" ;
+    t:primaryDataElement "MarketInventoryLowestPriceAmount" ;
+    t:ruleLogic "If MarketInventoryLowestPriceAmount <= 0 for the instance of MARKET_INVENTORY with MarketInventoryType = \"ActiveListings\"" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/MARKET/MARKET_INVENTORIES/MARKET_INVENTORY/" ;
+    t:messageText "The 'Lowest List Price' must be greater than $0." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1633> ;
+    t:baselinePath "examples/xml/SF1_Appraisal_v1.4.xml" ;
+    t:mutationMode "replace-text" ;
+    t:mutationXPath "//m:MARKET_INVENTORY[m:MarketInventoryType='ActiveListings']/m:MarketInventoryLowestPriceAmount" ;
+    t:allowedValue "435000" ;
+    t:outsideValue "0" ;
+    t:expectedViolationKind "NumericBoundViolation" ;
+    t:expectedDataLocation "//m:MARKET_INVENTORY[m:MarketInventoryType='ActiveListings']/m:MarketInventoryLowestPriceAmount" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1636 a t:TestCase ;
+    t:ruleId "UAD1636" ;
+    t:sourceUniqueIdCell "3000.0022" ;
+    t:primaryDataElement "MarketInventoryMedianPriceAmount" ;
+    t:ruleLogic "If MarketInventoryMedianPriceAmount <= 0 for the instance of MARKET_INVENTORY with MarketInventoryType = \"ActiveListings\"" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/MARKET/MARKET_INVENTORIES/MARKET_INVENTORY/" ;
+    t:messageText "The 'Median List Price' must be greater than $0." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1636> ;
+    t:baselinePath "examples/xml/SF1_Appraisal_v1.4.xml" ;
+    t:mutationMode "replace-text" ;
+    t:mutationXPath "//m:MARKET_INVENTORY[m:MarketInventoryType='ActiveListings']/m:MarketInventoryMedianPriceAmount" ;
+    t:allowedValue "440000" ;
+    t:outsideValue "0" ;
+    t:expectedViolationKind "NumericBoundViolation" ;
+    t:expectedDataLocation "//m:MARKET_INVENTORY[m:MarketInventoryType='ActiveListings']/m:MarketInventoryMedianPriceAmount" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1644 a t:TestCase ;
+    t:ruleId "UAD1644" ;
+    t:sourceUniqueIdCell "3000.0027" ;
+    t:primaryDataElement "MarketInventoryHighestPriceAmount" ;
+    t:ruleLogic "If MarketInventoryHighestPriceAmount <= 0 for the instance of MARKET_INVENTORY with MarketInventoryType = \"TotalSales\"" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/MARKET/MARKET_INVENTORIES/MARKET_INVENTORY/" ;
+    t:messageText "The 'Highest Sale Price' must be greater than $0." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1644> ;
+    t:baselinePath "examples/xml/SF1_Appraisal_v1.4.xml" ;
+    t:mutationMode "replace-text" ;
+    t:mutationXPath "//m:MARKET_INVENTORY[m:MarketInventoryType='TotalSales']/m:MarketInventoryHighestPriceAmount" ;
+    t:allowedValue "597000" ;
+    t:outsideValue "0" ;
+    t:expectedViolationKind "NumericBoundViolation" ;
+    t:expectedDataLocation "//m:MARKET_INVENTORY[m:MarketInventoryType='TotalSales']/m:MarketInventoryHighestPriceAmount" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1646 a t:TestCase ;
+    t:ruleId "UAD1646" ;
+    t:sourceUniqueIdCell "3000.0028" ;
+    t:primaryDataElement "MarketInventoryLowestPriceAmount" ;
+    t:ruleLogic "If MarketInventoryLowestPriceAmount <= 0 for the instance of MARKET_INVENTORY with MarketInventoryType = \"TotalSales\"" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/MARKET/MARKET_INVENTORIES/MARKET_INVENTORY/" ;
+    t:messageText "The 'Lowest Sale Price' must be greater than $0." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1646> ;
+    t:baselinePath "examples/xml/SF1_Appraisal_v1.4.xml" ;
+    t:mutationMode "replace-text" ;
+    t:mutationXPath "//m:MARKET_INVENTORY[m:MarketInventoryType='TotalSales']/m:MarketInventoryLowestPriceAmount" ;
+    t:allowedValue "400000" ;
+    t:outsideValue "0" ;
+    t:expectedViolationKind "NumericBoundViolation" ;
+    t:expectedDataLocation "//m:MARKET_INVENTORY[m:MarketInventoryType='TotalSales']/m:MarketInventoryLowestPriceAmount" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1648 a t:TestCase ;
+    t:ruleId "UAD1648" ;
+    t:sourceUniqueIdCell "3000.0029" ;
+    t:primaryDataElement "MarketInventoryMedianPriceAmount" ;
+    t:ruleLogic "If MarketInventoryMedianPriceAmount <= 0 for the instance of MARKET_INVENTORY with MarketInventoryType = \"TotalSales\"" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/MARKET/MARKET_INVENTORIES/MARKET_INVENTORY/" ;
+    t:messageText "The 'Median Sale Price' must be greater than $0." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1648> ;
+    t:baselinePath "examples/xml/SF1_Appraisal_v1.4.xml" ;
+    t:mutationMode "replace-text" ;
+    t:mutationXPath "//m:MARKET_INVENTORY[m:MarketInventoryType='TotalSales']/m:MarketInventoryMedianPriceAmount" ;
+    t:allowedValue "499000" ;
+    t:outsideValue "0" ;
+    t:expectedViolationKind "NumericBoundViolation" ;
+    t:expectedDataLocation "//m:MARKET_INVENTORY[m:MarketInventoryType='TotalSales']/m:MarketInventoryMedianPriceAmount" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1745 a t:TestCase ;
+    t:ruleId "UAD1745" ;
+    t:sourceUniqueIdCell "1200.0034" ;
+    t:primaryDataElement "OwnershipTransferTransactionAmount" ;
+    t:ruleLogic "If OwnershipTransferTransactionAmount < 0 in SALES_HISTORY" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Gross Rent Multiplier Comparable #n" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SALES_HISTORIES/SALES_HISTORY/" ;
+    t:messageText "The amount related to the transfer of ownership of real property (typically the sale price) must be greater than or equal to $0." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1745> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:mutationMode "replace-text" ;
+    t:mutationXPath "(//m:PROPERTY[@ValuationUseType='GrossRentMultiplierComparable']//m:SALES_HISTORY/m:OwnershipTransferTransactionAmount)[1]" ;
+    t:allowedValue "265000" ;
+    t:outsideValue "-1" ;
+    t:expectedViolationKind "NumericBoundViolation" ;
+    t:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='GrossRentMultiplierComparable']//m:SALES_HISTORY/m:OwnershipTransferTransactionAmount)[1]" ;
+    t:xsdValidAfterMutation true .
