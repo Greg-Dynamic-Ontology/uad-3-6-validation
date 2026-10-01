@@ -373,7 +373,7 @@ def load_required_rules() -> tuple[dict[str, str], ...]:
             rules.append(row)
 
         elif (
-            row["Severity"] == "Fatal"
+            row["Severity"] in {"Fatal", "Warning"}
             and row["Rule Logic"]
             == f"If {row['Primary Data Element']} is not provided"
         ):
@@ -405,7 +405,10 @@ def load_required_rules() -> tuple[dict[str, str], ...]:
         elif not xml_path or not xml_path.strip():
             field = " xPath"
             problem = "Missing XML path"
-        elif not xml_path.startswith("../VALUATION_ANALYSIS/"):
+        elif not (
+            xml_path.startswith("../VALUATION_ANALYSIS/")
+            or xml_path == "MESSAGE/"
+        ):
             field = " xPath"
             problem = f"Unsupported XML path: {xml_path}"
 
@@ -431,7 +434,7 @@ def rule_path(rule: dict[str, str]) -> str:
     parts.append(rule["Primary Data Element"])
 
     return "//" + "/".join(
-        "m:" + part
+        (part if part.startswith("@") else "m:" + part)
         + (
             "[@ValuationUseType='SubjectProperty']"
             if part == "PROPERTY"
@@ -627,6 +630,40 @@ def evaluate_required_data(
         )
         element_name = rule["Primary Data Element"]
         specification = conditional_spec(rule)
+
+        if parts == ["MESSAGE"] and element_name.startswith("@"):
+            attribute_name = element_name.removeprefix("@")
+            if root.tag != f"{{{NAMESPACE}}}MESSAGE":
+                raise ValueError(
+                    f"Unsupported root path: {rule['Message ID']}"
+                )
+            if (root.get(attribute_name) or "").strip():
+                continue
+
+            findings.append(
+                Finding(
+                    finding_id=f"F-{uuid4().hex[:8]}",
+                    severity=Severity(rule["Severity"].casefold()),
+                    investor=investor,
+                    rule_type=RuleType.APPENDIX_H,
+                    rule_id=rule["Message ID"],
+                    row_id=rule["Unique ID"],
+                    primary_data_element=element_name,
+                    property_affected=rule["Property Affected"],
+                    violation_kind="MissingRequiredValue",
+                    data_location=rule_path(rule),
+                    nearest_existing_ancestor=".",
+                    observed_value="missing, empty, or nil",
+                    expected_condition=f"{element_name} must be provided.",
+                    source=Provenance(
+                        source_document="data/data-constraints.csv",
+                        source_version="UAD 3.6",
+                        source_section=rule["Unique ID"],
+                    ),
+                    finding=rule["Message Text"],
+                )
+            )
+            continue
 
         for analysis in analyses:
             if rule["Property Affected"] == "Subject":
