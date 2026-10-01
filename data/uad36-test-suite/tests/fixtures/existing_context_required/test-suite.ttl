@@ -1,0 +1,404 @@
+@prefix case: <urn:uad36:test-case:IT-1R8S1:> .
+@prefix suite: <urn:uad36:test-suite:> .
+@prefix t: <urn:uad36:test-suite:vocab:> .
+
+suite:existing-context-required a t:TestSuite ;
+    t:category <urn:uad36:work-tracking:scenario:existing_context_required> ;
+    t:hasCase case:UAD1034,
+        case:UAD1047,
+        case:UAD1270,
+        case:UAD1291,
+        case:UAD1349,
+        case:UAD1363,
+        case:UAD1364,
+        case:UAD1366,
+        case:UAD1388,
+        case:UAD1558,
+        case:UAD1559,
+        case:UAD1705,
+        case:UAD1707,
+        case:UAD1710,
+        case:UAD1711,
+        case:UAD1712,
+        case:UAD1714,
+        case:UAD1736,
+        case:UAD1737,
+        case:UAD1738,
+        case:UAD1739,
+        case:UAD1740 ;
+    t:ruleInventoryPath "data/data-constraints.csv" ;
+    t:scenarioId "IT-1R8S1" .
+
+case:UAD1034 a t:TestCase ;
+    t:ruleId "UAD1034" ;
+    t:sourceUniqueIdCell "" ;
+    t:primaryDataElement "@ValuationUseType" ;
+    t:ruleLogic "If @ValuationUseType is not provided for one or more instances of PROPERTY" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "N/A" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/" ;
+    t:messageText "Provide 'ValuationUseType' for each property included in the appraisal. For assistance with this message, contact the appraisal software vendor." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1034> ;
+    t:baselinePath "examples/xml/SF1_Appraisal_v1.4.xml" ;
+    t:contextXPath "//m:PROPERTY" ;
+    t:requiredValueXPath "(//m:PROPERTY[@ValuationUseType])[1]/@ValuationUseType" ;
+    t:expectedDataLocation "(//m:PROPERTY[@ValuationUseType])[1]/@ValuationUseType" ;
+    t:expectedViolationKind "MissingRequiredValueInExistingContext" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1047 a t:TestCase ;
+    t:ruleId "UAD1047" ;
+    t:sourceUniqueIdCell "0300.0009" ;
+    t:primaryDataElement "ImprovementType" ;
+    t:ruleLogic "If ImprovementType is not provided in a given instance of IMPROVEMENT_DETAIL" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/IMPROVEMENT_DETAIL/" ;
+    t:messageText "Indicate whether the structure is a 'Dwelling' or 'Outbuilding'." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1047> ;
+    t:baselinePath "examples/xml/SF1_Appraisal_v1.4.xml" ;
+    t:contextXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:IMPROVEMENT_DETAIL" ;
+    t:requiredValueXPath "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:IMPROVEMENT_DETAIL[m:ImprovementType])[1]/m:ImprovementType" ;
+    t:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:IMPROVEMENT_DETAIL[m:ImprovementType])[1]/m:ImprovementType" ;
+    t:expectedViolationKind "MissingRequiredValueInExistingContext" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1270 a t:TestCase ;
+    t:ruleId "UAD1270" ;
+    t:sourceUniqueIdCell "1400.0383" ;
+    t:primaryDataElement "ObjectURL" ;
+    t:ruleLogic "If ObjectURL is not provided in FOREIGN_OBJECT" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "N/A" ;
+    t:xpath "MESSAGE/DOCUMENT_SETS/DOCUMENT_SET/DOCUMENTS/DOCUMENT/VIEWS/VIEW/VIEW_FILES/VIEW_FILE/FOREIGN_OBJECT/" ;
+    t:messageText "Provide the location and file name of the appraisal (e.g., \\\\SF1Appraisal_v1.pdf). For assistance with this message, contact the appraisal software vendor." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1270> ;
+    t:baselinePath "examples/xml/SF1_Appraisal_v1.4.xml" ;
+    t:contextXPath "//m:FOREIGN_OBJECT" ;
+    t:requiredValueXPath "(//m:FOREIGN_OBJECT[m:ObjectURL])[1]/m:ObjectURL" ;
+    t:expectedDataLocation "(//m:FOREIGN_OBJECT[m:ObjectURL])[1]/m:ObjectURL" ;
+    t:expectedViolationKind "MissingRequiredValueInExistingContext" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1291 a t:TestCase ;
+    t:ruleId "UAD1291" ;
+    t:sourceUniqueIdCell "1500.0008" ;
+    t:primaryDataElement "EncroachmentDirectionType" ;
+    t:ruleLogic "If EncroachmentDirectionType is not provided in a given instance of ENCROACHMENT" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/ENCUMBRANCES/ENCUMBRANCE/ENCROACHMENTS/ENCROACHMENT/" ;
+    t:messageText "Provide the direction of the encroachment (i.e., bordering property encroaching on subject property, subject property encroaching on bordering property)." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1291> ;
+    t:baselinePath "data/uad36-test-suite/tests/fixtures/existing_context_required/derived/UAD1291.xml" ;
+    t:contextXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:ENCROACHMENT" ;
+    t:requiredValueXPath "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:ENCROACHMENT[m:EncroachmentDirectionType])[1]/m:EncroachmentDirectionType" ;
+    t:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:ENCROACHMENT[m:EncroachmentDirectionType])[1]/m:EncroachmentDirectionType" ;
+    t:expectedViolationKind "MissingRequiredValueInExistingContext" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1349 a t:TestCase ;
+    t:ruleId "UAD1349" ;
+    t:sourceUniqueIdCell "1500.0102" ;
+    t:primaryDataElement "SiteUtilityOwnershipType" ;
+    t:ruleLogic "If SiteUtilityOwnershipType is not provided in a given instance of SITE_UTILITY_DETAIL" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SITE/SITE_UTILITIES/SITE_UTILITY/SITE_UTILITY_DETAIL/" ;
+    t:messageText "Indicate whether the utility is public or private." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1349> ;
+    t:baselinePath "examples/xml/SF1_Appraisal_v1.4.xml" ;
+    t:contextXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:SITE_UTILITY_DETAIL" ;
+    t:requiredValueXPath "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:SITE_UTILITY_DETAIL[m:SiteUtilityOwnershipType])[1]/m:SiteUtilityOwnershipType" ;
+    t:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:SITE_UTILITY_DETAIL[m:SiteUtilityOwnershipType])[1]/m:SiteUtilityOwnershipType" ;
+    t:expectedViolationKind "MissingRequiredValueInExistingContext" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1363 a t:TestCase ;
+    t:ruleId "UAD1363" ;
+    t:sourceUniqueIdCell "1500.0117" ;
+    t:primaryDataElement "ViewPrimaryIndicator" ;
+    t:ruleLogic "If ViewPrimaryIndicator is not provided in a given instance of SITE_VIEW" ;
+    t:severity "Warning" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SITE/SITE_VIEWS/SITE_VIEW/" ;
+    t:messageText "Indicate whether the view is the primary view." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1363> ;
+    t:baselinePath "examples/xml/SF1_Appraisal_v1.4.xml" ;
+    t:contextXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:SITE_VIEW" ;
+    t:requiredValueXPath "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:SITE_VIEW[m:ViewPrimaryIndicator and m:ViewRangeType and m:ValueMarketabilityImpactType])[1]/m:ViewPrimaryIndicator" ;
+    t:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:SITE_VIEW[m:ViewPrimaryIndicator and m:ViewRangeType and m:ValueMarketabilityImpactType])[1]/m:ViewPrimaryIndicator" ;
+    t:expectedViolationKind "MissingRequiredValueInExistingContext" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1364 a t:TestCase ;
+    t:ruleId "UAD1364" ;
+    t:sourceUniqueIdCell "1500.0118" ;
+    t:primaryDataElement "ViewRangeType" ;
+    t:ruleLogic "If ViewRangeType is not provided in a given instance of SITE_VIEW" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SITE/SITE_VIEWS/SITE_VIEW/" ;
+    t:messageText "Provide 'Range of View'." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1364> ;
+    t:baselinePath "examples/xml/SF1_Appraisal_v1.4.xml" ;
+    t:contextXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:SITE_VIEW" ;
+    t:requiredValueXPath "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:SITE_VIEW[m:ViewPrimaryIndicator and m:ViewRangeType and m:ValueMarketabilityImpactType])[1]/m:ViewRangeType" ;
+    t:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:SITE_VIEW[m:ViewPrimaryIndicator and m:ViewRangeType and m:ValueMarketabilityImpactType])[1]/m:ViewRangeType" ;
+    t:expectedViolationKind "MissingRequiredValueInExistingContext" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1366 a t:TestCase ;
+    t:ruleId "UAD1366" ;
+    t:sourceUniqueIdCell "1500.0184" ;
+    t:primaryDataElement "ValueMarketabilityImpactType" ;
+    t:ruleLogic "If ValueMarketabilityImpactType is not provided in a given instance of SITE_VIEW" ;
+    t:severity "Warning" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SITE/SITE_VIEWS/SITE_VIEW/" ;
+    t:messageText "Provide the type of impact the selected view has on the value and marketability of the property." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1366> ;
+    t:baselinePath "examples/xml/SF1_Appraisal_v1.4.xml" ;
+    t:contextXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:SITE_VIEW" ;
+    t:requiredValueXPath "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:SITE_VIEW[m:ViewPrimaryIndicator and m:ViewRangeType and m:ValueMarketabilityImpactType])[1]/m:ValueMarketabilityImpactType" ;
+    t:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:SITE_VIEW[m:ViewPrimaryIndicator and m:ViewRangeType and m:ValueMarketabilityImpactType])[1]/m:ValueMarketabilityImpactType" ;
+    t:expectedViolationKind "MissingRequiredValueInExistingContext" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1388 a t:TestCase ;
+    t:ruleId "UAD1388" ;
+    t:sourceUniqueIdCell "" ;
+    t:primaryDataElement "ValuationAnalysisCategoryType" ;
+    t:ruleLogic "If ValuationAnalysisCategoryType is not provided in a given instance of VALUATION_COMMENTARY" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "N/A" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/VALUATION_COMMENTARIES/VALUATION_COMMENTARY/" ;
+    t:messageText "ValuationAnalysisCategoryType must be provided. For assistance with this message, contact the appraisal software vendor." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1388> ;
+    t:baselinePath "examples/xml/SF1_Appraisal_v1.4.xml" ;
+    t:contextXPath "//m:VALUATION_COMMENTARY" ;
+    t:requiredValueXPath "(//m:VALUATION_COMMENTARY[m:ValuationAnalysisCategoryType])[1]/m:ValuationAnalysisCategoryType" ;
+    t:expectedDataLocation "(//m:VALUATION_COMMENTARY[m:ValuationAnalysisCategoryType])[1]/m:ValuationAnalysisCategoryType" ;
+    t:expectedViolationKind "MissingRequiredValueInExistingContext" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1558 a t:TestCase ;
+    t:ruleId "UAD1558" ;
+    t:sourceUniqueIdCell "2400.0081; 2400.0503" ;
+    t:primaryDataElement "PropertyExteriorInspectionMethodType" ;
+    t:ruleLogic "If PropertyExteriorInspectionMethodType is not provided in a given instance of INSPECTION_DETAIL" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/INSPECTIONS/INSPECTION/INSPECTION_DETAIL/" ;
+    t:messageText "Provide the manner in which the exterior inspection was conducted by the Appraiser and/or Supervisory Appraiser." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1558> ;
+    t:baselinePath "examples/xml/SF1_Appraisal_v1.4.xml" ;
+    t:contextXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:INSPECTION_DETAIL" ;
+    t:requiredValueXPath "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:INSPECTION_DETAIL[m:PropertyExteriorInspectionMethodType and m:PropertyInteriorInspectionMethodType])[1]/m:PropertyExteriorInspectionMethodType" ;
+    t:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:INSPECTION_DETAIL[m:PropertyExteriorInspectionMethodType and m:PropertyInteriorInspectionMethodType])[1]/m:PropertyExteriorInspectionMethodType" ;
+    t:expectedViolationKind "MissingRequiredValueInExistingContext" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1559 a t:TestCase ;
+    t:ruleId "UAD1559" ;
+    t:sourceUniqueIdCell "2400.0082; 2400.0504" ;
+    t:primaryDataElement "PropertyInteriorInspectionMethodType" ;
+    t:ruleLogic "If PropertyInteriorInspectionMethodType is not provided in a given instance of INSPECTION_DETAIL" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/INSPECTIONS/INSPECTION/INSPECTION_DETAIL/" ;
+    t:messageText "Provide the manner in which the interior inspection was conducted by the Appraiser and/or Supervisory Appraiser." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1559> ;
+    t:baselinePath "examples/xml/SF1_Appraisal_v1.4.xml" ;
+    t:contextXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:INSPECTION_DETAIL" ;
+    t:requiredValueXPath "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:INSPECTION_DETAIL[m:PropertyExteriorInspectionMethodType and m:PropertyInteriorInspectionMethodType])[1]/m:PropertyInteriorInspectionMethodType" ;
+    t:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:INSPECTION_DETAIL[m:PropertyExteriorInspectionMethodType and m:PropertyInteriorInspectionMethodType])[1]/m:PropertyInteriorInspectionMethodType" ;
+    t:expectedViolationKind "MissingRequiredValueInExistingContext" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1705 a t:TestCase ;
+    t:ruleId "UAD1705" ;
+    t:sourceUniqueIdCell "" ;
+    t:primaryDataElement "ImageFileLocationIdentifier" ;
+    t:ruleLogic "If ImageFileLocationIdentifier is not provided in a given instance of IMAGE" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/INSPECTIONS/INSPECTION/IMAGES/IMAGE/" ;
+    t:messageText "Provide the file name and location of the image within the .zip file (e.g., \\\\Images\\MH1_DwellingFront.png). For assistance with this message, contact the appraisal software vendor." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1705> ;
+    t:baselinePath "examples/xml/SF1_Appraisal_v1.4.xml" ;
+    t:contextXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:IMAGE" ;
+    t:requiredValueXPath "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:IMAGE[m:ImageFileLocationIdentifier and m:MIMETypeIdentifier])[1]/m:ImageFileLocationIdentifier" ;
+    t:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:IMAGE[m:ImageFileLocationIdentifier and m:MIMETypeIdentifier])[1]/m:ImageFileLocationIdentifier" ;
+    t:expectedViolationKind "MissingRequiredValueInExistingContext" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1707 a t:TestCase ;
+    t:ruleId "UAD1707" ;
+    t:sourceUniqueIdCell "" ;
+    t:primaryDataElement "MIMETypeIdentifier" ;
+    t:ruleLogic "If MIMETypeIdentifier is not provided in a given instance of IMAGE" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/INSPECTIONS/INSPECTION/IMAGES/IMAGE/" ;
+    t:messageText "Provide the format of the image file. For assistance with this message, contact the appraisal software vendor." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1707> ;
+    t:baselinePath "examples/xml/SF1_Appraisal_v1.4.xml" ;
+    t:contextXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:IMAGE" ;
+    t:requiredValueXPath "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:IMAGE[m:ImageFileLocationIdentifier and m:MIMETypeIdentifier])[1]/m:MIMETypeIdentifier" ;
+    t:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:IMAGE[m:ImageFileLocationIdentifier and m:MIMETypeIdentifier])[1]/m:MIMETypeIdentifier" ;
+    t:expectedViolationKind "MissingRequiredValueInExistingContext" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1710 a t:TestCase ;
+    t:ruleId "UAD1710" ;
+    t:sourceUniqueIdCell "" ;
+    t:primaryDataElement "DefectItemAffectsSoundnessStructuralIntegrityIndicator" ;
+    t:ruleLogic "If DefectItemAffectsSoundnessStructuralIntegrityIndicator is not provided in a given instance of DEFECT_DETAIL" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DEFECT/DEFECTS/DEFECT/DEFECT_DETAIL/" ;
+    t:messageText "Indicate whether the defect, damage, or deficiency affects the soundness and / or structural integrity of the improvement." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1710> ;
+    t:baselinePath "examples/xml/SF1_Appraisal_v1.4.xml" ;
+    t:contextXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:DEFECT_DETAIL" ;
+    t:requiredValueXPath "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:DEFECT_DETAIL[m:DefectItemAffectsSoundnessStructuralIntegrityIndicator and m:DefectItemDescription and m:DefectItemLocationType and m:DefectItemRecommendedActionType])[1]/m:DefectItemAffectsSoundnessStructuralIntegrityIndicator" ;
+    t:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:DEFECT_DETAIL[m:DefectItemAffectsSoundnessStructuralIntegrityIndicator and m:DefectItemDescription and m:DefectItemLocationType and m:DefectItemRecommendedActionType])[1]/m:DefectItemAffectsSoundnessStructuralIntegrityIndicator" ;
+    t:expectedViolationKind "MissingRequiredValueInExistingContext" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1711 a t:TestCase ;
+    t:ruleId "UAD1711" ;
+    t:sourceUniqueIdCell "" ;
+    t:primaryDataElement "DefectItemDescription" ;
+    t:ruleLogic "If DefectItemDescription is not provided in a given instance of DEFECT_DETAIL" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DEFECT/DEFECTS/DEFECT/DEFECT_DETAIL/" ;
+    t:messageText "Provide a description of the defect, damage or deficiency." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1711> ;
+    t:baselinePath "examples/xml/SF1_Appraisal_v1.4.xml" ;
+    t:contextXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:DEFECT_DETAIL" ;
+    t:requiredValueXPath "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:DEFECT_DETAIL[m:DefectItemAffectsSoundnessStructuralIntegrityIndicator and m:DefectItemDescription and m:DefectItemLocationType and m:DefectItemRecommendedActionType])[1]/m:DefectItemDescription" ;
+    t:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:DEFECT_DETAIL[m:DefectItemAffectsSoundnessStructuralIntegrityIndicator and m:DefectItemDescription and m:DefectItemLocationType and m:DefectItemRecommendedActionType])[1]/m:DefectItemDescription" ;
+    t:expectedViolationKind "MissingRequiredValueInExistingContext" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1712 a t:TestCase ;
+    t:ruleId "UAD1712" ;
+    t:sourceUniqueIdCell "" ;
+    t:primaryDataElement "DefectItemLocationType" ;
+    t:ruleLogic "If DefectItemLocationType is not provided in a given instance of DEFECT_DETAIL" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DEFECT/DEFECTS/DEFECT/DEFECT_DETAIL/" ;
+    t:messageText "Provide the location of the defect, damage or deficiency." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1712> ;
+    t:baselinePath "examples/xml/SF1_Appraisal_v1.4.xml" ;
+    t:contextXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:DEFECT_DETAIL" ;
+    t:requiredValueXPath "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:DEFECT_DETAIL[m:DefectItemAffectsSoundnessStructuralIntegrityIndicator and m:DefectItemDescription and m:DefectItemLocationType and m:DefectItemRecommendedActionType])[1]/m:DefectItemLocationType" ;
+    t:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:DEFECT_DETAIL[m:DefectItemAffectsSoundnessStructuralIntegrityIndicator and m:DefectItemDescription and m:DefectItemLocationType and m:DefectItemRecommendedActionType])[1]/m:DefectItemLocationType" ;
+    t:expectedViolationKind "MissingRequiredValueInExistingContext" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1714 a t:TestCase ;
+    t:ruleId "UAD1714" ;
+    t:sourceUniqueIdCell "" ;
+    t:primaryDataElement "DefectItemRecommendedActionType" ;
+    t:ruleLogic "If DefectItemRecommendedActionType is not provided in a given instance of DEFECT_DETAIL" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DEFECT/DEFECTS/DEFECT/DEFECT_DETAIL/" ;
+    t:messageText "Provide the recommended action for the identified defect, damage or deficiency." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1714> ;
+    t:baselinePath "examples/xml/SF1_Appraisal_v1.4.xml" ;
+    t:contextXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:DEFECT_DETAIL" ;
+    t:requiredValueXPath "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:DEFECT_DETAIL[m:DefectItemAffectsSoundnessStructuralIntegrityIndicator and m:DefectItemDescription and m:DefectItemLocationType and m:DefectItemRecommendedActionType])[1]/m:DefectItemRecommendedActionType" ;
+    t:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:DEFECT_DETAIL[m:DefectItemAffectsSoundnessStructuralIntegrityIndicator and m:DefectItemDescription and m:DefectItemLocationType and m:DefectItemRecommendedActionType])[1]/m:DefectItemRecommendedActionType" ;
+    t:expectedViolationKind "MissingRequiredValueInExistingContext" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1736 a t:TestCase ;
+    t:ruleId "UAD1736" ;
+    t:sourceUniqueIdCell "1400.0742" ;
+    t:primaryDataElement "ImageFileLocationIdentifier" ;
+    t:ruleLogic "If ImageFileLocationIdentifier is not provided in a given instance of IMAGE" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/CAR_STORAGES/CAR_STORAGE/IMAGES/IMAGE/" ;
+    t:messageText "Provide the file name and location of the image within the .zip file (e.g., \\\\Images\\MH1_Garage.png). For assistance with this message, contact the appraisal software vendor." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1736> ;
+    t:baselinePath "data/uad36-test-suite/tests/fixtures/existing_context_required/derived/UAD1736.xml" ;
+    t:contextXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:IMAGE" ;
+    t:requiredValueXPath "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:IMAGE[m:ImageFileLocationIdentifier='\\\\Images\\MH1_Garage.png' and m:MIMETypeIdentifier])[1]/m:ImageFileLocationIdentifier" ;
+    t:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:IMAGE[m:ImageFileLocationIdentifier='\\\\Images\\MH1_Garage.png' and m:MIMETypeIdentifier])[1]/m:ImageFileLocationIdentifier" ;
+    t:expectedViolationKind "MissingRequiredValueInExistingContext" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1737 a t:TestCase ;
+    t:ruleId "UAD1737" ;
+    t:sourceUniqueIdCell "1400.0778" ;
+    t:primaryDataElement "ImageFileLocationIdentifier" ;
+    t:ruleLogic "If ImageFileLocationIdentifier is not provided in a given instance of IMAGE" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/PROPERTY_UNITS/PROPERTY_UNIT/INTERIOR_COMPONENTS/INTERIOR_COMPONENT/IMAGES/IMAGE/" ;
+    t:messageText "Provide the file name and location of the image within the .zip file (e.g., \\\\Images\\MH1_Flooring.png). For assistance with this message, contact the appraisal software vendor." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1737> ;
+    t:baselinePath "data/uad36-test-suite/tests/fixtures/existing_context_required/derived/UAD1737.xml" ;
+    t:contextXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:IMAGE" ;
+    t:requiredValueXPath "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:IMAGE[m:ImageFileLocationIdentifier='\\\\Images\\MH1_Flooring.png' and m:MIMETypeIdentifier])[1]/m:ImageFileLocationIdentifier" ;
+    t:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:IMAGE[m:ImageFileLocationIdentifier='\\\\Images\\MH1_Flooring.png' and m:MIMETypeIdentifier])[1]/m:ImageFileLocationIdentifier" ;
+    t:expectedViolationKind "MissingRequiredValueInExistingContext" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1738 a t:TestCase ;
+    t:ruleId "UAD1738" ;
+    t:sourceUniqueIdCell "1400.0784" ;
+    t:primaryDataElement "ImageFileLocationIdentifier" ;
+    t:ruleLogic "If ImageFileLocationIdentifier is not provided in a given instance of IMAGE" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/PROPERTY_UNITS/PROPERTY_UNIT/ROOMS/ROOM/IMAGES/IMAGE/" ;
+    t:messageText "Provide the file name and location of the image within the .zip file (e.g., \\\\Images\\MH1_Bedroom1.png). For assistance with this message, contact the appraisal software vendor." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1738> ;
+    t:baselinePath "data/uad36-test-suite/tests/fixtures/existing_context_required/derived/UAD1738.xml" ;
+    t:contextXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:IMAGE" ;
+    t:requiredValueXPath "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:IMAGE[m:ImageFileLocationIdentifier='\\\\Images\\MH1_Bedroom1.png' and m:MIMETypeIdentifier])[1]/m:ImageFileLocationIdentifier" ;
+    t:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:IMAGE[m:ImageFileLocationIdentifier='\\\\Images\\MH1_Bedroom1.png' and m:MIMETypeIdentifier])[1]/m:ImageFileLocationIdentifier" ;
+    t:expectedViolationKind "MissingRequiredValueInExistingContext" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1739 a t:TestCase ;
+    t:ruleId "UAD1739" ;
+    t:sourceUniqueIdCell "1400.0748" ;
+    t:primaryDataElement "ImageFileLocationIdentifier" ;
+    t:ruleLogic "If ImageFileLocationIdentifier is not provided in a given instance of IMAGE" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_AMENITY/AMENITY_CATEGORIES/AMENITY_CATEGORY/AMENITIES/AMENITY/IMAGES/IMAGE/" ;
+    t:messageText "Provide the file name and location of the image within the .zip file (e.g., \\\\Images\\MH1_Deck.png). For assistance with this message, contact the appraisal software vendor." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1739> ;
+    t:baselinePath "data/uad36-test-suite/tests/fixtures/existing_context_required/derived/UAD1739.xml" ;
+    t:contextXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:IMAGE" ;
+    t:requiredValueXPath "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:IMAGE[m:ImageFileLocationIdentifier='\\\\Images\\MH1_Deck.png' and m:MIMETypeIdentifier])[1]/m:ImageFileLocationIdentifier" ;
+    t:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:IMAGE[m:ImageFileLocationIdentifier='\\\\Images\\MH1_Deck.png' and m:MIMETypeIdentifier])[1]/m:ImageFileLocationIdentifier" ;
+    t:expectedViolationKind "MissingRequiredValueInExistingContext" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1740 a t:TestCase ;
+    t:ruleId "UAD1740" ;
+    t:sourceUniqueIdCell "" ;
+    t:primaryDataElement "ImageFileLocationIdentifier" ;
+    t:ruleLogic "If ImageFileLocationIdentifier is not provided in a given instance of IMAGE" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DEFECT/DEFECTS/DEFECT/IMAGES/IMAGE/" ;
+    t:messageText "Provide the file name and location of the image within the .zip file (e.g., \\\\Images\\MH1_ExteriorTrimDDD.png). For assistance with this message, contact the appraisal software vendor." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1740> ;
+    t:baselinePath "data/uad36-test-suite/tests/fixtures/existing_context_required/derived/UAD1740.xml" ;
+    t:contextXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:IMAGE" ;
+    t:requiredValueXPath "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:IMAGE[m:ImageFileLocationIdentifier='\\\\Images\\MH1_ExteriorTrimDDD.png' and m:MIMETypeIdentifier])[1]/m:ImageFileLocationIdentifier" ;
+    t:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:IMAGE[m:ImageFileLocationIdentifier='\\\\Images\\MH1_ExteriorTrimDDD.png' and m:MIMETypeIdentifier])[1]/m:ImageFileLocationIdentifier" ;
+    t:expectedViolationKind "MissingRequiredValueInExistingContext" ;
+    t:xsdValidAfterRemoval true .

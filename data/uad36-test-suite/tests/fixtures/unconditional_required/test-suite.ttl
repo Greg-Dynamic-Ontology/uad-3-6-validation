@@ -1,0 +1,1000 @@
+@prefix case: <urn:uad36:test-case:IT-1R4S1:> .
+@prefix suite: <urn:uad36:test-suite:> .
+@prefix t: <urn:uad36:test-suite:vocab:> .
+
+suite:unconditional-required a t:TestSuite ;
+    t:category <urn:uad36:work-tracking:scenario:unconditional_required> ;
+    t:hasCase case:UAD1001,
+        case:UAD1002,
+        case:UAD1003,
+        case:UAD1004,
+        case:UAD1006,
+        case:UAD1008,
+        case:UAD1009,
+        case:UAD1010,
+        case:UAD1012,
+        case:UAD1013,
+        case:UAD1017,
+        case:UAD1023,
+        case:UAD1027,
+        case:UAD1035,
+        case:UAD1036,
+        case:UAD1040,
+        case:UAD1042,
+        case:UAD1045,
+        case:UAD1049,
+        case:UAD1134,
+        case:UAD1191,
+        case:UAD1203,
+        case:UAD1210,
+        case:UAD1211,
+        case:UAD1213,
+        case:UAD1216,
+        case:UAD1218,
+        case:UAD1219,
+        case:UAD1222,
+        case:UAD1257,
+        case:UAD1262,
+        case:UAD1265,
+        case:UAD1266,
+        case:UAD1273,
+        case:UAD1317,
+        case:UAD1318,
+        case:UAD1369,
+        case:UAD1372,
+        case:UAD1373,
+        case:UAD1384,
+        case:UAD1385,
+        case:UAD1502,
+        case:UAD1508,
+        case:UAD1509,
+        case:UAD1510,
+        case:UAD1511,
+        case:UAD1519,
+        case:UAD1523,
+        case:UAD1616,
+        case:UAD1617,
+        case:UAD1618,
+        case:UAD1626,
+        case:UAD1627,
+        case:UAD1652,
+        case:UAD1653,
+        case:UAD1659,
+        case:UAD1660,
+        case:UAD1661,
+        case:UAD1662,
+        case:UAD1663,
+        case:UAD1676,
+        case:UAD1750 ;
+    t:ruleInventoryPath "data/data-constraints.csv" ;
+    t:scenarioId "IT-1R4S1" .
+
+case:UAD1001 a t:TestCase ;
+    t:ruleId "UAD1001" ;
+    t:sourceUniqueIdCell "0100.0007" ;
+    t:primaryDataElement "AddressLineText" ;
+    t:ruleLogic "If AddressLineText is not provided" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/ADDRESS/" ;
+    t:messageText "Provide the address line for the subject property physical address." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1001> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:ADDRESS/m:AddressLineText" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:ADDRESS/m:AddressLineText" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1002 a t:TestCase ;
+    t:ruleId "UAD1002" ;
+    t:sourceUniqueIdCell "0100.0009" ;
+    t:primaryDataElement "CityName" ;
+    t:ruleLogic "If CityName is not provided" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/ADDRESS/" ;
+    t:messageText "Provide the city name for the subject property physical address." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1002> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:ADDRESS/m:CityName" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:ADDRESS/m:CityName" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1003 a t:TestCase ;
+    t:ruleId "UAD1003" ;
+    t:sourceUniqueIdCell "0100.0010" ;
+    t:primaryDataElement "CountyName" ;
+    t:ruleLogic "If CountyName is not provided" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/ADDRESS/" ;
+    t:messageText "Provide the county name for the subject property physical address." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1003> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:ADDRESS/m:CountyName" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:ADDRESS/m:CountyName" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1004 a t:TestCase ;
+    t:ruleId "UAD1004" ;
+    t:sourceUniqueIdCell "0100.0011" ;
+    t:primaryDataElement "PostalCode" ;
+    t:ruleLogic "If PostalCode is not provided" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/ADDRESS/" ;
+    t:messageText "Provide the ZIP code for the subject property physical address." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1004> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:ADDRESS/m:PostalCode" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:ADDRESS/m:PostalCode" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1006 a t:TestCase ;
+    t:ruleId "UAD1006" ;
+    t:sourceUniqueIdCell "0100.0012" ;
+    t:primaryDataElement "StateCode" ;
+    t:ruleLogic "If StateCode is not provided" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/ADDRESS/" ;
+    t:messageText "Provide the state code for the subject property physical address." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1006> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:ADDRESS/m:StateCode" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:ADDRESS/m:StateCode" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1008 a t:TestCase ;
+    t:ruleId "UAD1008" ;
+    t:sourceUniqueIdCell "0100.0015" ;
+    t:primaryDataElement "LatitudeIdentifier" ;
+    t:ruleLogic "If LatitudeIdentifier is not provided" ;
+    t:severity "Warning" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/LOCATION_IDENTIFIER/GEOSPATIAL_INFORMATION/" ;
+    t:messageText "Provide the latitude for subject property. For assistance with this message, contact the appraisal software vendor." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1008> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:LOCATION_IDENTIFIER/m:GEOSPATIAL_INFORMATION/m:LatitudeIdentifier" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:LOCATION_IDENTIFIER/m:GEOSPATIAL_INFORMATION/m:LatitudeIdentifier" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1009 a t:TestCase ;
+    t:ruleId "UAD1009" ;
+    t:sourceUniqueIdCell "0100.0016" ;
+    t:primaryDataElement "LongitudeIdentifier" ;
+    t:ruleLogic "If LongitudeIdentifier is not provided" ;
+    t:severity "Warning" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/LOCATION_IDENTIFIER/GEOSPATIAL_INFORMATION/" ;
+    t:messageText "Provide the longitude for subject property. For assistance with this message, contact the appraisal software vendor." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1009> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:LOCATION_IDENTIFIER/m:GEOSPATIAL_INFORMATION/m:LongitudeIdentifier" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:LOCATION_IDENTIFIER/m:GEOSPATIAL_INFORMATION/m:LongitudeIdentifier" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1010 a t:TestCase ;
+    t:ruleId "UAD1010" ;
+    t:sourceUniqueIdCell "0100.0019" ;
+    t:primaryDataElement "AccessoryDwellingUnitTotalCount" ;
+    t:ruleLogic "If AccessoryDwellingUnitTotalCount is not provided" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/" ;
+    t:messageText "Provide the total number of ADUs, even if the value is 0." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1010> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:AccessoryDwellingUnitTotalCount" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:AccessoryDwellingUnitTotalCount" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1012 a t:TestCase ;
+    t:ruleId "UAD1012" ;
+    t:sourceUniqueIdCell "0100.0020" ;
+    t:primaryDataElement "AttachmentType" ;
+    t:ruleLogic "If AttachmentType is not provided" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/" ;
+    t:messageText "Provide the 'Attachment Type' for the property." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1012> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:AttachmentType" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:AttachmentType" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1013 a t:TestCase ;
+    t:ruleId "UAD1013" ;
+    t:sourceUniqueIdCell "0100.0021" ;
+    t:primaryDataElement "DwellingCount" ;
+    t:ruleLogic "If DwellingCount is not provided" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/" ;
+    t:messageText "Provide the total number of dwellings." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1013> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:DwellingCount" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:DwellingCount" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1017 a t:TestCase ;
+    t:ruleId "UAD1017" ;
+    t:sourceUniqueIdCell "0100.0022" ;
+    t:primaryDataElement "LivingUnitExcludingADUCount" ;
+    t:ruleLogic "If LivingUnitExcludingADUCount is not provided" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/" ;
+    t:messageText "Provide the total number of living units, excluding any ADUs." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1017> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:LivingUnitExcludingADUCount" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:LivingUnitExcludingADUCount" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1023 a t:TestCase ;
+    t:ruleId "UAD1023" ;
+    t:sourceUniqueIdCell "0100.0026" ;
+    t:primaryDataElement "PUDIndicator" ;
+    t:ruleLogic "If PUDIndicator is not provided" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/" ;
+    t:messageText "Indicate whether the property is located within a PUD." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1023> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PUDIndicator" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PUDIndicator" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1027 a t:TestCase ;
+    t:ruleId "UAD1027" ;
+    t:sourceUniqueIdCell "0100.0033" ;
+    t:primaryDataElement "SpecialTaxAssessmentsIndicator" ;
+    t:ruleLogic "If SpecialTaxAssessmentsIndicator is not provided" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_TAXES/PROPERTY_TAX/PROPERTY_TAX_DETAIL/" ;
+    t:messageText "Indicate whether the property has any special tax assessments." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1027> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_TAXES/m:PROPERTY_TAX/m:PROPERTY_TAX_DETAIL/m:SpecialTaxAssessmentsIndicator" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_TAXES/m:PROPERTY_TAX/m:PROPERTY_TAX_DETAIL/m:SpecialTaxAssessmentsIndicator" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1035 a t:TestCase ;
+    t:ruleId "UAD1035" ;
+    t:sourceUniqueIdCell "0100.0046" ;
+    t:primaryDataElement "HomeownerResponsibleForExteriorMaintenanceIndicator" ;
+    t:ruleLogic "If HomeownerResponsibleForExteriorMaintenanceIndicator is not provided" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/" ;
+    t:messageText "Provide 'Homeowner Responsible for all Exterior Maintenance of Dwelling(s)'." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1035> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:HomeownerResponsibleForExteriorMaintenanceIndicator" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:HomeownerResponsibleForExteriorMaintenanceIndicator" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1036 a t:TestCase ;
+    t:ruleId "UAD1036" ;
+    t:sourceUniqueIdCell "0100.0047" ;
+    t:primaryDataElement "LandOwnedInCommonIndicator" ;
+    t:ruleLogic "If LandOwnedInCommonIndicator is not provided" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SITE/SITE_DETAIL/" ;
+    t:messageText "Indicate whether the site is owned in common." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1036> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SITE/m:SITE_DETAIL/m:LandOwnedInCommonIndicator" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SITE/m:SITE_DETAIL/m:LandOwnedInCommonIndicator" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1040 a t:TestCase ;
+    t:ruleId "UAD1040" ;
+    t:sourceUniqueIdCell "0100.0054" ;
+    t:primaryDataElement "NativeAmericanLandsIndicator" ;
+    t:ruleLogic "If NativeAmericanLandsIndicator is not provided" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/" ;
+    t:messageText "Indicate whether the property is located on Native American lands." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1040> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:NativeAmericanLandsIndicator" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:NativeAmericanLandsIndicator" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1042 a t:TestCase ;
+    t:ruleId "UAD1042" ;
+    t:sourceUniqueIdCell "0100.0065" ;
+    t:primaryDataElement "PropertyInProjectIndicator" ;
+    t:ruleLogic "If PropertyInProjectIndicator is not provided" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/" ;
+    t:messageText "Indicate whether the property is located in a project." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1042> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyInProjectIndicator" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyInProjectIndicator" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1045 a t:TestCase ;
+    t:ruleId "UAD1045" ;
+    t:sourceUniqueIdCell "0200.0015" ;
+    t:primaryDataElement "PropertyAmenityExistsIndicator" ;
+    t:ruleLogic "If PropertyAmenityExistsIndicator is not provided" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/" ;
+    t:messageText "Indicate whether the property has any amenities." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1045> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyAmenityExistsIndicator" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PropertyAmenityExistsIndicator" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1049 a t:TestCase ;
+    t:ruleId "UAD1049" ;
+    t:sourceUniqueIdCell "0300.0010" ;
+    t:primaryDataElement "NewConstructionIndicator" ;
+    t:ruleLogic "If NewConstructionIndicator is not provided" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/" ;
+    t:messageText "Indicate whether the property is new construction." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1049> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:NewConstructionIndicator" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:NewConstructionIndicator" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1134 a t:TestCase ;
+    t:ruleId "UAD1134" ;
+    t:sourceUniqueIdCell "0600.0016" ;
+    t:primaryDataElement "SalesContractExistsIndicator" ;
+    t:ruleLogic "If SalesContractExistsIndicator is not provided" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SALES_CONTRACTS/SALES_CONTRACT/SALES_CONTRACT_DETAIL/" ;
+    t:messageText "Indicate whether there is a sales contract associated with the property." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1134> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SALES_CONTRACTS/m:SALES_CONTRACT/m:SALES_CONTRACT_DETAIL/m:SalesContractExistsIndicator" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SALES_CONTRACTS/m:SALES_CONTRACT/m:SALES_CONTRACT_DETAIL/m:SalesContractExistsIndicator" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1191 a t:TestCase ;
+    t:ruleId "UAD1191" ;
+    t:sourceUniqueIdCell "0800.0005" ;
+    t:primaryDataElement "PriorSalesOrTransfersIndicator" ;
+    t:ruleLogic "If PriorSalesOrTransfersIndicator is not provided" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/" ;
+    t:messageText "Indicate whether the subject property has a prior sale or transfer." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1191> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PriorSalesOrTransfersIndicator" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:PriorSalesOrTransfersIndicator" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1203 a t:TestCase ;
+    t:ruleId "UAD1203" ;
+    t:sourceUniqueIdCell "0900.0004" ;
+    t:primaryDataElement "ListedWithinPreviousYearIndicator" ;
+    t:ruleLogic "If ListedWithinPreviousYearIndicator is not provided" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/LISTING_INFORMATION_SUMMARY/" ;
+    t:messageText "Indicate whether the property has been listed within the previous twelve (12) months." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1203> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:LISTING_INFORMATION_SUMMARY/m:ListedWithinPreviousYearIndicator" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:LISTING_INFORMATION_SUMMARY/m:ListedWithinPreviousYearIndicator" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1210 a t:TestCase ;
+    t:ruleId "UAD1210" ;
+    t:sourceUniqueIdCell "1000.0027" ;
+    t:primaryDataElement "CostApproachIndicator" ;
+    t:ruleLogic "If CostApproachIndicator is not provided" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "N/A" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/SCOPE_OF_WORK/SCOPE_OF_WORK_DETAIL/" ;
+    t:messageText "Indicate whether the cost approach valuation method has been utilized." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1210> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:SCOPE_OF_WORK/m:SCOPE_OF_WORK_DETAIL/m:CostApproachIndicator" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:SCOPE_OF_WORK/m:SCOPE_OF_WORK_DETAIL/m:CostApproachIndicator" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1211 a t:TestCase ;
+    t:ruleId "UAD1211" ;
+    t:sourceUniqueIdCell "1000.0028" ;
+    t:primaryDataElement "GovernmentAgencyAppraisalIndicator" ;
+    t:ruleLogic "If GovernmentAgencyAppraisalIndicator is not provided" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "N/A" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/SCOPE_OF_WORK/SCOPE_OF_WORK_DETAIL/" ;
+    t:messageText "Indicate whether the appraisal has been prepared for a government agency." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1211> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:SCOPE_OF_WORK/m:SCOPE_OF_WORK_DETAIL/m:GovernmentAgencyAppraisalIndicator" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:SCOPE_OF_WORK/m:SCOPE_OF_WORK_DETAIL/m:GovernmentAgencyAppraisalIndicator" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1213 a t:TestCase ;
+    t:ruleId "UAD1213" ;
+    t:sourceUniqueIdCell "1000.0030" ;
+    t:primaryDataElement "IncomeApproachIndicator" ;
+    t:ruleLogic "If IncomeApproachIndicator is not provided" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "N/A" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/SCOPE_OF_WORK/SCOPE_OF_WORK_DETAIL/" ;
+    t:messageText "Indicate whether the income approach valuation method has been utilized." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1213> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:SCOPE_OF_WORK/m:SCOPE_OF_WORK_DETAIL/m:IncomeApproachIndicator" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:SCOPE_OF_WORK/m:SCOPE_OF_WORK_DETAIL/m:IncomeApproachIndicator" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1216 a t:TestCase ;
+    t:ruleId "UAD1216" ;
+    t:sourceUniqueIdCell "1000.0031" ;
+    t:primaryDataElement "RentScheduleIndicator" ;
+    t:ruleLogic "If RentScheduleIndicator is not provided" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "N/A" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/SCOPE_OF_WORK/SCOPE_OF_WORK_DETAIL/" ;
+    t:messageText "Indicate whether the rent schedule was included in the appraisal." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1216> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:SCOPE_OF_WORK/m:SCOPE_OF_WORK_DETAIL/m:RentScheduleIndicator" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:SCOPE_OF_WORK/m:SCOPE_OF_WORK_DETAIL/m:RentScheduleIndicator" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1218 a t:TestCase ;
+    t:ruleId "UAD1218" ;
+    t:sourceUniqueIdCell "1000.0032" ;
+    t:primaryDataElement "SalesComparisonApproachIndicator" ;
+    t:ruleLogic "If SalesComparisonApproachIndicator is not provided" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "N/A" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/SCOPE_OF_WORK/SCOPE_OF_WORK_DETAIL/" ;
+    t:messageText "Indicate whether the sales comparison approach valuation method has been utilized." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1218> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:SCOPE_OF_WORK/m:SCOPE_OF_WORK_DETAIL/m:SalesComparisonApproachIndicator" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:SCOPE_OF_WORK/m:SCOPE_OF_WORK_DETAIL/m:SalesComparisonApproachIndicator" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1219 a t:TestCase ;
+    t:ruleId "UAD1219" ;
+    t:sourceUniqueIdCell "1000.0034" ;
+    t:primaryDataElement "ValuationAssignmentType" ;
+    t:ruleLogic "If ValuationAssignmentType is not provided" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "N/A" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/SCOPE_OF_WORK/SCOPE_OF_WORK_DETAIL/" ;
+    t:messageText "Provide the 'Assignment Reason'." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1219> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:SCOPE_OF_WORK/m:SCOPE_OF_WORK_DETAIL/m:ValuationAssignmentType" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:SCOPE_OF_WORK/m:SCOPE_OF_WORK_DETAIL/m:ValuationAssignmentType" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1222 a t:TestCase ;
+    t:ruleId "UAD1222" ;
+    t:sourceUniqueIdCell "1000.0158" ;
+    t:primaryDataElement "PropertyValuationMethodType" ;
+    t:ruleLogic "If PropertyValuationMethodType is not provided" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_VALUATIONS/PROPERTY_VALUATION/PROPERTY_VALUATION_DETAIL/" ;
+    t:messageText "Provide the 'Property Valuation Method'." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1222> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_VALUATIONS/m:PROPERTY_VALUATION/m:PROPERTY_VALUATION_DETAIL/m:PropertyValuationMethodType" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_VALUATIONS/m:PROPERTY_VALUATION/m:PROPERTY_VALUATION_DETAIL/m:PropertyValuationMethodType" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1257 a t:TestCase ;
+    t:ruleId "UAD1257" ;
+    t:sourceUniqueIdCell "1300.0012" ;
+    t:primaryDataElement "AppraisalReportEffectiveDate" ;
+    t:ruleLogic "If AppraisalReportEffectiveDate is not provided" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "N/A" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/VALUATION_RECONCILIATION/VALUATION_RECONCILIATION_SUMMARY/VALUATION_RECONCILIATION_SUMMARY_DETAIL/" ;
+    t:messageText "Provide the 'Effective Date of Appraisal'." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1257> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_RECONCILIATION/m:VALUATION_RECONCILIATION_SUMMARY/m:VALUATION_RECONCILIATION_SUMMARY_DETAIL/m:AppraisalReportEffectiveDate" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_RECONCILIATION/m:VALUATION_RECONCILIATION_SUMMARY/m:VALUATION_RECONCILIATION_SUMMARY_DETAIL/m:AppraisalReportEffectiveDate" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1262 a t:TestCase ;
+    t:ruleId "UAD1262" ;
+    t:sourceUniqueIdCell "1300.0017" ;
+    t:primaryDataElement "OpinionOfValueAmount" ;
+    t:ruleLogic "If OpinionOfValueAmount is not provided" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "N/A" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/VALUATION_RECONCILIATION/VALUATION_RECONCILIATION_SUMMARY/VALUATION_RECONCILIATION_SUMMARY_DETAIL/" ;
+    t:messageText "Provide 'Opinion Of Market Value'." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1262> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_RECONCILIATION/m:VALUATION_RECONCILIATION_SUMMARY/m:VALUATION_RECONCILIATION_SUMMARY_DETAIL/m:OpinionOfValueAmount" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_RECONCILIATION/m:VALUATION_RECONCILIATION_SUMMARY/m:VALUATION_RECONCILIATION_SUMMARY_DETAIL/m:OpinionOfValueAmount" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1265 a t:TestCase ;
+    t:ruleId "UAD1265" ;
+    t:sourceUniqueIdCell "1300.0019" ;
+    t:primaryDataElement "AdditionalClientRequestedConditionsIndicator" ;
+    t:ruleLogic "If AdditionalClientRequestedConditionsIndicator is not provided" ;
+    t:severity "Warning" ;
+    t:propertyAffected "N/A" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/VALUATION_RECONCILIATION/VALUATION_RECONCILIATION_DETAIL/" ;
+    t:messageText "Indicate whether the client has requested additional value conditions." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1265> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_RECONCILIATION/m:VALUATION_RECONCILIATION_DETAIL/m:AdditionalClientRequestedConditionsIndicator" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_RECONCILIATION/m:VALUATION_RECONCILIATION_DETAIL/m:AdditionalClientRequestedConditionsIndicator" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1266 a t:TestCase ;
+    t:ruleId "UAD1266" ;
+    t:sourceUniqueIdCell "1300.0021" ;
+    t:primaryDataElement "ValuationReconciliationSummaryCommentDescription" ;
+    t:ruleLogic "If ValuationReconciliationSummaryCommentDescription is not provided" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "N/A" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/VALUATION_RECONCILIATION/VALUATION_RECONCILIATION_DETAIL/" ;
+    t:messageText "Provide commentary for the reconciliation of market value." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1266> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_RECONCILIATION/m:VALUATION_RECONCILIATION_DETAIL/m:ValuationReconciliationSummaryCommentDescription" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_RECONCILIATION/m:VALUATION_RECONCILIATION_DETAIL/m:ValuationReconciliationSummaryCommentDescription" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1273 a t:TestCase ;
+    t:ruleId "UAD1273" ;
+    t:sourceUniqueIdCell "1400.0408" ;
+    t:primaryDataElement "@MISMOReferenceModelIdentifier" ;
+    t:ruleLogic "If @MISMOReferenceModelIdentifier is not provided" ;
+    t:severity "Warning" ;
+    t:propertyAffected "N/A" ;
+    t:xpath "MESSAGE/" ;
+    t:messageText "Provide the MISMO Reference Model version. For assistance with this message, contact the appraisal software vendor." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1273> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:MESSAGE/@MISMOReferenceModelIdentifier" ;
+    t:expectedDataLocation "//m:MESSAGE/@MISMOReferenceModelIdentifier" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1317 a t:TestCase ;
+    t:ruleId "UAD1317" ;
+    t:sourceUniqueIdCell "1500.0054" ;
+    t:primaryDataElement "PropertyAccessTypicalToMarketIndicator" ;
+    t:ruleLogic "If PropertyAccessTypicalToMarketIndicator is not provided" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SITE/PROPERTY_ACCESS/PROPERTY_ACCESS_DETAIL/" ;
+    t:messageText "Indicate whether the property access is common for the market." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1317> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SITE/m:PROPERTY_ACCESS/m:PROPERTY_ACCESS_DETAIL/m:PropertyAccessTypicalToMarketIndicator" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SITE/m:PROPERTY_ACCESS/m:PROPERTY_ACCESS_DETAIL/m:PropertyAccessTypicalToMarketIndicator" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1318 a t:TestCase ;
+    t:ruleId "UAD1318" ;
+    t:sourceUniqueIdCell "1500.0055" ;
+    t:primaryDataElement "PropertyPrimaryEntryExitMethodType" ;
+    t:ruleLogic "If PropertyPrimaryEntryExitMethodType is not provided" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SITE/PROPERTY_ACCESS/PROPERTY_ACCESS_DETAIL/" ;
+    t:messageText "Provide the primary ingress / egress method for the property." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1318> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SITE/m:PROPERTY_ACCESS/m:PROPERTY_ACCESS_DETAIL/m:PropertyPrimaryEntryExitMethodType" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SITE/m:PROPERTY_ACCESS/m:PROPERTY_ACCESS_DETAIL/m:PropertyPrimaryEntryExitMethodType" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1369 a t:TestCase ;
+    t:ruleId "UAD1369" ;
+    t:sourceUniqueIdCell "1500.0125" ;
+    t:primaryDataElement "SiteZoningComplianceType" ;
+    t:ruleLogic "If SiteZoningComplianceType is not provided" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SITE/SITE_ZONING/SITE_ZONING_DETAIL/" ;
+    t:messageText "Provide 'Zoning Compliance'." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1369> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SITE/m:SITE_ZONING/m:SITE_ZONING_DETAIL/m:SiteZoningComplianceType" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SITE/m:SITE_ZONING/m:SITE_ZONING_DETAIL/m:SiteZoningComplianceType" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1372 a t:TestCase ;
+    t:ruleId "UAD1372" ;
+    t:sourceUniqueIdCell "1500.0166" ;
+    t:primaryDataElement "BroadbandInternetAvailableIndicator" ;
+    t:ruleLogic "If BroadbandInternetAvailableIndicator is not provided" ;
+    t:severity "Warning" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SITE/SITE_DETAIL/" ;
+    t:messageText "Indicate whether the broadband internet is available for the market." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1372> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SITE/m:SITE_DETAIL/m:BroadbandInternetAvailableIndicator" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SITE/m:SITE_DETAIL/m:BroadbandInternetAvailableIndicator" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1373 a t:TestCase ;
+    t:ruleId "UAD1373" ;
+    t:sourceUniqueIdCell "1500.0178" ;
+    t:primaryDataElement "SiteDefectsExistIndicator" ;
+    t:ruleLogic "If SiteDefectsExistIndicator is not provided" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SITE/SITE_DETAIL/" ;
+    t:messageText "Indicate whether any defects, damages, or deficiencies are observed on the site." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1373> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SITE/m:SITE_DETAIL/m:SiteDefectsExistIndicator" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SITE/m:SITE_DETAIL/m:SiteDefectsExistIndicator" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1384 a t:TestCase ;
+    t:ruleId "UAD1384" ;
+    t:sourceUniqueIdCell "1600.0006" ;
+    t:primaryDataElement "OverallConditionRatingCode" ;
+    t:ruleLogic "If OverallConditionRatingCode is not provided" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/" ;
+    t:messageText "Provide 'Overall Condition'." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1384> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:OverallConditionRatingCode" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:OverallConditionRatingCode" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1385 a t:TestCase ;
+    t:ruleId "UAD1385" ;
+    t:sourceUniqueIdCell "1600.0007" ;
+    t:primaryDataElement "OverallQualityRatingCode" ;
+    t:ruleLogic "If OverallQualityRatingCode is not provided" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/" ;
+    t:messageText "Provide 'Overall Quality'." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1385> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:OverallQualityRatingCode" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:OverallQualityRatingCode" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1502 a t:TestCase ;
+    t:ruleId "UAD1502" ;
+    t:sourceUniqueIdCell "2100.0045" ;
+    t:primaryDataElement "ValuationReportContentIdentifier" ;
+    t:ruleLogic "If ValuationReportContentIdentifier is not provided" ;
+    t:severity "Warning" ;
+    t:propertyAffected "N/A" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/VALUATION_REPORT_DETAIL/" ;
+    t:messageText "Provide the UAD Delivery Specification version. For assistance with this message, contact the appraisal software vendor.\n" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1502> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_REPORT_DETAIL/m:ValuationReportContentIdentifier" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_REPORT_DETAIL/m:ValuationReportContentIdentifier" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1508 a t:TestCase ;
+    t:ruleId "UAD1508" ;
+    t:sourceUniqueIdCell "2200.0017" ;
+    t:primaryDataElement "AppraiserPriorServicesPerformedIndicator" ;
+    t:ruleLogic "If AppraiserPriorServicesPerformedIndicator is not provided" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "N/A" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/VALUATION_REPORT_DETAIL/" ;
+    t:messageText "Indicate whether the Appraiser has performed any prior services for the subject property." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1508> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_REPORT_DETAIL/m:AppraiserPriorServicesPerformedIndicator" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_REPORT_DETAIL/m:AppraiserPriorServicesPerformedIndicator" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1509 a t:TestCase ;
+    t:ruleId "UAD1509" ;
+    t:sourceUniqueIdCell "2200.0034" ;
+    t:primaryDataElement "AppraiserAdditionalCertificationIndicator" ;
+    t:ruleLogic "If AppraiserAdditionalCertificationIndicator is not provided" ;
+    t:severity "Warning" ;
+    t:propertyAffected "N/A" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/VALUATION_REPORT_DETAIL/" ;
+    t:messageText "Indicate whether additional certifications have been identified by the Appraiser." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1509> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_REPORT_DETAIL/m:AppraiserAdditionalCertificationIndicator" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_REPORT_DETAIL/m:AppraiserAdditionalCertificationIndicator" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1510 a t:TestCase ;
+    t:ruleId "UAD1510" ;
+    t:sourceUniqueIdCell "2200.0037" ;
+    t:primaryDataElement "ValuationAdditionalIntendedUserIndicator" ;
+    t:ruleLogic "If ValuationAdditionalIntendedUserIndicator is not provided" ;
+    t:severity "Warning" ;
+    t:propertyAffected "N/A" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/SCOPE_OF_WORK/SCOPE_OF_WORK_DETAIL/" ;
+    t:messageText "Indicate whether additional intended users have been identified for the appraisal." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1510> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:SCOPE_OF_WORK/m:SCOPE_OF_WORK_DETAIL/m:ValuationAdditionalIntendedUserIndicator" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:SCOPE_OF_WORK/m:SCOPE_OF_WORK_DETAIL/m:ValuationAdditionalIntendedUserIndicator" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1511 a t:TestCase ;
+    t:ruleId "UAD1511" ;
+    t:sourceUniqueIdCell "2200.0038" ;
+    t:primaryDataElement "ValuationReportInspectionCertificationType" ;
+    t:ruleLogic "If ValuationReportInspectionCertificationType is not provided" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "N/A" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/VALUATION_REPORT_DETAIL/" ;
+    t:messageText "Provide the type of inspection performed by the Appraiser in the valuation certifications (Cert #10) for this assignment." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1511> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_REPORT_DETAIL/m:ValuationReportInspectionCertificationType" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_REPORT_DETAIL/m:ValuationReportInspectionCertificationType" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1519 a t:TestCase ;
+    t:ruleId "UAD1519" ;
+    t:sourceUniqueIdCell "1000.0043" ;
+    t:primaryDataElement "PropertyDataReportIndicator" ;
+    t:ruleLogic "If PropertyDataReportIndicator is not provided" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "N/A" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/VALUATION_REPORT_DETAIL/" ;
+    t:messageText "Indicate whether a third-party property data report was used." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1519> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_REPORT_DETAIL/m:PropertyDataReportIndicator" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_REPORT_DETAIL/m:PropertyDataReportIndicator" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1523 a t:TestCase ;
+    t:ruleId "UAD1523" ;
+    t:sourceUniqueIdCell "2200.0062" ;
+    t:primaryDataElement "ValuationAdditionalScopeOfWorkIndicator" ;
+    t:ruleLogic "If ValuationAdditionalScopeOfWorkIndicator is not provided" ;
+    t:severity "Warning" ;
+    t:propertyAffected "N/A" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/SCOPE_OF_WORK/SCOPE_OF_WORK_DETAIL/" ;
+    t:messageText "Indicate whether additional scope of work (beyond the minimum scope) has been identified for this valuation assignment." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1523> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:SCOPE_OF_WORK/m:SCOPE_OF_WORK_DETAIL/m:ValuationAdditionalScopeOfWorkIndicator" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:SCOPE_OF_WORK/m:SCOPE_OF_WORK_DETAIL/m:ValuationAdditionalScopeOfWorkIndicator" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1616 a t:TestCase ;
+    t:ruleId "UAD1616" ;
+    t:sourceUniqueIdCell "2600.0003" ;
+    t:primaryDataElement "EfficiencyRatingExistsIndicator" ;
+    t:ruleLogic "If EfficiencyRatingExistsIndicator is not provided" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/ENERGY_EFFICIENCY_AND_GREEN/ENERGY_EFFICIENCY_AND_GREEN_DETAIL/" ;
+    t:messageText "Indicate whether the property has obtained an efficiency rating." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1616> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:ENERGY_EFFICIENCY_AND_GREEN/m:ENERGY_EFFICIENCY_AND_GREEN_DETAIL/m:EfficiencyRatingExistsIndicator" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:ENERGY_EFFICIENCY_AND_GREEN/m:ENERGY_EFFICIENCY_AND_GREEN_DETAIL/m:EfficiencyRatingExistsIndicator" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1617 a t:TestCase ;
+    t:ruleId "UAD1617" ;
+    t:sourceUniqueIdCell "2600.0004" ;
+    t:primaryDataElement "GreenCertificationExistsIndicator" ;
+    t:ruleLogic "If GreenCertificationExistsIndicator is not provided" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/ENERGY_EFFICIENCY_AND_GREEN/ENERGY_EFFICIENCY_AND_GREEN_DETAIL/" ;
+    t:messageText "Indicate whether the property has obtained green, health or wellness certification." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1617> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:ENERGY_EFFICIENCY_AND_GREEN/m:ENERGY_EFFICIENCY_AND_GREEN_DETAIL/m:GreenCertificationExistsIndicator" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:ENERGY_EFFICIENCY_AND_GREEN/m:ENERGY_EFFICIENCY_AND_GREEN_DETAIL/m:GreenCertificationExistsIndicator" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1618 a t:TestCase ;
+    t:ruleId "UAD1618" ;
+    t:sourceUniqueIdCell "2600.0005" ;
+    t:primaryDataElement "RenewableEnergyComponentExistsIndicator" ;
+    t:ruleLogic "If RenewableEnergyComponentExistsIndicator is not provided" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/ENERGY_EFFICIENCY_AND_GREEN/ENERGY_EFFICIENCY_AND_GREEN_DETAIL/" ;
+    t:messageText "Indicate whether the property has any renewable energy components." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1618> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:ENERGY_EFFICIENCY_AND_GREEN/m:ENERGY_EFFICIENCY_AND_GREEN_DETAIL/m:RenewableEnergyComponentExistsIndicator" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:ENERGY_EFFICIENCY_AND_GREEN/m:ENERGY_EFFICIENCY_AND_GREEN_DETAIL/m:RenewableEnergyComponentExistsIndicator" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1626 a t:TestCase ;
+    t:ruleId "UAD1626" ;
+    t:sourceUniqueIdCell "3000.0008" ;
+    t:primaryDataElement "MarketBoundariesDescription" ;
+    t:ruleLogic "If MarketBoundariesDescription is not provided" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/MARKET/MARKET_DETAIL/" ;
+    t:messageText "Provide a description of the 'Market Boundary'." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1626> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:MARKET/m:MARKET_DETAIL/m:MarketBoundariesDescription" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:MARKET/m:MARKET_DETAIL/m:MarketBoundariesDescription" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1627 a t:TestCase ;
+    t:ruleId "UAD1627" ;
+    t:sourceUniqueIdCell "3000.0009" ;
+    t:primaryDataElement "MarketInventoryLookbackMonthsCount" ;
+    t:ruleLogic "If MarketInventoryLookbackMonthsCount is not provided" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/MARKET/MARKET_DETAIL/" ;
+    t:messageText "Provide the lookback period for sales in the market area." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1627> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:MARKET/m:MARKET_DETAIL/m:MarketInventoryLookbackMonthsCount" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:MARKET/m:MARKET_DETAIL/m:MarketInventoryLookbackMonthsCount" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1652 a t:TestCase ;
+    t:ruleId "UAD1652" ;
+    t:sourceUniqueIdCell "3000.0033" ;
+    t:primaryDataElement "MarketSupplyTrendType" ;
+    t:ruleLogic "If MarketSupplyTrendType is not provided" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/MARKET/MARKET_TREND/" ;
+    t:messageText "Provide 'Demand/Supply'." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1652> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:MARKET/m:MARKET_TREND/m:MarketSupplyTrendType" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:MARKET/m:MARKET_TREND/m:MarketSupplyTrendType" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1653 a t:TestCase ;
+    t:ruleId "UAD1653" ;
+    t:sourceUniqueIdCell "3000.0034" ;
+    t:primaryDataElement "MarketTrendsForeclosureActivityIndicator" ;
+    t:ruleLogic "If MarketTrendsForeclosureActivityIndicator is not provided" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/MARKET/MARKET_TREND/" ;
+    t:messageText "Indicate whether distressed market competition exists." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1653> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:MARKET/m:MARKET_TREND/m:MarketTrendsForeclosureActivityIndicator" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:MARKET/m:MARKET_TREND/m:MarketTrendsForeclosureActivityIndicator" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1659 a t:TestCase ;
+    t:ruleId "UAD1659" ;
+    t:sourceUniqueIdCell "3100.0003" ;
+    t:primaryDataElement "FinanciallyFeasibleIndicator" ;
+    t:ruleLogic "If FinanciallyFeasibleIndicator is not provided" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SITE/HIGHEST_AND_BEST_USE/" ;
+    t:messageText "Indicate whether the highest and best use of the property is financially feasible." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1659> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SITE/m:HIGHEST_AND_BEST_USE/m:FinanciallyFeasibleIndicator" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SITE/m:HIGHEST_AND_BEST_USE/m:FinanciallyFeasibleIndicator" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1660 a t:TestCase ;
+    t:ruleId "UAD1660" ;
+    t:sourceUniqueIdCell "3100.0004" ;
+    t:primaryDataElement "LegallyPermissibleIndicator" ;
+    t:ruleLogic "If LegallyPermissibleIndicator is not provided" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SITE/HIGHEST_AND_BEST_USE/" ;
+    t:messageText "Indicate whether the highest and best use of the property is legally permissible." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1660> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SITE/m:HIGHEST_AND_BEST_USE/m:LegallyPermissibleIndicator" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SITE/m:HIGHEST_AND_BEST_USE/m:LegallyPermissibleIndicator" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1661 a t:TestCase ;
+    t:ruleId "UAD1661" ;
+    t:sourceUniqueIdCell "3100.0005" ;
+    t:primaryDataElement "MaximallyProductiveIndicator" ;
+    t:ruleLogic "If MaximallyProductiveIndicator is not provided" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SITE/HIGHEST_AND_BEST_USE/" ;
+    t:messageText "Indicate whether the highest and best use of the property is maximally productive." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1661> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SITE/m:HIGHEST_AND_BEST_USE/m:MaximallyProductiveIndicator" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SITE/m:HIGHEST_AND_BEST_USE/m:MaximallyProductiveIndicator" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1662 a t:TestCase ;
+    t:ruleId "UAD1662" ;
+    t:sourceUniqueIdCell "3100.0006" ;
+    t:primaryDataElement "PhysicallyPossibleIndicator" ;
+    t:ruleLogic "If PhysicallyPossibleIndicator is not provided" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SITE/HIGHEST_AND_BEST_USE/" ;
+    t:messageText "Indicate whether the highest and best use of the property is physically possible." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1662> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SITE/m:HIGHEST_AND_BEST_USE/m:PhysicallyPossibleIndicator" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SITE/m:HIGHEST_AND_BEST_USE/m:PhysicallyPossibleIndicator" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1663 a t:TestCase ;
+    t:ruleId "UAD1663" ;
+    t:sourceUniqueIdCell "3100.0007" ;
+    t:primaryDataElement "SiteHighestBestUseIndicator" ;
+    t:ruleLogic "If SiteHighestBestUseIndicator is not provided" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SITE/HIGHEST_AND_BEST_USE/" ;
+    t:messageText "Indicate whether the present or the proposed use is the highest and best." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1663> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SITE/m:HIGHEST_AND_BEST_USE/m:SiteHighestBestUseIndicator" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:SITE/m:HIGHEST_AND_BEST_USE/m:SiteHighestBestUseIndicator" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1676 a t:TestCase ;
+    t:ruleId "UAD1676" ;
+    t:sourceUniqueIdCell "3300.0002" ;
+    t:primaryDataElement "SketchExistsIndicator" ;
+    t:ruleLogic "If SketchExistsIndicator is not provided" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "N/A" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/VALUATION_REPORT_DETAIL/" ;
+    t:messageText "Indicate whether a sketch or floor plan has been included in the appraisal." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1676> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_REPORT_DETAIL/m:SketchExistsIndicator" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_REPORT_DETAIL/m:SketchExistsIndicator" ;
+    t:xsdValidAfterRemoval true .
+
+case:UAD1750 a t:TestCase ;
+    t:ruleId "UAD1750" ;
+    t:sourceUniqueIdCell "4000.0004" ;
+    t:primaryDataElement "ReconsiderationOfValueIndicator" ;
+    t:ruleLogic "If ReconsiderationOfValueIndicator is not provided" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "N/A" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/VALUATION_REPORT_DETAIL/" ;
+    t:messageText "Indicate whether a reconsideration of value has been requested." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1750> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:requiredValueXPath "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_REPORT_DETAIL/m:ReconsiderationOfValueIndicator" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_REPORT_DETAIL/m:ReconsiderationOfValueIndicator" ;
+    t:xsdValidAfterRemoval true .

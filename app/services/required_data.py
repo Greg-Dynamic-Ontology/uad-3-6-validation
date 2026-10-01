@@ -35,6 +35,10 @@ from app.services.representation_restriction_required_data import (
     binding_for as representation_restriction_binding_for,
     evaluate_representation_restriction,
 )
+from app.services.existing_context_required_data import (
+    binding_for as existing_context_binding_for,
+    evaluate_existing_context_required,
+)
 from app.services.scoped_required_data import (
     evaluate_scoped_rule,
     scoped_spec,
@@ -370,6 +374,9 @@ def load_required_rules() -> tuple[dict[str, str], ...]:
         if representation_restriction_binding_for(row) is not None:
             rules.append(row)
             continue
+        if existing_context_binding_for(row) is not None:
+            rules.append(row)
+            continue
         if scoped_spec(row) is not None:
             verify_definition(row)
             rules.append(row)
@@ -419,6 +426,9 @@ def load_required_rules() -> tuple[dict[str, str], ...]:
             valid_rules.append(rule)
             continue
         if representation_restriction_binding_for(rule) is not None:
+            valid_rules.append(rule)
+            continue
+        if existing_context_binding_for(rule) is not None:
             valid_rules.append(rule)
             continue
         problem = None
@@ -660,6 +670,11 @@ def evaluate_required_data(
         if representation_restriction_binding_for(rule) is not None:
             findings.extend(
                 evaluate_representation_restriction(root, investor, rule)
+            )
+            continue
+        if existing_context_binding_for(rule) is not None:
+            findings.extend(
+                evaluate_existing_context_required(root, investor, rule)
             )
             continue
         if scoped_spec(rule) is not None:

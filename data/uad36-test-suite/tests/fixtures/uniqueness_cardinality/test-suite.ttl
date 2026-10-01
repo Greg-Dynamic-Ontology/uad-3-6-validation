@@ -1,0 +1,499 @@
+@prefix case: <urn:uad36:test-case:IT-1R5S1:> .
+@prefix suite: <urn:uad36:test-suite:> .
+@prefix t: <urn:uad36:test-suite:vocab:> .
+
+suite:uniqueness-cardinality a t:TestSuite ;
+    t:category <urn:uad36:work-tracking:scenario:uniqueness_cardinality> ;
+    t:categoryInventoryPath "data/spreadsheet-rule-category-tracking.ttl" ;
+    t:hasCase case:UAD1033,
+        case:UAD1037,
+        case:UAD1092,
+        case:UAD1093,
+        case:UAD1171,
+        case:UAD1172,
+        case:UAD1223,
+        case:UAD1224,
+        case:UAD1226,
+        case:UAD1247,
+        case:UAD1256,
+        case:UAD1268,
+        case:UAD1403,
+        case:UAD1432,
+        case:UAD1485,
+        case:UAD1495,
+        case:UAD1535,
+        case:UAD1637,
+        case:UAD1640,
+        case:UAD1649,
+        case:UAD1702,
+        case:UAD1703,
+        case:UAD1704,
+        case:UAD1722,
+        case:UAD1758,
+        case:UAD1759 ;
+    t:ruleInventoryPath "data/data-constraints.csv" ;
+    t:scenarioId "IT-1R5S1" .
+
+case:UAD1033 a t:TestCase ;
+    t:ruleId "UAD1033" ;
+    t:sourceUniqueIdCell "0100.0043" ;
+    t:primaryDataElement "@ValuationUseType" ;
+    t:ruleLogic "If more than one instance of PROPERTY has @ValuationUseType = \"SubjectProperty\"" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/" ;
+    t:messageText "More than one property has been identified as the subject property. For assistance with this message, contact the appraisal software vendor." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1033> ;
+    t:uniqueId "0100.0043" ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='SubjectProperty'])[1]" ;
+    t:expectedViolationKind "CardinalityViolation" ;
+    t:mutationMode "duplicate-node" ;
+    t:mutationXPath "(//m:PROPERTY[@ValuationUseType='SubjectProperty'])[1]" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1037 a t:TestCase ;
+    t:ruleId "UAD1037" ;
+    t:sourceUniqueIdCell "" ;
+    t:primaryDataElement "ValuationAnalysisCategoryType" ;
+    t:ruleLogic "If there is more than one instance of VALUATION_COMMENTARY with the same ValuationAnalysisCategoryType enumeration" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "N/A" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/VALUATION_COMMENTARIES/VALUATION_COMMENTARY/" ;
+    t:messageText "Each ValuationAnalysisCategoryType can only be delivered once. For assistance with this message, contact the appraisal software vendor." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1037> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:expectedDataLocation "(//m:VALUATION_COMMENTARY)[1]" ;
+    t:expectedViolationKind "CardinalityViolation" ;
+    t:mutationMode "duplicate-node" ;
+    t:mutationXPath "(//m:VALUATION_COMMENTARY)[1]" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1092 a t:TestCase ;
+    t:ruleId "UAD1092" ;
+    t:sourceUniqueIdCell "0300.0101" ;
+    t:primaryDataElement "StructureIdentifier" ;
+    t:ruleLogic "If StructureIdentifier is not unique across all instances of STRUCTURE_DETAIL" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/STRUCTURE/STRUCTURE_DETAIL/" ;
+    t:messageText "The structure identifier must be unique." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1092> ;
+    t:uniqueId "0300.0101" ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:STRUCTURE_DETAIL[m:StructureIdentifier])[1]" ;
+    t:expectedViolationKind "DuplicateValue" ;
+    t:mutationMode "duplicate-node" ;
+    t:mutationXPath "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:STRUCTURE_DETAIL[m:StructureIdentifier])[1]" ;
+    t:xsdValidAfterMutation false .
+
+case:UAD1093 a t:TestCase ;
+    t:ruleId "UAD1093" ;
+    t:sourceUniqueIdCell "0300.0065" ;
+    t:primaryDataElement "StructureIdentifier" ;
+    t:ruleLogic "If @ValuationUseType = \"SalesComparable\" and StructureIdentifier is not unique across all instances of IMPROVEMENT/STRUCTURE/STRUCTURE_DETAIL for a given comp" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Sales Comparable #n" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/STRUCTURE/STRUCTURE_DETAIL/" ;
+    t:messageText "The structure identifier must be unique." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1093> ;
+    t:uniqueId "0300.0065" ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='SalesComparable']//m:STRUCTURE_DETAIL[m:StructureIdentifier])[1]" ;
+    t:expectedViolationKind "DuplicateValue" ;
+    t:mutationMode "duplicate-node" ;
+    t:mutationXPath "(//m:PROPERTY[@ValuationUseType='SalesComparable']//m:STRUCTURE_DETAIL[m:StructureIdentifier])[1]" ;
+    t:xsdValidAfterMutation false .
+
+case:UAD1171 a t:TestCase ;
+    t:ruleId "UAD1171" ;
+    t:sourceUniqueIdCell "0700.0114" ;
+    t:primaryDataElement "UnitIdentifier" ;
+    t:ruleLogic "If UnitIdentifier is not unique across all instances of PROPERTY_UNIT_DETAIL" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/PROPERTY_UNITS/PROPERTY_UNIT/PROPERTY_UNIT_DETAIL/" ;
+    t:messageText "The unit identifier must be unique." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1171> ;
+    t:uniqueId "0700.0114" ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:PROPERTY_UNIT_DETAIL[m:UnitIdentifier])[1]" ;
+    t:expectedViolationKind "DuplicateValue" ;
+    t:mutationMode "duplicate-node" ;
+    t:mutationXPath "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:PROPERTY_UNIT_DETAIL[m:UnitIdentifier])[1]" ;
+    t:xsdValidAfterMutation false .
+
+case:UAD1172 a t:TestCase ;
+    t:ruleId "UAD1172" ;
+    t:sourceUniqueIdCell "1800.0159" ;
+    t:primaryDataElement "UnitIdentifier" ;
+    t:ruleLogic "If @ValuationUseType = \"SalesComparable\" and UnitIdentifier is not unique across all instances of PROPERTY_UNIT_DETAIL" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Sales Comparable #n" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/PROPERTY_UNITS/PROPERTY_UNIT/PROPERTY_UNIT_DETAIL/" ;
+    t:messageText "The unit identifier must be unique." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1172> ;
+    t:uniqueId "1800.0159" ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='SalesComparable']//m:PROPERTY_UNIT_DETAIL[m:UnitIdentifier])[1]" ;
+    t:expectedViolationKind "DuplicateValue" ;
+    t:mutationMode "duplicate-node" ;
+    t:mutationXPath "(//m:PROPERTY[@ValuationUseType='SalesComparable']//m:PROPERTY_UNIT_DETAIL[m:UnitIdentifier])[1]" ;
+    t:xsdValidAfterMutation false .
+
+case:UAD1223 a t:TestCase ;
+    t:ruleId "UAD1223" ;
+    t:sourceUniqueIdCell "1000.0198" ;
+    t:primaryDataElement "ServiceType" ;
+    t:ruleLogic "If there is no instance or more than one instance of SERVICE_DETAIL with ServiceType = \"Valuation\"" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "N/A" ;
+    t:xpath "../SERVICE/SERVICE_DETAIL/" ;
+    t:messageText "'ServiceType' = 'Valuation' must be delivered once. For assistance with this message, contact the appraisal software vendor." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1223> ;
+    t:uniqueId "1000.0198" ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:expectedDataLocation "(//m:SERVICE_DETAIL[m:ServiceType='Valuation'])[1]" ;
+    t:expectedViolationKind "CardinalityViolation" ;
+    t:mutationMode "duplicate-node" ;
+    t:mutationXPath "(//m:SERVICE_DETAIL[m:ServiceType='Valuation'])[1]" ;
+    t:xsdValidAfterMutation false .
+
+case:UAD1224 a t:TestCase ;
+    t:ruleId "UAD1224" ;
+    t:sourceUniqueIdCell "1000.0197" ;
+    t:primaryDataElement "ServiceType" ;
+    t:ruleLogic "If there is more than one instance of SERVICE_DETAIL with ServiceType = \"Inspection\"" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "N/A" ;
+    t:xpath "../SERVICE/SERVICE_DETAIL/" ;
+    t:messageText "'ServiceType' = 'Inspection' must be delivered no more than once. For assistance with this message, contact the appraisal software vendor." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1224> ;
+    t:uniqueId "1000.0197" ;
+    t:baselinePath "examples/xml/Condo1_Appraisal_v1.4.xml" ;
+    t:expectedDataLocation "(//m:SERVICE_DETAIL[m:ServiceType='Inspection'])[1]" ;
+    t:expectedViolationKind "CardinalityViolation" ;
+    t:mutationMode "duplicate-node" ;
+    t:mutationXPath "(//m:SERVICE_DETAIL[m:ServiceType='Inspection'])[1]" ;
+    t:xsdValidAfterMutation false .
+
+case:UAD1226 a t:TestCase ;
+    t:ruleId "UAD1226" ;
+    t:sourceUniqueIdCell "1100.0015" ;
+    t:primaryDataElement "PropertyOrdinalNumber" ;
+    t:ruleLogic "If PropertyOrdinalNumber is not unique across all instances of PROPERTY with @ValuationUseType = \"LandComparable\"" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Land Comparable" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/COMPARABLE/COMPARABLE_DETAIL/" ;
+    t:messageText "Comparable # must be unique. For assistance with this message, contact the appraisal software vendor." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1226> ;
+    t:uniqueId "1100.0015" ;
+    t:baselinePath "examples/xml/MH1_Appraisal_v1.4.xml" ;
+    t:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='LandComparable'])[1]" ;
+    t:expectedViolationKind "DuplicateValue" ;
+    t:mutationMode "duplicate-node" ;
+    t:mutationXPath "(//m:PROPERTY[@ValuationUseType='LandComparable'])[1]" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1247 a t:TestCase ;
+    t:ruleId "UAD1247" ;
+    t:sourceUniqueIdCell "1200.0028" ;
+    t:primaryDataElement "PropertyOrdinalNumber" ;
+    t:ruleLogic "if PropertyOrdinalNumber is not unique across all instances of PROPERTY with @ValuationUseType = \"GrossRentMultiplierComparable\"" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Gross Rent Multiplier Comparable" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/COMPARABLE/COMPARABLE_DETAIL/" ;
+    t:messageText "Comparable # must be unique. For assistance with this message, contact the appraisal software vendor." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1247> ;
+    t:uniqueId "1200.0028" ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='GrossRentMultiplierComparable'])[1]" ;
+    t:expectedViolationKind "DuplicateValue" ;
+    t:mutationMode "duplicate-node" ;
+    t:mutationXPath "(//m:PROPERTY[@ValuationUseType='GrossRentMultiplierComparable'])[1]" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1256 a t:TestCase ;
+    t:ruleId "UAD1256" ;
+    t:sourceUniqueIdCell "1300.0010" ;
+    t:primaryDataElement "PropertyValuationConditionalConclusionType" ;
+    t:ruleLogic "If PropertyValuationConditionalConclusionType = \"AsIs\" and there are one or more additional instances of VALUATION_CONDITION" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "N/A" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/VALUATION_RECONCILIATION/VALUATION_RECONCILIATION_SUMMARY/VALUATION_CONDITIONS/VALUATION_CONDITION/" ;
+    t:messageText "When the appraisal is made 'As Is', no other type of market value condition can be delivered." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1256> ;
+    t:uniqueId "1300.0010" ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:expectedDataLocation "(//m:VALUATION_CONDITION[m:PropertyValuationConditionalConclusionType='AsIs'])[1]" ;
+    t:expectedViolationKind "CardinalityViolation" ;
+    t:mutationMode "duplicate-node" ;
+    t:mutationXPath "(//m:VALUATION_CONDITION[m:PropertyValuationConditionalConclusionType='AsIs'])[1]" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1268 a t:TestCase ;
+    t:ruleId "UAD1268" ;
+    t:sourceUniqueIdCell "" ;
+    t:primaryDataElement "INSPECTION_DETAIL" ;
+    t:ruleLogic "If PartyRoleType = \"Appraiser\" or \"AppraiserSupervisor\" and (no instance of INSPECTION_DETAIL is provided for each role or more than one instance of INSPECTION_DETAIL is provided for each role)" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/INSPECTIONS/INSPECTION/INSPECTION_DETAIL/" ;
+    t:messageText "The exterior inspection method, interior inspection method, and inspection date must be delivered no more than once for each Appraiser and/or Supervisory Appraiser. In the UAD XML, only one instance of INSPECTION_DETAIL must be included for each Appraiser and/or Supervisory Appraiser. For assistance with this message, contact the appraisal software vendor." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1268> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:expectedDataLocation "(//m:INSPECTION[@xlink:label='INSPECTION_Appraiser']/m:INSPECTION_DETAIL)[1]" ;
+    t:expectedViolationKind "CardinalityViolation" ;
+    t:mutationMode "duplicate-node" ;
+    t:mutationXPath "(//m:INSPECTION[@xlink:label='INSPECTION_Appraiser']/m:INSPECTION_DETAIL)[1]" ;
+    t:xsdValidAfterMutation false .
+
+case:UAD1403 a t:TestCase ;
+    t:ruleId "UAD1403" ;
+    t:sourceUniqueIdCell "1800.0075" ;
+    t:primaryDataElement "ListingStatusType" ;
+    t:ruleLogic "If @ValuationUseType = \"SalesComparable\" and there is more than one instance of LISTING_INFORMATION" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Sales Comparable #n" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/LISTING_INFORMATIONS/LISTING_INFORMATION/LISTING_INFORMATION_DETAIL/" ;
+    t:messageText "Only one listing status must be delivered for the sales comparable." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1403> ;
+    t:uniqueId "1800.0075" ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='SalesComparable']//m:LISTING_INFORMATION)[1]" ;
+    t:expectedViolationKind "CardinalityViolation" ;
+    t:mutationMode "duplicate-node" ;
+    t:mutationXPath "(//m:PROPERTY[@ValuationUseType='SalesComparable']//m:LISTING_INFORMATION)[1]" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1432 a t:TestCase ;
+    t:ruleId "UAD1432" ;
+    t:sourceUniqueIdCell "1800.0192" ;
+    t:primaryDataElement "PropertyOrdinalNumber" ;
+    t:ruleLogic "if PropertyOrdinalNumber is not unique across all instances of PROPERTY with @ValuationUseType = \"SalesComparable\"" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Sales Comparable" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/COMPARABLE/COMPARABLE_DETAIL/" ;
+    t:messageText "Comparable # must be unique. For assistance with this message, contact the appraisal software vendor." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1432> ;
+    t:uniqueId "1800.0192" ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='SalesComparable'])[1]" ;
+    t:expectedViolationKind "DuplicateValue" ;
+    t:mutationMode "duplicate-node" ;
+    t:mutationXPath "(//m:PROPERTY[@ValuationUseType='SalesComparable'])[1]" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1485 a t:TestCase ;
+    t:ruleId "UAD1485" ;
+    t:sourceUniqueIdCell "1900.0017" ;
+    t:primaryDataElement "PropertyOrdinalNumber" ;
+    t:ruleLogic "if PropertyOrdinalNumber is not unique across all instances of PROPERTY with @ValuationUseType = \"PropertyAnalyzedNotUsed\"" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Property Analyzed Not Used" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/COMPARABLE/COMPARABLE_DETAIL/" ;
+    t:messageText "Comparable # must be unique. For assistance with this message, contact the appraisal software vendor." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1485> ;
+    t:uniqueId "1900.0017" ;
+    t:baselinePath "examples/xml/SF1_Appraisal_v1.4.xml" ;
+    t:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='PropertyAnalyzedNotUsed'])[1]" ;
+    t:expectedViolationKind "DuplicateValue" ;
+    t:mutationMode "duplicate-node" ;
+    t:mutationXPath "(//m:PROPERTY[@ValuationUseType='PropertyAnalyzedNotUsed'])[1]" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1495 a t:TestCase ;
+    t:ruleId "UAD1495" ;
+    t:sourceUniqueIdCell "2000.0078" ;
+    t:primaryDataElement "PropertyOrdinalNumber" ;
+    t:ruleLogic "if PropertyOrdinalNumber is not unique across all instances of PROPERTY with @ValuationUseType = \"RentalComparable\"" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Rental Comparable" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/COMPARABLE/COMPARABLE_DETAIL/" ;
+    t:messageText "Comparable # must be unique. For assistance with this message, contact the appraisal software vendor." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1495> ;
+    t:uniqueId "2000.0078" ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='RentalComparable'])[1]" ;
+    t:expectedViolationKind "DuplicateValue" ;
+    t:mutationMode "duplicate-node" ;
+    t:mutationXPath "(//m:PROPERTY[@ValuationUseType='RentalComparable'])[1]" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1535 a t:TestCase ;
+    t:ruleId "UAD1535" ;
+    t:sourceUniqueIdCell "2200.0154; 2200.0002" ;
+    t:primaryDataElement "ExecutionDate" ;
+    t:ruleLogic "If ExecutionDate is not provided for PartyRoleType = (\"AppraiserSupervisor\" or \"Appraiser\") or more than one instance of ExecutionDate is provided for PartyRoleType = (\"AppraiserSupervisor\" or \"Appraiser\")" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "N/A" ;
+    t:xpath "MESSAGE/DOCUMENT_SETS/DOCUMENT_SET/DOCUMENTS/DOCUMENT/SIGNATORIES/SIGNATORY/EXECUTION/EXECUTION_DETAIL/" ;
+    t:messageText "Provide the 'Date of Signature and Report'.\nThe 'Date of Signature and Report' must be provided for the Appraiser and the Supervisory Appraiser (if applicable), with only one instance allowed per party." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1535> ;
+    t:uniqueId "2200.0154" ;
+    t:uniqueId "2200.0002" ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:expectedDataLocation "(//m:SIGNATORY/m:EXECUTION/m:EXECUTION_DETAIL/m:ExecutionDate)[1]" ;
+    t:expectedViolationKind "CardinalityViolation" ;
+    t:mutationMode "duplicate-node" ;
+    t:mutationXPath "(//m:SIGNATORY/m:EXECUTION/m:EXECUTION_DETAIL/m:ExecutionDate)[1]" ;
+    t:xsdValidAfterMutation false .
+
+case:UAD1637 a t:TestCase ;
+    t:ruleId "UAD1637" ;
+    t:sourceUniqueIdCell "3000.0023" ;
+    t:primaryDataElement "MarketInventoryType" ;
+    t:ruleLogic "If there is more than one instance of MARKET_INVENTORY with MarketInventoryType = \"ActiveListings\"" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/MARKET/MARKET_INVENTORIES/MARKET_INVENTORY/" ;
+    t:messageText "The market inventory type qualifier of 'ActiveListings' must be provided only once. For assistance with this message, contact the appraisal software vendor.\n" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1637> ;
+    t:uniqueId "3000.0023" ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:expectedDataLocation "(//m:MARKET_INVENTORY[m:MarketInventoryType='ActiveListings'])[1]" ;
+    t:expectedViolationKind "CardinalityViolation" ;
+    t:mutationMode "duplicate-node" ;
+    t:mutationXPath "(//m:MARKET_INVENTORY[m:MarketInventoryType='ActiveListings'])[1]" ;
+    t:xsdValidAfterMutation false .
+
+case:UAD1640 a t:TestCase ;
+    t:ruleId "UAD1640" ;
+    t:sourceUniqueIdCell "3000.0025" ;
+    t:primaryDataElement "MarketInventoryType" ;
+    t:ruleLogic "If there is more than one instance of MARKET_INVENTORY with MarketInventoryType = \"PendingSales\"" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/MARKET/MARKET_INVENTORIES/MARKET_INVENTORY/" ;
+    t:messageText "A market inventory type qualifier of 'PendingSales' must be provided only once. For assistance with this message, contact the appraisal software vendor." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1640> ;
+    t:uniqueId "3000.0025" ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:expectedDataLocation "(//m:MARKET_INVENTORY[m:MarketInventoryType='PendingSales'])[1]" ;
+    t:expectedViolationKind "CardinalityViolation" ;
+    t:mutationMode "duplicate-node" ;
+    t:mutationXPath "(//m:MARKET_INVENTORY[m:MarketInventoryType='PendingSales'])[1]" ;
+    t:xsdValidAfterMutation false .
+
+case:UAD1649 a t:TestCase ;
+    t:ruleId "UAD1649" ;
+    t:sourceUniqueIdCell "3000.0030" ;
+    t:primaryDataElement "MarketInventoryType" ;
+    t:ruleLogic "If there is more than one instance of MARKET_INVENTORY with MarketInventoryType = \"TotalSales\"" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/MARKET/MARKET_INVENTORIES/MARKET_INVENTORY/" ;
+    t:messageText "A market inventory type qualifier of 'TotalSales' must be provided only once. For assistance with this message, contact the appraisal software vendor." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1649> ;
+    t:uniqueId "3000.0030" ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:expectedDataLocation "(//m:MARKET_INVENTORY[m:MarketInventoryType='TotalSales'])[1]" ;
+    t:expectedViolationKind "CardinalityViolation" ;
+    t:mutationMode "duplicate-node" ;
+    t:mutationXPath "(//m:MARKET_INVENTORY[m:MarketInventoryType='TotalSales'])[1]" ;
+    t:xsdValidAfterMutation false .
+
+case:UAD1702 a t:TestCase ;
+    t:ruleId "UAD1702" ;
+    t:sourceUniqueIdCell "" ;
+    t:primaryDataElement "SALES_HISTORY" ;
+    t:ruleLogic "If @ValuationUseType = \"LandComparable\" and there is more than one instance of SALES_HISTORY" ;
+    t:severity "Warning" ;
+    t:propertyAffected "Land Comparable #n" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SALES_HISTORIES/SALES_HISTORY/" ;
+    t:messageText "Only the most recent sale should be delivered. For assistance with this message, contact the appraisal software vendor." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1702> ;
+    t:baselinePath "examples/xml/MH1_Appraisal_v1.4.xml" ;
+    t:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='LandComparable']//m:SALES_HISTORY)[1]" ;
+    t:expectedViolationKind "CardinalityViolation" ;
+    t:mutationMode "duplicate-node" ;
+    t:mutationXPath "(//m:PROPERTY[@ValuationUseType='LandComparable']//m:SALES_HISTORY)[1]" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1703 a t:TestCase ;
+    t:ruleId "UAD1703" ;
+    t:sourceUniqueIdCell "" ;
+    t:primaryDataElement "SALES_HISTORY" ;
+    t:ruleLogic "If @ValuationUseType = \"GrossRentMultiplierComparable\" and there is more than one instance of SALES_HISTORY" ;
+    t:severity "Warning" ;
+    t:propertyAffected "Gross Rent Multiplier Comparable #n" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SALES_HISTORIES/SALES_HISTORY/" ;
+    t:messageText "Only the most recent sale should be delivered. For assistance with this message, contact the appraisal software vendor." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1703> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='GrossRentMultiplierComparable']//m:SALES_HISTORY)[1]" ;
+    t:expectedViolationKind "CardinalityViolation" ;
+    t:mutationMode "duplicate-node" ;
+    t:mutationXPath "(//m:PROPERTY[@ValuationUseType='GrossRentMultiplierComparable']//m:SALES_HISTORY)[1]" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1704 a t:TestCase ;
+    t:ruleId "UAD1704" ;
+    t:sourceUniqueIdCell "" ;
+    t:primaryDataElement "SALES_HISTORY" ;
+    t:ruleLogic "If @ValuationUseType = \"PropertyAnalyzedNotUsed\" and there is more than one instance of SALES_HISTORY" ;
+    t:severity "Warning" ;
+    t:propertyAffected "Property Analyzed Not Used #n" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SALES_HISTORIES/SALES_HISTORY/" ;
+    t:messageText "Only the most recent sale should be delivered. For assistance with this message, contact the appraisal software vendor." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1704> ;
+    t:baselinePath "examples/xml/SF1_Appraisal_v1.4.xml" ;
+    t:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='PropertyAnalyzedNotUsed']//m:SALES_HISTORY)[1]" ;
+    t:expectedViolationKind "CardinalityViolation" ;
+    t:mutationMode "duplicate-node" ;
+    t:mutationXPath "(//m:PROPERTY[@ValuationUseType='PropertyAnalyzedNotUsed']//m:SALES_HISTORY)[1]" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1722 a t:TestCase ;
+    t:ruleId "UAD1722" ;
+    t:sourceUniqueIdCell "2400.0056" ;
+    t:primaryDataElement "PartyRoleType" ;
+    t:ruleLogic "If more than one instance of ROLE_DETAIL has PartyRoleType = \"Appraiser\" across all instances of PARTY" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "N/A" ;
+    t:xpath "../SERVICE/PARTIES/PARTY/ROLES/ROLE/ROLE_DETAIL/" ;
+    t:messageText "More than one Appraiser has been identified in the appraisal. There can be only one Appraiser, the other has to be Supervisory Appraiser." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1722> ;
+    t:uniqueId "2400.0056" ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:expectedDataLocation "(//m:ROLE_DETAIL[m:PartyRoleType='Appraiser'])[1]" ;
+    t:expectedViolationKind "CardinalityViolation" ;
+    t:mutationMode "duplicate-node" ;
+    t:mutationXPath "(//m:ROLE_DETAIL[m:PartyRoleType='Appraiser'])[1]" ;
+    t:xsdValidAfterMutation false .
+
+case:UAD1758 a t:TestCase ;
+    t:ruleId "UAD1758" ;
+    t:sourceUniqueIdCell "1800.0318" ;
+    t:primaryDataElement "ComparableAdjustmentType " ;
+    t:ruleLogic "If @ValuationUseType = \"SalesComparable\" and there is more than one instance of COMPARABLE_ADJUSTMENT with the same ComparableAdjustmentType enumeration that should only be adjusted once (e.g., View). Please refer to the Adjustments Cardinality tab for the list of adjustments that can be applied only once." ;
+    t:severity "Warning" ;
+    t:propertyAffected "Sales Comparable #n" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/COMPARABLE/COMPARABLE_ADJUSTMENTS/COMPARABLE_ADJUSTMENT/" ;
+    t:messageText "Only one line-item adjustment is allowed for this Adjustment Type." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1758> ;
+    t:uniqueId "1800.0318" ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='SalesComparable']//m:COMPARABLE_ADJUSTMENT[m:ComparableAdjustmentType='OverallQualityRating'])[1]" ;
+    t:expectedViolationKind "CardinalityViolation" ;
+    t:mutationMode "duplicate-node" ;
+    t:mutationXPath "(//m:PROPERTY[@ValuationUseType='SalesComparable']//m:COMPARABLE_ADJUSTMENT[m:ComparableAdjustmentType='OverallQualityRating'])[1]" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1759 a t:TestCase ;
+    t:ruleId "UAD1759" ;
+    t:sourceUniqueIdCell "2200.0085" ;
+    t:primaryDataElement "PartyRoleType" ;
+    t:ruleLogic "If more than one instance of ROLE_DETAIL has PartyRoleType = \"AppraiserSupervisor\" across all instances of PARTY" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "N/A" ;
+    t:xpath "../SERVICE/PARTIES/PARTY/ROLES/ROLE/ROLE_DETAIL/" ;
+    t:messageText "More than one Supervisory Appraiser has been identified in the appraisal. There can be only one Supervisory Appraiser." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1759> ;
+    t:uniqueId "2200.0085" ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:expectedDataLocation "(//m:ROLE_DETAIL[m:PartyRoleType='AppraiserSupervisor'])[1]" ;
+    t:expectedViolationKind "CardinalityViolation" ;
+    t:mutationMode "duplicate-node" ;
+    t:mutationXPath "(//m:ROLE_DETAIL[m:PartyRoleType='AppraiserSupervisor'])[1]" ;
+    t:xsdValidAfterMutation false .

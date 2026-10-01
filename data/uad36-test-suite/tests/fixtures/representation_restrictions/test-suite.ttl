@@ -1,0 +1,448 @@
+@prefix case: <urn:uad36:test-case:IT-1R7S1:> .
+@prefix suite: <urn:uad36:test-suite:> .
+@prefix t: <urn:uad36:test-suite:vocab:> .
+
+suite:representation-restrictions a t:TestSuite ;
+    t:category <urn:uad36:work-tracking:scenario:format_precision_length> ;
+    t:hasCase case:UAD1005,
+        case:UAD1196,
+        case:UAD1260,
+        case:UAD1507,
+        case:UAD1530,
+        case:UAD1721,
+        case:UAD1723,
+        case:UAD1725,
+        case:UAD1726,
+        case:UAD1727,
+        case:UAD1728,
+        case:UAD1741,
+        case:UAD1742,
+        case:UAD1743,
+        case:UAD1744,
+        case:UAD1748,
+        case:UAD1749,
+        case:UAD1755,
+        case:UAD1765,
+        case:UAD1766,
+        case:UAD1767,
+        case:UAD1768 ;
+    t:ruleInventoryPath "data/data-constraints.csv" ;
+    t:scenarioId "IT-1R7S1" .
+
+case:UAD1005 a t:TestCase ;
+    t:ruleId "UAD1005" ;
+    t:sourceUniqueIdCell "0100.0011" ;
+    t:primaryDataElement "PostalCode" ;
+    t:ruleLogic "If PostalCode is not in the required format (5 digits, or 5 digits, a hyphen, and 4 digits)" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/ADDRESS/" ;
+    t:messageText "The ZIP code for the subject property physical address must be either 5 digits, or 5 digits, a hyphen, and 4 digits (ZIP+4)." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1005> ;
+    t:baselinePath "examples/xml/SF1_Appraisal_v1.4.xml" ;
+    t:mutationMode "replace-text" ;
+    t:mutationXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:ADDRESS/m:PostalCode" ;
+    t:allowedValue "12345" ;
+    t:outsideValue "1234" ;
+    t:expectedViolationKind "RepresentationRestrictionViolation" ;
+    t:expectedDataLocation "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:ADDRESS/m:PostalCode" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1196 a t:TestCase ;
+    t:ruleId "UAD1196" ;
+    t:sourceUniqueIdCell "0800.0011" ;
+    t:primaryDataElement "OwnershipTransferDate" ;
+    t:ruleLogic "If OwnershipTransferDate does not include year, month and day (YYYY-MM-DD format) in a given instance of SALES_HISTORY" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SALES_HISTORIES/SALES_HISTORY/" ;
+    t:messageText "The prior sale or transfer date for the subject property must include year, month and day." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1196> ;
+    t:baselinePath "examples/xml/SF5_Appraisal_v1.2.xml" ;
+    t:mutationMode "replace-text" ;
+    t:mutationXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:SALES_HISTORY/m:OwnershipTransferDate" ;
+    t:allowedValue "2022-10-30" ;
+    t:outsideValue "2022-10" ;
+    t:expectedViolationKind "RepresentationRestrictionViolation" ;
+    t:expectedDataLocation "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:SALES_HISTORY/m:OwnershipTransferDate" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1260 a t:TestCase ;
+    t:ruleId "UAD1260" ;
+    t:sourceUniqueIdCell "1300.0012" ;
+    t:primaryDataElement "AppraisalReportEffectiveDate" ;
+    t:ruleLogic "If AppraisalReportEffectiveDate does not include year, month and day in YYYY-MM-DD format" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "N/A" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/VALUATION_RECONCILIATION/VALUATION_RECONCILIATION_SUMMARY/VALUATION_RECONCILIATION_SUMMARY_DETAIL/" ;
+    t:messageText "The 'Effective Date of Appraisal' must include year, month and day." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1260> ;
+    t:baselinePath "examples/xml/SF5_Appraisal_v1.2.xml" ;
+    t:mutationMode "replace-text" ;
+    t:mutationXPath "//m:VALUATION_RECONCILIATION_SUMMARY_DETAIL/m:AppraisalReportEffectiveDate" ;
+    t:allowedValue "2026-01-12" ;
+    t:outsideValue "2026-01" ;
+    t:expectedViolationKind "RepresentationRestrictionViolation" ;
+    t:expectedDataLocation "//m:VALUATION_RECONCILIATION_SUMMARY_DETAIL/m:AppraisalReportEffectiveDate" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1507 a t:TestCase ;
+    t:ruleId "UAD1507" ;
+    t:sourceUniqueIdCell "2200.0154; 2200.0002" ;
+    t:primaryDataElement "ExecutionDate" ;
+    t:ruleLogic "If ExecutionDate does not include year, month and day (YYYY-MM-DD format) in a given instance of SIGNATORY" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "N/A" ;
+    t:xpath "MESSAGE/DOCUMENT_SETS/DOCUMENT_SET/DOCUMENTS/DOCUMENT/SIGNATORIES/SIGNATORY/EXECUTION/EXECUTION_DETAIL/" ;
+    t:messageText "The 'Date of Signature and Report' must include year, month and day." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1507> ;
+    t:baselinePath "examples/xml/SF5_Appraisal_v1.2.xml" ;
+    t:mutationMode "replace-text" ;
+    t:mutationXPath "(//m:SIGNATORY//m:EXECUTION_DETAIL/m:ExecutionDate)[1]" ;
+    t:allowedValue "2026-01-16" ;
+    t:outsideValue "2026-01" ;
+    t:expectedViolationKind "RepresentationRestrictionViolation" ;
+    t:expectedDataLocation "(//m:SIGNATORY//m:EXECUTION_DETAIL/m:ExecutionDate)[1]" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1530 a t:TestCase ;
+    t:ruleId "UAD1530" ;
+    t:sourceUniqueIdCell "2400.0053; 2200.0082" ;
+    t:primaryDataElement "LicenseExpirationDate" ;
+    t:ruleLogic "If LicenseExpirationDate does not include year, month and day (YYYY-MM-DD format)" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "N/A" ;
+    t:xpath "../SERVICE/PARTIES/PARTY/ROLES/ROLE/LICENSES/LICENSE/LICENSE_DETAIL/" ;
+    t:messageText "The license expiration date must include year, month and day." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1530> ;
+    t:baselinePath "examples/xml/SF5_Appraisal_v1.2.xml" ;
+    t:mutationMode "replace-text" ;
+    t:mutationXPath "(//m:LICENSE_DETAIL/m:LicenseExpirationDate)[1]" ;
+    t:allowedValue "2027-12-31" ;
+    t:outsideValue "2027-12" ;
+    t:expectedViolationKind "RepresentationRestrictionViolation" ;
+    t:expectedDataLocation "(//m:LICENSE_DETAIL/m:LicenseExpirationDate)[1]" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1721 a t:TestCase ;
+    t:ruleId "UAD1721" ;
+    t:sourceUniqueIdCell "0500.0016" ;
+    t:primaryDataElement "ManufacturedHomeManufactureDate" ;
+    t:ruleLogic "If ManufacturedHomeManufactureDate does not include year, month and day in YYYY-MM-DD format" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/MANUFACTURED_HOME/MANUFACTURED_HOME_DETAIL/" ;
+    t:messageText "The 'Date of Manufacture' must include year, month and day." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1721> ;
+    t:baselinePath "examples/xml/MH1_Appraisal_v1.4.xml" ;
+    t:mutationMode "replace-text" ;
+    t:mutationXPath "//m:MANUFACTURED_HOME_DETAIL/m:ManufacturedHomeManufactureDate" ;
+    t:allowedValue "2019-01-15" ;
+    t:outsideValue "2019-01" ;
+    t:expectedViolationKind "RepresentationRestrictionViolation" ;
+    t:expectedDataLocation "//m:MANUFACTURED_HOME_DETAIL/m:ManufacturedHomeManufactureDate" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1723 a t:TestCase ;
+    t:ruleId "UAD1723" ;
+    t:sourceUniqueIdCell "2400.0080; 2400.0502" ;
+    t:primaryDataElement "InspectionDate" ;
+    t:ruleLogic "If InspectionDate does not include year, month and day (YYYY-MM-DD format)" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSES/VALUATION_ANALYSIS/PROPERTIES/PROPERTY/INSPECTIONS/INSPECTION/INSPECTION_DETAIL/" ;
+    t:messageText "The 'Inspection Date' must include year, month and day." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1723> ;
+    t:baselinePath "examples/xml/SF1_Appraisal_v1.4.xml" ;
+    t:mutationMode "replace-text" ;
+    t:mutationXPath "(//m:INSPECTION_DETAIL/m:InspectionDate)[1]" ;
+    t:allowedValue "2019-09-20" ;
+    t:outsideValue "2019-09" ;
+    t:expectedViolationKind "RepresentationRestrictionViolation" ;
+    t:expectedDataLocation "(//m:INSPECTION_DETAIL/m:InspectionDate)[1]" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1725 a t:TestCase ;
+    t:ruleId "UAD1725" ;
+    t:sourceUniqueIdCell "0900.0012" ;
+    t:primaryDataElement "ListingStartDate" ;
+    t:ruleLogic "If ListingStartDate does not include year, month and day (YYYY-MM-DD format)" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSES/VALUATION_ANALYSIS/PROPERTIES/PROPERTY/LISTING_INFORMATIONS/LISTING_INFORMATION/LISTING_INFORMATION_DETAIL/" ;
+    t:messageText "The listing 'Start Date' must include year, month and day." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1725> ;
+    t:baselinePath "examples/xml/SF1_Appraisal_v1.4.xml" ;
+    t:mutationMode "replace-text" ;
+    t:mutationXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:LISTING_INFORMATION_DETAIL/m:ListingStartDate" ;
+    t:allowedValue "2019-09-05" ;
+    t:outsideValue "2019-09" ;
+    t:expectedViolationKind "RepresentationRestrictionViolation" ;
+    t:expectedDataLocation "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:LISTING_INFORMATION_DETAIL/m:ListingStartDate" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1726 a t:TestCase ;
+    t:ruleId "UAD1726" ;
+    t:sourceUniqueIdCell "0900.0010" ;
+    t:primaryDataElement "ListingEndDate" ;
+    t:ruleLogic "If ListingEndDate does not include year, month and day (YYYY-MM-DD format)" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSES/VALUATION_ANALYSIS/PROPERTIES/PROPERTY/LISTING_INFORMATIONS/LISTING_INFORMATION/LISTING_INFORMATION_DETAIL/" ;
+    t:messageText "The listing 'End Date' must include year, month and day." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1726> ;
+    t:baselinePath "examples/xml/SF1_Appraisal_v1.4.xml" ;
+    t:mutationMode "replace-text" ;
+    t:mutationXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:LISTING_INFORMATION_DETAIL/m:ListingEndDate" ;
+    t:allowedValue "2019-09-17" ;
+    t:outsideValue "2019-09" ;
+    t:expectedViolationKind "RepresentationRestrictionViolation" ;
+    t:expectedDataLocation "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:LISTING_INFORMATION_DETAIL/m:ListingEndDate" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1727 a t:TestCase ;
+    t:ruleId "UAD1727" ;
+    t:sourceUniqueIdCell "2500.0084" ;
+    t:primaryDataElement "TaxAbatementsOrExemptionsExpirationDate" ;
+    t:ruleLogic "If TaxAbatementsOrExemptionsExpirationDate does not include year and month (YYYY-MM format)" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSES/VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_TAXES/PROPERTY_TAX/PROPERTY_TAX_EXEMPTIONS/PROPERTY_TAX_EXEMPTION/" ;
+    t:messageText "The expiration date for the tax abatements or exemptions must include year and month (YYYY-MM format)." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1727> ;
+    t:baselinePath "data/uad36-test-suite/tests/fixtures/representation_restrictions/baseline/UAD1727.xml" ;
+    t:mutationMode "replace-text" ;
+    t:mutationXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:PROPERTY_TAX_EXEMPTION/m:TaxAbatementsOrExemptionsExpirationDate" ;
+    t:allowedValue "2030-12" ;
+    t:outsideValue "2030" ;
+    t:expectedViolationKind "RepresentationRestrictionViolation" ;
+    t:expectedDataLocation "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:PROPERTY_TAX_EXEMPTION/m:TaxAbatementsOrExemptionsExpirationDate" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1728 a t:TestCase ;
+    t:ruleId "UAD1728" ;
+    t:sourceUniqueIdCell "0600.0009" ;
+    t:primaryDataElement "SalesContractDate" ;
+    t:ruleLogic "If SalesContractDate does not include year, month and day (YYYY-MM-DD format)" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SALES_CONTRACTS/SALES_CONTRACT/SALES_CONTRACT_DETAIL/" ;
+    t:messageText "The 'Contract Date' must include year, month and day." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1728> ;
+    t:baselinePath "examples/xml/SF1_Appraisal_v1.4.xml" ;
+    t:mutationMode "replace-text" ;
+    t:mutationXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:SALES_CONTRACT_DETAIL/m:SalesContractDate" ;
+    t:allowedValue "2019-09-17" ;
+    t:outsideValue "2019-09" ;
+    t:expectedViolationKind "RepresentationRestrictionViolation" ;
+    t:expectedDataLocation "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:SALES_CONTRACT_DETAIL/m:SalesContractDate" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1741 a t:TestCase ;
+    t:ruleId "UAD1741" ;
+    t:sourceUniqueIdCell "2500.0023" ;
+    t:primaryDataElement "CooperativeProprietaryLeaseExpirationDate" ;
+    t:ruleLogic "If CooperativeProprietaryLeaseExpirationDate is not provided in YYYY-MM format." ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/" ;
+    t:messageText "The cooperative proprietary lease expiration date must include year and month (YYYY-MM format)." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1741> ;
+    t:baselinePath "data/uad36-test-suite/tests/fixtures/representation_restrictions/baseline/UAD1741.xml" ;
+    t:mutationMode "replace-text" ;
+    t:mutationXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:CooperativeProprietaryLeaseExpirationDate" ;
+    t:allowedValue "2050-12" ;
+    t:outsideValue "2050" ;
+    t:expectedViolationKind "RepresentationRestrictionViolation" ;
+    t:expectedDataLocation "//m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROPERTY_DETAIL/m:CooperativeProprietaryLeaseExpirationDate" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1742 a t:TestCase ;
+    t:ruleId "UAD1742" ;
+    t:sourceUniqueIdCell "0100.0015" ;
+    t:primaryDataElement "LatitudeIdentifier" ;
+    t:ruleLogic "If LatitudeIdentifier is not provided between -90 and 90 with at least 5 digits of precision to the right of the decimal point" ;
+    t:severity "Warning" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/LOCATION_IDENTIFIER/GEOSPATIAL_INFORMATION/" ;
+    t:messageText "The latitude must be a value between -90 and 90 with at least 5 digits of precision to the right of the decimal point. For assistance with this message, contact the appraisal software vendor." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1742> ;
+    t:baselinePath "examples/xml/SF1_Appraisal_v1.4.xml" ;
+    t:mutationMode "replace-text" ;
+    t:mutationXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:GEOSPATIAL_INFORMATION/m:LatitudeIdentifier" ;
+    t:allowedValue "25.165173" ;
+    t:outsideValue "25.1651" ;
+    t:expectedViolationKind "RepresentationRestrictionViolation" ;
+    t:expectedDataLocation "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:GEOSPATIAL_INFORMATION/m:LatitudeIdentifier" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1743 a t:TestCase ;
+    t:ruleId "UAD1743" ;
+    t:sourceUniqueIdCell "0100.0016" ;
+    t:primaryDataElement "LongitudeIdentifier" ;
+    t:ruleLogic "If LongitudeIdentifier is not provided between -180 and 180 with at least 5 digits of precision to the right of the decimal point" ;
+    t:severity "Warning" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/LOCATION_IDENTIFIER/GEOSPATIAL_INFORMATION/" ;
+    t:messageText "The longitude must be a value between -180 and 180 with at least 5 digits of precision to the right of the decimal point. For assistance with this message, contact the appraisal software vendor." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1743> ;
+    t:baselinePath "examples/xml/SF1_Appraisal_v1.4.xml" ;
+    t:mutationMode "replace-text" ;
+    t:mutationXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:GEOSPATIAL_INFORMATION/m:LongitudeIdentifier" ;
+    t:allowedValue "-51.328125" ;
+    t:outsideValue "-51.3281" ;
+    t:expectedViolationKind "RepresentationRestrictionViolation" ;
+    t:expectedDataLocation "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:GEOSPATIAL_INFORMATION/m:LongitudeIdentifier" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1744 a t:TestCase ;
+    t:ruleId "UAD1744" ;
+    t:sourceUniqueIdCell "1800.0342; 1800.0207" ;
+    t:primaryDataElement "OwnershipTransferDate" ;
+    t:ruleLogic "If OwnershipTransferDate does not include year, month and day (YYYY-MM-DD format) in a given instance of SALES_HISTORY" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Sales Comparable #n" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SALES_HISTORIES/SALES_HISTORY/" ;
+    t:messageText "The prior sale or transfer date for the sales comparable must include year, month and day." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1744> ;
+    t:baselinePath "examples/xml/SF1_Appraisal_v1.4.xml" ;
+    t:mutationMode "replace-text" ;
+    t:mutationXPath "(//m:PROPERTY[@ValuationUseType='SalesComparable']//m:SALES_HISTORY/m:OwnershipTransferDate)[1]" ;
+    t:allowedValue "2019-08-17" ;
+    t:outsideValue "2019-08" ;
+    t:expectedViolationKind "RepresentationRestrictionViolation" ;
+    t:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='SalesComparable']//m:SALES_HISTORY/m:OwnershipTransferDate)[1]" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1748 a t:TestCase ;
+    t:ruleId "UAD1748" ;
+    t:sourceUniqueIdCell "1800.0190" ;
+    t:primaryDataElement "LatitudeIdentifier" ;
+    t:ruleLogic "If @ValuationUseType = \"SalesComparable\" and LatitudeIdentifier is not provided between -90 and 90 with at least 5 digits of precision to the right of the decimal point" ;
+    t:severity "Warning" ;
+    t:propertyAffected "Sales Comparable #n" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/LOCATION_IDENTIFIER/GEOSPATIAL_INFORMATION/" ;
+    t:messageText "The latitude must be a value between -90 and 90 with at least 5 digits of precision to the right of the decimal point. For assistance with this message, contact the appraisal software vendor." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1748> ;
+    t:baselinePath "examples/xml/SF1_Appraisal_v1.4.xml" ;
+    t:mutationMode "replace-text" ;
+    t:mutationXPath "(//m:PROPERTY[@ValuationUseType='SalesComparable']//m:GEOSPATIAL_INFORMATION/m:LatitudeIdentifier)[1]" ;
+    t:allowedValue "25.165172" ;
+    t:outsideValue "25.1651" ;
+    t:expectedViolationKind "RepresentationRestrictionViolation" ;
+    t:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='SalesComparable']//m:GEOSPATIAL_INFORMATION/m:LatitudeIdentifier)[1]" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1749 a t:TestCase ;
+    t:ruleId "UAD1749" ;
+    t:sourceUniqueIdCell "1800.0191" ;
+    t:primaryDataElement "LongitudeIdentifier" ;
+    t:ruleLogic "If @ValuationUseType = \"SalesComparable\" and LongitudeIdentifier is not provided between -180 and 180 with at least 5 digits of precision to the right of the decimal point" ;
+    t:severity "Warning" ;
+    t:propertyAffected "Sales Comparable #n" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/LOCATION_IDENTIFIER/GEOSPATIAL_INFORMATION/" ;
+    t:messageText "The longitude must be a value between -180 and 180 with at least 5 digits of precision to the right of the decimal point. For assistance with this message, contact the appraisal software vendor." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1749> ;
+    t:baselinePath "examples/xml/SF1_Appraisal_v1.4.xml" ;
+    t:mutationMode "replace-text" ;
+    t:mutationXPath "(//m:PROPERTY[@ValuationUseType='SalesComparable']//m:GEOSPATIAL_INFORMATION/m:LongitudeIdentifier)[1]" ;
+    t:allowedValue "-51.328126" ;
+    t:outsideValue "-51.3281" ;
+    t:expectedViolationKind "RepresentationRestrictionViolation" ;
+    t:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='SalesComparable']//m:GEOSPATIAL_INFORMATION/m:LongitudeIdentifier)[1]" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1755 a t:TestCase ;
+    t:ruleId "UAD1755" ;
+    t:sourceUniqueIdCell "4000.0007" ;
+    t:primaryDataElement "ReconsiderationOfValueResultDate" ;
+    t:ruleLogic "If ReconsiderationOfValueResultDate does not include year, month and day YYYY-MM-DD format" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "N/A" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/RECONSIDERATIONS_OF_VALUE/RECONSIDERATION_OF_VALUE/" ;
+    t:messageText "The reconsideration of value date must include year, month and day." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1755> ;
+    t:baselinePath "examples/xml/SF5_Appraisal_v1.2.xml" ;
+    t:mutationMode "replace-text" ;
+    t:mutationXPath "//m:RECONSIDERATION_OF_VALUE/m:ReconsiderationOfValueResultDate" ;
+    t:allowedValue "2026-01-16" ;
+    t:outsideValue "2026-01" ;
+    t:expectedViolationKind "RepresentationRestrictionViolation" ;
+    t:expectedDataLocation "//m:RECONSIDERATION_OF_VALUE/m:ReconsiderationOfValueResultDate" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1765 a t:TestCase ;
+    t:ruleId "UAD1765" ;
+    t:sourceUniqueIdCell "1500.0186; 1500.0189" ;
+    t:primaryDataElement "ValuationCommentText" ;
+    t:ruleLogic "If ValuationAnalysisCategoryType = (\"HazardZones\" or \"PropertyNonResidentialUses\") and ValuationCommentText length exceeds 140 characters" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "N/A" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/VALUATION_COMMENTARIES/VALUATION_COMMENTARY/" ;
+    t:messageText "The commentary provided for the specified field exceeds the allowable limit of 140 characters." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1765> ;
+    t:baselinePath "data/uad36-test-suite/tests/fixtures/representation_restrictions/baseline/UAD1765.xml" ;
+    t:mutationMode "replace-text" ;
+    t:mutationXPath "//m:VALUATION_COMMENTARY[m:ValuationAnalysisCategoryType='HazardZones']/m:ValuationCommentText" ;
+    t:allowedValue "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" ;
+    t:outsideValue "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" ;
+    t:expectedViolationKind "RepresentationRestrictionViolation" ;
+    t:expectedDataLocation "//m:VALUATION_COMMENTARY[m:ValuationAnalysisCategoryType='HazardZones']/m:ValuationCommentText" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1766 a t:TestCase ;
+    t:ruleId "UAD1766" ;
+    t:sourceUniqueIdCell "" ;
+    t:primaryDataElement "ValuationCommentText" ;
+    t:ruleLogic "If ValuationAnalysisCategoryType = (\"ProjectDeveloperOrSponsorControlsProjectManagement\" or \"IncompleteProject\" or \"ProjectConversion\" or \"SingleEntityGreatestNumberOfUnitsOwned\" or \"SingleEntityGreatestNumberOfSharesOwned\" or \"ProjectCommercialSpace\" or \"ProjectLegalAction\" or \"ProjectSpecialAssessmentsAttributedToSubjectProperty\" or \"TransferFeeAttributedToSubjectProperty\" or \"PropertyTaxAbatementsOrExemptions\") and ValuationCommentText length exceeds 210 characters " ;
+    t:severity "Fatal" ;
+    t:propertyAffected "N/A" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/VALUATION_COMMENTARIES/VALUATION_COMMENTARY/" ;
+    t:messageText "The commentary provided for the specified field exceeds the allowable limit of 210 characters." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1766> ;
+    t:baselinePath "data/uad36-test-suite/tests/fixtures/representation_restrictions/baseline/UAD1766.xml" ;
+    t:mutationMode "replace-text" ;
+    t:mutationXPath "//m:VALUATION_COMMENTARY[m:ValuationAnalysisCategoryType='Project']/m:ValuationCommentText" ;
+    t:allowedValue "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" ;
+    t:outsideValue "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" ;
+    t:expectedViolationKind "RepresentationRestrictionViolation" ;
+    t:expectedDataLocation "//m:VALUATION_COMMENTARY[m:ValuationAnalysisCategoryType='Project']/m:ValuationCommentText" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1767 a t:TestCase ;
+    t:ruleId "UAD1767" ;
+    t:sourceUniqueIdCell "0100.0050" ;
+    t:primaryDataElement "ValuationCommentText" ;
+    t:ruleLogic "If ValuationAnalysisCategoryType = \"PropertySpecialTaxAssessments\" and ValuationCommentText length exceeds 540 characters " ;
+    t:severity "Fatal" ;
+    t:propertyAffected "N/A" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/VALUATION_COMMENTARIES/VALUATION_COMMENTARY/" ;
+    t:messageText "The commentary provided for the specified field exceeds the allowable limit of 540 characters." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1767> ;
+    t:baselinePath "data/uad36-test-suite/tests/fixtures/representation_restrictions/baseline/UAD1767.xml" ;
+    t:mutationMode "replace-text" ;
+    t:mutationXPath "//m:VALUATION_COMMENTARY[m:ValuationAnalysisCategoryType='PropertySpecialTaxAssessments']/m:ValuationCommentText" ;
+    t:allowedValue "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" ;
+    t:outsideValue "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" ;
+    t:expectedViolationKind "RepresentationRestrictionViolation" ;
+    t:expectedDataLocation "//m:VALUATION_COMMENTARY[m:ValuationAnalysisCategoryType='PropertySpecialTaxAssessments']/m:ValuationCommentText" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1768 a t:TestCase ;
+    t:ruleId "UAD1768" ;
+    t:sourceUniqueIdCell "" ;
+    t:primaryDataElement "ValuationCommentText" ;
+    t:ruleLogic "If ValuationAnalysisCategoryType = (\"ProjectFactors\" or \"Project\" or \"WaterFrontages\" or \"SiteFeatures\" or \"SiteViews\" or \"SiteInfluences\") and ValuationCommentText length exceeds 2500 characters" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "N/A" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/VALUATION_COMMENTARIES/VALUATION_COMMENTARY/" ;
+    t:messageText "The commentary provided for the specified field exceeds the allowable limit of 2500 characters." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1768> ;
+    t:baselinePath "examples/xml/SF3_Appraisal_v1.4.xml" ;
+    t:mutationMode "replace-text" ;
+    t:mutationXPath "//m:VALUATION_COMMENTARY[m:ValuationAnalysisCategoryType='SiteViews']/m:ValuationCommentText" ;
+    t:allowedValue "Pastoral with distant mountain view." ;
+    t:outsideValue "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" ;
+    t:expectedViolationKind "RepresentationRestrictionViolation" ;
+    t:expectedDataLocation "//m:VALUATION_COMMENTARY[m:ValuationAnalysisCategoryType='SiteViews']/m:ValuationCommentText" ;
+    t:xsdValidAfterMutation true .
