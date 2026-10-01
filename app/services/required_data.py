@@ -23,6 +23,10 @@ from app.services.required_structure_required_data import (
     binding_for as required_structure_binding_for,
     evaluate_required_structure,
 )
+from app.services.uniqueness_cardinality_required_data import (
+    binding_for as uniqueness_cardinality_binding_for,
+    evaluate_uniqueness_cardinality,
+)
 from app.services.scoped_required_data import (
     evaluate_scoped_rule,
     scoped_spec,
@@ -349,6 +353,9 @@ def load_required_rules() -> tuple[dict[str, str], ...]:
         if required_structure_binding_for(row) is not None:
             rules.append(row)
             continue
+        if uniqueness_cardinality_binding_for(row) is not None:
+            rules.append(row)
+            continue
         if scoped_spec(row) is not None:
             verify_definition(row)
             rules.append(row)
@@ -389,6 +396,9 @@ def load_required_rules() -> tuple[dict[str, str], ...]:
             valid_rules.append(rule)
             continue
         if required_structure_binding_for(rule) is not None:
+            valid_rules.append(rule)
+            continue
+        if uniqueness_cardinality_binding_for(rule) is not None:
             valid_rules.append(rule)
             continue
         problem = None
@@ -617,6 +627,11 @@ def evaluate_required_data(
         if required_structure_binding_for(rule) is not None:
             findings.extend(
                 evaluate_required_structure(root, investor, rule)
+            )
+            continue
+        if uniqueness_cardinality_binding_for(rule) is not None:
+            findings.extend(
+                evaluate_uniqueness_cardinality(root, investor, rule)
             )
             continue
         if scoped_spec(rule) is not None:
