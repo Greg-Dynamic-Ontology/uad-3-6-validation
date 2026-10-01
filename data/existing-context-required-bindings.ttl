@@ -1,0 +1,199 @@
+@prefix b: <urn:uad36:existing-context-required-binding:> .
+
+<urn:uad36:existing-context-required-rule:UAD1034> a b:Binding ;
+    b:contextXPath "//m:PROPERTY" ;
+    b:element "@ValuationUseType" ;
+    b:expectedDataLocation "(//m:PROPERTY[@ValuationUseType])[1]/@ValuationUseType" ;
+    b:requiredValueRelativeXPath "@ValuationUseType" ;
+    b:ruleId "UAD1034" ;
+    b:sourceFingerprint "bff5ede13b9b7919242252e341c2a95e20b885fd51d0b68516fee3ea101104dd" ;
+    b:violationKind "MissingRequiredValueInExistingContext" .
+
+<urn:uad36:existing-context-required-rule:UAD1047> a b:Binding ;
+    b:contextXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:IMPROVEMENT_DETAIL" ;
+    b:element "ImprovementType" ;
+    b:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:IMPROVEMENT_DETAIL[m:ImprovementType])[1]/m:ImprovementType" ;
+    b:requiredValueRelativeXPath "m:ImprovementType" ;
+    b:ruleId "UAD1047" ;
+    b:sourceFingerprint "7238ab85213ac895f370e9adc516fa67e7c5f3256276ca0c48e1183f4f4f41ab" ;
+    b:violationKind "MissingRequiredValueInExistingContext" .
+
+<urn:uad36:existing-context-required-rule:UAD1270> a b:Binding ;
+    b:contextXPath "//m:FOREIGN_OBJECT" ;
+    b:element "ObjectURL" ;
+    b:expectedDataLocation "(//m:FOREIGN_OBJECT[m:ObjectURL])[1]/m:ObjectURL" ;
+    b:requiredValueRelativeXPath "m:ObjectURL" ;
+    b:ruleId "UAD1270" ;
+    b:sourceFingerprint "2750ea5c37cbf854701477312a4b6e13f86b8d9b9cb087a8ea713358eec38bb6" ;
+    b:violationKind "MissingRequiredValueInExistingContext" .
+
+<urn:uad36:existing-context-required-rule:UAD1291> a b:Binding ;
+    b:contextXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:ENCROACHMENT" ;
+    b:element "EncroachmentDirectionType" ;
+    b:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:ENCROACHMENT[m:EncroachmentDirectionType])[1]/m:EncroachmentDirectionType" ;
+    b:requiredValueRelativeXPath "m:EncroachmentDirectionType" ;
+    b:ruleId "UAD1291" ;
+    b:sourceFingerprint "4aafc6fa23585bfb0e2e447c3afdec6ea046ea3ca6eabcc03ba3e4e7b2e35366" ;
+    b:violationKind "MissingRequiredValueInExistingContext" .
+
+<urn:uad36:existing-context-required-rule:UAD1349> a b:Binding ;
+    b:contextXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:SITE_UTILITY_DETAIL" ;
+    b:element "SiteUtilityOwnershipType" ;
+    b:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:SITE_UTILITY_DETAIL[m:SiteUtilityOwnershipType])[1]/m:SiteUtilityOwnershipType" ;
+    b:requiredValueRelativeXPath "m:SiteUtilityOwnershipType" ;
+    b:ruleId "UAD1349" ;
+    b:sourceFingerprint "071e9f556b728ec22ebcf12c3d46087edc7b378e6176809df077f41a7682a765" ;
+    b:violationKind "MissingRequiredValueInExistingContext" .
+
+<urn:uad36:existing-context-required-rule:UAD1363> a b:Binding ;
+    b:contextXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:SITE_VIEW" ;
+    b:element "ViewPrimaryIndicator" ;
+    b:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:SITE_VIEW[m:ViewPrimaryIndicator and m:ViewRangeType and m:ValueMarketabilityImpactType])[1]/m:ViewPrimaryIndicator" ;
+    b:requiredValueRelativeXPath "m:ViewPrimaryIndicator" ;
+    b:ruleId "UAD1363" ;
+    b:sourceFingerprint "ca994693e8782aa69d5ee761b34c40197dd804a069decaaff184e4c2120c2f36" ;
+    b:violationKind "MissingRequiredValueInExistingContext" .
+
+<urn:uad36:existing-context-required-rule:UAD1364> a b:Binding ;
+    b:contextXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:SITE_VIEW" ;
+    b:element "ViewRangeType" ;
+    b:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:SITE_VIEW[m:ViewPrimaryIndicator and m:ViewRangeType and m:ValueMarketabilityImpactType])[1]/m:ViewRangeType" ;
+    b:requiredValueRelativeXPath "m:ViewRangeType" ;
+    b:ruleId "UAD1364" ;
+    b:sourceFingerprint "401a16de1e461cb760632dd5f20b6a81759167c816d6ad7d0ac64f67a242c9dc" ;
+    b:violationKind "MissingRequiredValueInExistingContext" .
+
+<urn:uad36:existing-context-required-rule:UAD1366> a b:Binding ;
+    b:contextXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:SITE_VIEW" ;
+    b:element "ValueMarketabilityImpactType" ;
+    b:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:SITE_VIEW[m:ViewPrimaryIndicator and m:ViewRangeType and m:ValueMarketabilityImpactType])[1]/m:ValueMarketabilityImpactType" ;
+    b:requiredValueRelativeXPath "m:ValueMarketabilityImpactType" ;
+    b:ruleId "UAD1366" ;
+    b:sourceFingerprint "b15fd1c7808e10562773efee859b8ccc708be11355d2fbca02f3a845bcbde4f1" ;
+    b:violationKind "MissingRequiredValueInExistingContext" .
+
+<urn:uad36:existing-context-required-rule:UAD1388> a b:Binding ;
+    b:contextXPath "//m:VALUATION_COMMENTARY" ;
+    b:element "ValuationAnalysisCategoryType" ;
+    b:expectedDataLocation "(//m:VALUATION_COMMENTARY[m:ValuationAnalysisCategoryType])[1]/m:ValuationAnalysisCategoryType" ;
+    b:requiredValueRelativeXPath "m:ValuationAnalysisCategoryType" ;
+    b:ruleId "UAD1388" ;
+    b:sourceFingerprint "33a1e3d168114b11db4a960b97787d6d5021dc11ca4986894603e6ec8aa70beb" ;
+    b:violationKind "MissingRequiredValueInExistingContext" .
+
+<urn:uad36:existing-context-required-rule:UAD1558> a b:Binding ;
+    b:contextXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:INSPECTION_DETAIL" ;
+    b:element "PropertyExteriorInspectionMethodType" ;
+    b:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:INSPECTION_DETAIL[m:PropertyExteriorInspectionMethodType and m:PropertyInteriorInspectionMethodType])[1]/m:PropertyExteriorInspectionMethodType" ;
+    b:requiredValueRelativeXPath "m:PropertyExteriorInspectionMethodType" ;
+    b:ruleId "UAD1558" ;
+    b:sourceFingerprint "cd69621ed854176b6813766837ab3f554fd696c6851e4399bb201e8256bd8743" ;
+    b:violationKind "MissingRequiredValueInExistingContext" .
+
+<urn:uad36:existing-context-required-rule:UAD1559> a b:Binding ;
+    b:contextXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:INSPECTION_DETAIL" ;
+    b:element "PropertyInteriorInspectionMethodType" ;
+    b:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:INSPECTION_DETAIL[m:PropertyExteriorInspectionMethodType and m:PropertyInteriorInspectionMethodType])[1]/m:PropertyInteriorInspectionMethodType" ;
+    b:requiredValueRelativeXPath "m:PropertyInteriorInspectionMethodType" ;
+    b:ruleId "UAD1559" ;
+    b:sourceFingerprint "815209ad78df0645481643d9426b1188a4757669d2cd896944403f29e02504d3" ;
+    b:violationKind "MissingRequiredValueInExistingContext" .
+
+<urn:uad36:existing-context-required-rule:UAD1705> a b:Binding ;
+    b:contextXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:IMAGE" ;
+    b:element "ImageFileLocationIdentifier" ;
+    b:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:IMAGE[m:ImageFileLocationIdentifier and m:MIMETypeIdentifier])[1]/m:ImageFileLocationIdentifier" ;
+    b:requiredValueRelativeXPath "m:ImageFileLocationIdentifier" ;
+    b:ruleId "UAD1705" ;
+    b:sourceFingerprint "0156f04011d8c813e16f72ad0f77f20c00740552439f0013e915d64b3da73210" ;
+    b:violationKind "MissingRequiredValueInExistingContext" .
+
+<urn:uad36:existing-context-required-rule:UAD1707> a b:Binding ;
+    b:contextXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:IMAGE" ;
+    b:element "MIMETypeIdentifier" ;
+    b:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:IMAGE[m:ImageFileLocationIdentifier and m:MIMETypeIdentifier])[1]/m:MIMETypeIdentifier" ;
+    b:requiredValueRelativeXPath "m:MIMETypeIdentifier" ;
+    b:ruleId "UAD1707" ;
+    b:sourceFingerprint "20107973ffd481dd3c65091b210ce0728f0c5b7d74881393648784d498b0d0d3" ;
+    b:violationKind "MissingRequiredValueInExistingContext" .
+
+<urn:uad36:existing-context-required-rule:UAD1710> a b:Binding ;
+    b:contextXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:DEFECT_DETAIL" ;
+    b:element "DefectItemAffectsSoundnessStructuralIntegrityIndicator" ;
+    b:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:DEFECT_DETAIL[m:DefectItemAffectsSoundnessStructuralIntegrityIndicator and m:DefectItemDescription and m:DefectItemLocationType and m:DefectItemRecommendedActionType])[1]/m:DefectItemAffectsSoundnessStructuralIntegrityIndicator" ;
+    b:requiredValueRelativeXPath "m:DefectItemAffectsSoundnessStructuralIntegrityIndicator" ;
+    b:ruleId "UAD1710" ;
+    b:sourceFingerprint "d1a66a59463ceb0beca52af074ae9683f93dee5f06178bee81363f457021530c" ;
+    b:violationKind "MissingRequiredValueInExistingContext" .
+
+<urn:uad36:existing-context-required-rule:UAD1711> a b:Binding ;
+    b:contextXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:DEFECT_DETAIL" ;
+    b:element "DefectItemDescription" ;
+    b:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:DEFECT_DETAIL[m:DefectItemAffectsSoundnessStructuralIntegrityIndicator and m:DefectItemDescription and m:DefectItemLocationType and m:DefectItemRecommendedActionType])[1]/m:DefectItemDescription" ;
+    b:requiredValueRelativeXPath "m:DefectItemDescription" ;
+    b:ruleId "UAD1711" ;
+    b:sourceFingerprint "795358fe706f462d48a9da8cf51265d1d1d6737dbf4b80709f95ad5347a519da" ;
+    b:violationKind "MissingRequiredValueInExistingContext" .
+
+<urn:uad36:existing-context-required-rule:UAD1712> a b:Binding ;
+    b:contextXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:DEFECT_DETAIL" ;
+    b:element "DefectItemLocationType" ;
+    b:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:DEFECT_DETAIL[m:DefectItemAffectsSoundnessStructuralIntegrityIndicator and m:DefectItemDescription and m:DefectItemLocationType and m:DefectItemRecommendedActionType])[1]/m:DefectItemLocationType" ;
+    b:requiredValueRelativeXPath "m:DefectItemLocationType" ;
+    b:ruleId "UAD1712" ;
+    b:sourceFingerprint "fb51afca39f39a2a7fc023a4e29ed732552d1fd807887e01a1cf832ef15f3f63" ;
+    b:violationKind "MissingRequiredValueInExistingContext" .
+
+<urn:uad36:existing-context-required-rule:UAD1714> a b:Binding ;
+    b:contextXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:DEFECT_DETAIL" ;
+    b:element "DefectItemRecommendedActionType" ;
+    b:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:DEFECT_DETAIL[m:DefectItemAffectsSoundnessStructuralIntegrityIndicator and m:DefectItemDescription and m:DefectItemLocationType and m:DefectItemRecommendedActionType])[1]/m:DefectItemRecommendedActionType" ;
+    b:requiredValueRelativeXPath "m:DefectItemRecommendedActionType" ;
+    b:ruleId "UAD1714" ;
+    b:sourceFingerprint "8da6cba1912b5980908b9b21a03e308fbd23af1c73cc53dc1e2964eb1af71f5f" ;
+    b:violationKind "MissingRequiredValueInExistingContext" .
+
+<urn:uad36:existing-context-required-rule:UAD1736> a b:Binding ;
+    b:contextXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:IMAGE" ;
+    b:element "ImageFileLocationIdentifier" ;
+    b:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:IMAGE[m:ImageFileLocationIdentifier='\\\\Images\\MH1_Garage.png' and m:MIMETypeIdentifier])[1]/m:ImageFileLocationIdentifier" ;
+    b:requiredValueRelativeXPath "m:ImageFileLocationIdentifier" ;
+    b:ruleId "UAD1736" ;
+    b:sourceFingerprint "af4432260e9fed8d18563e8ac40411d97d39c0a0e2cb0288f1276b5d0deaef35" ;
+    b:violationKind "MissingRequiredValueInExistingContext" .
+
+<urn:uad36:existing-context-required-rule:UAD1737> a b:Binding ;
+    b:contextXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:IMAGE" ;
+    b:element "ImageFileLocationIdentifier" ;
+    b:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:IMAGE[m:ImageFileLocationIdentifier='\\\\Images\\MH1_Flooring.png' and m:MIMETypeIdentifier])[1]/m:ImageFileLocationIdentifier" ;
+    b:requiredValueRelativeXPath "m:ImageFileLocationIdentifier" ;
+    b:ruleId "UAD1737" ;
+    b:sourceFingerprint "455c8615e9bd142fb37a5f875375db792cf39302df1981d89e789344f9786951" ;
+    b:violationKind "MissingRequiredValueInExistingContext" .
+
+<urn:uad36:existing-context-required-rule:UAD1738> a b:Binding ;
+    b:contextXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:IMAGE" ;
+    b:element "ImageFileLocationIdentifier" ;
+    b:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:IMAGE[m:ImageFileLocationIdentifier='\\\\Images\\MH1_Bedroom1.png' and m:MIMETypeIdentifier])[1]/m:ImageFileLocationIdentifier" ;
+    b:requiredValueRelativeXPath "m:ImageFileLocationIdentifier" ;
+    b:ruleId "UAD1738" ;
+    b:sourceFingerprint "b63955d66cc47a044b564bfb5fcc4b01807b265f9a1f556f3c5b3480d152845e" ;
+    b:violationKind "MissingRequiredValueInExistingContext" .
+
+<urn:uad36:existing-context-required-rule:UAD1739> a b:Binding ;
+    b:contextXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:IMAGE" ;
+    b:element "ImageFileLocationIdentifier" ;
+    b:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:IMAGE[m:ImageFileLocationIdentifier='\\\\Images\\MH1_Deck.png' and m:MIMETypeIdentifier])[1]/m:ImageFileLocationIdentifier" ;
+    b:requiredValueRelativeXPath "m:ImageFileLocationIdentifier" ;
+    b:ruleId "UAD1739" ;
+    b:sourceFingerprint "aea59f0f7d8db3e3134a322982a9e723f9201972850fffc5f7550d5f4cc628b2" ;
+    b:violationKind "MissingRequiredValueInExistingContext" .
+
+<urn:uad36:existing-context-required-rule:UAD1740> a b:Binding ;
+    b:contextXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:IMAGE" ;
+    b:element "ImageFileLocationIdentifier" ;
+    b:expectedDataLocation "(//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:IMAGE[m:ImageFileLocationIdentifier='\\\\Images\\MH1_ExteriorTrimDDD.png' and m:MIMETypeIdentifier])[1]/m:ImageFileLocationIdentifier" ;
+    b:requiredValueRelativeXPath "m:ImageFileLocationIdentifier" ;
+    b:ruleId "UAD1740" ;
+    b:sourceFingerprint "791339959c82ef1f12eb99ad112cfb002773653383bfb6639e8e72d5955b8b78" ;
+    b:violationKind "MissingRequiredValueInExistingContext" .
