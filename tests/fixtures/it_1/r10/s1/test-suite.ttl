@@ -1,0 +1,398 @@
+@prefix t: <urn:uad36:test-suite:vocab:> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<urn:uad36:test-suite:value-cross-field-consistency> a t:TestSuite ;
+    t:expectedCaseCount 17 ;
+    t:hasCase <urn:uad36:test-suite:value-cross-field-consistency:UAD1007>,
+        <urn:uad36:test-suite:value-cross-field-consistency:UAD1015>,
+        <urn:uad36:test-suite:value-cross-field-consistency:UAD1029>,
+        <urn:uad36:test-suite:value-cross-field-consistency:UAD1215>,
+        <urn:uad36:test-suite:value-cross-field-consistency:UAD1261>,
+        <urn:uad36:test-suite:value-cross-field-consistency:UAD1272>,
+        <urn:uad36:test-suite:value-cross-field-consistency:UAD1512>,
+        <urn:uad36:test-suite:value-cross-field-consistency:UAD1513>,
+        <urn:uad36:test-suite:value-cross-field-consistency:UAD1514>,
+        <urn:uad36:test-suite:value-cross-field-consistency:UAD1515>,
+        <urn:uad36:test-suite:value-cross-field-consistency:UAD1516>,
+        <urn:uad36:test-suite:value-cross-field-consistency:UAD1517>,
+        <urn:uad36:test-suite:value-cross-field-consistency:UAD1518>,
+        <urn:uad36:test-suite:value-cross-field-consistency:UAD1533>,
+        <urn:uad36:test-suite:value-cross-field-consistency:UAD1574>,
+        <urn:uad36:test-suite:value-cross-field-consistency:UAD1605>,
+        <urn:uad36:test-suite:value-cross-field-consistency:UAD1730> ;
+    t:scenario <urn:uad36:work-tracking:scenario:value_cross_field_consistency> .
+
+<urn:uad36:test-suite:value-cross-field-consistency:UAD1007> a t:TestCase ;
+    t:applicabilityXPath "true()" ;
+    t:baselinePath "tests/fixtures/it_1/r10/s1/UAD1007-baseline.xml" ;
+    t:baselineSha256 "42d88cff5e5d0051aed9aaf06d6c546cf4e88e02c36671c4caaec07861ca2ee6" ;
+    t:baselineValue "VA" ;
+    t:expectedViolationKind "InconsistentFieldValues" ;
+    t:messageText "The state code for the subject property physical address must be a valid 2-character US State or Territory Code." ;
+    t:primaryDataElement "StateCode" ;
+    t:propertyAffected "Subject" ;
+    t:publishedSourcePath "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 SF1_Appraisal/SF1_Appraisal_v1.4.xml" ;
+    t:publishedSourceSha256 "47509c23bcf28c3abb9c57e00a3f93cf52ed38fec3862d7cda24bffd6bca5be9" ;
+    t:ruleId "UAD1007" ;
+    t:ruleLogic "If StateCode is not a valid 2-character US State or Territory Code" ;
+    t:scenarioId "IT-1R10S1" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1007> ;
+    t:sourceUniqueIdCell "0100.0012" ;
+    t:targetXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:ADDRESS/m:StateCode" ;
+    t:violatingValue "ZZ" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/ADDRESS/" ;
+    t:xsdValidAfterMutation true .
+
+<urn:uad36:test-suite:value-cross-field-consistency:UAD1015> a t:TestCase ;
+    t:applicabilityXPath "(/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:PROPERTY_DETAIL/m:LivingUnitExcludingADUCount = '1')" ;
+    t:baselinePath "tests/fixtures/it_1/r10/s1/UAD1015-baseline.xml" ;
+    t:baselineSha256 "42d88cff5e5d0051aed9aaf06d6c546cf4e88e02c36671c4caaec07861ca2ee6" ;
+    t:baselineValue "1" ;
+    t:expectedViolationKind "InconsistentFieldValues" ;
+    t:messageText "The total number of dwellings exceeds the total number of living units, excluding any ADUs." ;
+    t:primaryDataElement "DwellingCount" ;
+    t:propertyAffected "Subject" ;
+    t:publishedSourcePath "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 SF1_Appraisal/SF1_Appraisal_v1.4.xml" ;
+    t:publishedSourceSha256 "47509c23bcf28c3abb9c57e00a3f93cf52ed38fec3862d7cda24bffd6bca5be9" ;
+    t:ruleId "UAD1015" ;
+    t:ruleLogic "If DwellingCount > LivingUnitExcludingADUCount" ;
+    t:scenarioId "IT-1R10S1" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1015> ;
+    t:sourceUniqueIdCell "0100.0021" ;
+    t:targetXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:PROPERTY_DETAIL/m:DwellingCount" ;
+    t:violatingValue "2" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/" ;
+    t:xsdValidAfterMutation true .
+
+<urn:uad36:test-suite:value-cross-field-consistency:UAD1029> a t:TestCase ;
+    t:applicabilityXPath "true()" ;
+    t:baselinePath "tests/fixtures/it_1/r10/s1/UAD1029-baseline.xml" ;
+    t:baselineSha256 "74d985ec0ef4baa47b74b5e4927a32696ac3087f48741c76bbce68622becda9f" ;
+    t:baselineValue "false" ;
+    t:expectedViolationKind "InconsistentFieldValues" ;
+    t:messageText "Deliver this indicator as false for each ownership right that is not included in the appraisal. For assistance with this message, contact the appraisal software vendor." ;
+    t:primaryDataElement "AppraisedIndicator" ;
+    t:propertyAffected "Subject" ;
+    t:publishedSourcePath "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 SF1_Appraisal/SF1_Appraisal_v1.4.xml" ;
+    t:publishedSourceSha256 "47509c23bcf28c3abb9c57e00a3f93cf52ed38fec3862d7cda24bffd6bca5be9" ;
+    t:ruleId "UAD1029" ;
+    t:ruleLogic "If AppraisedIndicator is not \"false\" in a given instance of REAL_PROPERTY_INTEREST" ;
+    t:scenarioId "IT-1R10S1" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1029> ;
+    t:sourceUniqueIdCell "0100.0035" ;
+    t:targetXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:REAL_PROPERTY_INTERESTS/m:REAL_PROPERTY_INTEREST/m:AppraisedIndicator" ;
+    t:violatingValue "true" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/REAL_PROPERTY_INTERESTS/REAL_PROPERTY_INTEREST/" ;
+    t:xsdValidAfterMutation true .
+
+<urn:uad36:test-suite:value-cross-field-consistency:UAD1215> a t:TestCase ;
+    t:applicabilityXPath "(/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:SCOPE_OF_WORK/m:SCOPE_OF_WORK_DETAIL/m:IncomeApproachIndicator = 'true')" ;
+    t:baselinePath "tests/fixtures/it_1/r10/s1/UAD1215-baseline.xml" ;
+    t:baselineSha256 "595bd090925d27eaca79bdfec8a7d2a93a2b0292cffd6fedf545856a9a239ed0" ;
+    t:baselineValue "true" ;
+    t:expectedViolationKind "InconsistentFieldValues" ;
+    t:messageText "When 'Income Approach Developed by Appraiser' is Yes, 'Rent Schedule Developed by Appraiser' must also be Yes." ;
+    t:primaryDataElement "RentScheduleIndicator" ;
+    t:propertyAffected "N/A" ;
+    t:publishedSourcePath "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 SF1_Appraisal/SF1_Appraisal_v1.4.xml" ;
+    t:publishedSourceSha256 "47509c23bcf28c3abb9c57e00a3f93cf52ed38fec3862d7cda24bffd6bca5be9" ;
+    t:ruleId "UAD1215" ;
+    t:ruleLogic "If IncomeApproachIndicator is \"true\" and RentScheduleIndicator is \"false\"" ;
+    t:scenarioId "IT-1R10S1" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1215> ;
+    t:sourceUniqueIdCell "1000.0031" ;
+    t:targetXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:SCOPE_OF_WORK/m:SCOPE_OF_WORK_DETAIL/m:RentScheduleIndicator" ;
+    t:violatingValue "false" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/SCOPE_OF_WORK/SCOPE_OF_WORK_DETAIL/" ;
+    t:xsdValidAfterMutation true .
+
+<urn:uad36:test-suite:value-cross-field-consistency:UAD1261> a t:TestCase ;
+    t:applicabilityXPath "true()" ;
+    t:baselinePath "tests/fixtures/it_1/r10/s1/UAD1261-baseline.xml" ;
+    t:baselineSha256 "42d88cff5e5d0051aed9aaf06d6c546cf4e88e02c36671c4caaec07861ca2ee6" ;
+    t:baselineValue "ReasonableExposureTime" ;
+    t:expectedViolationKind "InconsistentFieldValues" ;
+    t:messageText "Provide MarketingOrExposureTimeType as 'ReasonableExposureTime'. For assistance with this message, contact the appraisal software vendor." ;
+    t:primaryDataElement "MarketingOrExposureTimeType" ;
+    t:propertyAffected "N/A" ;
+    t:publishedSourcePath "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 SF1_Appraisal/SF1_Appraisal_v1.4.xml" ;
+    t:publishedSourceSha256 "47509c23bcf28c3abb9c57e00a3f93cf52ed38fec3862d7cda24bffd6bca5be9" ;
+    t:ruleId "UAD1261" ;
+    t:ruleLogic "If MarketingOrExposureTimeType is not provided or is not = 'ReasonableExposureTime' in VALUATION_RECONCILIATION_SUMMARY_DETAIL" ;
+    t:scenarioId "IT-1R10S1" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1261> ;
+    t:sourceUniqueIdCell "1300.0016" ;
+    t:targetXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_RECONCILIATION/m:VALUATION_RECONCILIATION_SUMMARY/m:VALUATION_RECONCILIATION_SUMMARY_DETAIL/m:MarketingOrExposureTimeType" ;
+    t:violatingValue "ClientImposedRestrictedMarketingTime" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/VALUATION_RECONCILIATION/VALUATION_RECONCILIATION_SUMMARY/VALUATION_RECONCILIATION_SUMMARY_DETAIL/" ;
+    t:xsdValidAfterMutation true .
+
+<urn:uad36:test-suite:value-cross-field-consistency:UAD1272> a t:TestCase ;
+    t:applicabilityXPath "true()" ;
+    t:baselinePath "tests/fixtures/it_1/r10/s1/UAD1272-baseline.xml" ;
+    t:baselineSha256 "42d88cff5e5d0051aed9aaf06d6c546cf4e88e02c36671c4caaec07861ca2ee6" ;
+    t:baselineValue "application/pdf" ;
+    t:expectedViolationKind "InconsistentFieldValues" ;
+    t:messageText "The MIMETypeIdentifier for the appraisal must be included as 'application/pdf' in the UAD XML. For assistance with this message, contact the appraisal software vendor." ;
+    t:primaryDataElement "MIMETypeIdentifier" ;
+    t:propertyAffected "N/A" ;
+    t:publishedSourcePath "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 SF1_Appraisal/SF1_Appraisal_v1.4.xml" ;
+    t:publishedSourceSha256 "47509c23bcf28c3abb9c57e00a3f93cf52ed38fec3862d7cda24bffd6bca5be9" ;
+    t:ruleId "UAD1272" ;
+    t:ruleLogic "If MIMETypeIdentifier in FOREIGN_OBJECT is not provided or not provided as \"application/pdf\"" ;
+    t:scenarioId "IT-1R10S1" ;
+    t:severity "Warning" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1272> ;
+    t:sourceUniqueIdCell "1400.0384" ;
+    t:targetXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:VIEWS/m:VIEW/m:VIEW_FILES/m:VIEW_FILE/m:FOREIGN_OBJECT/m:MIMETypeIdentifier" ;
+    t:violatingValue "image/png" ;
+    t:xpath "MESSAGE/DOCUMENT_SETS/DOCUMENT_SET/DOCUMENTS/DOCUMENT/VIEWS/VIEW/VIEW_FILES/VIEW_FILE/FOREIGN_OBJECT/" ;
+    t:xsdValidAfterMutation true .
+
+<urn:uad36:test-suite:value-cross-field-consistency:UAD1512> a t:TestCase ;
+    t:applicabilityXPath "(/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:PROPERTY_VALUATIONS/m:PROPERTY_VALUATION/m:PROPERTY_VALUATION_DETAIL/m:PropertyValuationMethodType = 'TraditionalAppraisal')" ;
+    t:baselinePath "tests/fixtures/it_1/r10/s1/UAD1512-baseline.xml" ;
+    t:baselineSha256 "42d88cff5e5d0051aed9aaf06d6c546cf4e88e02c36671c4caaec07861ca2ee6" ;
+    t:baselineValue "InteriorAndExterior" ;
+    t:expectedViolationKind "InconsistentFieldValues" ;
+    t:messageText "The Appraiser Certification (#10) does not align with the 'Property Valuation Method'." ;
+    t:primaryDataElement "PropertyValuationMethodType" ;
+    t:propertyAffected "Subject" ;
+    t:publishedSourcePath "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 SF1_Appraisal/SF1_Appraisal_v1.4.xml" ;
+    t:publishedSourceSha256 "47509c23bcf28c3abb9c57e00a3f93cf52ed38fec3862d7cda24bffd6bca5be9" ;
+    t:ruleId "UAD1512" ;
+    t:ruleLogic "If PropertyValuationMethodType = \"TraditionalAppraisal\" and ValuationReportInspectionCertificationType <> \"InteriorAndExterior\"" ;
+    t:scenarioId "IT-1R10S1" ;
+    t:severity "Warning" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1512> ;
+    t:sourceUniqueIdCell "1000.0158" ;
+    t:targetXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_REPORT_DETAIL/m:ValuationReportInspectionCertificationType" ;
+    t:violatingValue "Exterior" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_VALUATIONS/PROPERTY_VALUATION/PROPERTY_VALUATION_DETAIL/" ;
+    t:xsdValidAfterMutation true .
+
+<urn:uad36:test-suite:value-cross-field-consistency:UAD1513> a t:TestCase ;
+    t:applicabilityXPath "(/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:PROPERTY_VALUATIONS/m:PROPERTY_VALUATION/m:PROPERTY_VALUATION_DETAIL/m:PropertyValuationMethodType = 'ExteriorAppraisal')" ;
+    t:baselinePath "tests/fixtures/it_1/r10/s1/UAD1513-baseline.xml" ;
+    t:baselineSha256 "409cedc100da2843ecdc96c2ad9ba25d6a108dd63955187160f5d736ea42b700" ;
+    t:baselineValue "Exterior" ;
+    t:expectedViolationKind "InconsistentFieldValues" ;
+    t:messageText "The Appraiser Certification (#10) does not align with the 'Property Valuation Method'." ;
+    t:primaryDataElement "PropertyValuationMethodType" ;
+    t:propertyAffected "Subject" ;
+    t:publishedSourcePath "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 SF1_Appraisal/SF1_Appraisal_v1.4.xml" ;
+    t:publishedSourceSha256 "47509c23bcf28c3abb9c57e00a3f93cf52ed38fec3862d7cda24bffd6bca5be9" ;
+    t:ruleId "UAD1513" ;
+    t:ruleLogic "If PropertyValuationMethodType = \"ExteriorAppraisal\" and ValuationReportInspectionCertificationType <> \"Exterior\"" ;
+    t:scenarioId "IT-1R10S1" ;
+    t:severity "Warning" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1513> ;
+    t:sourceUniqueIdCell "1000.0158" ;
+    t:targetXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_REPORT_DETAIL/m:ValuationReportInspectionCertificationType" ;
+    t:violatingValue "NoPhysicalInspection" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_VALUATIONS/PROPERTY_VALUATION/PROPERTY_VALUATION_DETAIL/" ;
+    t:xsdValidAfterMutation true .
+
+<urn:uad36:test-suite:value-cross-field-consistency:UAD1514> a t:TestCase ;
+    t:applicabilityXPath "(/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:PROPERTY_VALUATIONS/m:PROPERTY_VALUATION/m:PROPERTY_VALUATION_DETAIL/m:PropertyValuationMethodType = 'DesktopAppraisal')" ;
+    t:baselinePath "tests/fixtures/it_1/r10/s1/UAD1514-baseline.xml" ;
+    t:baselineSha256 "ef8784bba0717276da768b0f4a554290a22993861d9484b92b5340eaf72ddf1c" ;
+    t:baselineValue "NoPhysicalInspection" ;
+    t:expectedViolationKind "InconsistentFieldValues" ;
+    t:messageText "The Appraiser Certification (#10) does not align with the 'Property Valuation Method'." ;
+    t:primaryDataElement "PropertyValuationMethodType" ;
+    t:propertyAffected "Subject" ;
+    t:publishedSourcePath "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 SF1_Appraisal/SF1_Appraisal_v1.4.xml" ;
+    t:publishedSourceSha256 "47509c23bcf28c3abb9c57e00a3f93cf52ed38fec3862d7cda24bffd6bca5be9" ;
+    t:ruleId "UAD1514" ;
+    t:ruleLogic "If PropertyValuationMethodType = \"DesktopAppraisal\" and ValuationReportInspectionCertificationType <> \"NoPhysicalInspection\"" ;
+    t:scenarioId "IT-1R10S1" ;
+    t:severity "Warning" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1514> ;
+    t:sourceUniqueIdCell "1000.0158" ;
+    t:targetXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_REPORT_DETAIL/m:ValuationReportInspectionCertificationType" ;
+    t:violatingValue "Exterior" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_VALUATIONS/PROPERTY_VALUATION/PROPERTY_VALUATION_DETAIL/" ;
+    t:xsdValidAfterMutation true .
+
+<urn:uad36:test-suite:value-cross-field-consistency:UAD1515> a t:TestCase ;
+    t:applicabilityXPath "(/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:PROPERTY_VALUATIONS/m:PROPERTY_VALUATION/m:PROPERTY_VALUATION_DETAIL/m:PropertyValuationMethodType = 'HybridAppraisal')" ;
+    t:baselinePath "tests/fixtures/it_1/r10/s1/UAD1515-baseline.xml" ;
+    t:baselineSha256 "479e4f490008fc8f2c952496652bf7eef298ca63b919e59b98219a2a09928d47" ;
+    t:baselineValue "NoPhysicalInspection" ;
+    t:expectedViolationKind "InconsistentFieldValues" ;
+    t:messageText "The Appraiser Certification (#10) does not align with the 'Property Valuation Method'." ;
+    t:primaryDataElement "PropertyValuationMethodType" ;
+    t:propertyAffected "Subject" ;
+    t:publishedSourcePath "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 SF1_Appraisal/SF1_Appraisal_v1.4.xml" ;
+    t:publishedSourceSha256 "47509c23bcf28c3abb9c57e00a3f93cf52ed38fec3862d7cda24bffd6bca5be9" ;
+    t:ruleId "UAD1515" ;
+    t:ruleLogic "If PropertyValuationMethodType = \"HybridAppraisal\" and ValuationReportInspectionCertificationType <> \"NoPhysicalInspection\"" ;
+    t:scenarioId "IT-1R10S1" ;
+    t:severity "Warning" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1515> ;
+    t:sourceUniqueIdCell "1000.0158" ;
+    t:targetXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_REPORT_DETAIL/m:ValuationReportInspectionCertificationType" ;
+    t:violatingValue "Exterior" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_VALUATIONS/PROPERTY_VALUATION/PROPERTY_VALUATION_DETAIL/" ;
+    t:xsdValidAfterMutation true .
+
+<urn:uad36:test-suite:value-cross-field-consistency:UAD1516> a t:TestCase ;
+    t:applicabilityXPath "(/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:PARTIES/m:PARTY[3]/m:ROLES/m:ROLE/m:ROLE_DETAIL/m:PartyRoleType = 'Appraiser') and (count(//m:RELATIONSHIP[@xlink:arcrole='urn:fdc:mismo.org:2009:residential/INSPECTION_CompletedBy_ROLE' and @xlink:from='INSPECTION_Appraiser' and @xlink:to='ROLE_Appraiser']) = 1) and (/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:INSPECTIONS/m:INSPECTION[2]/m:INSPECTION_DETAIL/m:PropertyInteriorInspectionMethodType = 'Physical') and (/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:INSPECTIONS/m:INSPECTION[2]/m:INSPECTION_DETAIL/m:PropertyExteriorInspectionMethodType = 'Physical')" ;
+    t:baselinePath "tests/fixtures/it_1/r10/s1/UAD1516-baseline.xml" ;
+    t:baselineSha256 "42d88cff5e5d0051aed9aaf06d6c546cf4e88e02c36671c4caaec07861ca2ee6" ;
+    t:baselineValue "InteriorAndExterior" ;
+    t:expectedViolationKind "InconsistentFieldValues" ;
+    t:messageText "The Appraiser Certification (#10) does not align with the appraiser subject property inspection." ;
+    t:primaryDataElement "ValuationReportInspectionCertificationType" ;
+    t:propertyAffected "N/A" ;
+    t:publishedSourcePath "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 SF1_Appraisal/SF1_Appraisal_v1.4.xml" ;
+    t:publishedSourceSha256 "47509c23bcf28c3abb9c57e00a3f93cf52ed38fec3862d7cda24bffd6bca5be9" ;
+    t:ruleId "UAD1516" ;
+    t:ruleLogic "If PropertyInteriorInspectionMethodType = \"Physical\" and PropertyExteriorInspectionMethodType = \"Physical\" for PartyRoleType = \"Appraiser\", and ValuationReportInspectionCertificationType <> \"InteriorAndExterior\"" ;
+    t:scenarioId "IT-1R10S1" ;
+    t:severity "Warning" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1516> ;
+    t:sourceUniqueIdCell "2200.0038" ;
+    t:targetXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_REPORT_DETAIL/m:ValuationReportInspectionCertificationType" ;
+    t:violatingValue "Exterior" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/VALUATION_REPORT_DETAIL/" ;
+    t:xsdValidAfterMutation true .
+
+<urn:uad36:test-suite:value-cross-field-consistency:UAD1517> a t:TestCase ;
+    t:applicabilityXPath "(/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:PARTIES/m:PARTY[3]/m:ROLES/m:ROLE/m:ROLE_DETAIL/m:PartyRoleType = 'Appraiser') and (count(//m:RELATIONSHIP[@xlink:arcrole='urn:fdc:mismo.org:2009:residential/INSPECTION_CompletedBy_ROLE' and @xlink:from='INSPECTION_Appraiser' and @xlink:to='ROLE_Appraiser']) = 1) and (/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:INSPECTIONS/m:INSPECTION[2]/m:INSPECTION_DETAIL/m:PropertyInteriorInspectionMethodType = 'NoInspection') and (/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:INSPECTIONS/m:INSPECTION[2]/m:INSPECTION_DETAIL/m:PropertyExteriorInspectionMethodType = 'NoInspection')" ;
+    t:baselinePath "tests/fixtures/it_1/r10/s1/UAD1517-baseline.xml" ;
+    t:baselineSha256 "cc4f6bc215e7f873cf2a3156bf6523315e98f840738a2f8aefb6fd0620d7603c" ;
+    t:baselineValue "NoPhysicalInspection" ;
+    t:expectedViolationKind "InconsistentFieldValues" ;
+    t:messageText "The Appraiser Certification (#10) does not align with the appraiser subject property inspection." ;
+    t:primaryDataElement "ValuationReportInspectionCertificationType" ;
+    t:propertyAffected "N/A" ;
+    t:publishedSourcePath "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 SF1_Appraisal/SF1_Appraisal_v1.4.xml" ;
+    t:publishedSourceSha256 "47509c23bcf28c3abb9c57e00a3f93cf52ed38fec3862d7cda24bffd6bca5be9" ;
+    t:ruleId "UAD1517" ;
+    t:ruleLogic "If (PropertyInteriorInspectionMethodType = \"Virtual\" or \"NoInspection\" and PropertyExteriorInspectionMethodType = \"Virtual\" or \"NoInspection\" for PartyRoleType = \"Appraiser\"), and ValuationReportInspectionCertificationType <> \"NoPhysicalInspection\"" ;
+    t:scenarioId "IT-1R10S1" ;
+    t:severity "Warning" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1517> ;
+    t:sourceUniqueIdCell "2200.0038" ;
+    t:targetXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_REPORT_DETAIL/m:ValuationReportInspectionCertificationType" ;
+    t:violatingValue "Exterior" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/VALUATION_REPORT_DETAIL/" ;
+    t:xsdValidAfterMutation true .
+
+<urn:uad36:test-suite:value-cross-field-consistency:UAD1518> a t:TestCase ;
+    t:applicabilityXPath "(/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:PARTIES/m:PARTY[3]/m:ROLES/m:ROLE/m:ROLE_DETAIL/m:PartyRoleType = 'Appraiser') and (count(//m:RELATIONSHIP[@xlink:arcrole='urn:fdc:mismo.org:2009:residential/INSPECTION_CompletedBy_ROLE' and @xlink:from='INSPECTION_Appraiser' and @xlink:to='ROLE_Appraiser']) = 1) and (/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:INSPECTIONS/m:INSPECTION[2]/m:INSPECTION_DETAIL/m:PropertyInteriorInspectionMethodType = 'NoInspection') and (/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:INSPECTIONS/m:INSPECTION[2]/m:INSPECTION_DETAIL/m:PropertyExteriorInspectionMethodType = 'Physical')" ;
+    t:baselinePath "tests/fixtures/it_1/r10/s1/UAD1518-baseline.xml" ;
+    t:baselineSha256 "c6c22b6fbf1e63a0dbdd9897e2f152902c83d88e2aed07b4fc45f7452e43d388" ;
+    t:baselineValue "Exterior" ;
+    t:expectedViolationKind "InconsistentFieldValues" ;
+    t:messageText "The Appraiser Certification (#10) does not align with the appraiser subject property inspection." ;
+    t:primaryDataElement "ValuationReportInspectionCertificationType" ;
+    t:propertyAffected "N/A" ;
+    t:publishedSourcePath "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 SF1_Appraisal/SF1_Appraisal_v1.4.xml" ;
+    t:publishedSourceSha256 "47509c23bcf28c3abb9c57e00a3f93cf52ed38fec3862d7cda24bffd6bca5be9" ;
+    t:ruleId "UAD1518" ;
+    t:ruleLogic "If (PropertyInteriorInspectionMethodType = \"Virtual\" or \"NoInspection\" and PropertyExteriorInspectionMethodType = \"Physical\" for PartyRoleType = \"Appraiser\"), and ValuationReportInspectionCertificationType <> \"Exterior\"" ;
+    t:scenarioId "IT-1R10S1" ;
+    t:severity "Warning" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1518> ;
+    t:sourceUniqueIdCell "2200.0038" ;
+    t:targetXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_REPORT_DETAIL/m:ValuationReportInspectionCertificationType" ;
+    t:violatingValue "NoPhysicalInspection" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/VALUATION_REPORT_DETAIL/" ;
+    t:xsdValidAfterMutation true .
+
+<urn:uad36:test-suite:value-cross-field-consistency:UAD1533> a t:TestCase ;
+    t:applicabilityXPath "(/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:PARTIES/m:PARTY[3]/m:ROLES/m:ROLE/m:ROLE_DETAIL/m:PartyRoleType = 'Appraiser') and (/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:ADDRESS/m:StateCode = 'VA')" ;
+    t:baselinePath "tests/fixtures/it_1/r10/s1/UAD1533-baseline.xml" ;
+    t:baselineSha256 "42d88cff5e5d0051aed9aaf06d6c546cf4e88e02c36671c4caaec07861ca2ee6" ;
+    t:baselineValue "VA" ;
+    t:expectedViolationKind "InconsistentFieldValues" ;
+    t:messageText "The Appraiser and Supervisory Appraiser must be licensed in the state in which the subject property is located." ;
+    t:primaryDataElement "LicenseIssuingAuthorityStateCode" ;
+    t:propertyAffected "N/A" ;
+    t:publishedSourcePath "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 SF1_Appraisal/SF1_Appraisal_v1.4.xml" ;
+    t:publishedSourceSha256 "47509c23bcf28c3abb9c57e00a3f93cf52ed38fec3862d7cda24bffd6bca5be9" ;
+    t:ruleId "UAD1533" ;
+    t:ruleLogic "If LicenseIssuingAuthorityStateCode for PartyRoleType = \"Appraiser\" or \"AppraiserSupervisor\" <> StateCode (PROPERTY/ADDRESS with @ValuationUseType = \"SubjectProperty\")" ;
+    t:scenarioId "IT-1R10S1" ;
+    t:severity "Warning" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1533> ;
+    t:sourceUniqueIdCell "2200.0084; 2400.0055" ;
+    t:targetXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:PARTIES/m:PARTY[3]/m:ROLES/m:ROLE/m:LICENSES/m:LICENSE/m:LICENSE_DETAIL/m:LicenseIssuingAuthorityStateCode" ;
+    t:violatingValue "CA" ;
+    t:xpath "../SERVICE/PARTIES/PARTY/ROLES/ROLE/LICENSES/LICENSE/LICENSE_DETAIL/" ;
+    t:xsdValidAfterMutation true .
+
+<urn:uad36:test-suite:value-cross-field-consistency:UAD1574> a t:TestCase ;
+    t:applicabilityXPath "(/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:HOMEOWNERS_ASSOCIATIONS/m:HOMEOWNERS_ASSOCIATION/m:ASSOCIATION_CHARGES/m:ASSOCIATION_CHARGE[1]/m:ASSOCIATION_CHARGE_DETAIL/m:AssociationChargeType = 'AssociationDues')" ;
+    t:baselinePath "tests/fixtures/it_1/r10/s1/UAD1574-baseline.xml" ;
+    t:baselineSha256 "42d88cff5e5d0051aed9aaf06d6c546cf4e88e02c36671c4caaec07861ca2ee6" ;
+    t:baselineValue "Monthly" ;
+    t:expectedViolationKind "InconsistentFieldValues" ;
+    t:messageText "The association charge period must be provided as monthly. For assistance with this message, contact the appraisal software vendor." ;
+    t:primaryDataElement "AssociationChargePeriodType" ;
+    t:propertyAffected "Subject" ;
+    t:publishedSourcePath "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 SF1_Appraisal/SF1_Appraisal_v1.4.xml" ;
+    t:publishedSourceSha256 "47509c23bcf28c3abb9c57e00a3f93cf52ed38fec3862d7cda24bffd6bca5be9" ;
+    t:ruleId "UAD1574" ;
+    t:ruleLogic "If AssociationChargeType = \"AssociationDues\", and AssociationChargePeriodType is either not provided, or not = \"Monthly\" in the given instance of ASSOCIATION_CHARGE" ;
+    t:scenarioId "IT-1R10S1" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1574> ;
+    t:sourceUniqueIdCell "2500.0008" ;
+    t:targetXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:HOMEOWNERS_ASSOCIATIONS/m:HOMEOWNERS_ASSOCIATION/m:ASSOCIATION_CHARGES/m:ASSOCIATION_CHARGE[1]/m:ASSOCIATION_CHARGE_DETAIL/m:AssociationChargePeriodType" ;
+    t:violatingValue "OneTime" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/HOMEOWNERS_ASSOCIATIONS/HOMEOWNERS_ASSOCIATION/ASSOCIATION_CHARGES/ASSOCIATION_CHARGE/ASSOCIATION_CHARGE_DETAIL/" ;
+    t:xsdValidAfterMutation true .
+
+<urn:uad36:test-suite:value-cross-field-consistency:UAD1605> a t:TestCase ;
+    t:applicabilityXPath "(/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:PROJECT/m:PROJECT_DETAIL/m:ProjectCompletedIndicator = 'false')" ;
+    t:baselinePath "tests/fixtures/it_1/r10/s1/UAD1605-baseline.xml" ;
+    t:baselineSha256 "0f217c8806218bcbb6376b06bb463445c04b163afffa97c98bf4de2fb4ab07bd" ;
+    t:baselineValue "false" ;
+    t:expectedViolationKind "InconsistentFieldValues" ;
+    t:messageText "Deliver ProjectComponentCompletedIndicator as false for each incomplete project element. For assistance with this message, contact the appraisal software vendor." ;
+    t:primaryDataElement "ProjectComponentCompletedIndicator" ;
+    t:propertyAffected "Subject" ;
+    t:publishedSourcePath "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 SF1_Appraisal/SF1_Appraisal_v1.4.xml" ;
+    t:publishedSourceSha256 "47509c23bcf28c3abb9c57e00a3f93cf52ed38fec3862d7cda24bffd6bca5be9" ;
+    t:ruleId "UAD1605" ;
+    t:ruleLogic "If ProjectCompletedIndicator = \"false\" and ProjectComponentCompletedIndicator is not = \"false\" in a given instance of PROJECT_COMPONENT" ;
+    t:scenarioId "IT-1R10S1" ;
+    t:severity "Fatal" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1605> ;
+    t:sourceUniqueIdCell "2500.0073" ;
+    t:targetXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:PROJECT/m:PROJECT_COMPONENTS/m:PROJECT_COMPONENT/m:ProjectComponentCompletedIndicator" ;
+    t:violatingValue "true" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROJECT/PROJECT_COMPONENTS/PROJECT_COMPONENT/" ;
+    t:xsdValidAfterMutation true .
+
+<urn:uad36:test-suite:value-cross-field-consistency:UAD1730> a t:TestCase ;
+    t:applicabilityXPath "(/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:ImprovementType = 'Outbuilding')" ;
+    t:baselinePath "tests/fixtures/it_1/r10/s1/UAD1730-baseline.xml" ;
+    t:baselineSha256 "ea3805933d76f27038e863e9878db743c559e0e321bfcf0451e38ed4c50c93e7" ;
+    t:baselineValue "true" ;
+    t:expectedViolationKind "InconsistentFieldValues" ;
+    t:messageText "There is an indicator of a living unit in an outbuilding, and it was not identified as an ADU. Any living unit in an outbuilding is considered an ADU, or it would have to be identified as a dwelling." ;
+    t:primaryDataElement "AccessoryDwellingUnitIndicator" ;
+    t:propertyAffected "Subject" ;
+    t:publishedSourcePath "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 SF1_Appraisal/SF1_Appraisal_v1.4.xml" ;
+    t:publishedSourceSha256 "47509c23bcf28c3abb9c57e00a3f93cf52ed38fec3862d7cda24bffd6bca5be9" ;
+    t:ruleId "UAD1730" ;
+    t:ruleLogic "If AccessoryDwellingUnitIndicator = \"false\" for a given instance of PROPERTY_UNIT_DETAIL in IMPROVEMENT with ImprovementType = \"Outbuilding\"" ;
+    t:scenarioId "IT-1R10S1" ;
+    t:severity "Warning" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1730> ;
+    t:sourceUniqueIdCell "0700.0089" ;
+    t:targetXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:PROPERTY_UNITS/m:PROPERTY_UNIT/m:PROPERTY_UNIT_DETAIL/m:AccessoryDwellingUnitIndicator" ;
+    t:violatingValue "false" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/PROPERTY_UNITS/PROPERTY_UNIT/PROPERTY_UNIT_DETAIL/" ;
+    t:xsdValidAfterMutation true .
+

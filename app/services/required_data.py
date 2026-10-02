@@ -43,6 +43,10 @@ from app.services.relationship_reference_required_data import (
     binding_for as relationship_reference_binding_for,
     evaluate_relationship_reference,
 )
+from app.services.value_consistency_required_data import (
+    binding_for as value_consistency_binding_for,
+    evaluate_value_consistency,
+)
 from app.services.scoped_required_data import (
     evaluate_scoped_rule,
     scoped_spec,
@@ -363,6 +367,9 @@ def load_required_rules() -> tuple[dict[str, str], ...]:
 
     rules = []
     for row in rows:
+        if value_consistency_binding_for(row) is not None:
+            rules.append(row)
+            continue
         if binding_for(row) is not None:
             rules.append(row)
             continue
@@ -420,6 +427,9 @@ def load_required_rules() -> tuple[dict[str, str], ...]:
     valid_rules = []
 
     for rule in rules:
+        if value_consistency_binding_for(rule) is not None:
+            valid_rules.append(rule)
+            continue
         if binding_for(rule) is not None:
             valid_rules.append(rule)
             continue
@@ -661,6 +671,9 @@ def evaluate_required_data(
     for rule in sorted(
         load_required_rules(), key=lambda row: row["Unique ID"]
     ):
+        if value_consistency_binding_for(rule) is not None:
+            findings.extend(evaluate_value_consistency(root, investor, rule))
+            continue
         if binding_for(rule) is not None:
             findings.extend(evaluate_single_equality(root, investor, rule))
             continue

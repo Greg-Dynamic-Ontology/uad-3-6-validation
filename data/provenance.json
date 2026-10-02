@@ -1,0 +1,383 @@
+[
+  {
+    "messageId": "UAD1007",
+    "baseline": "data/uad36-test-suite/tests/fixtures/value_cross_field_consistency/derived/UAD1007-baseline.xml",
+    "source": "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 SF1_Appraisal/SF1_Appraisal_v1.4.xml",
+    "sourceSha256": "47509c23bcf28c3abb9c57e00a3f93cf52ed38fec3862d7cda24bffd6bca5be9",
+    "edits": [
+      {
+        "path": "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:ADDRESS/m:StateCode",
+        "before": "VA",
+        "after": "VA"
+      }
+    ],
+    "negativeMutation": {
+      "path": "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:ADDRESS/m:StateCode",
+      "before": "VA",
+      "after": "ZZ"
+    }
+  },
+  {
+    "messageId": "UAD1015",
+    "baseline": "data/uad36-test-suite/tests/fixtures/value_cross_field_consistency/derived/UAD1015-baseline.xml",
+    "source": "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 SF1_Appraisal/SF1_Appraisal_v1.4.xml",
+    "sourceSha256": "47509c23bcf28c3abb9c57e00a3f93cf52ed38fec3862d7cda24bffd6bca5be9",
+    "edits": [
+      {
+        "path": "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:PROPERTY_DETAIL/m:DwellingCount",
+        "before": "1",
+        "after": "1"
+      },
+      {
+        "path": "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:PROPERTY_DETAIL/m:LivingUnitExcludingADUCount",
+        "before": "1",
+        "after": "1"
+      }
+    ],
+    "negativeMutation": {
+      "path": "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:PROPERTY_DETAIL/m:DwellingCount",
+      "before": "1",
+      "after": "2"
+    }
+  },
+  {
+    "messageId": "UAD1029",
+    "baseline": "data/uad36-test-suite/tests/fixtures/value_cross_field_consistency/derived/UAD1029-baseline.xml",
+    "source": "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 SF1_Appraisal/SF1_Appraisal_v1.4.xml",
+    "sourceSha256": "47509c23bcf28c3abb9c57e00a3f93cf52ed38fec3862d7cda24bffd6bca5be9",
+    "edits": [
+      {
+        "path": "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:REAL_PROPERTY_INTERESTS/m:REAL_PROPERTY_INTEREST/m:AppraisedIndicator",
+        "before": null,
+        "after": "false"
+      }
+    ],
+    "negativeMutation": {
+      "path": "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:REAL_PROPERTY_INTERESTS/m:REAL_PROPERTY_INTEREST/m:AppraisedIndicator",
+      "before": "false",
+      "after": "true"
+    }
+  },
+  {
+    "messageId": "UAD1215",
+    "baseline": "data/uad36-test-suite/tests/fixtures/value_cross_field_consistency/derived/UAD1215-baseline.xml",
+    "source": "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 SF1_Appraisal/SF1_Appraisal_v1.4.xml",
+    "sourceSha256": "47509c23bcf28c3abb9c57e00a3f93cf52ed38fec3862d7cda24bffd6bca5be9",
+    "edits": [
+      {
+        "path": "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:SCOPE_OF_WORK/m:SCOPE_OF_WORK_DETAIL/m:IncomeApproachIndicator",
+        "before": "false",
+        "after": "true"
+      },
+      {
+        "path": "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:SCOPE_OF_WORK/m:SCOPE_OF_WORK_DETAIL/m:RentScheduleIndicator",
+        "before": "false",
+        "after": "true"
+      }
+    ],
+    "negativeMutation": {
+      "path": "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:SCOPE_OF_WORK/m:SCOPE_OF_WORK_DETAIL/m:RentScheduleIndicator",
+      "before": "true",
+      "after": "false"
+    }
+  },
+  {
+    "messageId": "UAD1261",
+    "baseline": "data/uad36-test-suite/tests/fixtures/value_cross_field_consistency/derived/UAD1261-baseline.xml",
+    "source": "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 SF1_Appraisal/SF1_Appraisal_v1.4.xml",
+    "sourceSha256": "47509c23bcf28c3abb9c57e00a3f93cf52ed38fec3862d7cda24bffd6bca5be9",
+    "edits": [
+      {
+        "path": "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_RECONCILIATION/m:VALUATION_RECONCILIATION_SUMMARY/m:VALUATION_RECONCILIATION_SUMMARY_DETAIL/m:MarketingOrExposureTimeType",
+        "before": "ReasonableExposureTime",
+        "after": "ReasonableExposureTime"
+      }
+    ],
+    "negativeMutation": {
+      "path": "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_RECONCILIATION/m:VALUATION_RECONCILIATION_SUMMARY/m:VALUATION_RECONCILIATION_SUMMARY_DETAIL/m:MarketingOrExposureTimeType",
+      "before": "ReasonableExposureTime",
+      "after": "ClientImposedRestrictedMarketingTime"
+    }
+  },
+  {
+    "messageId": "UAD1272",
+    "baseline": "data/uad36-test-suite/tests/fixtures/value_cross_field_consistency/derived/UAD1272-baseline.xml",
+    "source": "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 SF1_Appraisal/SF1_Appraisal_v1.4.xml",
+    "sourceSha256": "47509c23bcf28c3abb9c57e00a3f93cf52ed38fec3862d7cda24bffd6bca5be9",
+    "edits": [
+      {
+        "path": "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:VIEWS/m:VIEW/m:VIEW_FILES/m:VIEW_FILE/m:FOREIGN_OBJECT/m:MIMETypeIdentifier",
+        "before": "application/pdf",
+        "after": "application/pdf"
+      }
+    ],
+    "negativeMutation": {
+      "path": "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:VIEWS/m:VIEW/m:VIEW_FILES/m:VIEW_FILE/m:FOREIGN_OBJECT/m:MIMETypeIdentifier",
+      "before": "application/pdf",
+      "after": "image/png"
+    }
+  },
+  {
+    "messageId": "UAD1512",
+    "baseline": "data/uad36-test-suite/tests/fixtures/value_cross_field_consistency/derived/UAD1512-baseline.xml",
+    "source": "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 SF1_Appraisal/SF1_Appraisal_v1.4.xml",
+    "sourceSha256": "47509c23bcf28c3abb9c57e00a3f93cf52ed38fec3862d7cda24bffd6bca5be9",
+    "edits": [
+      {
+        "path": "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:PROPERTY_VALUATIONS/m:PROPERTY_VALUATION/m:PROPERTY_VALUATION_DETAIL/m:PropertyValuationMethodType",
+        "before": "TraditionalAppraisal",
+        "after": "TraditionalAppraisal"
+      },
+      {
+        "path": "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_REPORT_DETAIL/m:ValuationReportInspectionCertificationType",
+        "before": "InteriorAndExterior",
+        "after": "InteriorAndExterior"
+      }
+    ],
+    "negativeMutation": {
+      "path": "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_REPORT_DETAIL/m:ValuationReportInspectionCertificationType",
+      "before": "InteriorAndExterior",
+      "after": "Exterior"
+    }
+  },
+  {
+    "messageId": "UAD1513",
+    "baseline": "data/uad36-test-suite/tests/fixtures/value_cross_field_consistency/derived/UAD1513-baseline.xml",
+    "source": "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 SF1_Appraisal/SF1_Appraisal_v1.4.xml",
+    "sourceSha256": "47509c23bcf28c3abb9c57e00a3f93cf52ed38fec3862d7cda24bffd6bca5be9",
+    "edits": [
+      {
+        "path": "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:PROPERTY_VALUATIONS/m:PROPERTY_VALUATION/m:PROPERTY_VALUATION_DETAIL/m:PropertyValuationMethodType",
+        "before": "TraditionalAppraisal",
+        "after": "ExteriorAppraisal"
+      },
+      {
+        "path": "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_REPORT_DETAIL/m:ValuationReportInspectionCertificationType",
+        "before": "InteriorAndExterior",
+        "after": "Exterior"
+      }
+    ],
+    "negativeMutation": {
+      "path": "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_REPORT_DETAIL/m:ValuationReportInspectionCertificationType",
+      "before": "Exterior",
+      "after": "NoPhysicalInspection"
+    }
+  },
+  {
+    "messageId": "UAD1514",
+    "baseline": "data/uad36-test-suite/tests/fixtures/value_cross_field_consistency/derived/UAD1514-baseline.xml",
+    "source": "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 SF1_Appraisal/SF1_Appraisal_v1.4.xml",
+    "sourceSha256": "47509c23bcf28c3abb9c57e00a3f93cf52ed38fec3862d7cda24bffd6bca5be9",
+    "edits": [
+      {
+        "path": "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:PROPERTY_VALUATIONS/m:PROPERTY_VALUATION/m:PROPERTY_VALUATION_DETAIL/m:PropertyValuationMethodType",
+        "before": "TraditionalAppraisal",
+        "after": "DesktopAppraisal"
+      },
+      {
+        "path": "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_REPORT_DETAIL/m:ValuationReportInspectionCertificationType",
+        "before": "InteriorAndExterior",
+        "after": "NoPhysicalInspection"
+      }
+    ],
+    "negativeMutation": {
+      "path": "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_REPORT_DETAIL/m:ValuationReportInspectionCertificationType",
+      "before": "NoPhysicalInspection",
+      "after": "Exterior"
+    }
+  },
+  {
+    "messageId": "UAD1515",
+    "baseline": "data/uad36-test-suite/tests/fixtures/value_cross_field_consistency/derived/UAD1515-baseline.xml",
+    "source": "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 SF1_Appraisal/SF1_Appraisal_v1.4.xml",
+    "sourceSha256": "47509c23bcf28c3abb9c57e00a3f93cf52ed38fec3862d7cda24bffd6bca5be9",
+    "edits": [
+      {
+        "path": "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:PROPERTY_VALUATIONS/m:PROPERTY_VALUATION/m:PROPERTY_VALUATION_DETAIL/m:PropertyValuationMethodType",
+        "before": "TraditionalAppraisal",
+        "after": "HybridAppraisal"
+      },
+      {
+        "path": "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_REPORT_DETAIL/m:ValuationReportInspectionCertificationType",
+        "before": "InteriorAndExterior",
+        "after": "NoPhysicalInspection"
+      }
+    ],
+    "negativeMutation": {
+      "path": "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_REPORT_DETAIL/m:ValuationReportInspectionCertificationType",
+      "before": "NoPhysicalInspection",
+      "after": "Exterior"
+    }
+  },
+  {
+    "messageId": "UAD1516",
+    "baseline": "data/uad36-test-suite/tests/fixtures/value_cross_field_consistency/derived/UAD1516-baseline.xml",
+    "source": "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 SF1_Appraisal/SF1_Appraisal_v1.4.xml",
+    "sourceSha256": "47509c23bcf28c3abb9c57e00a3f93cf52ed38fec3862d7cda24bffd6bca5be9",
+    "edits": [
+      {
+        "path": "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:INSPECTIONS/m:INSPECTION[2]/m:INSPECTION_DETAIL/m:PropertyInteriorInspectionMethodType",
+        "before": "Physical",
+        "after": "Physical"
+      },
+      {
+        "path": "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:INSPECTIONS/m:INSPECTION[2]/m:INSPECTION_DETAIL/m:PropertyExteriorInspectionMethodType",
+        "before": "Physical",
+        "after": "Physical"
+      },
+      {
+        "path": "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_REPORT_DETAIL/m:ValuationReportInspectionCertificationType",
+        "before": "InteriorAndExterior",
+        "after": "InteriorAndExterior"
+      }
+    ],
+    "negativeMutation": {
+      "path": "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_REPORT_DETAIL/m:ValuationReportInspectionCertificationType",
+      "before": "InteriorAndExterior",
+      "after": "Exterior"
+    }
+  },
+  {
+    "messageId": "UAD1517",
+    "baseline": "data/uad36-test-suite/tests/fixtures/value_cross_field_consistency/derived/UAD1517-baseline.xml",
+    "source": "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 SF1_Appraisal/SF1_Appraisal_v1.4.xml",
+    "sourceSha256": "47509c23bcf28c3abb9c57e00a3f93cf52ed38fec3862d7cda24bffd6bca5be9",
+    "edits": [
+      {
+        "path": "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:INSPECTIONS/m:INSPECTION[2]/m:INSPECTION_DETAIL/m:PropertyInteriorInspectionMethodType",
+        "before": "Physical",
+        "after": "NoInspection"
+      },
+      {
+        "path": "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:INSPECTIONS/m:INSPECTION[2]/m:INSPECTION_DETAIL/m:PropertyExteriorInspectionMethodType",
+        "before": "Physical",
+        "after": "NoInspection"
+      },
+      {
+        "path": "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_REPORT_DETAIL/m:ValuationReportInspectionCertificationType",
+        "before": "InteriorAndExterior",
+        "after": "NoPhysicalInspection"
+      }
+    ],
+    "negativeMutation": {
+      "path": "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_REPORT_DETAIL/m:ValuationReportInspectionCertificationType",
+      "before": "NoPhysicalInspection",
+      "after": "Exterior"
+    }
+  },
+  {
+    "messageId": "UAD1518",
+    "baseline": "data/uad36-test-suite/tests/fixtures/value_cross_field_consistency/derived/UAD1518-baseline.xml",
+    "source": "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 SF1_Appraisal/SF1_Appraisal_v1.4.xml",
+    "sourceSha256": "47509c23bcf28c3abb9c57e00a3f93cf52ed38fec3862d7cda24bffd6bca5be9",
+    "edits": [
+      {
+        "path": "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:INSPECTIONS/m:INSPECTION[2]/m:INSPECTION_DETAIL/m:PropertyInteriorInspectionMethodType",
+        "before": "Physical",
+        "after": "NoInspection"
+      },
+      {
+        "path": "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:INSPECTIONS/m:INSPECTION[2]/m:INSPECTION_DETAIL/m:PropertyExteriorInspectionMethodType",
+        "before": "Physical",
+        "after": "Physical"
+      },
+      {
+        "path": "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_REPORT_DETAIL/m:ValuationReportInspectionCertificationType",
+        "before": "InteriorAndExterior",
+        "after": "Exterior"
+      }
+    ],
+    "negativeMutation": {
+      "path": "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_REPORT_DETAIL/m:ValuationReportInspectionCertificationType",
+      "before": "Exterior",
+      "after": "NoPhysicalInspection"
+    }
+  },
+  {
+    "messageId": "UAD1533",
+    "baseline": "data/uad36-test-suite/tests/fixtures/value_cross_field_consistency/derived/UAD1533-baseline.xml",
+    "source": "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 SF1_Appraisal/SF1_Appraisal_v1.4.xml",
+    "sourceSha256": "47509c23bcf28c3abb9c57e00a3f93cf52ed38fec3862d7cda24bffd6bca5be9",
+    "edits": [
+      {
+        "path": "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:ADDRESS/m:StateCode",
+        "before": "VA",
+        "after": "VA"
+      },
+      {
+        "path": "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:PARTIES/m:PARTY[3]/m:ROLES/m:ROLE/m:LICENSES/m:LICENSE/m:LICENSE_DETAIL/m:LicenseIssuingAuthorityStateCode",
+        "before": "VA",
+        "after": "VA"
+      }
+    ],
+    "negativeMutation": {
+      "path": "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:PARTIES/m:PARTY[3]/m:ROLES/m:ROLE/m:LICENSES/m:LICENSE/m:LICENSE_DETAIL/m:LicenseIssuingAuthorityStateCode",
+      "before": "VA",
+      "after": "CA"
+    }
+  },
+  {
+    "messageId": "UAD1574",
+    "baseline": "data/uad36-test-suite/tests/fixtures/value_cross_field_consistency/derived/UAD1574-baseline.xml",
+    "source": "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 SF1_Appraisal/SF1_Appraisal_v1.4.xml",
+    "sourceSha256": "47509c23bcf28c3abb9c57e00a3f93cf52ed38fec3862d7cda24bffd6bca5be9",
+    "edits": [
+      {
+        "path": "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:HOMEOWNERS_ASSOCIATIONS/m:HOMEOWNERS_ASSOCIATION/m:ASSOCIATION_CHARGES/m:ASSOCIATION_CHARGE[1]/m:ASSOCIATION_CHARGE_DETAIL/m:AssociationChargePeriodType",
+        "before": "Monthly",
+        "after": "Monthly"
+      }
+    ],
+    "negativeMutation": {
+      "path": "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:HOMEOWNERS_ASSOCIATIONS/m:HOMEOWNERS_ASSOCIATION/m:ASSOCIATION_CHARGES/m:ASSOCIATION_CHARGE[1]/m:ASSOCIATION_CHARGE_DETAIL/m:AssociationChargePeriodType",
+      "before": "Monthly",
+      "after": "OneTime"
+    }
+  },
+  {
+    "messageId": "UAD1605",
+    "baseline": "data/uad36-test-suite/tests/fixtures/value_cross_field_consistency/derived/UAD1605-baseline.xml",
+    "source": "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 SF1_Appraisal/SF1_Appraisal_v1.4.xml",
+    "sourceSha256": "47509c23bcf28c3abb9c57e00a3f93cf52ed38fec3862d7cda24bffd6bca5be9",
+    "edits": [
+      {
+        "path": "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:PROJECT/m:PROJECT_DETAIL/m:ProjectCompletedIndicator",
+        "before": null,
+        "after": "false"
+      },
+      {
+        "path": "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:PROJECT/m:PROJECT_COMPONENTS/m:PROJECT_COMPONENT/m:ProjectComponentCompletedIndicator",
+        "before": null,
+        "after": "false"
+      }
+    ],
+    "negativeMutation": {
+      "path": "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:PROJECT/m:PROJECT_COMPONENTS/m:PROJECT_COMPONENT/m:ProjectComponentCompletedIndicator",
+      "before": "false",
+      "after": "true"
+    }
+  },
+  {
+    "messageId": "UAD1730",
+    "baseline": "data/uad36-test-suite/tests/fixtures/value_cross_field_consistency/derived/UAD1730-baseline.xml",
+    "source": "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 SF1_Appraisal/SF1_Appraisal_v1.4.xml",
+    "sourceSha256": "47509c23bcf28c3abb9c57e00a3f93cf52ed38fec3862d7cda24bffd6bca5be9",
+    "edits": [
+      {
+        "path": "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:ImprovementType",
+        "before": null,
+        "after": "Outbuilding"
+      },
+      {
+        "path": "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:PROPERTY_UNITS/m:PROPERTY_UNIT/m:PROPERTY_UNIT_DETAIL/m:AccessoryDwellingUnitIndicator",
+        "before": null,
+        "after": "true"
+      }
+    ],
+    "negativeMutation": {
+      "path": "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:PROPERTY_UNITS/m:PROPERTY_UNIT/m:PROPERTY_UNIT_DETAIL/m:AccessoryDwellingUnitIndicator",
+      "before": "true",
+      "after": "false"
+    }
+  }
+]
