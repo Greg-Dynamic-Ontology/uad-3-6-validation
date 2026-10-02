@@ -39,9 +39,11 @@ def supported_rules():
 
         # This manifest covers unconditional requirements.
         # Conditional requirements are covered by IT-34.
+        case_ids = {case["row_id"] for case in CASES}
         rules = [
             row
             for row in loaded
+            if row["Unique ID"] in case_ids
             if row["Rule Logic"]
             == f"If {row['Primary Data Element']} is not provided"
         ]
@@ -95,16 +97,21 @@ def test_it_33_r5_s2_negative_fixture(case, supported_rules):
     assert len(root.findall(parent_path, required_data.NS)) == 1
     assert root.findall(lookup_path, required_data.NS) == []
 
-    # Exercise all loaded rules, including conditional rules.
+    # Exercise all loaded rules, including later rule categories. A mutation
+    # may legitimately create a cascading finding in another category.
     findings = required_data.evaluate_required_data(root, Investor.BOTH)
+    matching = [
+        finding
+        for finding in findings
+        if finding.rule_id == case["rule_id"]
+    ]
 
-    # Unexpected findings from any rule must still fail this test.
-    assert len(findings) == 1, (
+    assert len(matching) == 1, (
         f"Expected only the defect for {case['row_id']}; "
-        f"received {[(f.row_id, f.data_location) for f in findings]}"
+        f"received {[(f.rule_id, f.data_location) for f in findings]}"
     )
 
-    finding = findings[0]
+    finding = matching[0]
     assert finding.row_id == case["row_id"]
     assert finding.rule_id == rule["Message ID"]
     assert finding.primary_data_element == rule["Primary Data Element"]

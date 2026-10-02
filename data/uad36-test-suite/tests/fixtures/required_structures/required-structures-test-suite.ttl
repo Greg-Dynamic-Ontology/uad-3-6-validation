@@ -1273,10 +1273,10 @@ case:UAD1404 a t:TestCase ;
     t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1404> ;
     t:uniqueId "1000.0032" ;
     t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
-    t:requiredStructureXPath "//m:SalesComparisonApproachIndicator" ;
-    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:SCOPE_OF_WORK/m:SCOPE_OF_WORK_DETAIL/m:SalesComparisonApproachIndicator" ;
+    t:requiredStructureXPath "//m:PROPERTY[@ValuationUseType='SalesComparable']" ;
+    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SalesComparable']" ;
     t:xsdValidAfterRemoval true ;
-    t:applicabilityXPath "" .
+    t:applicabilityXPath "//m:SalesComparisonApproachIndicator[.='true']" .
 
 case:UAD1405 a t:TestCase ;
     t:ruleId "UAD1405" ;

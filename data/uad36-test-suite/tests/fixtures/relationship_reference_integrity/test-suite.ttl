@@ -1,0 +1,368 @@
+@prefix case: <urn:uad36:test-case:IT-1R9S1:> .
+@prefix suite: <urn:uad36:test-suite:> .
+@prefix t: <urn:uad36:test-suite:vocab:> .
+
+suite:relationship-reference-integrity a t:TestSuite ;
+    t:category <urn:uad36:work-tracking:scenario:relationship_reference_integrity> ;
+    t:hasCase case:UAD1183,
+        case:UAD1199,
+        case:UAD1200,
+        case:UAD1201,
+        case:UAD1202,
+        case:UAD1209,
+        case:UAD1470,
+        case:UAD1477,
+        case:UAD1614,
+        case:UAD1658,
+        case:UAD1685,
+        case:UAD1686,
+        case:UAD1689,
+        case:UAD1690,
+        case:UAD1691,
+        case:UAD1692,
+        case:UAD1717,
+        case:UAD1718,
+        case:UAD1719,
+        case:UAD1747 ;
+    t:ruleInventoryPath "data/data-constraints.csv" ;
+    t:scenarioId "IT-1R9S1" .
+
+case:UAD1183 a t:TestCase ;
+    t:ruleId "UAD1183" ;
+    t:sourceUniqueIdCell "0700.0131" ;
+    t:primaryDataElement "@xlink:arcrole" ;
+    t:ruleLogic "If there is no instance of RELATIONSHIP with @xlink:arcrole = \"urn:fdc:mismo.org:2009:residential/DATA_SOURCE_IsDataSourceFor_PROPERTY_UNIT_AREA\" that links DATA_SOURCE to each PROPERTY_UNIT_AREA where @ValuationUseType = \"SubjectProperty\" \n\n" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../SERVICE/RELATIONSHIPS/RELATIONSHIP/" ;
+    t:messageText "Provide at least one data source for each living unit associated with the subject property. In the UAD XML, a minimum of one RELATIONSHIP must be included that links DATA_SOURCE to PROPERTY_UNIT_AREA. For assistance with this message, contact the appraisal software vendor." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1183> ;
+    t:baselinePath "examples/xml/SF1_Appraisal_v1.4.xml" ;
+    t:expectedDataLocation "//m:RELATIONSHIP[@xlink:arcrole='urn:fdc:mismo.org:2009:residential/DATA_SOURCE_IsDataSourceFor_PROPERTY_UNIT_AREA' and @xlink:to='PROPERTY_UNIT_AREA_SubjectPropertyArea']" ;
+    t:expectedViolationKind "MissingRequiredRelationship" ;
+    t:mutationMode "remove-relationships" ;
+    t:relationshipXPath "//m:RELATIONSHIP[@xlink:arcrole='urn:fdc:mismo.org:2009:residential/DATA_SOURCE_IsDataSourceFor_PROPERTY_UNIT_AREA' and @xlink:to='PROPERTY_UNIT_AREA_SubjectPropertyArea']" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1199 a t:TestCase ;
+    t:ruleId "UAD1199" ;
+    t:sourceUniqueIdCell "0800.0031" ;
+    t:primaryDataElement "@xlink:arcrole" ;
+    t:ruleLogic "If @ValuationUseType = \"SalesComparable\" and PriorSalesOrTransfersIndicator = \"false\", and there is no instance of RELATIONSHIP with @xlink:arcrole = \"urn:fdc:mismo.org:2009:residential/DATA_SOURCE_IsDataSourceFor_PriorSalesOrTransfersIndicator\" that links DATA_SOURCE to PriorSalesOrTransfersIndicator" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Sales Comparable #n" ;
+    t:xpath "../SERVICE/RELATIONSHIPS/RELATIONSHIP/" ;
+    t:messageText "Provide at least one data source when the sales comparable does not have any prior sales or transfer history. In the UAD XML, a minimum of one RELATIONSHIP must be included that links DATA_SOURCE to PriorSalesOrTransfersIndicator. For assistance with this message, contact the appraisal software vendor." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1199> ;
+    t:baselinePath "examples/xml/SF1_Appraisal_v1.4.xml" ;
+    t:expectedDataLocation "//m:RELATIONSHIP[@xlink:arcrole='urn:fdc:mismo.org:2009:residential/DATA_SOURCE_IsDataSourceFor_PriorSalesOrTransfersIndicator' and @xlink:to='PriorSalesOrTransfersIndicator_SalesComp2NoPriorSales']" ;
+    t:expectedViolationKind "MissingRequiredRelationship" ;
+    t:mutationMode "remove-relationships" ;
+    t:relationshipXPath "//m:RELATIONSHIP[@xlink:arcrole='urn:fdc:mismo.org:2009:residential/DATA_SOURCE_IsDataSourceFor_PriorSalesOrTransfersIndicator' and @xlink:to='PriorSalesOrTransfersIndicator_SalesComp2NoPriorSales']" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1200 a t:TestCase ;
+    t:ruleId "UAD1200" ;
+    t:sourceUniqueIdCell "0800.0034" ;
+    t:primaryDataElement "@xlink:arcrole" ;
+    t:ruleLogic "If @ValuationUseType = \"SubjectProperty\" and PriorSalesOrTransfersIndicator = \"false\", and there is no instance of RELATIONSHIP with @xlink:arcrole = \"urn:fdc:mismo.org:2009:residential/DATA_SOURCE_IsDataSourceFor_PriorSalesOrTransfersIndicator\" that links DATA_SOURCE to PriorSalesOrTransfersIndicator" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../SERVICE/RELATIONSHIPS/RELATIONSHIP/" ;
+    t:messageText "Provide at least one data source when the subject property does not have any prior sales or transfer history. In the UAD XML, a minimum of one RELATIONSHIP must be included that links DATA_SOURCE to PriorSalesOrTransfersIndicator. For assistance with this message, contact the appraisal software vendor." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1200> ;
+    t:baselinePath "examples/xml/SF1_Appraisal_v1.4.xml" ;
+    t:expectedDataLocation "//m:RELATIONSHIP[@xlink:arcrole='urn:fdc:mismo.org:2009:residential/DATA_SOURCE_IsDataSourceFor_PriorSalesOrTransfersIndicator' and @xlink:to='PriorSalesOrTransfersIndicator_SubjectPropertyNoPriorSales']" ;
+    t:expectedViolationKind "MissingRequiredRelationship" ;
+    t:mutationMode "remove-relationships" ;
+    t:relationshipXPath "//m:RELATIONSHIP[@xlink:arcrole='urn:fdc:mismo.org:2009:residential/DATA_SOURCE_IsDataSourceFor_PriorSalesOrTransfersIndicator' and @xlink:to='PriorSalesOrTransfersIndicator_SubjectPropertyNoPriorSales']" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1201 a t:TestCase ;
+    t:ruleId "UAD1201" ;
+    t:sourceUniqueIdCell "0800.0039" ;
+    t:primaryDataElement "@xlink:arcrole" ;
+    t:ruleLogic "If @ValuationUseType = \"SalesComparable\" and PriorSalesOrTransfersIndicator = \"true\", and there is no instance of RELATIONSHIP with @xlink:arcrole = \"urn:fdc:mismo.org:2009:residential/DATA_SOURCE_IsDataSourceFor_SALES_HISTORY\" that links DATA_SOURCE to SALES_HISTORY" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Sales Comparable #n" ;
+    t:xpath "../SERVICE/RELATIONSHIPS/RELATIONSHIP/" ;
+    t:messageText "Provide at least one data source when the sales comparable has a prior sale or transfer history. In the UAD XML, a minimum of one RELATIONSHIP must be included that links DATA_SOURCE to SALES_HISTORY for each prior sale or transfer. For assistance with this message, contact the appraisal software vendor." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1201> ;
+    t:baselinePath "examples/xml/SF1_Appraisal_v1.4.xml" ;
+    t:expectedDataLocation "//m:RELATIONSHIP[@xlink:arcrole='urn:fdc:mismo.org:2009:residential/DATA_SOURCE_IsDataSourceFor_SALES_HISTORY' and @xlink:to='SALES_HISTORY_SalesComp1_PriorSales']" ;
+    t:expectedViolationKind "MissingRequiredRelationship" ;
+    t:mutationMode "remove-relationships" ;
+    t:relationshipXPath "//m:RELATIONSHIP[@xlink:arcrole='urn:fdc:mismo.org:2009:residential/DATA_SOURCE_IsDataSourceFor_SALES_HISTORY' and @xlink:to='SALES_HISTORY_SalesComp1_PriorSales']" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1202 a t:TestCase ;
+    t:ruleId "UAD1202" ;
+    t:sourceUniqueIdCell "0800.0042" ;
+    t:primaryDataElement "@xlink:arcrole" ;
+    t:ruleLogic "If @ValuationUseType = \"SubjectProperty\" and PriorSalesOrTransfersIndicator = \"true\", and there is no instance of RELATIONSHIP with @xlink:arcrole = \"urn:fdc:mismo.org:2009:residential/DATA_SOURCE_IsDataSourceFor_SALES_HISTORY\" that links DATA_SOURCE to SALES_HISTORY" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../SERVICE/RELATIONSHIPS/RELATIONSHIP/" ;
+    t:messageText "Provide at least one data source when the subject property has a prior sale or transfer history. In the UAD XML, a minimum of one RELATIONSHIP must be included that links DATA_SOURCE to SALES_HISTORY for each prior sale or transfer. For assistance with this message, contact the appraisal software vendor." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1202> ;
+    t:baselinePath "examples/xml/Condo1_Appraisal_v1.4.xml" ;
+    t:expectedDataLocation "//m:RELATIONSHIP[@xlink:arcrole='urn:fdc:mismo.org:2009:residential/DATA_SOURCE_IsDataSourceFor_SALES_HISTORY' and @xlink:to='SALES_HISTORY_SUBJECT']" ;
+    t:expectedViolationKind "MissingRequiredRelationship" ;
+    t:mutationMode "remove-relationships" ;
+    t:relationshipXPath "//m:RELATIONSHIP[@xlink:arcrole='urn:fdc:mismo.org:2009:residential/DATA_SOURCE_IsDataSourceFor_SALES_HISTORY' and @xlink:to='SALES_HISTORY_SUBJECT']" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1209 a t:TestCase ;
+    t:ruleId "UAD1209" ;
+    t:sourceUniqueIdCell "0900.0033" ;
+    t:primaryDataElement "@xlink:arcrole" ;
+    t:ruleLogic "If @ValuationUseType = \"SubjectProperty\" and ListedWithinPreviousYearIndicator = \"false\", and there is no instance of RELATIONSHIP with @xlink:arcrole = \"urn:fdc:mismo.org:2009:residential/DATA_SOURCE_IsDataSourceFor_LISTING_INFORMATION_SUMMARY\" that links DATA_SOURCE to LISTING_INFORMATION_SUMMARY" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../SERVICE/RELATIONSHIPS/RELATIONSHIP/" ;
+    t:messageText "Provide at least one data source when the subject property is not listed within the previous year. In the UAD XML, a minimum of one RELATIONSHIP must be included that links DATA_SOURCE to LISTING_INFORMATION_SUMMARY. For assistance with this message, contact the appraisal software vendor." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1209> ;
+    t:baselinePath "examples/xml/Condo1_Appraisal_v1.4.xml" ;
+    t:expectedDataLocation "//m:RELATIONSHIP[@xlink:arcrole='urn:fdc:mismo.org:2009:residential/DATA_SOURCE_IsDataSourceFor_LISTING_INFORMATION_SUMMARY' and @xlink:to='LISTING_INFORMATION_SUMMARY_SUBJECT']" ;
+    t:expectedViolationKind "MissingRequiredRelationship" ;
+    t:mutationMode "remove-relationships" ;
+    t:relationshipXPath "//m:RELATIONSHIP[@xlink:arcrole='urn:fdc:mismo.org:2009:residential/DATA_SOURCE_IsDataSourceFor_LISTING_INFORMATION_SUMMARY' and @xlink:to='LISTING_INFORMATION_SUMMARY_SUBJECT']" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1470 a t:TestCase ;
+    t:ruleId "UAD1470" ;
+    t:sourceUniqueIdCell "1800.0360" ;
+    t:primaryDataElement "@xlink:arcrole" ;
+    t:ruleLogic "If (@ValuationUseType = \"SubjectProperty\" and (LivingUnitExcludingADUCount > 1 or AccessoryDwellingUnitTotalCount > 0)) and\n(@ValuationUseType = \"SalesComparable\" and (LivingUnitExcludingADUCount > 1 or AccessoryDwellingUnitTotalCount > 0)), and there is not an instance of RELATIONSHIP with @xlink:arcrole = urn:fdc:mismo.org:2009:residential/PROPERTY_UNIT_IsComparableFor_PROPERTY_UNIT" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Sales Comparable #n; Subject" ;
+    t:xpath "../SERVICE/RELATIONSHIPS/RELATIONSHIP/" ;
+    t:messageText "When the sales comparable and the subject property have more than one living unit, each comparable unit must be associated to a subject property unit. In the UAD XML, a RELATIONSHIP container must be included that links the instance of PROPERTY_UNIT (@ValuationUseType = 'SalesComparable') to PROPERTY_UNIT (@ValuationUseType = 'SubjectProperty'). For assistance with this message, contact the appraisal software vendor." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1470> ;
+    t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
+    t:expectedDataLocation "//m:RELATIONSHIP[@xlink:arcrole='urn:fdc:mismo.org:2009:residential/PROPERTY_UNIT_IsComparableFor_PROPERTY_UNIT' and @xlink:from='PROPERTY_UNIT_COMP1_BLDG1' and @xlink:to='PROPERTY_UNIT_BLDG1']" ;
+    t:expectedViolationKind "MissingRequiredRelationship" ;
+    t:mutationMode "remove-relationships" ;
+    t:relationshipXPath "//m:RELATIONSHIP[@xlink:arcrole='urn:fdc:mismo.org:2009:residential/PROPERTY_UNIT_IsComparableFor_PROPERTY_UNIT' and @xlink:from='PROPERTY_UNIT_COMP1_BLDG1' and @xlink:to='PROPERTY_UNIT_BLDG1']" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1477 a t:TestCase ;
+    t:ruleId "UAD1477" ;
+    t:sourceUniqueIdCell "1800.0374" ;
+    t:primaryDataElement "@xlink:arcrole" ;
+    t:ruleLogic "If SalesComparisonApproachIndicator = \"true\" and there is no instance of RELATIONSHIP with @xlink:arcrole = \"urn:fdc:mismo.org:2009:residential/DATA_SOURCE_IsDataSourceFor_PROPERTY\" that links DATA_SOURCE to PROPERTY where @ValuationUseType = \"SalesComparable\"" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Sales Comparable #n" ;
+    t:xpath "../SERVICE/RELATIONSHIPS/RELATIONSHIP/" ;
+    t:messageText "Provide at least one data source for each sales comparable. In the UAD XML, a minimum of one RELATIONSHIP container must be included that links DATA_SOURCE to PROPERTY (@ValuationUseType = 'SalesComparable'). For assistance with this message, contact the appraisal software vendor." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1477> ;
+    t:baselinePath "examples/xml/SF1_Appraisal_v1.4.xml" ;
+    t:expectedDataLocation "//m:RELATIONSHIP[@xlink:arcrole='urn:fdc:mismo.org:2009:residential/DATA_SOURCE_IsDataSourceFor_PROPERTY' and @xlink:to='PROPERTY_SALESCOMP1']" ;
+    t:expectedViolationKind "MissingRequiredRelationship" ;
+    t:mutationMode "remove-relationships" ;
+    t:relationshipXPath "//m:RELATIONSHIP[@xlink:arcrole='urn:fdc:mismo.org:2009:residential/DATA_SOURCE_IsDataSourceFor_PROPERTY' and @xlink:to='PROPERTY_SALESCOMP1']" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1614 a t:TestCase ;
+    t:ruleId "UAD1614" ;
+    t:sourceUniqueIdCell "2500.0165" ;
+    t:primaryDataElement "@xlink:arcrole" ;
+    t:ruleLogic "If @ValuationUseType = \"SubjectProperty\" and (PropertyInProjectIndicator = \"true\" or PUDIndicator = \"true\"), and there is no instance of RELATIONSHIP with @xlink:arcrole = \"urn:fdc:mismo.org:2009:residential/DATA_SOURCE_IsDataSourceFor_PROJECT\" that links DATA_SOURCE to PROJECT" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../SERVICE/RELATIONSHIPS/RELATIONSHIP/" ;
+    t:messageText "Provide at least one data source when the subject property is located in a project or PUD. In the UAD XML, a minimum of one RELATIONSHIP container must be included that links DATA_SOURCE to PROJECT. For assistance with this message, contact the appraisal software vendor." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1614> ;
+    t:baselinePath "examples/xml/SF1_Appraisal_v1.4.xml" ;
+    t:expectedDataLocation "//m:RELATIONSHIP[@xlink:arcrole='urn:fdc:mismo.org:2009:residential/DATA_SOURCE_IsDataSourceFor_PROJECT' and @xlink:to='PROJECT_1']" ;
+    t:expectedViolationKind "MissingRequiredRelationship" ;
+    t:mutationMode "remove-relationships" ;
+    t:relationshipXPath "//m:RELATIONSHIP[@xlink:arcrole='urn:fdc:mismo.org:2009:residential/DATA_SOURCE_IsDataSourceFor_PROJECT' and @xlink:to='PROJECT_1']" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1658 a t:TestCase ;
+    t:ruleId "UAD1658" ;
+    t:sourceUniqueIdCell "3000.0053" ;
+    t:primaryDataElement "@xlink:arcrole" ;
+    t:ruleLogic "If there is no instance of RELATIONSHIP with @xlink:arcrole = \"urn:fdc:mismo.org:2009:residential/DATA_SOURCE_IsDataSourceFor_MARKET_TREND\" linking DATA_SOURCE to MARKET_TREND where @ValuationUseType = \"SubjectProperty\"" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../SERVICE/RELATIONSHIPS/RELATIONSHIP/" ;
+    t:messageText "Provide at least one data source that the Appraiser used to determine price trends for the subject property. In the UAD XML, a minimum of one RELATIONSHIP must be included linking DATA_SOURCE to MARKET_TREND. For assistance with this message, contact the appraisal software vendor." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1658> ;
+    t:baselinePath "examples/xml/SF1_Appraisal_v1.4.xml" ;
+    t:expectedDataLocation "//m:RELATIONSHIP[@xlink:arcrole='urn:fdc:mismo.org:2009:residential/DATA_SOURCE_IsDataSourceFor_MARKET_TREND' and @xlink:to='MARKET_TREND_1']" ;
+    t:expectedViolationKind "MissingRequiredRelationship" ;
+    t:mutationMode "remove-relationships" ;
+    t:relationshipXPath "//m:RELATIONSHIP[@xlink:arcrole='urn:fdc:mismo.org:2009:residential/DATA_SOURCE_IsDataSourceFor_MARKET_TREND' and @xlink:to='MARKET_TREND_1']" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1685 a t:TestCase ;
+    t:ruleId "UAD1685" ;
+    t:sourceUniqueIdCell "3900.0033" ;
+    t:primaryDataElement "@xlink:arcrole" ;
+    t:ruleLogic "If @ValuationUseType = \"SubjectProperty\" and SubjectPropertyAmenitiesDefectsExistIndicator = \"true\", and there is no instance of RELATIONSHIP with @xlink:arcrole = \"urn:fdc:mismo.org:2009:residential/DEFECT_ContainsDefectOf_AMENITY\" linking DEFECT to the AMENITY" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../SERVICE/RELATIONSHIPS/RELATIONSHIP/" ;
+    t:messageText "Provide at least one defect when the Appraiser identified a defect, damage or deficiency with one or more amenities. In the UAD XML, a minimum of one RELATIONSHIP must be included linking each DEFECT to the AMENITY that has the defect. For assistance with this message, contact the appraisal software vendor." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1685> ;
+    t:baselinePath "examples/xml/Condo1_Appraisal_v1.4.xml" ;
+    t:expectedDataLocation "//m:RELATIONSHIP[@xlink:arcrole='urn:fdc:mismo.org:2009:residential/DEFECT_ContainsDefectOf_AMENITY' and @xlink:to='AMENITY_BALCONY']" ;
+    t:expectedViolationKind "MissingRequiredRelationship" ;
+    t:mutationMode "remove-relationships" ;
+    t:relationshipXPath "//m:RELATIONSHIP[@xlink:arcrole='urn:fdc:mismo.org:2009:residential/DEFECT_ContainsDefectOf_AMENITY' and @xlink:to='AMENITY_BALCONY']" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1686 a t:TestCase ;
+    t:ruleId "UAD1686" ;
+    t:sourceUniqueIdCell "3900.0091" ;
+    t:primaryDataElement "@xlink:arcrole" ;
+    t:ruleLogic "If @ValuationUseType = \"SubjectProperty\" and VehicleStorageDefectsExistIndicator = \"true\", and there is no instance of RELATIONSHIP with @xlink:arcrole = \"urn:fdc:mismo.org:2009:residential/DEFECT_ContainsDefectOf_CAR_STORAGE\" linking DEFECT to CAR_STORAGE" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../SERVICE/RELATIONSHIPS/RELATIONSHIP/" ;
+    t:messageText "Provide at least one defect when the Appraiser identified a defect, damage or deficiency with one or more vehicle storages. In the UAD XML, a minimum of one RELATIONSHIP must be included linking each DEFECT to the CAR_STORAGE that has the defect. For assistance with this message, contact the appraisal software vendor." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1686> ;
+    t:baselinePath "data/uad36-test-suite/tests/fixtures/relationship_reference_integrity/derived/UAD1686.xml" ;
+    t:expectedDataLocation "//m:RELATIONSHIP[@xlink:arcrole='urn:fdc:mismo.org:2009:residential/DEFECT_ContainsDefectOf_CAR_STORAGE' and @xlink:to='CAR_STORAGE_Subject']" ;
+    t:expectedViolationKind "MissingRequiredRelationship" ;
+    t:mutationMode "remove-relationships" ;
+    t:relationshipXPath "//m:RELATIONSHIP[@xlink:arcrole='urn:fdc:mismo.org:2009:residential/DEFECT_ContainsDefectOf_CAR_STORAGE' and @xlink:to='CAR_STORAGE_Subject']" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1689 a t:TestCase ;
+    t:ruleId "UAD1689" ;
+    t:sourceUniqueIdCell "3900.0145" ;
+    t:primaryDataElement "@xlink:arcrole" ;
+    t:ruleLogic "If @ValuationUseType = \"SubjectProperty\" and DwellingExteriorDefectsExistIndicator = \"true\", and there is no instance of RELATIONSHIP with @xlink:arcrole = \"urn:fdc:mismo.org:2009:residential/DEFECT_ContainsDefectOf_IMPROVEMENT\" that links DEFECT to the given instance of IMPROVEMENT with ImprovementType = 'Dwelling'\n" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../SERVICE/RELATIONSHIPS/RELATIONSHIP/" ;
+    t:messageText "Provide at least one defect when the Appraiser identified a defect, damage or deficiency with the dwelling exterior. In the UAD XML, a minimum of one RELATIONSHIP must be included linking DEFECT to IMPROVEMENT (ImprovementType = 'Dwelling'). For assistance with this message, contact the appraisal software vendor." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1689> ;
+    t:baselinePath "examples/xml/SF1_Appraisal_v1.4.xml" ;
+    t:expectedDataLocation "//m:RELATIONSHIP[@xlink:arcrole='urn:fdc:mismo.org:2009:residential/DEFECT_ContainsDefectOf_IMPROVEMENT' and @xlink:to='IMPROVEMENT_SubjectDwelling']" ;
+    t:expectedViolationKind "MissingRequiredRelationship" ;
+    t:mutationMode "remove-relationships" ;
+    t:relationshipXPath "//m:RELATIONSHIP[@xlink:arcrole='urn:fdc:mismo.org:2009:residential/DEFECT_ContainsDefectOf_IMPROVEMENT' and @xlink:to='IMPROVEMENT_SubjectDwelling']" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1690 a t:TestCase ;
+    t:ruleId "UAD1690" ;
+    t:sourceUniqueIdCell "3900.0148" ;
+    t:primaryDataElement "@xlink:arcrole" ;
+    t:ruleLogic "If @ValuationUseType = \"SubjectProperty\" and SiteDefectsExistIndicator = \"true\", and there is no instance of RELATIONSHIP with @xlink:arcrole = \"urn:fdc:mismo.org:2009:residential/DEFECT_ContainsDefectOf_SITE\" linking DEFECT to SITE" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../SERVICE/RELATIONSHIPS/RELATIONSHIP/" ;
+    t:messageText "Provide at least one defect when the Appraiser identified a defect, damage or deficiency with the site. In the UAD XML, a minimum of one RELATIONSHIP must be included linking DEFECT to SITE. For assistance with this message, contact the appraisal software vendor." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1690> ;
+    t:baselinePath "data/uad36-test-suite/tests/fixtures/relationship_reference_integrity/derived/UAD1690.xml" ;
+    t:expectedDataLocation "//m:RELATIONSHIP[@xlink:arcrole='urn:fdc:mismo.org:2009:residential/DEFECT_ContainsDefectOf_SITE' and @xlink:to='SITE_Subject']" ;
+    t:expectedViolationKind "MissingRequiredRelationship" ;
+    t:mutationMode "remove-relationships" ;
+    t:relationshipXPath "//m:RELATIONSHIP[@xlink:arcrole='urn:fdc:mismo.org:2009:residential/DEFECT_ContainsDefectOf_SITE' and @xlink:to='SITE_Subject']" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1691 a t:TestCase ;
+    t:ruleId "UAD1691" ;
+    t:sourceUniqueIdCell "3900.0154" ;
+    t:primaryDataElement "@xlink:arcrole" ;
+    t:ruleLogic "If @ValuationUseType = \"SubjectProperty\" and UnitInteriorDefectsExistIndicator = \"true\", and there is no instance of RELATIONSHIP with @xlink:arcrole = \"urn:fdc:mismo.org:2009:residential/DEFECT_ContainsDefectOf_PROPERTY_UNIT\" linking DEFECT to the given instance of PROPERTY_UNIT" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../SERVICE/RELATIONSHIPS/RELATIONSHIP/" ;
+    t:messageText "Provide at least one defect when the Appraiser identified a defect, damage or deficiency in the interior of the living unit or the ADU. In the UAD XML, a minimum of one RELATIONSHIP must be included linking DEFECT to the PROPERTY_UNIT that has the defect. For assistance with this message, contact the appraisal software vendor." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1691> ;
+    t:baselinePath "examples/xml/SF1_Appraisal_v1.4.xml" ;
+    t:expectedDataLocation "//m:RELATIONSHIP[@xlink:arcrole='urn:fdc:mismo.org:2009:residential/DEFECT_ContainsDefectOf_PROPERTY_UNIT' and @xlink:to='PROPERTY_UNIT_SubjectUnit1']" ;
+    t:expectedViolationKind "MissingRequiredRelationship" ;
+    t:mutationMode "remove-relationships" ;
+    t:relationshipXPath "//m:RELATIONSHIP[@xlink:arcrole='urn:fdc:mismo.org:2009:residential/DEFECT_ContainsDefectOf_PROPERTY_UNIT' and @xlink:to='PROPERTY_UNIT_SubjectUnit1']" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1692 a t:TestCase ;
+    t:ruleId "UAD1692" ;
+    t:sourceUniqueIdCell "3900.0192" ;
+    t:primaryDataElement "@xlink:arcrole" ;
+    t:ruleLogic "If @ValuationUseType = \"SubjectProperty\" and OutbuildingDefectsExistIndicator = \"true\", and there is no instance of RELATIONSHIP with @xlink:arcrole = \"urn:fdc:mismo.org:2009:residential/DEFECT_ContainsDefectOf_IMPROVEMENT\" linking DEFECT to IMPROVEMENT with ImprovementType = 'Outbuilding'" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "Subject" ;
+    t:xpath "../SERVICE/RELATIONSHIPS/RELATIONSHIP/" ;
+    t:messageText "Provide at least one defect when the Appraiser identified a defect, damage or deficiency in the outbuilding. In the UAD XML, a minimum of one RELATIONSHIP must be included linking DEFECT to IMPROVEMENT (ImprovementType = 'Outbuilding'). For assistance with this message, contact the appraisal software vendor." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1692> ;
+    t:baselinePath "examples/xml/MH1_Appraisal_v1.4.xml" ;
+    t:expectedDataLocation "//m:RELATIONSHIP[@xlink:arcrole='urn:fdc:mismo.org:2009:residential/DEFECT_ContainsDefectOf_IMPROVEMENT' and @xlink:to='IMPROVEMENT_SUBJECTPROPERTY_BARN']" ;
+    t:expectedViolationKind "MissingRequiredRelationship" ;
+    t:mutationMode "remove-relationships" ;
+    t:relationshipXPath "//m:RELATIONSHIP[@xlink:arcrole='urn:fdc:mismo.org:2009:residential/DEFECT_ContainsDefectOf_IMPROVEMENT' and @xlink:to='IMPROVEMENT_SUBJECTPROPERTY_BARN']" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1717 a t:TestCase ;
+    t:ruleId "UAD1717" ;
+    t:sourceUniqueIdCell "" ;
+    t:primaryDataElement "RELATIONSHIP" ;
+    t:ruleLogic "If the 'xlink:arcrole', 'xlink:from', and 'xlink:to' labels are not unique across all instances of RELATIONSHIP" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "N/A" ;
+    t:xpath "../SERVICE/RELATIONSHIPS/RELATIONSHIP/" ;
+    t:messageText "One or more duplicate RELATIONSHIP containers exist. For assistance with this message, contact the appraisal software vendor." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1717> ;
+    t:baselinePath "examples/xml/SF1_Appraisal_v1.4.xml" ;
+    t:expectedDataLocation "(//m:RELATIONSHIP)[1]" ;
+    t:expectedViolationKind "DuplicateRelationship" ;
+    t:mutationMode "duplicate-relationship" ;
+    t:relationshipXPath "(//m:RELATIONSHIP)[1]" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1718 a t:TestCase ;
+    t:ruleId "UAD1718" ;
+    t:sourceUniqueIdCell "" ;
+    t:primaryDataElement "xlink:from" ;
+    t:ruleLogic "If the associated container does not have the xlink:from label specified in a given instance of RELATIONSHIP" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "N/A" ;
+    t:xpath "../SERVICE/RELATIONSHIPS/RELATIONSHIP/" ;
+    t:messageText "The 'from' label included in a RELATIONSHIP container is missing from the associated container. For assistance with this message, contact the appraisal software vendor." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1718> ;
+    t:baselinePath "examples/xml/SF1_Appraisal_v1.4.xml" ;
+    t:expectedDataLocation "(//m:RELATIONSHIP)[1]" ;
+    t:expectedViolationKind "UnresolvedRelationshipSource" ;
+    t:mutationMode "replace-from" ;
+    t:relationshipXPath "(//m:RELATIONSHIP)[1]" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1719 a t:TestCase ;
+    t:ruleId "UAD1719" ;
+    t:sourceUniqueIdCell "" ;
+    t:primaryDataElement "xlink:to" ;
+    t:ruleLogic "If the associated container or data element does not have the xlink:to label specified in a given instance of RELATIONSHIP" ;
+    t:severity "Fatal" ;
+    t:propertyAffected "N/A" ;
+    t:xpath "../SERVICE/RELATIONSHIPS/RELATIONSHIP/" ;
+    t:messageText "The 'to' label included in a RELATIONSHIP container is missing from the associated container or data element. For assistance with this message, contact the appraisal software vendor." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1719> ;
+    t:baselinePath "examples/xml/SF1_Appraisal_v1.4.xml" ;
+    t:expectedDataLocation "(//m:RELATIONSHIP)[1]" ;
+    t:expectedViolationKind "UnresolvedRelationshipTarget" ;
+    t:mutationMode "replace-to" ;
+    t:relationshipXPath "(//m:RELATIONSHIP)[1]" ;
+    t:xsdValidAfterMutation true .
+
+case:UAD1747 a t:TestCase ;
+    t:ruleId "UAD1747" ;
+    t:sourceUniqueIdCell "2400.0492; 1400.0348" ;
+    t:primaryDataElement "@xlink:arcrole" ;
+    t:ruleLogic "If PartyRoleType = \"Appraiser\" or \"AppraiserSupervisor\" and there is no instance of RELATIONSHIP provided for each role that links INSPECTION to the associated ROLE." ;
+    t:severity "Fatal" ;
+    t:propertyAffected "N/A" ;
+    t:xpath "../SERVICE/RELATIONSHIPS/RELATIONSHIP/" ;
+    t:messageText "The exterior inspection method, interior inspection method, and inspection date must be associated with the party that performed the inspection. In the UAD XML, one instance of RELATIONSHIP must be included for each Appraiser and/or Supervisory Appraiser that links INSPECTION to ROLE. For assistance with this message, contact the appraisal software vendor." ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1747> ;
+    t:baselinePath "examples/xml/SF1_Appraisal_v1.4.xml" ;
+    t:expectedDataLocation "//m:RELATIONSHIP[@xlink:arcrole='urn:fdc:mismo.org:2009:residential/INSPECTION_CompletedBy_ROLE' and @xlink:from='INSPECTION_Appraiser' and @xlink:to='ROLE_Appraiser']" ;
+    t:expectedViolationKind "MissingRequiredRelationship" ;
+    t:mutationMode "remove-relationships" ;
+    t:relationshipXPath "//m:RELATIONSHIP[@xlink:arcrole='urn:fdc:mismo.org:2009:residential/INSPECTION_CompletedBy_ROLE' and @xlink:from='INSPECTION_Appraiser' and @xlink:to='ROLE_Appraiser']" ;
+    t:xsdValidAfterMutation true .

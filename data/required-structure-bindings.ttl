@@ -545,10 +545,10 @@
     b:sourceFingerprint "4ef4a5db6b787ea3256f80c682bba9d8ad09c93f8b27afad359712d6f7391e1c" .
 
 <urn:uad36:required-structure-rule:UAD1404> a b:Binding ;
-    b:applicabilityXPath "" ;
+    b:applicabilityXPath "//m:SalesComparisonApproachIndicator[.='true']" ;
     b:element "SalesComparisonApproachIndicator" ;
-    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:SCOPE_OF_WORK/m:SCOPE_OF_WORK_DETAIL/m:SalesComparisonApproachIndicator" ;
-    b:requiredStructureXPath "//m:SalesComparisonApproachIndicator" ;
+    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SalesComparable']" ;
+    b:requiredStructureXPath "//m:PROPERTY[@ValuationUseType='SalesComparable']" ;
     b:ruleId "UAD1404" ;
     b:sourceFingerprint "1560e1bcd4b5a0e68662c6f4b52b76c5dc8a837fc220d4bece7f318feffcf299" .
 

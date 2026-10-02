@@ -17,7 +17,7 @@ LOGICAL_SCHEMA_FILE = (
     PROJECT_ROOT
     / "artifacts"
     / "reference"
-    / "historical-logical-schema.ttl"
+    / "logical-schema.ttl"
 )
 
 CONSTRAINT_VOCAB = Namespace(

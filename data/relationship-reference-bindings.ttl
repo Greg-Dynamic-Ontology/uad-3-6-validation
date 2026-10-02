@@ -1,0 +1,261 @@
+@prefix b: <urn:uad36:relationship-reference-binding:> .
+
+<urn:uad36:relationship-reference-rule:UAD1183> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:arcrole "urn:fdc:mismo.org:2009:residential/DATA_SOURCE_IsDataSourceFor_PROPERTY_UNIT_AREA" ;
+    b:element "@xlink:arcrole" ;
+    b:evaluationMode "required-link-per-target" ;
+    b:expectedDataLocation "//m:RELATIONSHIP[@xlink:arcrole='urn:fdc:mismo.org:2009:residential/DATA_SOURCE_IsDataSourceFor_PROPERTY_UNIT_AREA' and @xlink:to='PROPERTY_UNIT_AREA_SubjectPropertyArea']" ;
+    b:otherEndpointElement "DATA_SOURCE" ;
+    b:ruleId "UAD1183" ;
+    b:sourceFingerprint "e0c08a160e4c312734282fd0276723937adcfb2fc1f01be91830a650027e63f3" ;
+    b:targetAxis "to" ;
+    b:targetXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:PROPERTY_UNIT_AREA[@xlink:label]" ;
+    b:violationKind "MissingRequiredRelationship" .
+
+<urn:uad36:relationship-reference-rule:UAD1199> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:arcrole "urn:fdc:mismo.org:2009:residential/DATA_SOURCE_IsDataSourceFor_PriorSalesOrTransfersIndicator" ;
+    b:element "@xlink:arcrole" ;
+    b:evaluationMode "required-link-per-target" ;
+    b:expectedDataLocation "//m:RELATIONSHIP[@xlink:arcrole='urn:fdc:mismo.org:2009:residential/DATA_SOURCE_IsDataSourceFor_PriorSalesOrTransfersIndicator' and @xlink:to='PriorSalesOrTransfersIndicator_SalesComp2NoPriorSales']" ;
+    b:otherEndpointElement "DATA_SOURCE" ;
+    b:ruleId "UAD1199" ;
+    b:sourceFingerprint "d792c945265a46ec70794324fe0283fcaad545ae41b2a5d6928dad1eee6d646e" ;
+    b:targetAxis "to" ;
+    b:targetXPath "//m:PROPERTY[@ValuationUseType='SalesComparable']//m:PriorSalesOrTransfersIndicator[.='false'][@xlink:label]" ;
+    b:violationKind "MissingRequiredRelationship" .
+
+<urn:uad36:relationship-reference-rule:UAD1200> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:arcrole "urn:fdc:mismo.org:2009:residential/DATA_SOURCE_IsDataSourceFor_PriorSalesOrTransfersIndicator" ;
+    b:element "@xlink:arcrole" ;
+    b:evaluationMode "required-link-per-target" ;
+    b:expectedDataLocation "//m:RELATIONSHIP[@xlink:arcrole='urn:fdc:mismo.org:2009:residential/DATA_SOURCE_IsDataSourceFor_PriorSalesOrTransfersIndicator' and @xlink:to='PriorSalesOrTransfersIndicator_SubjectPropertyNoPriorSales']" ;
+    b:otherEndpointElement "DATA_SOURCE" ;
+    b:ruleId "UAD1200" ;
+    b:sourceFingerprint "394c0ee7dfc7ca83380074ec92ff943632efdd222ef7987f70bdf398e26d8233" ;
+    b:targetAxis "to" ;
+    b:targetXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:PriorSalesOrTransfersIndicator[.='false'][@xlink:label]" ;
+    b:violationKind "MissingRequiredRelationship" .
+
+<urn:uad36:relationship-reference-rule:UAD1201> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:arcrole "urn:fdc:mismo.org:2009:residential/DATA_SOURCE_IsDataSourceFor_SALES_HISTORY" ;
+    b:element "@xlink:arcrole" ;
+    b:evaluationMode "required-link-per-target" ;
+    b:expectedDataLocation "//m:RELATIONSHIP[@xlink:arcrole='urn:fdc:mismo.org:2009:residential/DATA_SOURCE_IsDataSourceFor_SALES_HISTORY' and @xlink:to='SALES_HISTORY_SalesComp1_PriorSales']" ;
+    b:otherEndpointElement "DATA_SOURCE" ;
+    b:ruleId "UAD1201" ;
+    b:sourceFingerprint "01c840ddfa65294ba14062f9e514459ea2b8403c30d02bbdb49c0eb0695ca01c" ;
+    b:targetAxis "to" ;
+    b:targetXPath "//m:PROPERTY[@ValuationUseType='SalesComparable'][.//m:PriorSalesOrTransfersIndicator='true']//m:SALES_HISTORY[@xlink:label]" ;
+    b:violationKind "MissingRequiredRelationship" .
+
+<urn:uad36:relationship-reference-rule:UAD1202> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:arcrole "urn:fdc:mismo.org:2009:residential/DATA_SOURCE_IsDataSourceFor_SALES_HISTORY" ;
+    b:element "@xlink:arcrole" ;
+    b:evaluationMode "required-link-per-target" ;
+    b:expectedDataLocation "//m:RELATIONSHIP[@xlink:arcrole='urn:fdc:mismo.org:2009:residential/DATA_SOURCE_IsDataSourceFor_SALES_HISTORY' and @xlink:to='SALES_HISTORY_SUBJECT']" ;
+    b:otherEndpointElement "DATA_SOURCE" ;
+    b:ruleId "UAD1202" ;
+    b:sourceFingerprint "a8d946694fcbf646bb0ba0e2981c615bbf56794d9909d0093f0c7744b10320e7" ;
+    b:targetAxis "to" ;
+    b:targetXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty'][.//m:PriorSalesOrTransfersIndicator='true']//m:SALES_HISTORY[@xlink:label]" ;
+    b:violationKind "MissingRequiredRelationship" .
+
+<urn:uad36:relationship-reference-rule:UAD1209> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:arcrole "urn:fdc:mismo.org:2009:residential/DATA_SOURCE_IsDataSourceFor_LISTING_INFORMATION_SUMMARY" ;
+    b:element "@xlink:arcrole" ;
+    b:evaluationMode "required-link-per-target" ;
+    b:expectedDataLocation "//m:RELATIONSHIP[@xlink:arcrole='urn:fdc:mismo.org:2009:residential/DATA_SOURCE_IsDataSourceFor_LISTING_INFORMATION_SUMMARY' and @xlink:to='LISTING_INFORMATION_SUMMARY_SUBJECT']" ;
+    b:otherEndpointElement "DATA_SOURCE" ;
+    b:ruleId "UAD1209" ;
+    b:sourceFingerprint "a9905b0f7f8591b8feea79dff9999a1ff97e1f1571d8f730bed9fffc6792aaf6" ;
+    b:targetAxis "to" ;
+    b:targetXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty'][.//m:ListedWithinPreviousYearIndicator='false']//m:LISTING_INFORMATION_SUMMARY[@xlink:label]" ;
+    b:violationKind "MissingRequiredRelationship" .
+
+<urn:uad36:relationship-reference-rule:UAD1470> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:arcrole "urn:fdc:mismo.org:2009:residential/PROPERTY_UNIT_IsComparableFor_PROPERTY_UNIT" ;
+    b:element "@xlink:arcrole" ;
+    b:evaluationMode "required-link-per-target" ;
+    b:expectedDataLocation "//m:RELATIONSHIP[@xlink:arcrole='urn:fdc:mismo.org:2009:residential/PROPERTY_UNIT_IsComparableFor_PROPERTY_UNIT' and @xlink:from='PROPERTY_UNIT_COMP1_BLDG1' and @xlink:to='PROPERTY_UNIT_BLDG1']" ;
+    b:otherEndpointElement "PROPERTY_UNIT" ;
+    b:ruleId "UAD1470" ;
+    b:sourceFingerprint "e6d19c9ba1581604259eff748a5927a1b86834e9ae54af6682d930d60b23692c" ;
+    b:targetAxis "from" ;
+    b:targetXPath "//m:PROPERTY[@ValuationUseType='SalesComparable'][.//m:LivingUnitExcludingADUCount > 1 or .//m:AccessoryDwellingUnitTotalCount > 0]//m:PROPERTY_UNIT[@xlink:label]" ;
+    b:violationKind "MissingRequiredRelationship" .
+
+<urn:uad36:relationship-reference-rule:UAD1477> a b:Binding ;
+    b:applicabilityXPath "//m:SalesComparisonApproachIndicator[.='true']" ;
+    b:arcrole "urn:fdc:mismo.org:2009:residential/DATA_SOURCE_IsDataSourceFor_PROPERTY" ;
+    b:element "@xlink:arcrole" ;
+    b:evaluationMode "required-link-per-target" ;
+    b:expectedDataLocation "//m:RELATIONSHIP[@xlink:arcrole='urn:fdc:mismo.org:2009:residential/DATA_SOURCE_IsDataSourceFor_PROPERTY' and @xlink:to='PROPERTY_SALESCOMP1']" ;
+    b:otherEndpointElement "DATA_SOURCE" ;
+    b:ruleId "UAD1477" ;
+    b:sourceFingerprint "ad171deec35b5fee73476b1dfdb8b957ebff17ad11d9143971cff00dba298452" ;
+    b:targetAxis "to" ;
+    b:targetXPath "//m:PROPERTY[@ValuationUseType='SalesComparable'][@xlink:label]" ;
+    b:violationKind "MissingRequiredRelationship" .
+
+<urn:uad36:relationship-reference-rule:UAD1614> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:arcrole "urn:fdc:mismo.org:2009:residential/DATA_SOURCE_IsDataSourceFor_PROJECT" ;
+    b:element "@xlink:arcrole" ;
+    b:evaluationMode "required-link-per-target" ;
+    b:expectedDataLocation "//m:RELATIONSHIP[@xlink:arcrole='urn:fdc:mismo.org:2009:residential/DATA_SOURCE_IsDataSourceFor_PROJECT' and @xlink:to='PROJECT_1']" ;
+    b:otherEndpointElement "DATA_SOURCE" ;
+    b:ruleId "UAD1614" ;
+    b:sourceFingerprint "2cc9a6f711166397e0d2ebe54af008dcf247dd5e7e289013883e9fda5a7c8eee" ;
+    b:targetAxis "to" ;
+    b:targetXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty'][.//m:PropertyInProjectIndicator='true' or .//m:PUDIndicator='true']//m:PROJECT[@xlink:label]" ;
+    b:violationKind "MissingRequiredRelationship" .
+
+<urn:uad36:relationship-reference-rule:UAD1658> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:arcrole "urn:fdc:mismo.org:2009:residential/DATA_SOURCE_IsDataSourceFor_MARKET_TREND" ;
+    b:element "@xlink:arcrole" ;
+    b:evaluationMode "required-link-per-target" ;
+    b:expectedDataLocation "//m:RELATIONSHIP[@xlink:arcrole='urn:fdc:mismo.org:2009:residential/DATA_SOURCE_IsDataSourceFor_MARKET_TREND' and @xlink:to='MARKET_TREND_1']" ;
+    b:otherEndpointElement "DATA_SOURCE" ;
+    b:ruleId "UAD1658" ;
+    b:sourceFingerprint "57c8d29dee976e024645e54f3a287c3f2c3b797cca73bbdcfbb1f2f8a27a3115" ;
+    b:targetAxis "to" ;
+    b:targetXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:MARKET_TREND[@xlink:label]" ;
+    b:violationKind "MissingRequiredRelationship" .
+
+<urn:uad36:relationship-reference-rule:UAD1685> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:arcrole "urn:fdc:mismo.org:2009:residential/DEFECT_ContainsDefectOf_AMENITY" ;
+    b:element "@xlink:arcrole" ;
+    b:evaluationMode "required-link-per-target" ;
+    b:expectedDataLocation "//m:RELATIONSHIP[@xlink:arcrole='urn:fdc:mismo.org:2009:residential/DEFECT_ContainsDefectOf_AMENITY' and @xlink:to='AMENITY_BALCONY']" ;
+    b:otherEndpointElement "DEFECT" ;
+    b:ruleId "UAD1685" ;
+    b:sourceFingerprint "df87a7ce3138bd50fce3b44184a49231df00c71813e4fdeb2e29c3d68ecf7a1e" ;
+    b:targetAxis "to" ;
+    b:targetXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty'][.//m:SubjectPropertyAmenitiesDefectsExistIndicator='true']//m:AMENITY[@xlink:label]" ;
+    b:violationKind "MissingRequiredRelationship" .
+
+<urn:uad36:relationship-reference-rule:UAD1686> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:arcrole "urn:fdc:mismo.org:2009:residential/DEFECT_ContainsDefectOf_CAR_STORAGE" ;
+    b:element "@xlink:arcrole" ;
+    b:evaluationMode "required-link-per-target" ;
+    b:expectedDataLocation "//m:RELATIONSHIP[@xlink:arcrole='urn:fdc:mismo.org:2009:residential/DEFECT_ContainsDefectOf_CAR_STORAGE' and @xlink:to='CAR_STORAGE_Subject']" ;
+    b:otherEndpointElement "DEFECT" ;
+    b:ruleId "UAD1686" ;
+    b:sourceFingerprint "4db247be73df62c864fc3a05b4bca3cb834a2d582da72d4bd219d8bb59ea3ecb" ;
+    b:targetAxis "to" ;
+    b:targetXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty'][.//m:VehicleStorageDefectsExistIndicator='true']//m:CAR_STORAGE[@xlink:label]" ;
+    b:violationKind "MissingRequiredRelationship" .
+
+<urn:uad36:relationship-reference-rule:UAD1689> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:arcrole "urn:fdc:mismo.org:2009:residential/DEFECT_ContainsDefectOf_IMPROVEMENT" ;
+    b:element "@xlink:arcrole" ;
+    b:evaluationMode "required-link-per-target" ;
+    b:expectedDataLocation "//m:RELATIONSHIP[@xlink:arcrole='urn:fdc:mismo.org:2009:residential/DEFECT_ContainsDefectOf_IMPROVEMENT' and @xlink:to='IMPROVEMENT_SubjectDwelling']" ;
+    b:otherEndpointElement "DEFECT" ;
+    b:ruleId "UAD1689" ;
+    b:sourceFingerprint "081e58944bee2e5758a378bd05299c2ec9ec14b5328cf5c505a46809b39582fa" ;
+    b:targetAxis "to" ;
+    b:targetXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:IMPROVEMENT[m:IMPROVEMENT_DETAIL/m:ImprovementType='Dwelling' and m:IMPROVEMENT_DETAIL/m:DwellingExteriorDefectsExistIndicator='true'][@xlink:label]" ;
+    b:violationKind "MissingRequiredRelationship" .
+
+<urn:uad36:relationship-reference-rule:UAD1690> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:arcrole "urn:fdc:mismo.org:2009:residential/DEFECT_ContainsDefectOf_SITE" ;
+    b:element "@xlink:arcrole" ;
+    b:evaluationMode "required-link-per-target" ;
+    b:expectedDataLocation "//m:RELATIONSHIP[@xlink:arcrole='urn:fdc:mismo.org:2009:residential/DEFECT_ContainsDefectOf_SITE' and @xlink:to='SITE_Subject']" ;
+    b:otherEndpointElement "DEFECT" ;
+    b:ruleId "UAD1690" ;
+    b:sourceFingerprint "54f0a1ea34a786d6fa3bf31c5a237cfe03aaf98c02ab6850bed0dcdd36090b00" ;
+    b:targetAxis "to" ;
+    b:targetXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:SITE[m:SITE_DETAIL/m:SiteDefectsExistIndicator='true'][@xlink:label]" ;
+    b:violationKind "MissingRequiredRelationship" .
+
+<urn:uad36:relationship-reference-rule:UAD1691> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:arcrole "urn:fdc:mismo.org:2009:residential/DEFECT_ContainsDefectOf_PROPERTY_UNIT" ;
+    b:element "@xlink:arcrole" ;
+    b:evaluationMode "required-link-per-target" ;
+    b:expectedDataLocation "//m:RELATIONSHIP[@xlink:arcrole='urn:fdc:mismo.org:2009:residential/DEFECT_ContainsDefectOf_PROPERTY_UNIT' and @xlink:to='PROPERTY_UNIT_SubjectUnit1']" ;
+    b:otherEndpointElement "DEFECT" ;
+    b:ruleId "UAD1691" ;
+    b:sourceFingerprint "7c4cfaaf910e9e619d8a043a9072902adabe7039e563a86a69b80606b68b1cab" ;
+    b:targetAxis "to" ;
+    b:targetXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:PROPERTY_UNIT[m:PROPERTY_UNIT_DETAIL/m:UnitInteriorDefectsExistIndicator='true'][@xlink:label]" ;
+    b:violationKind "MissingRequiredRelationship" .
+
+<urn:uad36:relationship-reference-rule:UAD1692> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:arcrole "urn:fdc:mismo.org:2009:residential/DEFECT_ContainsDefectOf_IMPROVEMENT" ;
+    b:element "@xlink:arcrole" ;
+    b:evaluationMode "required-link-per-target" ;
+    b:expectedDataLocation "//m:RELATIONSHIP[@xlink:arcrole='urn:fdc:mismo.org:2009:residential/DEFECT_ContainsDefectOf_IMPROVEMENT' and @xlink:to='IMPROVEMENT_SUBJECTPROPERTY_BARN']" ;
+    b:otherEndpointElement "DEFECT" ;
+    b:ruleId "UAD1692" ;
+    b:sourceFingerprint "c3da6034d5fbea6da508efd873e003c0fdc16dc3af24d3a75f6f174341c8421f" ;
+    b:targetAxis "to" ;
+    b:targetXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:IMPROVEMENT[m:IMPROVEMENT_DETAIL/m:ImprovementType='Outbuilding' and m:IMPROVEMENT_DETAIL/m:OutbuildingDefectsExistIndicator='true'][@xlink:label]" ;
+    b:violationKind "MissingRequiredRelationship" .
+
+<urn:uad36:relationship-reference-rule:UAD1717> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:arcrole "" ;
+    b:element "RELATIONSHIP" ;
+    b:evaluationMode "unique-relationship-key" ;
+    b:expectedDataLocation "(//m:RELATIONSHIP)[1]" ;
+    b:otherEndpointElement "" ;
+    b:ruleId "UAD1717" ;
+    b:sourceFingerprint "60415cf0a135356a8e458dd446f6331e416fc79b29fc86225124dc08ce64fc03" ;
+    b:targetAxis "to" ;
+    b:targetXPath "" ;
+    b:violationKind "DuplicateRelationship" .
+
+<urn:uad36:relationship-reference-rule:UAD1718> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:arcrole "" ;
+    b:element "xlink:from" ;
+    b:evaluationMode "from-endpoint-resolves" ;
+    b:expectedDataLocation "(//m:RELATIONSHIP)[1]" ;
+    b:otherEndpointElement "" ;
+    b:ruleId "UAD1718" ;
+    b:sourceFingerprint "e6c80c039bc241d0580f7f064b8e50162abe952ce2d0a0ab1b0bfc900c19980c" ;
+    b:targetAxis "to" ;
+    b:targetXPath "" ;
+    b:violationKind "UnresolvedRelationshipSource" .
+
+<urn:uad36:relationship-reference-rule:UAD1719> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:arcrole "" ;
+    b:element "xlink:to" ;
+    b:evaluationMode "to-endpoint-resolves" ;
+    b:expectedDataLocation "(//m:RELATIONSHIP)[1]" ;
+    b:otherEndpointElement "" ;
+    b:ruleId "UAD1719" ;
+    b:sourceFingerprint "0dd1d31179d3df6ecebee2817ba921bbdec54e1a97aa44a1c2ae089453b64934" ;
+    b:targetAxis "to" ;
+    b:targetXPath "" ;
+    b:violationKind "UnresolvedRelationshipTarget" .
+
+<urn:uad36:relationship-reference-rule:UAD1747> a b:Binding ;
+    b:applicabilityXPath "" ;
+    b:arcrole "urn:fdc:mismo.org:2009:residential/INSPECTION_CompletedBy_ROLE" ;
+    b:element "@xlink:arcrole" ;
+    b:evaluationMode "required-link-per-target" ;
+    b:expectedDataLocation "//m:RELATIONSHIP[@xlink:arcrole='urn:fdc:mismo.org:2009:residential/INSPECTION_CompletedBy_ROLE' and @xlink:from='INSPECTION_Appraiser' and @xlink:to='ROLE_Appraiser']" ;
+    b:otherEndpointElement "INSPECTION" ;
+    b:ruleId "UAD1747" ;
+    b:sourceFingerprint "9e466f443e28fe8661fdce7fb56078aeb14afa816702ba99d02e0fdbbc9d0c09" ;
+    b:targetAxis "to" ;
+    b:targetXPath "//m:ROLE[.//m:PartyRoleType='Appraiser' or .//m:PartyRoleType='AppraiserSupervisor'][@xlink:label]" ;
+    b:violationKind "MissingRequiredRelationship" .

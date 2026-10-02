@@ -88,6 +88,7 @@ TARGET_XPATHS = {
     "UAD1732": "//m:DEFECT_DETAIL[m:DefectItemRecommendedActionType='Inspection']",
     "UAD1763": "//m:VALUATION_COMMENTARY[m:ValuationAnalysisCategoryType='ComparableRental' and m:ValuationCommentText]",
     "UAD1764": "//m:PROPERTY_UNIT",
+    "UAD1404": "//m:PROPERTY[@ValuationUseType='SalesComparable']",
 }
 
 # Applicability is independent of the required structure. These guards retain
@@ -122,12 +123,20 @@ APPLICABILITY_XPATHS = {
     "UAD1378": "//m:SiteZoningComplianceType[.!='Legal']",
     "UAD1398": "//m:CONDITION_COVENANT_RESTRICTIONS",
     "UAD1400": "//m:EASEMENTS",
+    "UAD1404": "//m:SalesComparisonApproachIndicator[.='true']",
     "UAD1520": "//m:PropertyDataReportIndicator[.='true']",
     "UAD1534": "//m:PARTY[.//m:PartyRoleType='Appraiser' and .//m:AppraiserLicenseType[.='None' or .='TraineeAppraiser']]",
     "UAD1603": "//m:PROJECT_COMPONENTS",
     "UAD1622": "//m:RenewableEnergyComponentExistsIndicator[.='true']",
     "UAD1732": "//m:PropertyValuationConditionalConclusionType[.='SubjectToInspection']",
     "UAD1763": "//m:RentScheduleIndicator[.='true']",
+}
+
+EXPECTED_LOCATIONS = {
+    "UAD1404": (
+        "//m:VALUATION_ANALYSIS/m:PROPERTIES/"
+        "m:PROPERTY[@ValuationUseType='SalesComparable']"
+    ),
 }
 
 DERIVED_APPLICABILITY_VALUES = {}
@@ -252,7 +261,9 @@ def executable_bindings(source):
         bindings[rule_id] = {
             "baselinePath": path.relative_to(ROOT).as_posix(),
             "requiredStructureXPath": target,
-            "expectedDataLocation": expected_location(row),
+            "expectedDataLocation": EXPECTED_LOCATIONS.get(
+                rule_id, expected_location(row)
+            ),
             "xsdValidAfterRemoval": schema.validate(negative),
             "applicabilityXPath": applicability,
         }

@@ -71,9 +71,10 @@ def test_it_33_r5_s3_completion_coverage(caplog, record_property):
         ):
             rules = required_data.load_required_rules()
 
-        supported = {row["Unique ID"]: row for row in rules}
+        supported_by_rule = {row["Message ID"]: row for row in rules}
+        supported_ids = {row["Unique ID"] for row in rules}
 
-        for row_id in sorted(selected_ids - set(supported)):
+        for row_id in sorted(selected_ids - supported_ids):
             problems.append(
                 f"{row_id}: agreed required-data row was not loaded; "
                 "resolve its configuration or explicitly review its scope."
@@ -96,7 +97,7 @@ def test_it_33_r5_s3_completion_coverage(caplog, record_property):
                 "row_id": row_id,
                 "fixture": case["filename"],
                 "file_exists": exists,
-                "loaded": row_id in supported,
+                "loaded": case["rule_id"] in supported_by_rule,
             })
 
             if not exists:
@@ -104,7 +105,7 @@ def test_it_33_r5_s3_completion_coverage(caplog, record_property):
                     f"{row_id}: fixture file missing: {case['filename']}"
                 )
 
-            rule = supported.get(row_id)
+            rule = supported_by_rule.get(case["rule_id"])
             if rule is not None:
                 for manifest_field, source_field in (
                     ("rule_id", "Message ID"),
