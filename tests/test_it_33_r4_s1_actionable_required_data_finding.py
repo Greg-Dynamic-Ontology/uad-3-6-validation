@@ -19,7 +19,9 @@ FIXTURES = (
 )
 
 
-def test_it_33_r4_s1_actionable_required_data_finding():
+def test_it_33_r4_s1_actionable_required_data_finding(
+    required_data_baseline_clock,
+):
     """
     Rule: Return deterministic findings traceable to governed requirements.
 

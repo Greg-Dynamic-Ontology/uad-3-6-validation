@@ -78,6 +78,7 @@ def test_required_data_upload(
     required_data_server_url: str,
     relative_file: str,
     expected_fatal_count: int,
+    required_data_baseline_clock,
 ):
     source = FIXTURES / relative_file
     assert source.is_file(), f"Missing fixture: {source}"

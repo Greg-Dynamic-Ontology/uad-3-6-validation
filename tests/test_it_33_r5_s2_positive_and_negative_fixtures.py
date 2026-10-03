@@ -63,8 +63,11 @@ def supported_rules():
         required_data.load_required_rules.cache_clear()
 
 
-def test_it_33_r5_s2_positive_control(supported_rules):
-    """The complete source XML has no required-data findings."""
+def test_it_33_r5_s2_positive_control(
+    supported_rules,
+    required_data_baseline_clock,
+):
+    """The complete source XML has no findings at its recorded test date."""
     original = BASELINE.read_bytes()
     root = ET.fromstring(original)
     original_tree = ET.tostring(root)
@@ -81,7 +84,11 @@ def test_it_33_r5_s2_positive_control(supported_rules):
     CASES,
     ids=lambda case: f"{case['row_id']}-{case['rule_id']}",
 )
-def test_it_33_r5_s2_negative_fixture(case, supported_rules):
+def test_it_33_r5_s2_negative_fixture(
+    case,
+    supported_rules,
+    required_data_baseline_clock,
+):
     """Each controlled defect produces exactly its expected finding."""
     rule = supported_rules[case["row_id"]]
     fixture_path = FIXTURES / "tests" / case["filename"]

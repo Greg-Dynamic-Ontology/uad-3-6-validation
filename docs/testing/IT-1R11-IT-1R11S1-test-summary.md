@@ -39,16 +39,26 @@ Matching counts alone cannot establish correct coverage.
 
 ## Test files
 
-Create a reproducible fixture generator and a pytest runner.
+Fixture generator:
 
-Store the reusable test corpus under:
+scripts/testing/generate_it_1_r11_s1_fixtures.py
+
+Pytest runner:
+
+tests/test_it_1_r11_s1_date_chronology.py
+
+Reusable test corpus:
 
 tests/fixtures/it_1/r11/s1/
 
-Organize XML files by Rule ID, with descriptive filenames identifying
+The generated corpus contains 25 case pairs across 14 source rules:
+50 schema-valid XML fixtures, comprising 21 prohibited-relationship pairs
+and four applicability or context-control pairs.
+
+XML files are organized by Rule ID, with descriptive filenames identifying
 permitted, boundary, and prohibited cases.
 
-Store fixture definitions and expected results in manifest.ttl.
+Fixture definitions and expected results are stored in manifest.ttl.
 The manifest records:
 
 - Iteration, Rule, Scenario, and source-rule identity.
@@ -65,28 +75,29 @@ corpus inside the Python test file.
 
 ## Fixture construction
 
-Derive fixtures from available published appraisal XML.
+Fixtures are derived from available published appraisal XML.
 
-The generator must verify the published source and governed row metadata
+The generator verifies the published source and governed row metadata
 before applying explicit, documented changes.
 
-Validate every generated XML file against the combined UAD schema before
-writing the corpus. Prohibited chronology must remain schema-valid:
+Every generated XML file is validated against the combined UAD schema
+before the corpus is written. Prohibited chronology remains schema-valid:
 the intended failure is a business-rule violation.
 
-The generator must be reproducible and support a verification mode that
+The generator is reproducible and supports a verification mode that
 does not replace saved fixtures.
 
-Record both permitted and prohibited cases so the corpus can later support
-programmatic endpoint testing.
+Both permitted and prohibited cases are recorded so the corpus can later
+support programmatic endpoint testing.
 
 ## Date and boundary coverage
 
-Use a fixed evaluation date of 2026-10-02 for current-date comparisons.
-Record it in the manifest and supply it through test-controlled clock
-behavior. Do not use the machine's changing date as an expectation.
+The chronology corpus uses a fixed evaluation date of 2026-10-02 for
+current-date comparisons. It is recorded in the manifest and supplied
+through test-controlled clock behavior. Expectations do not depend on
+the machine's changing date.
 
-Cover:
+Coverage includes:
 
 - Equal dates for rules using strict greater-than or less-than comparisons.
 - Today versus tomorrow for future-date rules.
@@ -96,12 +107,12 @@ Cover:
 - Equal year-month and preceding year-month for UAD1611.
 - Appraiser and supervisory-appraiser applicability for UAD1529.
 - Nonapplicable conditions and unrelated repeated contexts where relevant.
+- Clock changes that move cases across the future-date and age boundaries.
 
-Compare tax expiration at year-month precision. Compare construction years
-at year precision. Compare full dates at date precision.
+Tax expiration is compared at year-month precision. Construction years
+are compared at year precision. Full dates are compared at date precision.
 
-Choose unambiguous prohibited values. Any unresolved source interpretation
-must be identified before an executable expectation is added.
+Prohibited values are chosen to express unambiguous governed violations.
 
 ## RED assertions
 
@@ -117,26 +128,27 @@ For each case:
 8. Verify that the finding location identifies the affected XML context.
 9. Verify that evaluation did not alter the XML input or saved files.
 
-Use violation kind ProhibitedDateRelationship for chronology findings.
+Chronology findings use violation kind ProhibitedDateRelationship.
 
-Evaluate each selected original CSV row independently to prevent unrelated
-business-rule findings from obscuring the behavior under test.
+Each selected original CSV row is evaluated independently to prevent
+unrelated business-rule findings from obscuring the behavior under test.
 
-This is evaluator-level coverage. HTTP API coverage remains separate.
+This is evaluator-level coverage. HTTP API coverage of the chronology
+corpus remains separate.
 
 ## Context protection
 
-Date comparisons must use the relevant owning context.
+Date comparisons use the relevant owning context.
 
 A different property's listing, dwelling, inspection, or tax expiration
 cannot satisfy the selected context's requirement.
 
-Report-level comparisons must use the applicable appraisal effective date.
-License checks must apply to the specified party roles.
-Execution checks must preserve the document/signatory context.
+Report-level comparisons use the applicable appraisal effective date.
+License checks apply to the specified party roles.
+Execution checks preserve the document/signatory context.
 
-Include controls that reveal accidental comparisons against unrelated
-records where applicable.
+Controls reveal accidental comparisons against unrelated records
+where applicable.
 
 ## RED completion criteria
 
@@ -150,27 +162,89 @@ RED is established only when:
 Collection errors, invalid XML, missing files, source mismatches, and clock
 setup failures do not establish RED.
 
-Report actual test counts and failure reasons after execution.
-Wait for the user's RED confirmation and GREEN authorization.
+The user confirmed RED and authorized GREEN implementation.
 
 ## Implementation boundary
 
-During RED, supply only the test summary, fixture generator, fixture
-definitions, and test runner needed for this scenario.
+During RED, changes were limited to the test summary, fixture generator,
+fixture definitions, and test runner needed for this scenario.
 
-Production chronology behavior is added during GREEN.
+During GREEN, production chronology behavior was added in:
 
-The user applies project changes in PyCharm one complete file at a time.
-The user runs the fixture generator after reviewing its write behavior.
+app/services/date_chronology_required_data.py
+
+The evaluator was connected through:
+
+app/services/required_data.py
+
+Production behavior is governed by the CSV rows. RDF tracking and fixture
+manifests are not production runtime inputs.
+
+The user applied project changes in PyCharm one complete file at a time
+and ran the fixture generator after reviewing its write behavior.
+
+## Regression finding and correction
+
+The first full acceptance run after chronology implementation reported
+four failures and 2,378 passes.
+
+The failures were:
+
+- tests/test_it_33_r4_s1_actionable_required_data_finding.py:
+  test_it_33_r4_s1_actionable_required_data_finding
+- tests/test_it_33_r5_s2_positive_and_negative_fixtures.py:
+  test_it_33_r5_s2_positive_control
+- tests/test_required_data_browser.py:
+  test_required_data_upload[chromium-complete-baseline]
+- tests/test_required_data_browser.py:
+  test_required_data_upload[chromium-missing-subject-address]
+
+These tests use the historical SF1 baseline with appraisal effective and
+execution dates of 2019-09-20.
+
+The new evaluator correctly produced UAD1259 and UAD1506 age warnings
+when that historical XML was evaluated against the current date.
+The baseline therefore produced two findings rather than none.
+The missing-address case produced three findings rather than one.
+
+The correction added the explicitly requested
+required_data_baseline_clock fixture in tests/conftest.py and connected
+the affected tests to it.
+
+Those historical-baseline tests now evaluate as of 2019-09-20.
+Production validation continues to use today's date.
+The chronology boundary tests retain their separately recorded
+evaluation date of 2026-10-02.
+
+No assertions were removed, weakened, or skipped.
+The historical XML fixtures were not changed.
 
 ## Execution evidence
 
-Status: Test construction beginning.
+The following execution results were reported and confirmed by the user.
 
-RED result: Pending.
+| Stage | Result | Duration |
+| --- | --- | --- |
+| Fixture generation | 25 case pairs validated for 14 source rules; 50 schema-valid XML fixtures and manifest.ttl written | Not recorded |
+| Initial chronology RED | 21 failed, 4 passed | 4.61 seconds |
+| Chronology GREEN | 25 passed | Not recorded |
+| Initial full acceptance regression | 4 failed, 2,378 passed | 1,089.48 seconds (18:09) |
+| Focused regression after historical-clock correction | 82 passed | 127.90 seconds (2:07) |
+| Full acceptance regression after historical-clock correction | 2,382 passed | 1,061.42 seconds (17:41) |
 
-GREEN result: Pending.
+The focused regression command was:
 
-Full acceptance result: Pending.
+python -B -m pytest tests/test_it_33_r4_s1_actionable_required_data_finding.py tests/test_it_33_r5_s2_positive_and_negative_fixtures.py tests/test_required_data_browser.py tests/test_it_1_r11_s1_date_chronology.py -q --tb=short -p no:cacheprovider
 
-Commit and push: Pending.
+The full acceptance regression was run using:
+
+run-acceptance-test.bat
+
+Status: IT-1R11 / IT-1R11S1 is GREEN, including the full acceptance regression.
+
+Commit and push:
+
+- The chronology implementation was committed and pushed after the user
+  confirmed 25 passing chronology tests.
+- Commit and push of the historical-clock regression correction and this
+  updated summary have not yet been reported.
