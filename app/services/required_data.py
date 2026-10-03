@@ -47,6 +47,10 @@ from app.services.value_consistency_required_data import (
     binding_for as value_consistency_binding_for,
     evaluate_value_consistency,
 )
+from app.services.date_chronology_required_data import (
+    binding_for as date_chronology_binding_for,
+    evaluate_date_chronology,
+)
 from app.services.scoped_required_data import (
     evaluate_scoped_rule,
     scoped_spec,
@@ -367,6 +371,9 @@ def load_required_rules() -> tuple[dict[str, str], ...]:
 
     rules = []
     for row in rows:
+        if date_chronology_binding_for(row) is not None:
+            rules.append(row)
+            continue
         if value_consistency_binding_for(row) is not None:
             rules.append(row)
             continue
@@ -427,6 +434,9 @@ def load_required_rules() -> tuple[dict[str, str], ...]:
     valid_rules = []
 
     for rule in rules:
+        if date_chronology_binding_for(rule) is not None:
+            valid_rules.append(rule)
+            continue
         if value_consistency_binding_for(rule) is not None:
             valid_rules.append(rule)
             continue
@@ -671,6 +681,9 @@ def evaluate_required_data(
     for rule in sorted(
         load_required_rules(), key=lambda row: row["Unique ID"]
     ):
+        if date_chronology_binding_for(rule) is not None:
+            findings.extend(evaluate_date_chronology(root, investor, rule))
+            continue
         if value_consistency_binding_for(rule) is not None:
             findings.extend(evaluate_value_consistency(root, investor, rule))
             continue
