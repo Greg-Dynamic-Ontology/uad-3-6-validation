@@ -1,0 +1,480 @@
+@prefix case: <urn:uad36:test-manifest:IT-1R1S2:dwelling-system:> .
+@prefix m: <urn:uad36:test-manifest:vocab:> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+case:manifest a m:Manifest ;
+    m:case case:UAD1098-both-supplied,
+        case:UAD1098-condition-false,
+        case:UAD1098-dwelling-and-outbuilding,
+        case:UAD1098-first-missing,
+        case:UAD1098-heated-and-unheated,
+        case:UAD1098-second-missing,
+        case:UAD1098-two-missing,
+        case:UAD1098-unheated-and-heated ;
+    m:caseCount 8 ;
+    m:derivedFrom case:template ;
+    m:fixtureFamily "dwelling-system" ;
+    m:scenarioId "IT-1R1S2" ;
+    m:sliceId "IT-1R1S2-Slice-02" ;
+    m:validationSchema case:schema .
+
+case:UAD1098-both-supplied a m:TestCase ;
+    m:caseId "IT-1R1S2-Slice-02-UAD1098-both-supplied" ;
+    m:expectedFindingCount 0 ;
+    m:fixtureCheck case:UAD1098-both-supplied-check-0,
+        case:UAD1098-both-supplied-check-1,
+        case:UAD1098-both-supplied-check-2,
+        case:UAD1098-both-supplied-check-3,
+        case:UAD1098-both-supplied-check-4,
+        case:UAD1098-both-supplied-check-5,
+        case:UAD1098-both-supplied-check-6,
+        case:UAD1098-both-supplied-check-7,
+        case:UAD1098-both-supplied-check-8 ;
+    m:ruleId "UAD1098" ;
+    m:sourceRow 98 ;
+    m:sourceRuleLogic "If ImprovementType = \"Dwelling\" and HeatingSystemType <> \"None\", and CoreHeatingSystemBelowGradeIndicator is not provided in SYSTEM_DETAIL for a given instance of IMPROVEMENT" ;
+    m:sourceUniqueId "0300.0116" ;
+    m:state "applicable_supplied" ;
+    m:xmlFile "UAD1098/both-supplied.xml" ;
+    m:xmlSha256 "063da207d1b51d785d1fde962790bce09aa06d21f186b27f7e8212e0388369ad" .
+
+case:UAD1098-both-supplied-check-0 m:count 2 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT" .
+
+case:UAD1098-both-supplied-check-1 m:count 1 ;
+    m:expectedText "Dwelling" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1098-both-supplied-check-2 m:count 1 ;
+    m:expectedText "ForcedWarmAir" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:SYSTEM/m:HEATING_SYSTEMS/m:HEATING_SYSTEM/m:HeatingSystemType" .
+
+case:UAD1098-both-supplied-check-3 m:count 1 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:SYSTEM/m:SYSTEM_DETAIL" .
+
+case:UAD1098-both-supplied-check-4 m:count 1 ;
+    m:expectedText "false" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:SYSTEM/m:SYSTEM_DETAIL/m:CoreHeatingSystemBelowGradeIndicator" .
+
+case:UAD1098-both-supplied-check-5 m:count 1 ;
+    m:expectedText "Dwelling" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1098-both-supplied-check-6 m:count 1 ;
+    m:expectedText "ForcedWarmAir" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:SYSTEM/m:HEATING_SYSTEMS/m:HEATING_SYSTEM/m:HeatingSystemType" .
+
+case:UAD1098-both-supplied-check-7 m:count 1 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:SYSTEM/m:SYSTEM_DETAIL" .
+
+case:UAD1098-both-supplied-check-8 m:count 1 ;
+    m:expectedText "false" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:SYSTEM/m:SYSTEM_DETAIL/m:CoreHeatingSystemBelowGradeIndicator" .
+
+case:UAD1098-condition-false a m:TestCase ;
+    m:caseId "IT-1R1S2-Slice-02-UAD1098-condition-false" ;
+    m:expectedFindingCount 0 ;
+    m:fixtureCheck case:UAD1098-condition-false-check-0,
+        case:UAD1098-condition-false-check-1,
+        case:UAD1098-condition-false-check-2,
+        case:UAD1098-condition-false-check-3,
+        case:UAD1098-condition-false-check-4,
+        case:UAD1098-condition-false-check-5,
+        case:UAD1098-condition-false-check-6,
+        case:UAD1098-condition-false-check-7,
+        case:UAD1098-condition-false-check-8 ;
+    m:ruleId "UAD1098" ;
+    m:sourceRow 98 ;
+    m:sourceRuleLogic "If ImprovementType = \"Dwelling\" and HeatingSystemType <> \"None\", and CoreHeatingSystemBelowGradeIndicator is not provided in SYSTEM_DETAIL for a given instance of IMPROVEMENT" ;
+    m:sourceUniqueId "0300.0116" ;
+    m:state "not_applicable" ;
+    m:xmlFile "UAD1098/condition-false.xml" ;
+    m:xmlSha256 "00ba744741c822c9f92933ba65b2ef0275a1cb66bd7a9a48e7bd74982f65da1a" .
+
+case:UAD1098-condition-false-check-0 m:count 2 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT" .
+
+case:UAD1098-condition-false-check-1 m:count 1 ;
+    m:expectedText "Dwelling" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1098-condition-false-check-2 m:count 1 ;
+    m:expectedText "None" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:SYSTEM/m:HEATING_SYSTEMS/m:HEATING_SYSTEM/m:HeatingSystemType" .
+
+case:UAD1098-condition-false-check-3 m:count 1 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:SYSTEM/m:SYSTEM_DETAIL" .
+
+case:UAD1098-condition-false-check-4 m:count 0 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:SYSTEM/m:SYSTEM_DETAIL/m:CoreHeatingSystemBelowGradeIndicator" .
+
+case:UAD1098-condition-false-check-5 m:count 1 ;
+    m:expectedText "Dwelling" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1098-condition-false-check-6 m:count 1 ;
+    m:expectedText "None" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:SYSTEM/m:HEATING_SYSTEMS/m:HEATING_SYSTEM/m:HeatingSystemType" .
+
+case:UAD1098-condition-false-check-7 m:count 1 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:SYSTEM/m:SYSTEM_DETAIL" .
+
+case:UAD1098-condition-false-check-8 m:count 0 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:SYSTEM/m:SYSTEM_DETAIL/m:CoreHeatingSystemBelowGradeIndicator" .
+
+case:UAD1098-dwelling-and-outbuilding a m:TestCase ;
+    m:caseId "IT-1R1S2-Slice-02-UAD1098-dwelling-and-outbuilding" ;
+    m:expectedFinding case:UAD1098-dwelling-and-outbuilding-finding-0 ;
+    m:expectedFindingCount 1 ;
+    m:fixtureCheck case:UAD1098-dwelling-and-outbuilding-check-0,
+        case:UAD1098-dwelling-and-outbuilding-check-1,
+        case:UAD1098-dwelling-and-outbuilding-check-2,
+        case:UAD1098-dwelling-and-outbuilding-check-3,
+        case:UAD1098-dwelling-and-outbuilding-check-4,
+        case:UAD1098-dwelling-and-outbuilding-check-5,
+        case:UAD1098-dwelling-and-outbuilding-check-6,
+        case:UAD1098-dwelling-and-outbuilding-check-7,
+        case:UAD1098-dwelling-and-outbuilding-check-8 ;
+    m:ruleId "UAD1098" ;
+    m:sourceRow 98 ;
+    m:sourceRuleLogic "If ImprovementType = \"Dwelling\" and HeatingSystemType <> \"None\", and CoreHeatingSystemBelowGradeIndicator is not provided in SYSTEM_DETAIL for a given instance of IMPROVEMENT" ;
+    m:sourceUniqueId "0300.0116" ;
+    m:state "applicable_missing" ;
+    m:xmlFile "UAD1098/dwelling-and-outbuilding.xml" ;
+    m:xmlSha256 "521d9dcc0641c408fa680f2c5d69635e6928c5cba8319fa28710dec4278949dc" .
+
+case:UAD1098-dwelling-and-outbuilding-check-0 m:count 2 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT" .
+
+case:UAD1098-dwelling-and-outbuilding-check-1 m:count 1 ;
+    m:expectedText "Dwelling" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1098-dwelling-and-outbuilding-check-2 m:count 1 ;
+    m:expectedText "ForcedWarmAir" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:SYSTEM/m:HEATING_SYSTEMS/m:HEATING_SYSTEM/m:HeatingSystemType" .
+
+case:UAD1098-dwelling-and-outbuilding-check-3 m:count 1 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:SYSTEM/m:SYSTEM_DETAIL" .
+
+case:UAD1098-dwelling-and-outbuilding-check-4 m:count 0 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:SYSTEM/m:SYSTEM_DETAIL/m:CoreHeatingSystemBelowGradeIndicator" .
+
+case:UAD1098-dwelling-and-outbuilding-check-5 m:count 1 ;
+    m:expectedText "Outbuilding" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1098-dwelling-and-outbuilding-check-6 m:count 1 ;
+    m:expectedText "ForcedWarmAir" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:SYSTEM/m:HEATING_SYSTEMS/m:HEATING_SYSTEM/m:HeatingSystemType" .
+
+case:UAD1098-dwelling-and-outbuilding-check-7 m:count 1 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:SYSTEM/m:SYSTEM_DETAIL" .
+
+case:UAD1098-dwelling-and-outbuilding-check-8 m:count 0 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:SYSTEM/m:SYSTEM_DETAIL/m:CoreHeatingSystemBelowGradeIndicator" .
+
+case:UAD1098-dwelling-and-outbuilding-finding-0 m:dataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:SYSTEM/m:SYSTEM_DETAIL/m:CoreHeatingSystemBelowGradeIndicator" ;
+    m:ruleId "UAD1098" ;
+    m:severity "fatal" ;
+    m:violationKind "MissingRequiredValue" .
+
+case:UAD1098-first-missing a m:TestCase ;
+    m:caseId "IT-1R1S2-Slice-02-UAD1098-first-missing" ;
+    m:expectedFinding case:UAD1098-first-missing-finding-0 ;
+    m:expectedFindingCount 1 ;
+    m:fixtureCheck case:UAD1098-first-missing-check-0,
+        case:UAD1098-first-missing-check-1,
+        case:UAD1098-first-missing-check-2,
+        case:UAD1098-first-missing-check-3,
+        case:UAD1098-first-missing-check-4,
+        case:UAD1098-first-missing-check-5,
+        case:UAD1098-first-missing-check-6,
+        case:UAD1098-first-missing-check-7,
+        case:UAD1098-first-missing-check-8 ;
+    m:ruleId "UAD1098" ;
+    m:sourceRow 98 ;
+    m:sourceRuleLogic "If ImprovementType = \"Dwelling\" and HeatingSystemType <> \"None\", and CoreHeatingSystemBelowGradeIndicator is not provided in SYSTEM_DETAIL for a given instance of IMPROVEMENT" ;
+    m:sourceUniqueId "0300.0116" ;
+    m:state "applicable_missing" ;
+    m:xmlFile "UAD1098/first-missing.xml" ;
+    m:xmlSha256 "23de1c30b8189b026a29da2fe320f359add78d399d9134c77ddcde8bc823c39d" .
+
+case:UAD1098-first-missing-check-0 m:count 2 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT" .
+
+case:UAD1098-first-missing-check-1 m:count 1 ;
+    m:expectedText "Dwelling" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1098-first-missing-check-2 m:count 1 ;
+    m:expectedText "ForcedWarmAir" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:SYSTEM/m:HEATING_SYSTEMS/m:HEATING_SYSTEM/m:HeatingSystemType" .
+
+case:UAD1098-first-missing-check-3 m:count 1 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:SYSTEM/m:SYSTEM_DETAIL" .
+
+case:UAD1098-first-missing-check-4 m:count 0 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:SYSTEM/m:SYSTEM_DETAIL/m:CoreHeatingSystemBelowGradeIndicator" .
+
+case:UAD1098-first-missing-check-5 m:count 1 ;
+    m:expectedText "Dwelling" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1098-first-missing-check-6 m:count 1 ;
+    m:expectedText "ForcedWarmAir" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:SYSTEM/m:HEATING_SYSTEMS/m:HEATING_SYSTEM/m:HeatingSystemType" .
+
+case:UAD1098-first-missing-check-7 m:count 1 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:SYSTEM/m:SYSTEM_DETAIL" .
+
+case:UAD1098-first-missing-check-8 m:count 1 ;
+    m:expectedText "false" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:SYSTEM/m:SYSTEM_DETAIL/m:CoreHeatingSystemBelowGradeIndicator" .
+
+case:UAD1098-first-missing-finding-0 m:dataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:SYSTEM/m:SYSTEM_DETAIL/m:CoreHeatingSystemBelowGradeIndicator" ;
+    m:ruleId "UAD1098" ;
+    m:severity "fatal" ;
+    m:violationKind "MissingRequiredValue" .
+
+case:UAD1098-heated-and-unheated a m:TestCase ;
+    m:caseId "IT-1R1S2-Slice-02-UAD1098-heated-and-unheated" ;
+    m:expectedFinding case:UAD1098-heated-and-unheated-finding-0 ;
+    m:expectedFindingCount 1 ;
+    m:fixtureCheck case:UAD1098-heated-and-unheated-check-0,
+        case:UAD1098-heated-and-unheated-check-1,
+        case:UAD1098-heated-and-unheated-check-2,
+        case:UAD1098-heated-and-unheated-check-3,
+        case:UAD1098-heated-and-unheated-check-4,
+        case:UAD1098-heated-and-unheated-check-5,
+        case:UAD1098-heated-and-unheated-check-6,
+        case:UAD1098-heated-and-unheated-check-7,
+        case:UAD1098-heated-and-unheated-check-8 ;
+    m:ruleId "UAD1098" ;
+    m:sourceRow 98 ;
+    m:sourceRuleLogic "If ImprovementType = \"Dwelling\" and HeatingSystemType <> \"None\", and CoreHeatingSystemBelowGradeIndicator is not provided in SYSTEM_DETAIL for a given instance of IMPROVEMENT" ;
+    m:sourceUniqueId "0300.0116" ;
+    m:state "applicable_missing" ;
+    m:xmlFile "UAD1098/heated-and-unheated.xml" ;
+    m:xmlSha256 "ecefce0c90e53fdd078ba2600cc5b9952fd7bcd807b5e1ecc65751431364948d" .
+
+case:UAD1098-heated-and-unheated-check-0 m:count 2 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT" .
+
+case:UAD1098-heated-and-unheated-check-1 m:count 1 ;
+    m:expectedText "Dwelling" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1098-heated-and-unheated-check-2 m:count 1 ;
+    m:expectedText "ForcedWarmAir" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:SYSTEM/m:HEATING_SYSTEMS/m:HEATING_SYSTEM/m:HeatingSystemType" .
+
+case:UAD1098-heated-and-unheated-check-3 m:count 1 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:SYSTEM/m:SYSTEM_DETAIL" .
+
+case:UAD1098-heated-and-unheated-check-4 m:count 0 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:SYSTEM/m:SYSTEM_DETAIL/m:CoreHeatingSystemBelowGradeIndicator" .
+
+case:UAD1098-heated-and-unheated-check-5 m:count 1 ;
+    m:expectedText "Dwelling" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1098-heated-and-unheated-check-6 m:count 1 ;
+    m:expectedText "None" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:SYSTEM/m:HEATING_SYSTEMS/m:HEATING_SYSTEM/m:HeatingSystemType" .
+
+case:UAD1098-heated-and-unheated-check-7 m:count 1 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:SYSTEM/m:SYSTEM_DETAIL" .
+
+case:UAD1098-heated-and-unheated-check-8 m:count 0 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:SYSTEM/m:SYSTEM_DETAIL/m:CoreHeatingSystemBelowGradeIndicator" .
+
+case:UAD1098-heated-and-unheated-finding-0 m:dataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:SYSTEM/m:SYSTEM_DETAIL/m:CoreHeatingSystemBelowGradeIndicator" ;
+    m:ruleId "UAD1098" ;
+    m:severity "fatal" ;
+    m:violationKind "MissingRequiredValue" .
+
+case:UAD1098-second-missing a m:TestCase ;
+    m:caseId "IT-1R1S2-Slice-02-UAD1098-second-missing" ;
+    m:expectedFinding case:UAD1098-second-missing-finding-0 ;
+    m:expectedFindingCount 1 ;
+    m:fixtureCheck case:UAD1098-second-missing-check-0,
+        case:UAD1098-second-missing-check-1,
+        case:UAD1098-second-missing-check-2,
+        case:UAD1098-second-missing-check-3,
+        case:UAD1098-second-missing-check-4,
+        case:UAD1098-second-missing-check-5,
+        case:UAD1098-second-missing-check-6,
+        case:UAD1098-second-missing-check-7,
+        case:UAD1098-second-missing-check-8 ;
+    m:ruleId "UAD1098" ;
+    m:sourceRow 98 ;
+    m:sourceRuleLogic "If ImprovementType = \"Dwelling\" and HeatingSystemType <> \"None\", and CoreHeatingSystemBelowGradeIndicator is not provided in SYSTEM_DETAIL for a given instance of IMPROVEMENT" ;
+    m:sourceUniqueId "0300.0116" ;
+    m:state "applicable_missing" ;
+    m:xmlFile "UAD1098/second-missing.xml" ;
+    m:xmlSha256 "7e40d21c44fa58c67a54f846ef571faa6ceb9b48bc9b88770778c244d68beeda" .
+
+case:UAD1098-second-missing-check-0 m:count 2 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT" .
+
+case:UAD1098-second-missing-check-1 m:count 1 ;
+    m:expectedText "Dwelling" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1098-second-missing-check-2 m:count 1 ;
+    m:expectedText "ForcedWarmAir" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:SYSTEM/m:HEATING_SYSTEMS/m:HEATING_SYSTEM/m:HeatingSystemType" .
+
+case:UAD1098-second-missing-check-3 m:count 1 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:SYSTEM/m:SYSTEM_DETAIL" .
+
+case:UAD1098-second-missing-check-4 m:count 1 ;
+    m:expectedText "false" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:SYSTEM/m:SYSTEM_DETAIL/m:CoreHeatingSystemBelowGradeIndicator" .
+
+case:UAD1098-second-missing-check-5 m:count 1 ;
+    m:expectedText "Dwelling" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1098-second-missing-check-6 m:count 1 ;
+    m:expectedText "ForcedWarmAir" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:SYSTEM/m:HEATING_SYSTEMS/m:HEATING_SYSTEM/m:HeatingSystemType" .
+
+case:UAD1098-second-missing-check-7 m:count 1 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:SYSTEM/m:SYSTEM_DETAIL" .
+
+case:UAD1098-second-missing-check-8 m:count 0 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:SYSTEM/m:SYSTEM_DETAIL/m:CoreHeatingSystemBelowGradeIndicator" .
+
+case:UAD1098-second-missing-finding-0 m:dataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:SYSTEM/m:SYSTEM_DETAIL/m:CoreHeatingSystemBelowGradeIndicator" ;
+    m:ruleId "UAD1098" ;
+    m:severity "fatal" ;
+    m:violationKind "MissingRequiredValue" .
+
+case:UAD1098-two-missing a m:TestCase ;
+    m:caseId "IT-1R1S2-Slice-02-UAD1098-two-missing" ;
+    m:expectedFinding case:UAD1098-two-missing-finding-0,
+        case:UAD1098-two-missing-finding-1 ;
+    m:expectedFindingCount 2 ;
+    m:fixtureCheck case:UAD1098-two-missing-check-0,
+        case:UAD1098-two-missing-check-1,
+        case:UAD1098-two-missing-check-2,
+        case:UAD1098-two-missing-check-3,
+        case:UAD1098-two-missing-check-4,
+        case:UAD1098-two-missing-check-5,
+        case:UAD1098-two-missing-check-6,
+        case:UAD1098-two-missing-check-7,
+        case:UAD1098-two-missing-check-8 ;
+    m:ruleId "UAD1098" ;
+    m:sourceRow 98 ;
+    m:sourceRuleLogic "If ImprovementType = \"Dwelling\" and HeatingSystemType <> \"None\", and CoreHeatingSystemBelowGradeIndicator is not provided in SYSTEM_DETAIL for a given instance of IMPROVEMENT" ;
+    m:sourceUniqueId "0300.0116" ;
+    m:state "applicable_missing" ;
+    m:xmlFile "UAD1098/two-missing.xml" ;
+    m:xmlSha256 "628a545af4e31a8d302169873ea5dffe48c75eb231419f7e59f6ad08d95b5eb4" .
+
+case:UAD1098-two-missing-check-0 m:count 2 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT" .
+
+case:UAD1098-two-missing-check-1 m:count 1 ;
+    m:expectedText "Dwelling" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1098-two-missing-check-2 m:count 1 ;
+    m:expectedText "ForcedWarmAir" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:SYSTEM/m:HEATING_SYSTEMS/m:HEATING_SYSTEM/m:HeatingSystemType" .
+
+case:UAD1098-two-missing-check-3 m:count 1 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:SYSTEM/m:SYSTEM_DETAIL" .
+
+case:UAD1098-two-missing-check-4 m:count 0 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:SYSTEM/m:SYSTEM_DETAIL/m:CoreHeatingSystemBelowGradeIndicator" .
+
+case:UAD1098-two-missing-check-5 m:count 1 ;
+    m:expectedText "Dwelling" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1098-two-missing-check-6 m:count 1 ;
+    m:expectedText "ForcedWarmAir" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:SYSTEM/m:HEATING_SYSTEMS/m:HEATING_SYSTEM/m:HeatingSystemType" .
+
+case:UAD1098-two-missing-check-7 m:count 1 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:SYSTEM/m:SYSTEM_DETAIL" .
+
+case:UAD1098-two-missing-check-8 m:count 0 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:SYSTEM/m:SYSTEM_DETAIL/m:CoreHeatingSystemBelowGradeIndicator" .
+
+case:UAD1098-two-missing-finding-0 m:dataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:SYSTEM/m:SYSTEM_DETAIL/m:CoreHeatingSystemBelowGradeIndicator" ;
+    m:ruleId "UAD1098" ;
+    m:severity "fatal" ;
+    m:violationKind "MissingRequiredValue" .
+
+case:UAD1098-two-missing-finding-1 m:dataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:SYSTEM/m:SYSTEM_DETAIL/m:CoreHeatingSystemBelowGradeIndicator" ;
+    m:ruleId "UAD1098" ;
+    m:severity "fatal" ;
+    m:violationKind "MissingRequiredValue" .
+
+case:UAD1098-unheated-and-heated a m:TestCase ;
+    m:caseId "IT-1R1S2-Slice-02-UAD1098-unheated-and-heated" ;
+    m:expectedFinding case:UAD1098-unheated-and-heated-finding-0 ;
+    m:expectedFindingCount 1 ;
+    m:fixtureCheck case:UAD1098-unheated-and-heated-check-0,
+        case:UAD1098-unheated-and-heated-check-1,
+        case:UAD1098-unheated-and-heated-check-2,
+        case:UAD1098-unheated-and-heated-check-3,
+        case:UAD1098-unheated-and-heated-check-4,
+        case:UAD1098-unheated-and-heated-check-5,
+        case:UAD1098-unheated-and-heated-check-6,
+        case:UAD1098-unheated-and-heated-check-7,
+        case:UAD1098-unheated-and-heated-check-8 ;
+    m:ruleId "UAD1098" ;
+    m:sourceRow 98 ;
+    m:sourceRuleLogic "If ImprovementType = \"Dwelling\" and HeatingSystemType <> \"None\", and CoreHeatingSystemBelowGradeIndicator is not provided in SYSTEM_DETAIL for a given instance of IMPROVEMENT" ;
+    m:sourceUniqueId "0300.0116" ;
+    m:state "applicable_missing" ;
+    m:xmlFile "UAD1098/unheated-and-heated.xml" ;
+    m:xmlSha256 "14025ffec16aa0102979d9a2a135abc9efa18864824c0c5f7d7128199242ab65" .
+
+case:UAD1098-unheated-and-heated-check-0 m:count 2 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT" .
+
+case:UAD1098-unheated-and-heated-check-1 m:count 1 ;
+    m:expectedText "Dwelling" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1098-unheated-and-heated-check-2 m:count 1 ;
+    m:expectedText "None" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:SYSTEM/m:HEATING_SYSTEMS/m:HEATING_SYSTEM/m:HeatingSystemType" .
+
+case:UAD1098-unheated-and-heated-check-3 m:count 1 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:SYSTEM/m:SYSTEM_DETAIL" .
+
+case:UAD1098-unheated-and-heated-check-4 m:count 0 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:SYSTEM/m:SYSTEM_DETAIL/m:CoreHeatingSystemBelowGradeIndicator" .
+
+case:UAD1098-unheated-and-heated-check-5 m:count 1 ;
+    m:expectedText "Dwelling" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1098-unheated-and-heated-check-6 m:count 1 ;
+    m:expectedText "ForcedWarmAir" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:SYSTEM/m:HEATING_SYSTEMS/m:HEATING_SYSTEM/m:HeatingSystemType" .
+
+case:UAD1098-unheated-and-heated-check-7 m:count 1 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:SYSTEM/m:SYSTEM_DETAIL" .
+
+case:UAD1098-unheated-and-heated-check-8 m:count 0 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:SYSTEM/m:SYSTEM_DETAIL/m:CoreHeatingSystemBelowGradeIndicator" .
+
+case:UAD1098-unheated-and-heated-finding-0 m:dataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:SYSTEM/m:SYSTEM_DETAIL/m:CoreHeatingSystemBelowGradeIndicator" ;
+    m:ruleId "UAD1098" ;
+    m:severity "fatal" ;
+    m:violationKind "MissingRequiredValue" .
+
+case:schema m:path "chatgpt-sources/sources/schemas/UAD/GSE_UAD_3.6.0_v1.3/Combined/GSE_UAD_3.6.0_v1.3.xsd" ;
+    m:sha256 "0bb6650ab465753fe2023be14d414ad6db45820201b7fdee1d90023e49cbf129" .
+
+case:template m:path "tests/fixtures/it_1/r1/s1/UAD1687/Outbuilding-not-applicable.xml" ;
+    m:sha256 "0e8ea899ed1d26472d1425fb6029a6067cc2cd6fc114aad5ba448684f8a44d2f" .
+

@@ -1,0 +1,1356 @@
+@prefix t: <urn:uad36:test-suite:vocab:> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<urn:uad36:test-suite:date-chronology> a t:TestSuite ;
+    t:evaluationDate "2026-10-02" ;
+    t:expectedCaseCount 25 ;
+    t:expectedFixtureCount 50 ;
+    t:generatedBy "scripts/testing/generate_it_1_r11_s1_fixtures.py" ;
+    t:hasCase <urn:uad36:test-suite:date-chronology:UAD1051:following-year-boundary>,
+        <urn:uad36:test-suite:date-chronology:UAD1051:not-new-construction-control>,
+        <urn:uad36:test-suite:date-chronology:UAD1051:outbuilding-control>,
+        <urn:uad36:test-suite:date-chronology:UAD1051:previous-year-boundary>,
+        <urn:uad36:test-suite:date-chronology:UAD1051:same-year>,
+        <urn:uad36:test-suite:date-chronology:UAD1053:c1-two-year-boundary>,
+        <urn:uad36:test-suite:date-chronology:UAD1053:non-c1-effective-year-boundary>,
+        <urn:uad36:test-suite:date-chronology:UAD1053:outbuilding-control>,
+        <urn:uad36:test-suite:date-chronology:UAD1131:equal-effective-date>,
+        <urn:uad36:test-suite:date-chronology:UAD1131:other-property-contract-context>,
+        <urn:uad36:test-suite:date-chronology:UAD1206:equal-listing-dates>,
+        <urn:uad36:test-suite:date-chronology:UAD1206:repeated-listing-context>,
+        <urn:uad36:test-suite:date-chronology:UAD1258:today-boundary>,
+        <urn:uad36:test-suite:date-chronology:UAD1259:367-day-boundary>,
+        <urn:uad36:test-suite:date-chronology:UAD1505:today-boundary>,
+        <urn:uad36:test-suite:date-chronology:UAD1506:367-day-boundary>,
+        <urn:uad36:test-suite:date-chronology:UAD1529:appraiser-equal-effective-date>,
+        <urn:uad36:test-suite:date-chronology:UAD1529:other-role-control>,
+        <urn:uad36:test-suite:date-chronology:UAD1529:supervisor-equal-effective-date>,
+        <urn:uad36:test-suite:date-chronology:UAD1536:equal-effective-date>,
+        <urn:uad36:test-suite:date-chronology:UAD1557:equal-effective-date>,
+        <urn:uad36:test-suite:date-chronology:UAD1611:equal-effective-month>,
+        <urn:uad36:test-suite:date-chronology:UAD1611:same-month-earlier-day>,
+        <urn:uad36:test-suite:date-chronology:UAD1756:equal-effective-date>,
+        <urn:uad36:test-suite:date-chronology:UAD1757:367-day-boundary> ;
+    t:note "Schema-valid chronology fixtures derived from published SF1 XML. Expectations apply to the selected original CSV row only. Other business-rule findings may occur. Clock-dependent endpoint replay requires the recorded evaluation date." ;
+    t:publishedSourcePath "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 SF1_Appraisal/SF1_Appraisal_v1.4.xml" ;
+    t:publishedSourceSha256 "47509c23bcf28c3abb9c57e00a3f93cf52ed38fec3862d7cda24bffd6bca5be9" ;
+    t:scenarioId "IT-1R11S1" ;
+    t:schemaPath "chatgpt-sources/sources/schemas/UAD/GSE_UAD_3.6.0_v1.3/Combined/GSE_UAD_3.6.0_v1.3.xsd" ;
+    t:schemaSha256 "0bb6650ab465753fe2023be14d414ad6db45820201b7fdee1d90023e49cbf129" ;
+    t:schemaSource <urn:uad36:test-suite:date-chronology:schema:GSE_UAD_3.6.0_v1.3.xsd>,
+        <urn:uad36:test-suite:date-chronology:schema:GSE_UAD_3.6.0_xlink_v1.3.xsd>,
+        <urn:uad36:test-suite:date-chronology:schema:xml.xsd> ;
+    t:sourceRuleCount 14 .
+
+<urn:uad36:test-suite:date-chronology:UAD1051:following-year-boundary> a t:TestCase ;
+    t:applicabilityXPath "(/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:IMPROVEMENTS/m:IMPROVEMENT/m:IMPROVEMENT_DETAIL/m:ImprovementType = 'Dwelling') and (/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:PROPERTY_DETAIL/m:NewConstructionIndicator = 'true')" ;
+    t:baselineValue "2020" ;
+    t:caseId "following-year-boundary" ;
+    t:changedValue "2021" ;
+    t:comparisonPrecision "year" ;
+    t:evaluationDate "2026-10-02" ;
+    t:expectedApplicable true ;
+    t:hasFixture <urn:uad36:test-suite:date-chronology:UAD1051:following-year-boundary:permitted>,
+        <urn:uad36:test-suite:date-chronology:UAD1051:following-year-boundary:prohibited> ;
+    t:messageText "The property can only be considered as new construction when 'Year Built' for the dwelling(s) is within 1 year of the 'Effective Date of Appraisal'." ;
+    t:primaryDataElement "NewConstructionIndicator" ;
+    t:propertyAffected "Subject" ;
+    t:referenceValue "2019-09-20" ;
+    t:referenceXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_RECONCILIATION/m:VALUATION_RECONCILIATION_SUMMARY/m:VALUATION_RECONCILIATION_SUMMARY_DETAIL/m:AppraisalReportEffectiveDate" ;
+    t:ruleId "UAD1051" ;
+    t:ruleLogic "If NewConstructionIndicator = \"true\", and PropertyStructureBuiltYear is not the same year, or within 1 year of the AppraisalReportEffectiveDate, for one or more instances of IMPROVEMENT_DETAIL with ImprovementType = \"Dwelling\"." ;
+    t:scenarioId "IT-1R11S1" ;
+    t:setupChange <urn:uad36:test-suite:date-chronology:UAD1051:following-year-boundary:setup:0>,
+        <urn:uad36:test-suite:date-chronology:UAD1051:following-year-boundary:setup:1> ;
+    t:severity "Warning" ;
+    t:sourceFingerprint "3b3ca5c75743d6446c9b040efb82113bcb847ab91ee88bf4b49b6af1b91bab67" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1051> ;
+    t:sourceUniqueIdCell "0300.0010" ;
+    t:targetElement "PropertyStructureBuiltYear" ;
+    t:targetXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:IMPROVEMENTS/m:IMPROVEMENT/m:IMPROVEMENT_DETAIL/m:PropertyStructureBuiltYear" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/" .
+
+<urn:uad36:test-suite:date-chronology:UAD1051:following-year-boundary:permitted> a t:XMLFixture ;
+    t:expectedFindingCount 0 ;
+    t:expectedViolationKind "ProhibitedDateRelationship" ;
+    t:path "tests/fixtures/it_1/r11/s1/UAD1051/following-year-boundary-permitted.xml" ;
+    t:sha256 "930ab13a14a2a41572dedf4266fc919c2671b2c6d543acebab28ff8c1b8a1f56" ;
+    t:state "permitted" ;
+    t:targetValue "2020" ;
+    t:xsdValid true .
+
+<urn:uad36:test-suite:date-chronology:UAD1051:following-year-boundary:prohibited> a t:XMLFixture ;
+    t:expectedFindingCount 1 ;
+    t:expectedViolationKind "ProhibitedDateRelationship" ;
+    t:path "tests/fixtures/it_1/r11/s1/UAD1051/following-year-boundary-prohibited.xml" ;
+    t:sha256 "88391ec772d300ad27dac56d9b5bc2ea69203a753085f396ee6ca86da6ba25cb" ;
+    t:state "prohibited" ;
+    t:targetValue "2021" ;
+    t:xsdValid true .
+
+<urn:uad36:test-suite:date-chronology:UAD1051:following-year-boundary:setup:0> t:afterValue "true" ;
+    t:beforeValue "false" ;
+    t:xpath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:PROPERTY_DETAIL/m:NewConstructionIndicator" .
+
+<urn:uad36:test-suite:date-chronology:UAD1051:following-year-boundary:setup:1> t:afterValue "2020" ;
+    t:beforeValue "2004" ;
+    t:xpath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:IMPROVEMENTS/m:IMPROVEMENT/m:IMPROVEMENT_DETAIL/m:PropertyStructureBuiltYear" .
+
+<urn:uad36:test-suite:date-chronology:UAD1051:not-new-construction-control> a t:TestCase ;
+    t:applicabilityXPath "(/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:IMPROVEMENTS/m:IMPROVEMENT/m:IMPROVEMENT_DETAIL/m:ImprovementType = 'Dwelling') and (/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:PROPERTY_DETAIL/m:NewConstructionIndicator = 'true')" ;
+    t:baselineValue "2019" ;
+    t:caseId "not-new-construction-control" ;
+    t:changedValue "2010" ;
+    t:comparisonPrecision "year" ;
+    t:evaluationDate "2026-10-02" ;
+    t:expectedApplicable false ;
+    t:hasFixture <urn:uad36:test-suite:date-chronology:UAD1051:not-new-construction-control:changed-control>,
+        <urn:uad36:test-suite:date-chronology:UAD1051:not-new-construction-control:permitted> ;
+    t:messageText "The property can only be considered as new construction when 'Year Built' for the dwelling(s) is within 1 year of the 'Effective Date of Appraisal'." ;
+    t:primaryDataElement "NewConstructionIndicator" ;
+    t:propertyAffected "Subject" ;
+    t:referenceValue "2019-09-20" ;
+    t:referenceXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_RECONCILIATION/m:VALUATION_RECONCILIATION_SUMMARY/m:VALUATION_RECONCILIATION_SUMMARY_DETAIL/m:AppraisalReportEffectiveDate" ;
+    t:ruleId "UAD1051" ;
+    t:ruleLogic "If NewConstructionIndicator = \"true\", and PropertyStructureBuiltYear is not the same year, or within 1 year of the AppraisalReportEffectiveDate, for one or more instances of IMPROVEMENT_DETAIL with ImprovementType = \"Dwelling\"." ;
+    t:scenarioId "IT-1R11S1" ;
+    t:setupChange <urn:uad36:test-suite:date-chronology:UAD1051:not-new-construction-control:setup:0> ;
+    t:severity "Warning" ;
+    t:sourceFingerprint "3b3ca5c75743d6446c9b040efb82113bcb847ab91ee88bf4b49b6af1b91bab67" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1051> ;
+    t:sourceUniqueIdCell "0300.0010" ;
+    t:targetElement "PropertyStructureBuiltYear" ;
+    t:targetXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:IMPROVEMENTS/m:IMPROVEMENT/m:IMPROVEMENT_DETAIL/m:PropertyStructureBuiltYear" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/" .
+
+<urn:uad36:test-suite:date-chronology:UAD1051:not-new-construction-control:changed-control> a t:XMLFixture ;
+    t:expectedFindingCount 0 ;
+    t:expectedViolationKind "ProhibitedDateRelationship" ;
+    t:path "tests/fixtures/it_1/r11/s1/UAD1051/not-new-construction-control-changed-control.xml" ;
+    t:sha256 "7f6e27735ab7f0c90917e48d87d291bbe18b186c8676fa22c066d826af2fc563" ;
+    t:state "changed-control" ;
+    t:targetValue "2010" ;
+    t:xsdValid true .
+
+<urn:uad36:test-suite:date-chronology:UAD1051:not-new-construction-control:permitted> a t:XMLFixture ;
+    t:expectedFindingCount 0 ;
+    t:expectedViolationKind "ProhibitedDateRelationship" ;
+    t:path "tests/fixtures/it_1/r11/s1/UAD1051/not-new-construction-control-permitted.xml" ;
+    t:sha256 "01a63fbdc58e4b11cbb38287af458fd0f5b698c96a43970243f951798123ea11" ;
+    t:state "permitted" ;
+    t:targetValue "2019" ;
+    t:xsdValid true .
+
+<urn:uad36:test-suite:date-chronology:UAD1051:not-new-construction-control:setup:0> t:afterValue "2019" ;
+    t:beforeValue "2004" ;
+    t:xpath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:IMPROVEMENTS/m:IMPROVEMENT/m:IMPROVEMENT_DETAIL/m:PropertyStructureBuiltYear" .
+
+<urn:uad36:test-suite:date-chronology:UAD1051:outbuilding-control> a t:TestCase ;
+    t:applicabilityXPath "(/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:IMPROVEMENTS/m:IMPROVEMENT/m:IMPROVEMENT_DETAIL/m:ImprovementType = 'Dwelling') and (/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:PROPERTY_DETAIL/m:NewConstructionIndicator = 'true')" ;
+    t:baselineValue "2019" ;
+    t:caseId "outbuilding-control" ;
+    t:changedValue "2010" ;
+    t:comparisonPrecision "year" ;
+    t:evaluationDate "2026-10-02" ;
+    t:expectedApplicable false ;
+    t:hasFixture <urn:uad36:test-suite:date-chronology:UAD1051:outbuilding-control:changed-control>,
+        <urn:uad36:test-suite:date-chronology:UAD1051:outbuilding-control:permitted> ;
+    t:messageText "The property can only be considered as new construction when 'Year Built' for the dwelling(s) is within 1 year of the 'Effective Date of Appraisal'." ;
+    t:primaryDataElement "NewConstructionIndicator" ;
+    t:propertyAffected "Subject" ;
+    t:referenceValue "2019-09-20" ;
+    t:referenceXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_RECONCILIATION/m:VALUATION_RECONCILIATION_SUMMARY/m:VALUATION_RECONCILIATION_SUMMARY_DETAIL/m:AppraisalReportEffectiveDate" ;
+    t:ruleId "UAD1051" ;
+    t:ruleLogic "If NewConstructionIndicator = \"true\", and PropertyStructureBuiltYear is not the same year, or within 1 year of the AppraisalReportEffectiveDate, for one or more instances of IMPROVEMENT_DETAIL with ImprovementType = \"Dwelling\"." ;
+    t:scenarioId "IT-1R11S1" ;
+    t:setupChange <urn:uad36:test-suite:date-chronology:UAD1051:outbuilding-control:setup:0>,
+        <urn:uad36:test-suite:date-chronology:UAD1051:outbuilding-control:setup:1>,
+        <urn:uad36:test-suite:date-chronology:UAD1051:outbuilding-control:setup:2> ;
+    t:severity "Warning" ;
+    t:sourceFingerprint "3b3ca5c75743d6446c9b040efb82113bcb847ab91ee88bf4b49b6af1b91bab67" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1051> ;
+    t:sourceUniqueIdCell "0300.0010" ;
+    t:targetElement "PropertyStructureBuiltYear" ;
+    t:targetXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:IMPROVEMENTS/m:IMPROVEMENT/m:IMPROVEMENT_DETAIL/m:PropertyStructureBuiltYear" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/" .
+
+<urn:uad36:test-suite:date-chronology:UAD1051:outbuilding-control:changed-control> a t:XMLFixture ;
+    t:expectedFindingCount 0 ;
+    t:expectedViolationKind "ProhibitedDateRelationship" ;
+    t:path "tests/fixtures/it_1/r11/s1/UAD1051/outbuilding-control-changed-control.xml" ;
+    t:sha256 "b952bdbf71f03a5736512da196690e7e0251abafd30e87b3cd275656a7e962e3" ;
+    t:state "changed-control" ;
+    t:targetValue "2010" ;
+    t:xsdValid true .
+
+<urn:uad36:test-suite:date-chronology:UAD1051:outbuilding-control:permitted> a t:XMLFixture ;
+    t:expectedFindingCount 0 ;
+    t:expectedViolationKind "ProhibitedDateRelationship" ;
+    t:path "tests/fixtures/it_1/r11/s1/UAD1051/outbuilding-control-permitted.xml" ;
+    t:sha256 "f9c408609d7d83e82f6eb6e28cc9666ef361efa085fdf5fd0c3c033f04b65811" ;
+    t:state "permitted" ;
+    t:targetValue "2019" ;
+    t:xsdValid true .
+
+<urn:uad36:test-suite:date-chronology:UAD1051:outbuilding-control:setup:0> t:afterValue "true" ;
+    t:beforeValue "false" ;
+    t:xpath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:PROPERTY_DETAIL/m:NewConstructionIndicator" .
+
+<urn:uad36:test-suite:date-chronology:UAD1051:outbuilding-control:setup:1> t:afterValue "Outbuilding" ;
+    t:beforeValue "Dwelling" ;
+    t:xpath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:IMPROVEMENTS/m:IMPROVEMENT/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+<urn:uad36:test-suite:date-chronology:UAD1051:outbuilding-control:setup:2> t:afterValue "2019" ;
+    t:beforeValue "2004" ;
+    t:xpath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:IMPROVEMENTS/m:IMPROVEMENT/m:IMPROVEMENT_DETAIL/m:PropertyStructureBuiltYear" .
+
+<urn:uad36:test-suite:date-chronology:UAD1051:previous-year-boundary> a t:TestCase ;
+    t:applicabilityXPath "(/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:IMPROVEMENTS/m:IMPROVEMENT/m:IMPROVEMENT_DETAIL/m:ImprovementType = 'Dwelling') and (/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:PROPERTY_DETAIL/m:NewConstructionIndicator = 'true')" ;
+    t:baselineValue "2018" ;
+    t:caseId "previous-year-boundary" ;
+    t:changedValue "2017" ;
+    t:comparisonPrecision "year" ;
+    t:evaluationDate "2026-10-02" ;
+    t:expectedApplicable true ;
+    t:hasFixture <urn:uad36:test-suite:date-chronology:UAD1051:previous-year-boundary:permitted>,
+        <urn:uad36:test-suite:date-chronology:UAD1051:previous-year-boundary:prohibited> ;
+    t:messageText "The property can only be considered as new construction when 'Year Built' for the dwelling(s) is within 1 year of the 'Effective Date of Appraisal'." ;
+    t:primaryDataElement "NewConstructionIndicator" ;
+    t:propertyAffected "Subject" ;
+    t:referenceValue "2019-09-20" ;
+    t:referenceXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_RECONCILIATION/m:VALUATION_RECONCILIATION_SUMMARY/m:VALUATION_RECONCILIATION_SUMMARY_DETAIL/m:AppraisalReportEffectiveDate" ;
+    t:ruleId "UAD1051" ;
+    t:ruleLogic "If NewConstructionIndicator = \"true\", and PropertyStructureBuiltYear is not the same year, or within 1 year of the AppraisalReportEffectiveDate, for one or more instances of IMPROVEMENT_DETAIL with ImprovementType = \"Dwelling\"." ;
+    t:scenarioId "IT-1R11S1" ;
+    t:setupChange <urn:uad36:test-suite:date-chronology:UAD1051:previous-year-boundary:setup:0>,
+        <urn:uad36:test-suite:date-chronology:UAD1051:previous-year-boundary:setup:1> ;
+    t:severity "Warning" ;
+    t:sourceFingerprint "3b3ca5c75743d6446c9b040efb82113bcb847ab91ee88bf4b49b6af1b91bab67" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1051> ;
+    t:sourceUniqueIdCell "0300.0010" ;
+    t:targetElement "PropertyStructureBuiltYear" ;
+    t:targetXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:IMPROVEMENTS/m:IMPROVEMENT/m:IMPROVEMENT_DETAIL/m:PropertyStructureBuiltYear" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/" .
+
+<urn:uad36:test-suite:date-chronology:UAD1051:previous-year-boundary:permitted> a t:XMLFixture ;
+    t:expectedFindingCount 0 ;
+    t:expectedViolationKind "ProhibitedDateRelationship" ;
+    t:path "tests/fixtures/it_1/r11/s1/UAD1051/previous-year-boundary-permitted.xml" ;
+    t:sha256 "207846f2325e2aa10c39b751367c65fa741ac97183d68c4c799221895d8bafeb" ;
+    t:state "permitted" ;
+    t:targetValue "2018" ;
+    t:xsdValid true .
+
+<urn:uad36:test-suite:date-chronology:UAD1051:previous-year-boundary:prohibited> a t:XMLFixture ;
+    t:expectedFindingCount 1 ;
+    t:expectedViolationKind "ProhibitedDateRelationship" ;
+    t:path "tests/fixtures/it_1/r11/s1/UAD1051/previous-year-boundary-prohibited.xml" ;
+    t:sha256 "3b0d9dabc55726965111b9be225809652da6f68978c0046fdb87f21ad49d3d64" ;
+    t:state "prohibited" ;
+    t:targetValue "2017" ;
+    t:xsdValid true .
+
+<urn:uad36:test-suite:date-chronology:UAD1051:previous-year-boundary:setup:0> t:afterValue "true" ;
+    t:beforeValue "false" ;
+    t:xpath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:PROPERTY_DETAIL/m:NewConstructionIndicator" .
+
+<urn:uad36:test-suite:date-chronology:UAD1051:previous-year-boundary:setup:1> t:afterValue "2018" ;
+    t:beforeValue "2004" ;
+    t:xpath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:IMPROVEMENTS/m:IMPROVEMENT/m:IMPROVEMENT_DETAIL/m:PropertyStructureBuiltYear" .
+
+<urn:uad36:test-suite:date-chronology:UAD1051:same-year> a t:TestCase ;
+    t:applicabilityXPath "(/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:IMPROVEMENTS/m:IMPROVEMENT/m:IMPROVEMENT_DETAIL/m:ImprovementType = 'Dwelling') and (/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:PROPERTY_DETAIL/m:NewConstructionIndicator = 'true')" ;
+    t:baselineValue "2019" ;
+    t:caseId "same-year" ;
+    t:changedValue "2021" ;
+    t:comparisonPrecision "year" ;
+    t:evaluationDate "2026-10-02" ;
+    t:expectedApplicable true ;
+    t:hasFixture <urn:uad36:test-suite:date-chronology:UAD1051:same-year:permitted>,
+        <urn:uad36:test-suite:date-chronology:UAD1051:same-year:prohibited> ;
+    t:messageText "The property can only be considered as new construction when 'Year Built' for the dwelling(s) is within 1 year of the 'Effective Date of Appraisal'." ;
+    t:primaryDataElement "NewConstructionIndicator" ;
+    t:propertyAffected "Subject" ;
+    t:referenceValue "2019-09-20" ;
+    t:referenceXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_RECONCILIATION/m:VALUATION_RECONCILIATION_SUMMARY/m:VALUATION_RECONCILIATION_SUMMARY_DETAIL/m:AppraisalReportEffectiveDate" ;
+    t:ruleId "UAD1051" ;
+    t:ruleLogic "If NewConstructionIndicator = \"true\", and PropertyStructureBuiltYear is not the same year, or within 1 year of the AppraisalReportEffectiveDate, for one or more instances of IMPROVEMENT_DETAIL with ImprovementType = \"Dwelling\"." ;
+    t:scenarioId "IT-1R11S1" ;
+    t:setupChange <urn:uad36:test-suite:date-chronology:UAD1051:same-year:setup:0>,
+        <urn:uad36:test-suite:date-chronology:UAD1051:same-year:setup:1> ;
+    t:severity "Warning" ;
+    t:sourceFingerprint "3b3ca5c75743d6446c9b040efb82113bcb847ab91ee88bf4b49b6af1b91bab67" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1051> ;
+    t:sourceUniqueIdCell "0300.0010" ;
+    t:targetElement "PropertyStructureBuiltYear" ;
+    t:targetXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:IMPROVEMENTS/m:IMPROVEMENT/m:IMPROVEMENT_DETAIL/m:PropertyStructureBuiltYear" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/" .
+
+<urn:uad36:test-suite:date-chronology:UAD1051:same-year:permitted> a t:XMLFixture ;
+    t:expectedFindingCount 0 ;
+    t:expectedViolationKind "ProhibitedDateRelationship" ;
+    t:path "tests/fixtures/it_1/r11/s1/UAD1051/same-year-permitted.xml" ;
+    t:sha256 "e3d22389935d71212a3c81c0134933a12be388b7158780f1bc15aa073ab430c7" ;
+    t:state "permitted" ;
+    t:targetValue "2019" ;
+    t:xsdValid true .
+
+<urn:uad36:test-suite:date-chronology:UAD1051:same-year:prohibited> a t:XMLFixture ;
+    t:expectedFindingCount 1 ;
+    t:expectedViolationKind "ProhibitedDateRelationship" ;
+    t:path "tests/fixtures/it_1/r11/s1/UAD1051/same-year-prohibited.xml" ;
+    t:sha256 "88391ec772d300ad27dac56d9b5bc2ea69203a753085f396ee6ca86da6ba25cb" ;
+    t:state "prohibited" ;
+    t:targetValue "2021" ;
+    t:xsdValid true .
+
+<urn:uad36:test-suite:date-chronology:UAD1051:same-year:setup:0> t:afterValue "true" ;
+    t:beforeValue "false" ;
+    t:xpath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:PROPERTY_DETAIL/m:NewConstructionIndicator" .
+
+<urn:uad36:test-suite:date-chronology:UAD1051:same-year:setup:1> t:afterValue "2019" ;
+    t:beforeValue "2004" ;
+    t:xpath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:IMPROVEMENTS/m:IMPROVEMENT/m:IMPROVEMENT_DETAIL/m:PropertyStructureBuiltYear" .
+
+<urn:uad36:test-suite:date-chronology:UAD1053:c1-two-year-boundary> a t:TestCase ;
+    t:applicabilityXPath "(/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:IMPROVEMENTS/m:IMPROVEMENT/m:IMPROVEMENT_DETAIL/m:ImprovementType = 'Dwelling')" ;
+    t:baselineValue "2021" ;
+    t:caseId "c1-two-year-boundary" ;
+    t:changedValue "2022" ;
+    t:comparisonPrecision "year" ;
+    t:evaluationDate "2026-10-02" ;
+    t:expectedApplicable true ;
+    t:hasFixture <urn:uad36:test-suite:date-chronology:UAD1053:c1-two-year-boundary:permitted>,
+        <urn:uad36:test-suite:date-chronology:UAD1053:c1-two-year-boundary:prohibited> ;
+    t:messageText "The 'Year Built' for a dwelling cannot be after 'Effective Date of Appraisal'." ;
+    t:primaryDataElement "PropertyStructureBuiltYear" ;
+    t:propertyAffected "Subject" ;
+    t:referenceValue "2019-09-20" ;
+    t:referenceXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_RECONCILIATION/m:VALUATION_RECONCILIATION_SUMMARY/m:VALUATION_RECONCILIATION_SUMMARY_DETAIL/m:AppraisalReportEffectiveDate" ;
+    t:ruleId "UAD1053" ;
+    t:ruleLogic "If ((ExteriorConditionRatingCode = \"C1\" and PropertyStructureBuiltYear > year of (AppraisalReportEffectiveDate) + 2 years ) or (ExteriorConditionRatingCode <> \"C1\" and PropertyStructureBuiltYear > year of (AppraisalReportEffectiveDate)) in a given instance of IMPROVEMENT_DETAIL with ImprovementType = \"Dwelling\"" ;
+    t:scenarioId "IT-1R11S1" ;
+    t:setupChange <urn:uad36:test-suite:date-chronology:UAD1053:c1-two-year-boundary:setup:0>,
+        <urn:uad36:test-suite:date-chronology:UAD1053:c1-two-year-boundary:setup:1>,
+        <urn:uad36:test-suite:date-chronology:UAD1053:c1-two-year-boundary:setup:2> ;
+    t:severity "Warning" ;
+    t:sourceFingerprint "b468bc3be2946c82aee64972d55b746eab9477b87298bc4e35d20853ffcee07b" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1053> ;
+    t:sourceUniqueIdCell "0300.0011" ;
+    t:targetElement "PropertyStructureBuiltYear" ;
+    t:targetXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:IMPROVEMENTS/m:IMPROVEMENT/m:IMPROVEMENT_DETAIL/m:PropertyStructureBuiltYear" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/IMPROVEMENT_DETAIL/" .
+
+<urn:uad36:test-suite:date-chronology:UAD1053:c1-two-year-boundary:permitted> a t:XMLFixture ;
+    t:expectedFindingCount 0 ;
+    t:expectedViolationKind "ProhibitedDateRelationship" ;
+    t:path "tests/fixtures/it_1/r11/s1/UAD1053/c1-two-year-boundary-permitted.xml" ;
+    t:sha256 "ea862b9b37aac656c7702b8d12b333e815015550088149242eb50c011ca8c9c4" ;
+    t:state "permitted" ;
+    t:targetValue "2021" ;
+    t:xsdValid true .
+
+<urn:uad36:test-suite:date-chronology:UAD1053:c1-two-year-boundary:prohibited> a t:XMLFixture ;
+    t:expectedFindingCount 1 ;
+    t:expectedViolationKind "ProhibitedDateRelationship" ;
+    t:path "tests/fixtures/it_1/r11/s1/UAD1053/c1-two-year-boundary-prohibited.xml" ;
+    t:sha256 "2eb83b587aa105eb7d552cfdd9eade0976626d2473c341a59d8998cc29f4df3c" ;
+    t:state "prohibited" ;
+    t:targetValue "2022" ;
+    t:xsdValid true .
+
+<urn:uad36:test-suite:date-chronology:UAD1053:c1-two-year-boundary:setup:0> t:afterValue "true" ;
+    t:beforeValue "false" ;
+    t:xpath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:PROPERTY_DETAIL/m:NewConstructionIndicator" .
+
+<urn:uad36:test-suite:date-chronology:UAD1053:c1-two-year-boundary:setup:1> t:afterValue "C1" ;
+    t:beforeValue "C4" ;
+    t:xpath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:IMPROVEMENTS/m:IMPROVEMENT/m:STRUCTURE/m:STRUCTURE_DETAIL/m:ExteriorConditionRatingCode" .
+
+<urn:uad36:test-suite:date-chronology:UAD1053:c1-two-year-boundary:setup:2> t:afterValue "2021" ;
+    t:beforeValue "2004" ;
+    t:xpath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:IMPROVEMENTS/m:IMPROVEMENT/m:IMPROVEMENT_DETAIL/m:PropertyStructureBuiltYear" .
+
+<urn:uad36:test-suite:date-chronology:UAD1053:non-c1-effective-year-boundary> a t:TestCase ;
+    t:applicabilityXPath "(/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:IMPROVEMENTS/m:IMPROVEMENT/m:IMPROVEMENT_DETAIL/m:ImprovementType = 'Dwelling')" ;
+    t:baselineValue "2019" ;
+    t:caseId "non-c1-effective-year-boundary" ;
+    t:changedValue "2020" ;
+    t:comparisonPrecision "year" ;
+    t:evaluationDate "2026-10-02" ;
+    t:expectedApplicable true ;
+    t:hasFixture <urn:uad36:test-suite:date-chronology:UAD1053:non-c1-effective-year-boundary:permitted>,
+        <urn:uad36:test-suite:date-chronology:UAD1053:non-c1-effective-year-boundary:prohibited> ;
+    t:messageText "The 'Year Built' for a dwelling cannot be after 'Effective Date of Appraisal'." ;
+    t:primaryDataElement "PropertyStructureBuiltYear" ;
+    t:propertyAffected "Subject" ;
+    t:referenceValue "2019-09-20" ;
+    t:referenceXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_RECONCILIATION/m:VALUATION_RECONCILIATION_SUMMARY/m:VALUATION_RECONCILIATION_SUMMARY_DETAIL/m:AppraisalReportEffectiveDate" ;
+    t:ruleId "UAD1053" ;
+    t:ruleLogic "If ((ExteriorConditionRatingCode = \"C1\" and PropertyStructureBuiltYear > year of (AppraisalReportEffectiveDate) + 2 years ) or (ExteriorConditionRatingCode <> \"C1\" and PropertyStructureBuiltYear > year of (AppraisalReportEffectiveDate)) in a given instance of IMPROVEMENT_DETAIL with ImprovementType = \"Dwelling\"" ;
+    t:scenarioId "IT-1R11S1" ;
+    t:setupChange <urn:uad36:test-suite:date-chronology:UAD1053:non-c1-effective-year-boundary:setup:0>,
+        <urn:uad36:test-suite:date-chronology:UAD1053:non-c1-effective-year-boundary:setup:1> ;
+    t:severity "Warning" ;
+    t:sourceFingerprint "b468bc3be2946c82aee64972d55b746eab9477b87298bc4e35d20853ffcee07b" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1053> ;
+    t:sourceUniqueIdCell "0300.0011" ;
+    t:targetElement "PropertyStructureBuiltYear" ;
+    t:targetXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:IMPROVEMENTS/m:IMPROVEMENT/m:IMPROVEMENT_DETAIL/m:PropertyStructureBuiltYear" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/IMPROVEMENT_DETAIL/" .
+
+<urn:uad36:test-suite:date-chronology:UAD1053:non-c1-effective-year-boundary:permitted> a t:XMLFixture ;
+    t:expectedFindingCount 0 ;
+    t:expectedViolationKind "ProhibitedDateRelationship" ;
+    t:path "tests/fixtures/it_1/r11/s1/UAD1053/non-c1-effective-year-boundary-permitted.xml" ;
+    t:sha256 "e3d22389935d71212a3c81c0134933a12be388b7158780f1bc15aa073ab430c7" ;
+    t:state "permitted" ;
+    t:targetValue "2019" ;
+    t:xsdValid true .
+
+<urn:uad36:test-suite:date-chronology:UAD1053:non-c1-effective-year-boundary:prohibited> a t:XMLFixture ;
+    t:expectedFindingCount 1 ;
+    t:expectedViolationKind "ProhibitedDateRelationship" ;
+    t:path "tests/fixtures/it_1/r11/s1/UAD1053/non-c1-effective-year-boundary-prohibited.xml" ;
+    t:sha256 "930ab13a14a2a41572dedf4266fc919c2671b2c6d543acebab28ff8c1b8a1f56" ;
+    t:state "prohibited" ;
+    t:targetValue "2020" ;
+    t:xsdValid true .
+
+<urn:uad36:test-suite:date-chronology:UAD1053:non-c1-effective-year-boundary:setup:0> t:afterValue "true" ;
+    t:beforeValue "false" ;
+    t:xpath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:PROPERTY_DETAIL/m:NewConstructionIndicator" .
+
+<urn:uad36:test-suite:date-chronology:UAD1053:non-c1-effective-year-boundary:setup:1> t:afterValue "2019" ;
+    t:beforeValue "2004" ;
+    t:xpath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:IMPROVEMENTS/m:IMPROVEMENT/m:IMPROVEMENT_DETAIL/m:PropertyStructureBuiltYear" .
+
+<urn:uad36:test-suite:date-chronology:UAD1053:outbuilding-control> a t:TestCase ;
+    t:applicabilityXPath "(/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:IMPROVEMENTS/m:IMPROVEMENT/m:IMPROVEMENT_DETAIL/m:ImprovementType = 'Dwelling')" ;
+    t:baselineValue "2019" ;
+    t:caseId "outbuilding-control" ;
+    t:changedValue "2022" ;
+    t:comparisonPrecision "year" ;
+    t:evaluationDate "2026-10-02" ;
+    t:expectedApplicable false ;
+    t:hasFixture <urn:uad36:test-suite:date-chronology:UAD1053:outbuilding-control:changed-control>,
+        <urn:uad36:test-suite:date-chronology:UAD1053:outbuilding-control:permitted> ;
+    t:messageText "The 'Year Built' for a dwelling cannot be after 'Effective Date of Appraisal'." ;
+    t:primaryDataElement "PropertyStructureBuiltYear" ;
+    t:propertyAffected "Subject" ;
+    t:referenceValue "2019-09-20" ;
+    t:referenceXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_RECONCILIATION/m:VALUATION_RECONCILIATION_SUMMARY/m:VALUATION_RECONCILIATION_SUMMARY_DETAIL/m:AppraisalReportEffectiveDate" ;
+    t:ruleId "UAD1053" ;
+    t:ruleLogic "If ((ExteriorConditionRatingCode = \"C1\" and PropertyStructureBuiltYear > year of (AppraisalReportEffectiveDate) + 2 years ) or (ExteriorConditionRatingCode <> \"C1\" and PropertyStructureBuiltYear > year of (AppraisalReportEffectiveDate)) in a given instance of IMPROVEMENT_DETAIL with ImprovementType = \"Dwelling\"" ;
+    t:scenarioId "IT-1R11S1" ;
+    t:setupChange <urn:uad36:test-suite:date-chronology:UAD1053:outbuilding-control:setup:0>,
+        <urn:uad36:test-suite:date-chronology:UAD1053:outbuilding-control:setup:1>,
+        <urn:uad36:test-suite:date-chronology:UAD1053:outbuilding-control:setup:2> ;
+    t:severity "Warning" ;
+    t:sourceFingerprint "b468bc3be2946c82aee64972d55b746eab9477b87298bc4e35d20853ffcee07b" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1053> ;
+    t:sourceUniqueIdCell "0300.0011" ;
+    t:targetElement "PropertyStructureBuiltYear" ;
+    t:targetXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:IMPROVEMENTS/m:IMPROVEMENT/m:IMPROVEMENT_DETAIL/m:PropertyStructureBuiltYear" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/IMPROVEMENT_DETAIL/" .
+
+<urn:uad36:test-suite:date-chronology:UAD1053:outbuilding-control:changed-control> a t:XMLFixture ;
+    t:expectedFindingCount 0 ;
+    t:expectedViolationKind "ProhibitedDateRelationship" ;
+    t:path "tests/fixtures/it_1/r11/s1/UAD1053/outbuilding-control-changed-control.xml" ;
+    t:sha256 "1cf114516d8b64c3e656f4e31f38e18b608a6e799b547eec6b9b019f0e4e4062" ;
+    t:state "changed-control" ;
+    t:targetValue "2022" ;
+    t:xsdValid true .
+
+<urn:uad36:test-suite:date-chronology:UAD1053:outbuilding-control:permitted> a t:XMLFixture ;
+    t:expectedFindingCount 0 ;
+    t:expectedViolationKind "ProhibitedDateRelationship" ;
+    t:path "tests/fixtures/it_1/r11/s1/UAD1053/outbuilding-control-permitted.xml" ;
+    t:sha256 "f9c408609d7d83e82f6eb6e28cc9666ef361efa085fdf5fd0c3c033f04b65811" ;
+    t:state "permitted" ;
+    t:targetValue "2019" ;
+    t:xsdValid true .
+
+<urn:uad36:test-suite:date-chronology:UAD1053:outbuilding-control:setup:0> t:afterValue "true" ;
+    t:beforeValue "false" ;
+    t:xpath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:PROPERTY_DETAIL/m:NewConstructionIndicator" .
+
+<urn:uad36:test-suite:date-chronology:UAD1053:outbuilding-control:setup:1> t:afterValue "Outbuilding" ;
+    t:beforeValue "Dwelling" ;
+    t:xpath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:IMPROVEMENTS/m:IMPROVEMENT/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+<urn:uad36:test-suite:date-chronology:UAD1053:outbuilding-control:setup:2> t:afterValue "2019" ;
+    t:beforeValue "2004" ;
+    t:xpath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:IMPROVEMENTS/m:IMPROVEMENT/m:IMPROVEMENT_DETAIL/m:PropertyStructureBuiltYear" .
+
+<urn:uad36:test-suite:date-chronology:UAD1131:equal-effective-date> a t:TestCase ;
+    t:applicabilityXPath "true()" ;
+    t:baselineValue "2019-09-20" ;
+    t:caseId "equal-effective-date" ;
+    t:changedValue "2019-09-21" ;
+    t:comparisonPrecision "date" ;
+    t:evaluationDate "2026-10-02" ;
+    t:expectedApplicable true ;
+    t:hasFixture <urn:uad36:test-suite:date-chronology:UAD1131:equal-effective-date:permitted>,
+        <urn:uad36:test-suite:date-chronology:UAD1131:equal-effective-date:prohibited> ;
+    t:messageText "The 'Contract Date' cannot be after the 'Effective Date of Appraisal'." ;
+    t:primaryDataElement "SalesContractDate" ;
+    t:propertyAffected "Subject" ;
+    t:referenceValue "2019-09-20" ;
+    t:referenceXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_RECONCILIATION/m:VALUATION_RECONCILIATION_SUMMARY/m:VALUATION_RECONCILIATION_SUMMARY_DETAIL/m:AppraisalReportEffectiveDate" ;
+    t:ruleId "UAD1131" ;
+    t:ruleLogic "If SalesContractDate > AppraisalReportEffectiveDate" ;
+    t:scenarioId "IT-1R11S1" ;
+    t:setupChange <urn:uad36:test-suite:date-chronology:UAD1131:equal-effective-date:setup:0> ;
+    t:severity "Warning" ;
+    t:sourceFingerprint "854b7de4a16591693f782f8b9d9d9c9d1748e4f7cec63ccb84ebc5ae00f79ae3" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1131> ;
+    t:sourceUniqueIdCell "0600.0009" ;
+    t:targetElement "SalesContractDate" ;
+    t:targetXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:SALES_CONTRACTS/m:SALES_CONTRACT/m:SALES_CONTRACT_DETAIL/m:SalesContractDate" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SALES_CONTRACTS/SALES_CONTRACT/SALES_CONTRACT_DETAIL/" .
+
+<urn:uad36:test-suite:date-chronology:UAD1131:equal-effective-date:permitted> a t:XMLFixture ;
+    t:expectedFindingCount 0 ;
+    t:expectedViolationKind "ProhibitedDateRelationship" ;
+    t:path "tests/fixtures/it_1/r11/s1/UAD1131/equal-effective-date-permitted.xml" ;
+    t:sha256 "8021b5acc37f357edd30731d6b9bb42e16c049cfb244537ae6b070e1758b6360" ;
+    t:state "permitted" ;
+    t:targetValue "2019-09-20" ;
+    t:xsdValid true .
+
+<urn:uad36:test-suite:date-chronology:UAD1131:equal-effective-date:prohibited> a t:XMLFixture ;
+    t:expectedFindingCount 1 ;
+    t:expectedViolationKind "ProhibitedDateRelationship" ;
+    t:path "tests/fixtures/it_1/r11/s1/UAD1131/equal-effective-date-prohibited.xml" ;
+    t:sha256 "46498b76f0e9c43108303b8c22bdcc8cca1d01d70369562928da081b1d303c3b" ;
+    t:state "prohibited" ;
+    t:targetValue "2019-09-21" ;
+    t:xsdValid true .
+
+<urn:uad36:test-suite:date-chronology:UAD1131:equal-effective-date:setup:0> t:afterValue "2019-09-20" ;
+    t:beforeValue "2019-09-17" ;
+    t:xpath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:SALES_CONTRACTS/m:SALES_CONTRACT/m:SALES_CONTRACT_DETAIL/m:SalesContractDate" .
+
+<urn:uad36:test-suite:date-chronology:UAD1131:other-property-contract-context> a t:TestCase ;
+    t:applicabilityXPath "true()" ;
+    t:baselineValue "2019-09-20" ;
+    t:caseId "other-property-contract-context" ;
+    t:changedValue "2019-09-21" ;
+    t:comparisonPrecision "date" ;
+    t:evaluationDate "2026-10-02" ;
+    t:expectedApplicable true ;
+    t:hasFixture <urn:uad36:test-suite:date-chronology:UAD1131:other-property-contract-context:permitted>,
+        <urn:uad36:test-suite:date-chronology:UAD1131:other-property-contract-context:prohibited> ;
+    t:messageText "The 'Contract Date' cannot be after the 'Effective Date of Appraisal'." ;
+    t:primaryDataElement "SalesContractDate" ;
+    t:propertyAffected "Subject" ;
+    t:referenceValue "2019-09-20" ;
+    t:referenceXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_RECONCILIATION/m:VALUATION_RECONCILIATION_SUMMARY/m:VALUATION_RECONCILIATION_SUMMARY_DETAIL/m:AppraisalReportEffectiveDate" ;
+    t:ruleId "UAD1131" ;
+    t:ruleLogic "If SalesContractDate > AppraisalReportEffectiveDate" ;
+    t:scenarioId "IT-1R11S1" ;
+    t:setupChange <urn:uad36:test-suite:date-chronology:UAD1131:other-property-contract-context:setup:0>,
+        <urn:uad36:test-suite:date-chronology:UAD1131:other-property-contract-context:setup:1> ;
+    t:severity "Warning" ;
+    t:sourceFingerprint "854b7de4a16591693f782f8b9d9d9c9d1748e4f7cec63ccb84ebc5ae00f79ae3" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1131> ;
+    t:sourceUniqueIdCell "0600.0009" ;
+    t:targetElement "SalesContractDate" ;
+    t:targetXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:SALES_CONTRACTS/m:SALES_CONTRACT/m:SALES_CONTRACT_DETAIL/m:SalesContractDate" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SALES_CONTRACTS/SALES_CONTRACT/SALES_CONTRACT_DETAIL/" .
+
+<urn:uad36:test-suite:date-chronology:UAD1131:other-property-contract-context:permitted> a t:XMLFixture ;
+    t:expectedFindingCount 0 ;
+    t:expectedViolationKind "ProhibitedDateRelationship" ;
+    t:path "tests/fixtures/it_1/r11/s1/UAD1131/other-property-contract-context-permitted.xml" ;
+    t:sha256 "7f2535ea233532fa098389481ef4cec3102de6b64825311a75e68da180605e31" ;
+    t:state "permitted" ;
+    t:targetValue "2019-09-20" ;
+    t:xsdValid true .
+
+<urn:uad36:test-suite:date-chronology:UAD1131:other-property-contract-context:prohibited> a t:XMLFixture ;
+    t:expectedFindingCount 1 ;
+    t:expectedViolationKind "ProhibitedDateRelationship" ;
+    t:path "tests/fixtures/it_1/r11/s1/UAD1131/other-property-contract-context-prohibited.xml" ;
+    t:sha256 "caeef4281052b68790565a672d617113dd7b547d1bc5d7e5f0889b8dfbf603a0" ;
+    t:state "prohibited" ;
+    t:targetValue "2019-09-21" ;
+    t:xsdValid true .
+
+<urn:uad36:test-suite:date-chronology:UAD1131:other-property-contract-context:setup:0> t:afterValue "2019-10-01" ;
+    t:beforeValue "2019-07-22" ;
+    t:xpath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[2]/m:SALES_CONTRACTS/m:SALES_CONTRACT/m:SALES_CONTRACT_DETAIL/m:SalesContractDate" .
+
+<urn:uad36:test-suite:date-chronology:UAD1131:other-property-contract-context:setup:1> t:afterValue "2019-09-20" ;
+    t:beforeValue "2019-09-17" ;
+    t:xpath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:SALES_CONTRACTS/m:SALES_CONTRACT/m:SALES_CONTRACT_DETAIL/m:SalesContractDate" .
+
+<urn:uad36:test-suite:date-chronology:UAD1206:equal-listing-dates> a t:TestCase ;
+    t:applicabilityXPath "true()" ;
+    t:baselineValue "2019-09-17" ;
+    t:caseId "equal-listing-dates" ;
+    t:changedValue "2019-09-18" ;
+    t:comparisonPrecision "date" ;
+    t:evaluationDate "2026-10-02" ;
+    t:expectedApplicable true ;
+    t:hasFixture <urn:uad36:test-suite:date-chronology:UAD1206:equal-listing-dates:permitted>,
+        <urn:uad36:test-suite:date-chronology:UAD1206:equal-listing-dates:prohibited> ;
+    t:messageText "The listing start date cannot be after the listing end date." ;
+    t:primaryDataElement "ListingStartDate" ;
+    t:propertyAffected "Subject" ;
+    t:referenceValue "2019-09-17" ;
+    t:referenceXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:LISTING_INFORMATIONS/m:LISTING_INFORMATION/m:LISTING_INFORMATION_DETAIL/m:ListingEndDate" ;
+    t:ruleId "UAD1206" ;
+    t:ruleLogic "If ListingStartDate > ListingEndDate in a given instance of LISTING_INFORMATION_DETAIL" ;
+    t:scenarioId "IT-1R11S1" ;
+    t:setupChange <urn:uad36:test-suite:date-chronology:UAD1206:equal-listing-dates:setup:0> ;
+    t:severity "Fatal" ;
+    t:sourceFingerprint "4ecb705407477878c1ad4d9bf82af6d98d0248be95330cbe67ede4f75b2361f3" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1206> ;
+    t:sourceUniqueIdCell "0900.0012" ;
+    t:targetElement "ListingStartDate" ;
+    t:targetXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:LISTING_INFORMATIONS/m:LISTING_INFORMATION/m:LISTING_INFORMATION_DETAIL/m:ListingStartDate" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/LISTING_INFORMATIONS/LISTING_INFORMATION/LISTING_INFORMATION_DETAIL/" .
+
+<urn:uad36:test-suite:date-chronology:UAD1206:equal-listing-dates:permitted> a t:XMLFixture ;
+    t:expectedFindingCount 0 ;
+    t:expectedViolationKind "ProhibitedDateRelationship" ;
+    t:path "tests/fixtures/it_1/r11/s1/UAD1206/equal-listing-dates-permitted.xml" ;
+    t:sha256 "ff0206e9a92cd9bdf847a76033ff52938487398c75393d92aa016241aa812004" ;
+    t:state "permitted" ;
+    t:targetValue "2019-09-17" ;
+    t:xsdValid true .
+
+<urn:uad36:test-suite:date-chronology:UAD1206:equal-listing-dates:prohibited> a t:XMLFixture ;
+    t:expectedFindingCount 1 ;
+    t:expectedViolationKind "ProhibitedDateRelationship" ;
+    t:path "tests/fixtures/it_1/r11/s1/UAD1206/equal-listing-dates-prohibited.xml" ;
+    t:sha256 "7b4bb1aceaa36265bb35fc3ca9c12093cfc6b4017f8d36e02d8793bd4596806a" ;
+    t:state "prohibited" ;
+    t:targetValue "2019-09-18" ;
+    t:xsdValid true .
+
+<urn:uad36:test-suite:date-chronology:UAD1206:equal-listing-dates:setup:0> t:afterValue "2019-09-17" ;
+    t:beforeValue "2019-09-05" ;
+    t:xpath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:LISTING_INFORMATIONS/m:LISTING_INFORMATION/m:LISTING_INFORMATION_DETAIL/m:ListingStartDate" .
+
+<urn:uad36:test-suite:date-chronology:UAD1206:repeated-listing-context> a t:TestCase ;
+    t:addedContextXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:LISTING_INFORMATIONS/m:LISTING_INFORMATION[2]" ;
+    t:applicabilityXPath "true()" ;
+    t:baselineValue "2019-09-17" ;
+    t:caseId "repeated-listing-context" ;
+    t:changedValue "2019-09-18" ;
+    t:comparisonPrecision "date" ;
+    t:evaluationDate "2026-10-02" ;
+    t:expectedApplicable true ;
+    t:hasFixture <urn:uad36:test-suite:date-chronology:UAD1206:repeated-listing-context:permitted>,
+        <urn:uad36:test-suite:date-chronology:UAD1206:repeated-listing-context:prohibited> ;
+    t:messageText "The listing start date cannot be after the listing end date." ;
+    t:primaryDataElement "ListingStartDate" ;
+    t:propertyAffected "Subject" ;
+    t:referenceValue "2019-09-17" ;
+    t:referenceXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:LISTING_INFORMATIONS/m:LISTING_INFORMATION[1]/m:LISTING_INFORMATION_DETAIL/m:ListingEndDate" ;
+    t:ruleId "UAD1206" ;
+    t:ruleLogic "If ListingStartDate > ListingEndDate in a given instance of LISTING_INFORMATION_DETAIL" ;
+    t:scenarioId "IT-1R11S1" ;
+    t:setupChange <urn:uad36:test-suite:date-chronology:UAD1206:repeated-listing-context:setup:0> ;
+    t:severity "Fatal" ;
+    t:sourceFingerprint "4ecb705407477878c1ad4d9bf82af6d98d0248be95330cbe67ede4f75b2361f3" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1206> ;
+    t:sourceUniqueIdCell "0900.0012" ;
+    t:targetElement "ListingStartDate" ;
+    t:targetXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:LISTING_INFORMATIONS/m:LISTING_INFORMATION[1]/m:LISTING_INFORMATION_DETAIL/m:ListingStartDate" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/LISTING_INFORMATIONS/LISTING_INFORMATION/LISTING_INFORMATION_DETAIL/" .
+
+<urn:uad36:test-suite:date-chronology:UAD1206:repeated-listing-context:permitted> a t:XMLFixture ;
+    t:expectedFindingCount 0 ;
+    t:expectedViolationKind "ProhibitedDateRelationship" ;
+    t:path "tests/fixtures/it_1/r11/s1/UAD1206/repeated-listing-context-permitted.xml" ;
+    t:sha256 "dc426677857e05ac68e735fc055b9c9bc4e0389a24032a4b7894aface644b3ce" ;
+    t:state "permitted" ;
+    t:targetValue "2019-09-17" ;
+    t:xsdValid true .
+
+<urn:uad36:test-suite:date-chronology:UAD1206:repeated-listing-context:prohibited> a t:XMLFixture ;
+    t:expectedFindingCount 1 ;
+    t:expectedViolationKind "ProhibitedDateRelationship" ;
+    t:path "tests/fixtures/it_1/r11/s1/UAD1206/repeated-listing-context-prohibited.xml" ;
+    t:sha256 "a4929febb729aa427daa5fcee6d44b6cfd49709b47af0fd158caf9be7f2c6d94" ;
+    t:state "prohibited" ;
+    t:targetValue "2019-09-18" ;
+    t:xsdValid true .
+
+<urn:uad36:test-suite:date-chronology:UAD1206:repeated-listing-context:setup:0> t:afterValue "2019-09-17" ;
+    t:beforeValue "2019-09-05" ;
+    t:xpath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:LISTING_INFORMATIONS/m:LISTING_INFORMATION[1]/m:LISTING_INFORMATION_DETAIL/m:ListingStartDate" .
+
+<urn:uad36:test-suite:date-chronology:UAD1258:today-boundary> a t:TestCase ;
+    t:applicabilityXPath "true()" ;
+    t:baselineValue "2026-10-02" ;
+    t:caseId "today-boundary" ;
+    t:changedValue "2026-10-03" ;
+    t:comparisonPrecision "date" ;
+    t:evaluationDate "2026-10-02" ;
+    t:expectedApplicable true ;
+    t:hasFixture <urn:uad36:test-suite:date-chronology:UAD1258:today-boundary:permitted>,
+        <urn:uad36:test-suite:date-chronology:UAD1258:today-boundary:prohibited> ;
+    t:messageText "The 'Effective Date of Appraisal' cannot be a future date." ;
+    t:primaryDataElement "AppraisalReportEffectiveDate" ;
+    t:propertyAffected "N/A" ;
+    t:referenceValue "2026-10-02" ;
+    t:referenceXPath "" ;
+    t:ruleId "UAD1258" ;
+    t:ruleLogic "If AppraisalReportEffectiveDate is in the future" ;
+    t:scenarioId "IT-1R11S1" ;
+    t:setupChange <urn:uad36:test-suite:date-chronology:UAD1258:today-boundary:setup:0> ;
+    t:severity "Fatal" ;
+    t:sourceFingerprint "27a11458158e9f7576b24549252ce2903d0a8aa5065c7d8c7f10b24a57da66f9" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1258> ;
+    t:sourceUniqueIdCell "1300.0012" ;
+    t:targetElement "AppraisalReportEffectiveDate" ;
+    t:targetXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_RECONCILIATION/m:VALUATION_RECONCILIATION_SUMMARY/m:VALUATION_RECONCILIATION_SUMMARY_DETAIL/m:AppraisalReportEffectiveDate" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/VALUATION_RECONCILIATION/VALUATION_RECONCILIATION_SUMMARY/VALUATION_RECONCILIATION_SUMMARY_DETAIL/" .
+
+<urn:uad36:test-suite:date-chronology:UAD1258:today-boundary:permitted> a t:XMLFixture ;
+    t:expectedFindingCount 0 ;
+    t:expectedViolationKind "ProhibitedDateRelationship" ;
+    t:path "tests/fixtures/it_1/r11/s1/UAD1258/today-boundary-permitted.xml" ;
+    t:sha256 "1b690b5393a59439bd6d2c4c8cf1490ff3d43fb7ef00fd9192e381f6c4deb909" ;
+    t:state "permitted" ;
+    t:targetValue "2026-10-02" ;
+    t:xsdValid true .
+
+<urn:uad36:test-suite:date-chronology:UAD1258:today-boundary:prohibited> a t:XMLFixture ;
+    t:expectedFindingCount 1 ;
+    t:expectedViolationKind "ProhibitedDateRelationship" ;
+    t:path "tests/fixtures/it_1/r11/s1/UAD1258/today-boundary-prohibited.xml" ;
+    t:sha256 "e58f497787eb91f592215b8cb9d55fcda815802588f3bf7694c3520b35361351" ;
+    t:state "prohibited" ;
+    t:targetValue "2026-10-03" ;
+    t:xsdValid true .
+
+<urn:uad36:test-suite:date-chronology:UAD1258:today-boundary:setup:0> t:afterValue "2026-10-02" ;
+    t:beforeValue "2019-09-20" ;
+    t:xpath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_RECONCILIATION/m:VALUATION_RECONCILIATION_SUMMARY/m:VALUATION_RECONCILIATION_SUMMARY_DETAIL/m:AppraisalReportEffectiveDate" .
+
+<urn:uad36:test-suite:date-chronology:UAD1259:367-day-boundary> a t:TestCase ;
+    t:applicabilityXPath "true()" ;
+    t:baselineValue "2025-09-30" ;
+    t:caseId "367-day-boundary" ;
+    t:changedValue "2025-09-29" ;
+    t:comparisonPrecision "date" ;
+    t:evaluationDate "2026-10-02" ;
+    t:expectedApplicable true ;
+    t:hasFixture <urn:uad36:test-suite:date-chronology:UAD1259:367-day-boundary:permitted>,
+        <urn:uad36:test-suite:date-chronology:UAD1259:367-day-boundary:prohibited> ;
+    t:messageText "The 'Effective Date of Appraisal' cannot be more than a year old." ;
+    t:primaryDataElement "AppraisalReportEffectiveDate" ;
+    t:propertyAffected "N/A" ;
+    t:referenceValue "2026-10-02" ;
+    t:referenceXPath "" ;
+    t:ruleId "UAD1259" ;
+    t:ruleLogic "If AppraisalReportEffectiveDate is more than 367 days before the current date" ;
+    t:scenarioId "IT-1R11S1" ;
+    t:setupChange <urn:uad36:test-suite:date-chronology:UAD1259:367-day-boundary:setup:0> ;
+    t:severity "Warning" ;
+    t:sourceFingerprint "8923eb6ceb9331e1bc5ac8d805433d261fddae60faad035d69714383951950c0" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1259> ;
+    t:sourceUniqueIdCell "1300.0012" ;
+    t:targetElement "AppraisalReportEffectiveDate" ;
+    t:targetXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_RECONCILIATION/m:VALUATION_RECONCILIATION_SUMMARY/m:VALUATION_RECONCILIATION_SUMMARY_DETAIL/m:AppraisalReportEffectiveDate" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/VALUATION_RECONCILIATION/VALUATION_RECONCILIATION_SUMMARY/VALUATION_RECONCILIATION_SUMMARY_DETAIL/" .
+
+<urn:uad36:test-suite:date-chronology:UAD1259:367-day-boundary:permitted> a t:XMLFixture ;
+    t:expectedFindingCount 0 ;
+    t:expectedViolationKind "ProhibitedDateRelationship" ;
+    t:path "tests/fixtures/it_1/r11/s1/UAD1259/367-day-boundary-permitted.xml" ;
+    t:sha256 "7b1b86997273a5202d22969504c6c9376e26673f0531d8b3d2afbd7026458a2a" ;
+    t:state "permitted" ;
+    t:targetValue "2025-09-30" ;
+    t:xsdValid true .
+
+<urn:uad36:test-suite:date-chronology:UAD1259:367-day-boundary:prohibited> a t:XMLFixture ;
+    t:expectedFindingCount 1 ;
+    t:expectedViolationKind "ProhibitedDateRelationship" ;
+    t:path "tests/fixtures/it_1/r11/s1/UAD1259/367-day-boundary-prohibited.xml" ;
+    t:sha256 "107fb3fe5bda74981c69b7a2e3c438ec0a9a640ec732aeca67b05e70942f9d27" ;
+    t:state "prohibited" ;
+    t:targetValue "2025-09-29" ;
+    t:xsdValid true .
+
+<urn:uad36:test-suite:date-chronology:UAD1259:367-day-boundary:setup:0> t:afterValue "2025-09-30" ;
+    t:beforeValue "2019-09-20" ;
+    t:xpath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_RECONCILIATION/m:VALUATION_RECONCILIATION_SUMMARY/m:VALUATION_RECONCILIATION_SUMMARY_DETAIL/m:AppraisalReportEffectiveDate" .
+
+<urn:uad36:test-suite:date-chronology:UAD1505:today-boundary> a t:TestCase ;
+    t:applicabilityXPath "true()" ;
+    t:baselineValue "2026-10-02" ;
+    t:caseId "today-boundary" ;
+    t:changedValue "2026-10-03" ;
+    t:comparisonPrecision "date" ;
+    t:evaluationDate "2026-10-02" ;
+    t:expectedApplicable true ;
+    t:hasFixture <urn:uad36:test-suite:date-chronology:UAD1505:today-boundary:permitted>,
+        <urn:uad36:test-suite:date-chronology:UAD1505:today-boundary:prohibited> ;
+    t:messageText "The 'Date of Signature and Report' cannot be a future date." ;
+    t:primaryDataElement "ExecutionDate" ;
+    t:propertyAffected "N/A" ;
+    t:referenceValue "2026-10-02" ;
+    t:referenceXPath "" ;
+    t:ruleId "UAD1505" ;
+    t:ruleLogic "If ExecutionDate is in the future" ;
+    t:scenarioId "IT-1R11S1" ;
+    t:setupChange <urn:uad36:test-suite:date-chronology:UAD1505:today-boundary:setup:0> ;
+    t:severity "Warning" ;
+    t:sourceFingerprint "d3217926bb300c670cfe1bce5263368970c24e2f550f746427a8c062f7429378" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1505> ;
+    t:sourceUniqueIdCell "2200.0154; 2200.0002" ;
+    t:targetElement "ExecutionDate" ;
+    t:targetXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:SIGNATORIES/m:SIGNATORY/m:EXECUTION/m:EXECUTION_DETAIL/m:ExecutionDate" ;
+    t:xpath "MESSAGE/DOCUMENT_SETS/DOCUMENT_SET/DOCUMENTS/DOCUMENT/SIGNATORIES/SIGNATORY/EXECUTION/EXECUTION_DETAIL/" .
+
+<urn:uad36:test-suite:date-chronology:UAD1505:today-boundary:permitted> a t:XMLFixture ;
+    t:expectedFindingCount 0 ;
+    t:expectedViolationKind "ProhibitedDateRelationship" ;
+    t:path "tests/fixtures/it_1/r11/s1/UAD1505/today-boundary-permitted.xml" ;
+    t:sha256 "5a1cb2a6f7773f36af320026ed39da582f0329dc347721d0bd1a0a3e1308df2c" ;
+    t:state "permitted" ;
+    t:targetValue "2026-10-02" ;
+    t:xsdValid true .
+
+<urn:uad36:test-suite:date-chronology:UAD1505:today-boundary:prohibited> a t:XMLFixture ;
+    t:expectedFindingCount 1 ;
+    t:expectedViolationKind "ProhibitedDateRelationship" ;
+    t:path "tests/fixtures/it_1/r11/s1/UAD1505/today-boundary-prohibited.xml" ;
+    t:sha256 "04db63e6fdb1def3a141c5f850179c0a784b9547580043b7018f5d4f4d60a65d" ;
+    t:state "prohibited" ;
+    t:targetValue "2026-10-03" ;
+    t:xsdValid true .
+
+<urn:uad36:test-suite:date-chronology:UAD1505:today-boundary:setup:0> t:afterValue "2026-10-02" ;
+    t:beforeValue "2019-09-20" ;
+    t:xpath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:SIGNATORIES/m:SIGNATORY/m:EXECUTION/m:EXECUTION_DETAIL/m:ExecutionDate" .
+
+<urn:uad36:test-suite:date-chronology:UAD1506:367-day-boundary> a t:TestCase ;
+    t:applicabilityXPath "true()" ;
+    t:baselineValue "2025-09-30" ;
+    t:caseId "367-day-boundary" ;
+    t:changedValue "2025-09-29" ;
+    t:comparisonPrecision "date" ;
+    t:evaluationDate "2026-10-02" ;
+    t:expectedApplicable true ;
+    t:hasFixture <urn:uad36:test-suite:date-chronology:UAD1506:367-day-boundary:permitted>,
+        <urn:uad36:test-suite:date-chronology:UAD1506:367-day-boundary:prohibited> ;
+    t:messageText "The 'Date of Signature and Report' cannot be more than a year old." ;
+    t:primaryDataElement "ExecutionDate" ;
+    t:propertyAffected "N/A" ;
+    t:referenceValue "2026-10-02" ;
+    t:referenceXPath "" ;
+    t:ruleId "UAD1506" ;
+    t:ruleLogic "If ExecutionDate is more than 367 days before the current date." ;
+    t:scenarioId "IT-1R11S1" ;
+    t:setupChange <urn:uad36:test-suite:date-chronology:UAD1506:367-day-boundary:setup:0> ;
+    t:severity "Warning" ;
+    t:sourceFingerprint "227c2483031da37ffd05aea87d6f059b87aeadad9fdb047d215fc0b24b68c447" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1506> ;
+    t:sourceUniqueIdCell "2200.0154; 2200.0002" ;
+    t:targetElement "ExecutionDate" ;
+    t:targetXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:SIGNATORIES/m:SIGNATORY/m:EXECUTION/m:EXECUTION_DETAIL/m:ExecutionDate" ;
+    t:xpath "MESSAGE/DOCUMENT_SETS/DOCUMENT_SET/DOCUMENTS/DOCUMENT/SIGNATORIES/SIGNATORY/EXECUTION/EXECUTION_DETAIL/" .
+
+<urn:uad36:test-suite:date-chronology:UAD1506:367-day-boundary:permitted> a t:XMLFixture ;
+    t:expectedFindingCount 0 ;
+    t:expectedViolationKind "ProhibitedDateRelationship" ;
+    t:path "tests/fixtures/it_1/r11/s1/UAD1506/367-day-boundary-permitted.xml" ;
+    t:sha256 "c4a0b7835914f333703a2380840be76b70b1b50d8fc02fa9aae4d41ec21c28d5" ;
+    t:state "permitted" ;
+    t:targetValue "2025-09-30" ;
+    t:xsdValid true .
+
+<urn:uad36:test-suite:date-chronology:UAD1506:367-day-boundary:prohibited> a t:XMLFixture ;
+    t:expectedFindingCount 1 ;
+    t:expectedViolationKind "ProhibitedDateRelationship" ;
+    t:path "tests/fixtures/it_1/r11/s1/UAD1506/367-day-boundary-prohibited.xml" ;
+    t:sha256 "30242cbf93de8837f1d62b5ab2e6233c600f3defc548eee2e5e0fbe94bfe16b4" ;
+    t:state "prohibited" ;
+    t:targetValue "2025-09-29" ;
+    t:xsdValid true .
+
+<urn:uad36:test-suite:date-chronology:UAD1506:367-day-boundary:setup:0> t:afterValue "2025-09-30" ;
+    t:beforeValue "2019-09-20" ;
+    t:xpath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:SIGNATORIES/m:SIGNATORY/m:EXECUTION/m:EXECUTION_DETAIL/m:ExecutionDate" .
+
+<urn:uad36:test-suite:date-chronology:UAD1529:appraiser-equal-effective-date> a t:TestCase ;
+    t:applicabilityXPath "(/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:PARTIES/m:PARTY[3]/m:ROLES/m:ROLE/m:ROLE_DETAIL/m:PartyRoleType = 'Appraiser') or (/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:PARTIES/m:PARTY[3]/m:ROLES/m:ROLE/m:ROLE_DETAIL/m:PartyRoleType = 'AppraiserSupervisor')" ;
+    t:baselineValue "2019-09-20" ;
+    t:caseId "appraiser-equal-effective-date" ;
+    t:changedValue "2019-09-19" ;
+    t:comparisonPrecision "date" ;
+    t:evaluationDate "2026-10-02" ;
+    t:expectedApplicable true ;
+    t:hasFixture <urn:uad36:test-suite:date-chronology:UAD1529:appraiser-equal-effective-date:permitted>,
+        <urn:uad36:test-suite:date-chronology:UAD1529:appraiser-equal-effective-date:prohibited> ;
+    t:messageText "The Appraiser and/or Supervisory Appraiser license expired before the 'Effective Date of Appraisal'." ;
+    t:primaryDataElement "LicenseExpirationDate" ;
+    t:propertyAffected "N/A" ;
+    t:referenceValue "2019-09-20" ;
+    t:referenceXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_RECONCILIATION/m:VALUATION_RECONCILIATION_SUMMARY/m:VALUATION_RECONCILIATION_SUMMARY_DETAIL/m:AppraisalReportEffectiveDate" ;
+    t:ruleId "UAD1529" ;
+    t:ruleLogic "If LicenseExpirationDate for PartyRoleType = \"Appraiser\" and/or \"AppraiserSupervisor\" < AppraisalReportEffectiveDate" ;
+    t:scenarioId "IT-1R11S1" ;
+    t:setupChange <urn:uad36:test-suite:date-chronology:UAD1529:appraiser-equal-effective-date:setup:0> ;
+    t:severity "Fatal" ;
+    t:sourceFingerprint "e29a6e63200d475c3166fd6e8b4586dcdfeedd84b4a7f30bdc9fdb46355a1ed8" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1529> ;
+    t:sourceUniqueIdCell "2200.0082" ;
+    t:targetElement "LicenseExpirationDate" ;
+    t:targetXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:PARTIES/m:PARTY[3]/m:ROLES/m:ROLE/m:LICENSES/m:LICENSE/m:LICENSE_DETAIL/m:LicenseExpirationDate" ;
+    t:xpath "../SERVICE/PARTIES/PARTY/ROLES/ROLE/LICENSES/LICENSE/LICENSE_DETAIL/" .
+
+<urn:uad36:test-suite:date-chronology:UAD1529:appraiser-equal-effective-date:permitted> a t:XMLFixture ;
+    t:expectedFindingCount 0 ;
+    t:expectedViolationKind "ProhibitedDateRelationship" ;
+    t:path "tests/fixtures/it_1/r11/s1/UAD1529/appraiser-equal-effective-date-permitted.xml" ;
+    t:sha256 "4e8994d3b48787bc501ba35eeba99c4e653a0545758d14599b3166489ae3acbd" ;
+    t:state "permitted" ;
+    t:targetValue "2019-09-20" ;
+    t:xsdValid true .
+
+<urn:uad36:test-suite:date-chronology:UAD1529:appraiser-equal-effective-date:prohibited> a t:XMLFixture ;
+    t:expectedFindingCount 1 ;
+    t:expectedViolationKind "ProhibitedDateRelationship" ;
+    t:path "tests/fixtures/it_1/r11/s1/UAD1529/appraiser-equal-effective-date-prohibited.xml" ;
+    t:sha256 "3a1063e61d982bbeaa16983d2f378d0c4e75ccd4c4c709ab32f23b37add7cede" ;
+    t:state "prohibited" ;
+    t:targetValue "2019-09-19" ;
+    t:xsdValid true .
+
+<urn:uad36:test-suite:date-chronology:UAD1529:appraiser-equal-effective-date:setup:0> t:afterValue "2019-09-20" ;
+    t:beforeValue "2020-10-10" ;
+    t:xpath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:PARTIES/m:PARTY[3]/m:ROLES/m:ROLE/m:LICENSES/m:LICENSE/m:LICENSE_DETAIL/m:LicenseExpirationDate" .
+
+<urn:uad36:test-suite:date-chronology:UAD1529:other-role-control> a t:TestCase ;
+    t:applicabilityXPath "(/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:PARTIES/m:PARTY[3]/m:ROLES/m:ROLE/m:ROLE_DETAIL/m:PartyRoleType = 'Appraiser') or (/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:PARTIES/m:PARTY[3]/m:ROLES/m:ROLE/m:ROLE_DETAIL/m:PartyRoleType = 'AppraiserSupervisor')" ;
+    t:baselineValue "2019-09-20" ;
+    t:caseId "other-role-control" ;
+    t:changedValue "2019-09-19" ;
+    t:comparisonPrecision "date" ;
+    t:evaluationDate "2026-10-02" ;
+    t:expectedApplicable false ;
+    t:hasFixture <urn:uad36:test-suite:date-chronology:UAD1529:other-role-control:changed-control>,
+        <urn:uad36:test-suite:date-chronology:UAD1529:other-role-control:permitted> ;
+    t:messageText "The Appraiser and/or Supervisory Appraiser license expired before the 'Effective Date of Appraisal'." ;
+    t:primaryDataElement "LicenseExpirationDate" ;
+    t:propertyAffected "N/A" ;
+    t:referenceValue "2019-09-20" ;
+    t:referenceXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_RECONCILIATION/m:VALUATION_RECONCILIATION_SUMMARY/m:VALUATION_RECONCILIATION_SUMMARY_DETAIL/m:AppraisalReportEffectiveDate" ;
+    t:ruleId "UAD1529" ;
+    t:ruleLogic "If LicenseExpirationDate for PartyRoleType = \"Appraiser\" and/or \"AppraiserSupervisor\" < AppraisalReportEffectiveDate" ;
+    t:scenarioId "IT-1R11S1" ;
+    t:setupChange <urn:uad36:test-suite:date-chronology:UAD1529:other-role-control:setup:0>,
+        <urn:uad36:test-suite:date-chronology:UAD1529:other-role-control:setup:1> ;
+    t:severity "Fatal" ;
+    t:sourceFingerprint "e29a6e63200d475c3166fd6e8b4586dcdfeedd84b4a7f30bdc9fdb46355a1ed8" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1529> ;
+    t:sourceUniqueIdCell "2200.0082" ;
+    t:targetElement "LicenseExpirationDate" ;
+    t:targetXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:PARTIES/m:PARTY[3]/m:ROLES/m:ROLE/m:LICENSES/m:LICENSE/m:LICENSE_DETAIL/m:LicenseExpirationDate" ;
+    t:xpath "../SERVICE/PARTIES/PARTY/ROLES/ROLE/LICENSES/LICENSE/LICENSE_DETAIL/" .
+
+<urn:uad36:test-suite:date-chronology:UAD1529:other-role-control:changed-control> a t:XMLFixture ;
+    t:expectedFindingCount 0 ;
+    t:expectedViolationKind "ProhibitedDateRelationship" ;
+    t:path "tests/fixtures/it_1/r11/s1/UAD1529/other-role-control-changed-control.xml" ;
+    t:sha256 "0e4cf30e099c4ab12bac74079900b8f4fbcd98584125ae14a0de6f4ff41e817a" ;
+    t:state "changed-control" ;
+    t:targetValue "2019-09-19" ;
+    t:xsdValid true .
+
+<urn:uad36:test-suite:date-chronology:UAD1529:other-role-control:permitted> a t:XMLFixture ;
+    t:expectedFindingCount 0 ;
+    t:expectedViolationKind "ProhibitedDateRelationship" ;
+    t:path "tests/fixtures/it_1/r11/s1/UAD1529/other-role-control-permitted.xml" ;
+    t:sha256 "d33c9de9f9845678c2995b37b11f5b7f9892ca2d8ab671ac8e56b98116e58570" ;
+    t:state "permitted" ;
+    t:targetValue "2019-09-20" ;
+    t:xsdValid true .
+
+<urn:uad36:test-suite:date-chronology:UAD1529:other-role-control:setup:0> t:afterValue "Borrower" ;
+    t:beforeValue "Appraiser" ;
+    t:xpath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:PARTIES/m:PARTY[3]/m:ROLES/m:ROLE/m:ROLE_DETAIL/m:PartyRoleType" .
+
+<urn:uad36:test-suite:date-chronology:UAD1529:other-role-control:setup:1> t:afterValue "2019-09-20" ;
+    t:beforeValue "2020-10-10" ;
+    t:xpath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:PARTIES/m:PARTY[3]/m:ROLES/m:ROLE/m:LICENSES/m:LICENSE/m:LICENSE_DETAIL/m:LicenseExpirationDate" .
+
+<urn:uad36:test-suite:date-chronology:UAD1529:supervisor-equal-effective-date> a t:TestCase ;
+    t:applicabilityXPath "(/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:PARTIES/m:PARTY[3]/m:ROLES/m:ROLE/m:ROLE_DETAIL/m:PartyRoleType = 'Appraiser') or (/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:PARTIES/m:PARTY[3]/m:ROLES/m:ROLE/m:ROLE_DETAIL/m:PartyRoleType = 'AppraiserSupervisor')" ;
+    t:baselineValue "2019-09-20" ;
+    t:caseId "supervisor-equal-effective-date" ;
+    t:changedValue "2019-09-19" ;
+    t:comparisonPrecision "date" ;
+    t:evaluationDate "2026-10-02" ;
+    t:expectedApplicable true ;
+    t:hasFixture <urn:uad36:test-suite:date-chronology:UAD1529:supervisor-equal-effective-date:permitted>,
+        <urn:uad36:test-suite:date-chronology:UAD1529:supervisor-equal-effective-date:prohibited> ;
+    t:messageText "The Appraiser and/or Supervisory Appraiser license expired before the 'Effective Date of Appraisal'." ;
+    t:primaryDataElement "LicenseExpirationDate" ;
+    t:propertyAffected "N/A" ;
+    t:referenceValue "2019-09-20" ;
+    t:referenceXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_RECONCILIATION/m:VALUATION_RECONCILIATION_SUMMARY/m:VALUATION_RECONCILIATION_SUMMARY_DETAIL/m:AppraisalReportEffectiveDate" ;
+    t:ruleId "UAD1529" ;
+    t:ruleLogic "If LicenseExpirationDate for PartyRoleType = \"Appraiser\" and/or \"AppraiserSupervisor\" < AppraisalReportEffectiveDate" ;
+    t:scenarioId "IT-1R11S1" ;
+    t:setupChange <urn:uad36:test-suite:date-chronology:UAD1529:supervisor-equal-effective-date:setup:0>,
+        <urn:uad36:test-suite:date-chronology:UAD1529:supervisor-equal-effective-date:setup:1> ;
+    t:severity "Fatal" ;
+    t:sourceFingerprint "e29a6e63200d475c3166fd6e8b4586dcdfeedd84b4a7f30bdc9fdb46355a1ed8" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1529> ;
+    t:sourceUniqueIdCell "2200.0082" ;
+    t:targetElement "LicenseExpirationDate" ;
+    t:targetXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:PARTIES/m:PARTY[3]/m:ROLES/m:ROLE/m:LICENSES/m:LICENSE/m:LICENSE_DETAIL/m:LicenseExpirationDate" ;
+    t:xpath "../SERVICE/PARTIES/PARTY/ROLES/ROLE/LICENSES/LICENSE/LICENSE_DETAIL/" .
+
+<urn:uad36:test-suite:date-chronology:UAD1529:supervisor-equal-effective-date:permitted> a t:XMLFixture ;
+    t:expectedFindingCount 0 ;
+    t:expectedViolationKind "ProhibitedDateRelationship" ;
+    t:path "tests/fixtures/it_1/r11/s1/UAD1529/supervisor-equal-effective-date-permitted.xml" ;
+    t:sha256 "0e4f658996598e597200c0ecc06d0ffa37d9c626d53b53112ace8b2717256aad" ;
+    t:state "permitted" ;
+    t:targetValue "2019-09-20" ;
+    t:xsdValid true .
+
+<urn:uad36:test-suite:date-chronology:UAD1529:supervisor-equal-effective-date:prohibited> a t:XMLFixture ;
+    t:expectedFindingCount 1 ;
+    t:expectedViolationKind "ProhibitedDateRelationship" ;
+    t:path "tests/fixtures/it_1/r11/s1/UAD1529/supervisor-equal-effective-date-prohibited.xml" ;
+    t:sha256 "af3808434f4bc9842eaf64ff51814a38988107e4d43dba152a960c1e9ba0b91b" ;
+    t:state "prohibited" ;
+    t:targetValue "2019-09-19" ;
+    t:xsdValid true .
+
+<urn:uad36:test-suite:date-chronology:UAD1529:supervisor-equal-effective-date:setup:0> t:afterValue "AppraiserSupervisor" ;
+    t:beforeValue "Appraiser" ;
+    t:xpath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:PARTIES/m:PARTY[3]/m:ROLES/m:ROLE/m:ROLE_DETAIL/m:PartyRoleType" .
+
+<urn:uad36:test-suite:date-chronology:UAD1529:supervisor-equal-effective-date:setup:1> t:afterValue "2019-09-20" ;
+    t:beforeValue "2020-10-10" ;
+    t:xpath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:PARTIES/m:PARTY[3]/m:ROLES/m:ROLE/m:LICENSES/m:LICENSE/m:LICENSE_DETAIL/m:LicenseExpirationDate" .
+
+<urn:uad36:test-suite:date-chronology:UAD1536:equal-effective-date> a t:TestCase ;
+    t:applicabilityXPath "true()" ;
+    t:baselineValue "2019-09-20" ;
+    t:caseId "equal-effective-date" ;
+    t:changedValue "2019-09-19" ;
+    t:comparisonPrecision "date" ;
+    t:evaluationDate "2026-10-02" ;
+    t:expectedApplicable true ;
+    t:hasFixture <urn:uad36:test-suite:date-chronology:UAD1536:equal-effective-date:permitted>,
+        <urn:uad36:test-suite:date-chronology:UAD1536:equal-effective-date:prohibited> ;
+    t:messageText "The 'Date of Signature and Report' must be on or after the 'Effective Date of Appraisal'." ;
+    t:primaryDataElement "ExecutionDate" ;
+    t:propertyAffected "N/A" ;
+    t:referenceValue "2019-09-20" ;
+    t:referenceXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_RECONCILIATION/m:VALUATION_RECONCILIATION_SUMMARY/m:VALUATION_RECONCILIATION_SUMMARY_DETAIL/m:AppraisalReportEffectiveDate" ;
+    t:ruleId "UAD1536" ;
+    t:ruleLogic "If ExecutionDate < AppraisalReportEffectiveDate in a given instance of SIGNATORY" ;
+    t:scenarioId "IT-1R11S1" ;
+    t:severity "Fatal" ;
+    t:sourceFingerprint "55cb501f9bde4d0f1bbb05eaa02fee04fb923464a0aea2abcdc76e3933a41175" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1536> ;
+    t:sourceUniqueIdCell "2200.0154; 2200.0002" ;
+    t:targetElement "ExecutionDate" ;
+    t:targetXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:SIGNATORIES/m:SIGNATORY/m:EXECUTION/m:EXECUTION_DETAIL/m:ExecutionDate" ;
+    t:xpath "MESSAGE/DOCUMENT_SETS/DOCUMENT_SET/DOCUMENTS/DOCUMENT/SIGNATORIES/SIGNATORY/EXECUTION/EXECUTION_DETAIL/" .
+
+<urn:uad36:test-suite:date-chronology:UAD1536:equal-effective-date:permitted> a t:XMLFixture ;
+    t:expectedFindingCount 0 ;
+    t:expectedViolationKind "ProhibitedDateRelationship" ;
+    t:path "tests/fixtures/it_1/r11/s1/UAD1536/equal-effective-date-permitted.xml" ;
+    t:sha256 "e0aaa5a22da41788290fcc77f820bc05e74f37cf639846716d0b07f9da946778" ;
+    t:state "permitted" ;
+    t:targetValue "2019-09-20" ;
+    t:xsdValid true .
+
+<urn:uad36:test-suite:date-chronology:UAD1536:equal-effective-date:prohibited> a t:XMLFixture ;
+    t:expectedFindingCount 1 ;
+    t:expectedViolationKind "ProhibitedDateRelationship" ;
+    t:path "tests/fixtures/it_1/r11/s1/UAD1536/equal-effective-date-prohibited.xml" ;
+    t:sha256 "8a035c0f2e4d549af9c237dc30961edc91f91455b36b9e029c136f125c140021" ;
+    t:state "prohibited" ;
+    t:targetValue "2019-09-19" ;
+    t:xsdValid true .
+
+<urn:uad36:test-suite:date-chronology:UAD1557:equal-effective-date> a t:TestCase ;
+    t:applicabilityXPath "true()" ;
+    t:baselineValue "2019-09-20" ;
+    t:caseId "equal-effective-date" ;
+    t:changedValue "2019-09-21" ;
+    t:comparisonPrecision "date" ;
+    t:evaluationDate "2026-10-02" ;
+    t:expectedApplicable true ;
+    t:hasFixture <urn:uad36:test-suite:date-chronology:UAD1557:equal-effective-date:permitted>,
+        <urn:uad36:test-suite:date-chronology:UAD1557:equal-effective-date:prohibited> ;
+    t:messageText "The 'Inspection Date' must be on or before the 'Effective Date of Appraisal'." ;
+    t:primaryDataElement "InspectionDate" ;
+    t:propertyAffected "Subject" ;
+    t:referenceValue "2019-09-20" ;
+    t:referenceXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_RECONCILIATION/m:VALUATION_RECONCILIATION_SUMMARY/m:VALUATION_RECONCILIATION_SUMMARY_DETAIL/m:AppraisalReportEffectiveDate" ;
+    t:ruleId "UAD1557" ;
+    t:ruleLogic "If InspectionDate > AppraisalReportEffectiveDate" ;
+    t:scenarioId "IT-1R11S1" ;
+    t:severity "Fatal" ;
+    t:sourceFingerprint "6366f4eaed7edaaf90f7659a45877bfb1b1fcba629a57cbbd0a43600bb34b6d3" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1557> ;
+    t:sourceUniqueIdCell "2400.0080; 2400.0502" ;
+    t:targetElement "InspectionDate" ;
+    t:targetXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:INSPECTIONS/m:INSPECTION[2]/m:INSPECTION_DETAIL/m:InspectionDate" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/INSPECTIONS/INSPECTION/INSPECTION_DETAIL/" .
+
+<urn:uad36:test-suite:date-chronology:UAD1557:equal-effective-date:permitted> a t:XMLFixture ;
+    t:expectedFindingCount 0 ;
+    t:expectedViolationKind "ProhibitedDateRelationship" ;
+    t:path "tests/fixtures/it_1/r11/s1/UAD1557/equal-effective-date-permitted.xml" ;
+    t:sha256 "e0aaa5a22da41788290fcc77f820bc05e74f37cf639846716d0b07f9da946778" ;
+    t:state "permitted" ;
+    t:targetValue "2019-09-20" ;
+    t:xsdValid true .
+
+<urn:uad36:test-suite:date-chronology:UAD1557:equal-effective-date:prohibited> a t:XMLFixture ;
+    t:expectedFindingCount 1 ;
+    t:expectedViolationKind "ProhibitedDateRelationship" ;
+    t:path "tests/fixtures/it_1/r11/s1/UAD1557/equal-effective-date-prohibited.xml" ;
+    t:sha256 "a950b1566f10dc1a25b5f249701942a2027677d8a0012812158e93f80c451ac5" ;
+    t:state "prohibited" ;
+    t:targetValue "2019-09-21" ;
+    t:xsdValid true .
+
+<urn:uad36:test-suite:date-chronology:UAD1611:equal-effective-month> a t:TestCase ;
+    t:addedContextXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:PROPERTY_TAXES/m:PROPERTY_TAX/m:PROPERTY_TAX_EXEMPTIONS",
+        "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:PROPERTY_TAXES/m:PROPERTY_TAX/m:PROPERTY_TAX_EXEMPTIONS/m:PROPERTY_TAX_EXEMPTION",
+        "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:PROPERTY_TAXES/m:PROPERTY_TAX/m:PROPERTY_TAX_EXEMPTIONS/m:PROPERTY_TAX_EXEMPTION/m:TaxAbatementsOrExemptionsExpirationDate" ;
+    t:applicabilityXPath "true()" ;
+    t:baselineValue "2019-09" ;
+    t:caseId "equal-effective-month" ;
+    t:changedValue "2019-08" ;
+    t:comparisonPrecision "year-month" ;
+    t:evaluationDate "2026-10-02" ;
+    t:expectedApplicable true ;
+    t:hasFixture <urn:uad36:test-suite:date-chronology:UAD1611:equal-effective-month:permitted>,
+        <urn:uad36:test-suite:date-chronology:UAD1611:equal-effective-month:prohibited> ;
+    t:messageText "The expiration date for the tax abatements or exemptions cannot be before the 'Effective Date of Appraisal'." ;
+    t:primaryDataElement "TaxAbatementsOrExemptionsExpirationDate" ;
+    t:propertyAffected "Subject" ;
+    t:referenceValue "2019-09-20" ;
+    t:referenceXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_RECONCILIATION/m:VALUATION_RECONCILIATION_SUMMARY/m:VALUATION_RECONCILIATION_SUMMARY_DETAIL/m:AppraisalReportEffectiveDate" ;
+    t:ruleId "UAD1611" ;
+    t:ruleLogic "If TaxAbatementsOrExemptionsExpirationDate < YYYY-MM of AppraisalReportEffectiveDate" ;
+    t:scenarioId "IT-1R11S1" ;
+    t:setupChange <urn:uad36:test-suite:date-chronology:UAD1611:equal-effective-month:setup:0>,
+        <urn:uad36:test-suite:date-chronology:UAD1611:equal-effective-month:setup:1> ;
+    t:severity "Warning" ;
+    t:sourceFingerprint "ba015cf73a70baee263ad42d91277343e4197e4ccd4e5c4572d491e2d998be05" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1611> ;
+    t:sourceUniqueIdCell "2500.0084" ;
+    t:targetElement "TaxAbatementsOrExemptionsExpirationDate" ;
+    t:targetXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:PROPERTY_TAXES/m:PROPERTY_TAX/m:PROPERTY_TAX_EXEMPTIONS/m:PROPERTY_TAX_EXEMPTION/m:TaxAbatementsOrExemptionsExpirationDate" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_TAXES/PROPERTY_TAX/PROPERTY_TAX_EXEMPTIONS/PROPERTY_TAX_EXEMPTION/" .
+
+<urn:uad36:test-suite:date-chronology:UAD1611:equal-effective-month:permitted> a t:XMLFixture ;
+    t:expectedFindingCount 0 ;
+    t:expectedViolationKind "ProhibitedDateRelationship" ;
+    t:path "tests/fixtures/it_1/r11/s1/UAD1611/equal-effective-month-permitted.xml" ;
+    t:sha256 "e56cce3af1603837dcaa7e776789079ef1797bb81833950b8c51e79f261be5cc" ;
+    t:state "permitted" ;
+    t:targetValue "2019-09" ;
+    t:xsdValid true .
+
+<urn:uad36:test-suite:date-chronology:UAD1611:equal-effective-month:prohibited> a t:XMLFixture ;
+    t:expectedFindingCount 1 ;
+    t:expectedViolationKind "ProhibitedDateRelationship" ;
+    t:path "tests/fixtures/it_1/r11/s1/UAD1611/equal-effective-month-prohibited.xml" ;
+    t:sha256 "b3a98d0842ab7d3127c6ead49039f8d84dfdf1d723f172b6aab35cee1a1b0176" ;
+    t:state "prohibited" ;
+    t:targetValue "2019-08" ;
+    t:xsdValid true .
+
+<urn:uad36:test-suite:date-chronology:UAD1611:equal-effective-month:setup:0> t:afterValue "true" ;
+    t:beforeValue "false" ;
+    t:xpath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:PROPERTY_TAXES/m:PROPERTY_TAX/m:PROPERTY_TAX_DETAIL/m:PropertyTaxAbatementsOrExemptionsIndicator" .
+
+<urn:uad36:test-suite:date-chronology:UAD1611:equal-effective-month:setup:1> t:afterValue "2019-09" ;
+    t:beforeValue "" ;
+    t:xpath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:PROPERTY_TAXES/m:PROPERTY_TAX/m:PROPERTY_TAX_EXEMPTIONS/m:PROPERTY_TAX_EXEMPTION/m:TaxAbatementsOrExemptionsExpirationDate" .
+
+<urn:uad36:test-suite:date-chronology:UAD1611:same-month-earlier-day> a t:TestCase ;
+    t:addedContextXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:PROPERTY_TAXES/m:PROPERTY_TAX/m:PROPERTY_TAX_EXEMPTIONS",
+        "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:PROPERTY_TAXES/m:PROPERTY_TAX/m:PROPERTY_TAX_EXEMPTIONS/m:PROPERTY_TAX_EXEMPTION",
+        "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:PROPERTY_TAXES/m:PROPERTY_TAX/m:PROPERTY_TAX_EXEMPTIONS/m:PROPERTY_TAX_EXEMPTION/m:TaxAbatementsOrExemptionsExpirationDate" ;
+    t:applicabilityXPath "true()" ;
+    t:baselineValue "2019-09-01" ;
+    t:caseId "same-month-earlier-day" ;
+    t:changedValue "2019-08-31" ;
+    t:comparisonPrecision "year-month" ;
+    t:evaluationDate "2026-10-02" ;
+    t:expectedApplicable true ;
+    t:hasFixture <urn:uad36:test-suite:date-chronology:UAD1611:same-month-earlier-day:permitted>,
+        <urn:uad36:test-suite:date-chronology:UAD1611:same-month-earlier-day:prohibited> ;
+    t:messageText "The expiration date for the tax abatements or exemptions cannot be before the 'Effective Date of Appraisal'." ;
+    t:primaryDataElement "TaxAbatementsOrExemptionsExpirationDate" ;
+    t:propertyAffected "Subject" ;
+    t:referenceValue "2019-09-20" ;
+    t:referenceXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_RECONCILIATION/m:VALUATION_RECONCILIATION_SUMMARY/m:VALUATION_RECONCILIATION_SUMMARY_DETAIL/m:AppraisalReportEffectiveDate" ;
+    t:ruleId "UAD1611" ;
+    t:ruleLogic "If TaxAbatementsOrExemptionsExpirationDate < YYYY-MM of AppraisalReportEffectiveDate" ;
+    t:scenarioId "IT-1R11S1" ;
+    t:setupChange <urn:uad36:test-suite:date-chronology:UAD1611:same-month-earlier-day:setup:0>,
+        <urn:uad36:test-suite:date-chronology:UAD1611:same-month-earlier-day:setup:1> ;
+    t:severity "Warning" ;
+    t:sourceFingerprint "ba015cf73a70baee263ad42d91277343e4197e4ccd4e5c4572d491e2d998be05" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1611> ;
+    t:sourceUniqueIdCell "2500.0084" ;
+    t:targetElement "TaxAbatementsOrExemptionsExpirationDate" ;
+    t:targetXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:PROPERTY_TAXES/m:PROPERTY_TAX/m:PROPERTY_TAX_EXEMPTIONS/m:PROPERTY_TAX_EXEMPTION/m:TaxAbatementsOrExemptionsExpirationDate" ;
+    t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_TAXES/PROPERTY_TAX/PROPERTY_TAX_EXEMPTIONS/PROPERTY_TAX_EXEMPTION/" .
+
+<urn:uad36:test-suite:date-chronology:UAD1611:same-month-earlier-day:permitted> a t:XMLFixture ;
+    t:expectedFindingCount 0 ;
+    t:expectedViolationKind "ProhibitedDateRelationship" ;
+    t:path "tests/fixtures/it_1/r11/s1/UAD1611/same-month-earlier-day-permitted.xml" ;
+    t:sha256 "463d483d4562ff0d0776d81fd97a90d06bd95384aacf4cba1d1278b26c9e5e0b" ;
+    t:state "permitted" ;
+    t:targetValue "2019-09-01" ;
+    t:xsdValid true .
+
+<urn:uad36:test-suite:date-chronology:UAD1611:same-month-earlier-day:prohibited> a t:XMLFixture ;
+    t:expectedFindingCount 1 ;
+    t:expectedViolationKind "ProhibitedDateRelationship" ;
+    t:path "tests/fixtures/it_1/r11/s1/UAD1611/same-month-earlier-day-prohibited.xml" ;
+    t:sha256 "fc291fef48304dae2335fe64d9e2e5ce39314736a113f9ce5bb3debb55731b3b" ;
+    t:state "prohibited" ;
+    t:targetValue "2019-08-31" ;
+    t:xsdValid true .
+
+<urn:uad36:test-suite:date-chronology:UAD1611:same-month-earlier-day:setup:0> t:afterValue "true" ;
+    t:beforeValue "false" ;
+    t:xpath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:PROPERTY_TAXES/m:PROPERTY_TAX/m:PROPERTY_TAX_DETAIL/m:PropertyTaxAbatementsOrExemptionsIndicator" .
+
+<urn:uad36:test-suite:date-chronology:UAD1611:same-month-earlier-day:setup:1> t:afterValue "2019-09-01" ;
+    t:beforeValue "" ;
+    t:xpath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[1]/m:PROPERTY_TAXES/m:PROPERTY_TAX/m:PROPERTY_TAX_EXEMPTIONS/m:PROPERTY_TAX_EXEMPTION/m:TaxAbatementsOrExemptionsExpirationDate" .
+
+<urn:uad36:test-suite:date-chronology:UAD1756:equal-effective-date> a t:TestCase ;
+    t:addedContextXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:RECONSIDERATIONS_OF_VALUE",
+        "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:RECONSIDERATIONS_OF_VALUE/m:RECONSIDERATION_OF_VALUE",
+        "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:RECONSIDERATIONS_OF_VALUE/m:RECONSIDERATION_OF_VALUE/m:ReconsiderationOfValueResultDate" ;
+    t:applicabilityXPath "true()" ;
+    t:baselineValue "2019-09-20" ;
+    t:caseId "equal-effective-date" ;
+    t:changedValue "2019-09-19" ;
+    t:comparisonPrecision "date" ;
+    t:evaluationDate "2026-10-02" ;
+    t:expectedApplicable true ;
+    t:hasFixture <urn:uad36:test-suite:date-chronology:UAD1756:equal-effective-date:permitted>,
+        <urn:uad36:test-suite:date-chronology:UAD1756:equal-effective-date:prohibited> ;
+    t:messageText "The reconsideration of value date must be on or after the 'Effective Date of Appraisal'." ;
+    t:primaryDataElement "ReconsiderationOfValueResultDate" ;
+    t:propertyAffected "N/A" ;
+    t:referenceValue "2019-09-20" ;
+    t:referenceXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:VALUATION_RECONCILIATION/m:VALUATION_RECONCILIATION_SUMMARY/m:VALUATION_RECONCILIATION_SUMMARY_DETAIL/m:AppraisalReportEffectiveDate" ;
+    t:ruleId "UAD1756" ;
+    t:ruleLogic "If ReconsiderationOfValueResultDate < AppraisalReportEffectiveDate" ;
+    t:scenarioId "IT-1R11S1" ;
+    t:setupChange <urn:uad36:test-suite:date-chronology:UAD1756:equal-effective-date:setup:0> ;
+    t:severity "Warning" ;
+    t:sourceFingerprint "f04e49a81f3b438e5eafec77f87c573448bc2e412dd9bc4b32ece22e0ac745e1" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1756> ;
+    t:sourceUniqueIdCell "4000.0007" ;
+    t:targetElement "ReconsiderationOfValueResultDate" ;
+    t:targetXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:RECONSIDERATIONS_OF_VALUE/m:RECONSIDERATION_OF_VALUE/m:ReconsiderationOfValueResultDate" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/RECONSIDERATIONS_OF_VALUE/RECONSIDERATION_OF_VALUE/" .
+
+<urn:uad36:test-suite:date-chronology:UAD1756:equal-effective-date:permitted> a t:XMLFixture ;
+    t:expectedFindingCount 0 ;
+    t:expectedViolationKind "ProhibitedDateRelationship" ;
+    t:path "tests/fixtures/it_1/r11/s1/UAD1756/equal-effective-date-permitted.xml" ;
+    t:sha256 "1bb745352446b996a5b52593925952964b7f1c4b2343b4e24588813b6f6bacd6" ;
+    t:state "permitted" ;
+    t:targetValue "2019-09-20" ;
+    t:xsdValid true .
+
+<urn:uad36:test-suite:date-chronology:UAD1756:equal-effective-date:prohibited> a t:XMLFixture ;
+    t:expectedFindingCount 1 ;
+    t:expectedViolationKind "ProhibitedDateRelationship" ;
+    t:path "tests/fixtures/it_1/r11/s1/UAD1756/equal-effective-date-prohibited.xml" ;
+    t:sha256 "ec195b7f9c21d88b9ddfb5ebd77d8040d8e6c822ec08ec40f7866cef5deadee4" ;
+    t:state "prohibited" ;
+    t:targetValue "2019-09-19" ;
+    t:xsdValid true .
+
+<urn:uad36:test-suite:date-chronology:UAD1756:equal-effective-date:setup:0> t:afterValue "2019-09-20" ;
+    t:beforeValue "" ;
+    t:xpath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:RECONSIDERATIONS_OF_VALUE/m:RECONSIDERATION_OF_VALUE/m:ReconsiderationOfValueResultDate" .
+
+<urn:uad36:test-suite:date-chronology:UAD1757:367-day-boundary> a t:TestCase ;
+    t:addedContextXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:RECONSIDERATIONS_OF_VALUE",
+        "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:RECONSIDERATIONS_OF_VALUE/m:RECONSIDERATION_OF_VALUE",
+        "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:RECONSIDERATIONS_OF_VALUE/m:RECONSIDERATION_OF_VALUE/m:ReconsiderationOfValueResultDate" ;
+    t:applicabilityXPath "true()" ;
+    t:baselineValue "2025-09-30" ;
+    t:caseId "367-day-boundary" ;
+    t:changedValue "2025-09-29" ;
+    t:comparisonPrecision "date" ;
+    t:evaluationDate "2026-10-02" ;
+    t:expectedApplicable true ;
+    t:hasFixture <urn:uad36:test-suite:date-chronology:UAD1757:367-day-boundary:permitted>,
+        <urn:uad36:test-suite:date-chronology:UAD1757:367-day-boundary:prohibited> ;
+    t:messageText "The reconsideration of value date cannot be more than a year old." ;
+    t:primaryDataElement "ReconsiderationOfValueResultDate" ;
+    t:propertyAffected "N/A" ;
+    t:referenceValue "2026-10-02" ;
+    t:referenceXPath "" ;
+    t:ruleId "UAD1757" ;
+    t:ruleLogic "If ReconsiderationOfValueResultDate is more than 367 days before the current date" ;
+    t:scenarioId "IT-1R11S1" ;
+    t:setupChange <urn:uad36:test-suite:date-chronology:UAD1757:367-day-boundary:setup:0> ;
+    t:severity "Warning" ;
+    t:sourceFingerprint "e8edf2dc0ec2eb0523a3e072f67806578ea5bdb3caf3ab80457ba6e05494d54a" ;
+    t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1757> ;
+    t:sourceUniqueIdCell "4000.0007" ;
+    t:targetElement "ReconsiderationOfValueResultDate" ;
+    t:targetXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:RECONSIDERATIONS_OF_VALUE/m:RECONSIDERATION_OF_VALUE/m:ReconsiderationOfValueResultDate" ;
+    t:xpath "../VALUATION_ANALYSIS/VALUATION_REPORT/RECONSIDERATIONS_OF_VALUE/RECONSIDERATION_OF_VALUE/" .
+
+<urn:uad36:test-suite:date-chronology:UAD1757:367-day-boundary:permitted> a t:XMLFixture ;
+    t:expectedFindingCount 0 ;
+    t:expectedViolationKind "ProhibitedDateRelationship" ;
+    t:path "tests/fixtures/it_1/r11/s1/UAD1757/367-day-boundary-permitted.xml" ;
+    t:sha256 "cf02983ec405f233b5ca63ca19448f5abc4bfde7f276b057bde7b28e70aebb61" ;
+    t:state "permitted" ;
+    t:targetValue "2025-09-30" ;
+    t:xsdValid true .
+
+<urn:uad36:test-suite:date-chronology:UAD1757:367-day-boundary:prohibited> a t:XMLFixture ;
+    t:expectedFindingCount 1 ;
+    t:expectedViolationKind "ProhibitedDateRelationship" ;
+    t:path "tests/fixtures/it_1/r11/s1/UAD1757/367-day-boundary-prohibited.xml" ;
+    t:sha256 "c00084a088ffe02d8540d601a31690b9fb1a96a47a8ee3e9cd29340239f67391" ;
+    t:state "prohibited" ;
+    t:targetValue "2025-09-29" ;
+    t:xsdValid true .
+
+<urn:uad36:test-suite:date-chronology:UAD1757:367-day-boundary:setup:0> t:afterValue "2025-09-30" ;
+    t:beforeValue "" ;
+    t:xpath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:VALUATION_REPORT/m:RECONSIDERATIONS_OF_VALUE/m:RECONSIDERATION_OF_VALUE/m:ReconsiderationOfValueResultDate" .
+
+<urn:uad36:test-suite:date-chronology:schema:GSE_UAD_3.6.0_v1.3.xsd> t:path "chatgpt-sources/sources/schemas/UAD/GSE_UAD_3.6.0_v1.3/Combined/GSE_UAD_3.6.0_v1.3.xsd" ;
+    t:sha256 "0bb6650ab465753fe2023be14d414ad6db45820201b7fdee1d90023e49cbf129" .
+
+<urn:uad36:test-suite:date-chronology:schema:GSE_UAD_3.6.0_xlink_v1.3.xsd> t:path "chatgpt-sources/sources/schemas/UAD/GSE_UAD_3.6.0_v1.3/Combined/GSE_UAD_3.6.0_xlink_v1.3.xsd" ;
+    t:sha256 "646a9674a5cf6598a862a0b05ecf439144f34fb4490d0ed2a680c11c59e1e386" .
+
+<urn:uad36:test-suite:date-chronology:schema:xml.xsd> t:path "chatgpt-sources/sources/schemas/UAD/GSE_UAD_3.6.0_v1.3/Combined/xml.xsd" ;
+    t:sha256 "523b263e297898f6557647352fea82bb42a148dcedf8ea1a968414743c9ebe54" .
+

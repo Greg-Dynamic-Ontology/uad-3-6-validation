@@ -23,7 +23,7 @@
     t:statusBasis :scopeAudit, :singleEqualityCompletion ;
     t:sourceRuleCount 728 ;
     t:featureTaggedRuleCount 731 ;
-    t:scenarioCount 13 ;
+    t:scenarioCount 14 ;
     t:sourceRulesWithoutUniqueIdCount 32 ;
     t:releaseSelection t:Undecided ;
     t:note "The v1.5 current sheet has 728 data rows plus one header row. The marked-up sheet is not used." ;
@@ -17845,3 +17845,98 @@ ORDER BY DESC(?ruleCount) ?subgroup""" .
 
 scenario:single_equality_conditional t:status t:DoneInAgreedScope ;
     t:statusBasis :singleEqualityCompletion .
+
+
+# Derived fixture-planning model for IT-1R1S2.
+# These values describe our test plan; they do not replace or reinterpret CSV source cells.
+# Source t:ruleLogic and t:xpath values above remain unchanged.
+
+t:testScenarioId rdfs:label "Test scenario ID" ;
+    rdfs:comment "Derived identifier for a scenario in the test plan." .
+t:requiredFixtureCase rdfs:label "Required fixture case" ;
+    rdfs:comment "A derived fixture case pattern required by the linked test scenario." .
+t:fixtureFamily rdfs:label "Fixture family" ;
+    rdfs:comment "Derived XML fixture construction family for a source rule; source logic and XPath remain authoritative." .
+t:FixturePlan rdfs:label "Fixture plan" ;
+    rdfs:comment "Derived plan connecting source rules to scenario-level fixture patterns." .
+t:FixtureFamily rdfs:label "Fixture family" ;
+    rdfs:comment "Derived grouping of rules that share an XML construction context." .
+t:FixtureCasePattern rdfs:label "Fixture case pattern" ;
+    rdfs:comment "Reusable derived expectation for a generated schema-valid test fixture." .
+
+:tracker t:scenario scenario:it_1_r1_s2 .
+
+scenario:it_1_r1_s2 a t:Scenario, t:FixturePlan ;
+    t:feature :feature ;
+    t:testScenarioId "IT-1R1S2" ;
+    t:featureRule "Other conditional or scoped requirements follow their governed applicability" ;
+    rdfs:label "Require data in each instance when all correlated conditions hold" ;
+    t:sourceRuleCount 27 ;
+    t:coversRule row:UAD1055, row:UAD1059, row:UAD1060, row:UAD1064, row:UAD1065,
+        row:UAD1077, row:UAD1083, row:UAD1088, row:UAD1091, row:UAD1095,
+        row:UAD1096, row:UAD1097, row:UAD1098, row:UAD1107, row:UAD1109,
+        row:UAD1110, row:UAD1114, row:UAD1115, row:UAD1116, row:UAD1117,
+        row:UAD1118, row:UAD1119, row:UAD1120, row:UAD1125, row:UAD1126,
+        row:UAD1382, row:UAD1383 ;
+    t:requiredFixtureCase :caseMissingForEveryApplicableInstance,
+        :caseValuesPresentForApplicableInstances,
+        :caseInapplicableSiblingDoesNotFind .
+
+:caseMissingForEveryApplicableInstance a t:FixtureCasePattern ;
+    rdfs:label "Missing target value in every applicable instance" ;
+    t:expectedOutcome "Report the required-data finding for each applicable instance whose target value is missing." .
+
+:caseValuesPresentForApplicableInstances a t:FixtureCasePattern ;
+    rdfs:label "Target values present in applicable instances" ;
+    t:expectedOutcome "Report no required-data finding for the covered rule when every applicable instance supplies its target value." .
+
+:caseInapplicableSiblingDoesNotFind a t:FixtureCasePattern ;
+    rdfs:label "Non-applicable sibling instance" ;
+    t:expectedOutcome "Do not report the covered rule for a sibling instance where at least one correlated source condition is false." .
+
+:fixtureFamilyOutbuilding a t:FixtureFamily ;
+    rdfs:label "Improvement — outbuilding" ;
+    t:fixtureRule row:UAD1055, row:UAD1059, row:UAD1083, row:UAD1095, row:UAD1096 .
+
+:fixtureFamilyDwellingStructure a t:FixtureFamily ;
+    rdfs:label "Improvement — dwelling structure, architecture, and components" ;
+    t:fixtureRule row:UAD1060, row:UAD1064, row:UAD1065, row:UAD1077,
+        row:UAD1088, row:UAD1091, row:UAD1097, row:UAD1382, row:UAD1383 .
+
+:fixtureFamilyDwellingSystem a t:FixtureFamily ;
+    rdfs:label "Improvement — dwelling system" ;
+    t:fixtureRule row:UAD1098 .
+
+:fixtureFamilyManufacturedHome a t:FixtureFamily ;
+    rdfs:label "Improvement — manufactured home" ;
+    t:fixtureRule row:UAD1107, row:UAD1109, row:UAD1110, row:UAD1114,
+        row:UAD1115, row:UAD1116, row:UAD1117, row:UAD1118, row:UAD1119,
+        row:UAD1120, row:UAD1125, row:UAD1126 .
+
+row:UAD1055 t:fixtureFamily :fixtureFamilyOutbuilding .
+row:UAD1059 t:fixtureFamily :fixtureFamilyOutbuilding .
+row:UAD1060 t:fixtureFamily :fixtureFamilyDwellingStructure .
+row:UAD1064 t:fixtureFamily :fixtureFamilyDwellingStructure .
+row:UAD1065 t:fixtureFamily :fixtureFamilyDwellingStructure .
+row:UAD1077 t:fixtureFamily :fixtureFamilyDwellingStructure .
+row:UAD1083 t:fixtureFamily :fixtureFamilyOutbuilding .
+row:UAD1088 t:fixtureFamily :fixtureFamilyDwellingStructure .
+row:UAD1091 t:fixtureFamily :fixtureFamilyDwellingStructure .
+row:UAD1095 t:fixtureFamily :fixtureFamilyOutbuilding .
+row:UAD1096 t:fixtureFamily :fixtureFamilyOutbuilding .
+row:UAD1097 t:fixtureFamily :fixtureFamilyDwellingStructure .
+row:UAD1098 t:fixtureFamily :fixtureFamilyDwellingSystem .
+row:UAD1107 t:fixtureFamily :fixtureFamilyManufacturedHome .
+row:UAD1109 t:fixtureFamily :fixtureFamilyManufacturedHome .
+row:UAD1110 t:fixtureFamily :fixtureFamilyManufacturedHome .
+row:UAD1114 t:fixtureFamily :fixtureFamilyManufacturedHome .
+row:UAD1115 t:fixtureFamily :fixtureFamilyManufacturedHome .
+row:UAD1116 t:fixtureFamily :fixtureFamilyManufacturedHome .
+row:UAD1117 t:fixtureFamily :fixtureFamilyManufacturedHome .
+row:UAD1118 t:fixtureFamily :fixtureFamilyManufacturedHome .
+row:UAD1119 t:fixtureFamily :fixtureFamilyManufacturedHome .
+row:UAD1120 t:fixtureFamily :fixtureFamilyManufacturedHome .
+row:UAD1125 t:fixtureFamily :fixtureFamilyManufacturedHome .
+row:UAD1126 t:fixtureFamily :fixtureFamilyManufacturedHome .
+row:UAD1382 t:fixtureFamily :fixtureFamilyDwellingStructure .
+row:UAD1383 t:fixtureFamily :fixtureFamilyDwellingStructure .

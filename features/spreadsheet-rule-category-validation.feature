@@ -23,6 +23,23 @@ Feature: Validate appraisal data against governed rule categories
       When I supply the required dependent value and validate again
       Then no finding is reported for that row
 
+  @IT-1R1S2 @category_other_conditional_scoped @subgroup_repeated_cross_and
+    Scenario: Require data in each instance when all correlated conditions hold
+      Given a selected conditional required-data row with correlated conditions across XML containers
+      And an XML fixture containing multiple instances of the governed context
+      And each instance has its own correlated condition inputs
+      When I validate with all governed conditions satisfied for one instance and its required data absent
+      Then a missing-data finding identifies that instance and the selected source rule
+      And no finding for that row identifies an instance whose conditions are unsatisfied
+      When I supply the required data in another instance and validate again
+      Then the missing-data finding remains for the applicable instance
+      When I supply the required data in the applicable instance and validate again
+      Then no finding is reported for that row
+      When I distribute the required condition inputs across different instances so no instance satisfies all conditions
+      And the dependent data is absent
+      And I validate again
+      Then no finding is reported for that row
+
   @IT-1R2
   Rule: A single equality trigger controls conditional required data
 

@@ -1,0 +1,1156 @@
+@prefix case: <urn:uad36:test-manifest:IT-1R1S2:> .
+@prefix m: <urn:uad36:test-manifest:vocab:> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+case:manifest a m:Manifest ;
+    m:case case:UAD1055-both-applicable-supplied,
+        case:UAD1055-conditions-split-across-instances,
+        case:UAD1055-one-missing-one-supplied,
+        case:UAD1055-two-applicable-missing,
+        case:UAD1059-both-applicable-supplied,
+        case:UAD1059-conditions-split-across-instances,
+        case:UAD1059-one-missing-one-supplied,
+        case:UAD1059-two-applicable-missing,
+        case:UAD1083-both-applicable-supplied,
+        case:UAD1083-conditions-split-across-instances,
+        case:UAD1083-one-missing-one-supplied,
+        case:UAD1083-two-applicable-missing,
+        case:UAD1095-both-applicable-supplied,
+        case:UAD1095-conditions-split-across-instances,
+        case:UAD1095-one-missing-one-supplied,
+        case:UAD1095-two-applicable-missing,
+        case:UAD1096-both-applicable-supplied,
+        case:UAD1096-conditions-split-across-instances,
+        case:UAD1096-one-missing-one-supplied,
+        case:UAD1096-two-applicable-missing ;
+    m:caseCount 20 ;
+    m:coverage "Five outbuilding rules; four correlated-instance cases per rule." ;
+    m:fixtureFamily "outbuilding" ;
+    m:scenarioId "IT-1R1S2" ;
+    m:validationSchema case:schema .
+
+case:UAD1055-both-applicable-supplied a m:TestCase ;
+    m:caseId "IT-1R1S2-UAD1055-both-applicable-supplied" ;
+    m:expectedFindingCount 0 ;
+    m:fixtureCheck case:UAD1055-both-applicable-supplied-check-1,
+        case:UAD1055-both-applicable-supplied-check-2,
+        case:UAD1055-both-applicable-supplied-check-3,
+        case:UAD1055-both-applicable-supplied-check-4,
+        case:UAD1055-both-applicable-supplied-check-5,
+        case:UAD1055-both-applicable-supplied-check-6,
+        case:UAD1055-both-applicable-supplied-check-7,
+        case:UAD1055-both-applicable-supplied-check-8 ;
+    m:fixtureFamily "outbuilding" ;
+    m:ruleId "UAD1055" ;
+    m:sourceRow 55 ;
+    m:sourceRuleLogic "If ImprovementType = \"Outbuilding\" and OutbuildingRealPropertyIndicator = \"true\", and LivingUnitCount = 0, and HeatingSystemExistsIndicator is not provided in a given instance of IMPROVEMENT_DETAIL" ;
+    m:sourceUniqueId "0300.0023" ;
+    m:state "applicable_supplied" ;
+    m:xmlFile "UAD1055/both-applicable-supplied.xml" ;
+    m:xmlSha256 "e786234968dd2b519f9ad33bcfd18e8511afc2ec988378e68b789f605c201871" .
+
+case:UAD1055-both-applicable-supplied-check-1 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Outbuilding" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1055-both-applicable-supplied-check-2 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "true" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:OutbuildingRealPropertyIndicator" .
+
+case:UAD1055-both-applicable-supplied-check-3 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "true" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:HeatingSystemExistsIndicator" .
+
+case:UAD1055-both-applicable-supplied-check-4 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "0" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:STRUCTURE/m:STRUCTURE_DETAIL/m:LivingUnitCount" .
+
+case:UAD1055-both-applicable-supplied-check-5 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Outbuilding" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1055-both-applicable-supplied-check-6 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "true" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:OutbuildingRealPropertyIndicator" .
+
+case:UAD1055-both-applicable-supplied-check-7 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "true" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:HeatingSystemExistsIndicator" .
+
+case:UAD1055-both-applicable-supplied-check-8 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "0" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:STRUCTURE/m:STRUCTURE_DETAIL/m:LivingUnitCount" .
+
+case:UAD1055-conditions-split-across-instances a m:TestCase ;
+    m:caseId "IT-1R1S2-UAD1055-conditions-split-across-instances" ;
+    m:expectedFindingCount 0 ;
+    m:fixtureCheck case:UAD1055-conditions-split-across-instances-check-1,
+        case:UAD1055-conditions-split-across-instances-check-2,
+        case:UAD1055-conditions-split-across-instances-check-3,
+        case:UAD1055-conditions-split-across-instances-check-4,
+        case:UAD1055-conditions-split-across-instances-check-5,
+        case:UAD1055-conditions-split-across-instances-check-6,
+        case:UAD1055-conditions-split-across-instances-check-7,
+        case:UAD1055-conditions-split-across-instances-check-8 ;
+    m:fixtureFamily "outbuilding" ;
+    m:ruleId "UAD1055" ;
+    m:sourceRow 55 ;
+    m:sourceRuleLogic "If ImprovementType = \"Outbuilding\" and OutbuildingRealPropertyIndicator = \"true\", and LivingUnitCount = 0, and HeatingSystemExistsIndicator is not provided in a given instance of IMPROVEMENT_DETAIL" ;
+    m:sourceUniqueId "0300.0023" ;
+    m:state "not_applicable" ;
+    m:xmlFile "UAD1055/conditions-split-across-instances.xml" ;
+    m:xmlSha256 "3250347cd8eb8c4176e9fc89b9ddc21b7f576344969e22ca515c6ac0175e1e16" .
+
+case:UAD1055-conditions-split-across-instances-check-1 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Outbuilding" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1055-conditions-split-across-instances-check-2 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "false" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:OutbuildingRealPropertyIndicator" .
+
+case:UAD1055-conditions-split-across-instances-check-3 a m:FixtureCheck ;
+    m:count 0 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:HeatingSystemExistsIndicator" .
+
+case:UAD1055-conditions-split-across-instances-check-4 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "1" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:STRUCTURE/m:STRUCTURE_DETAIL/m:LivingUnitCount" .
+
+case:UAD1055-conditions-split-across-instances-check-5 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Dwelling" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1055-conditions-split-across-instances-check-6 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "true" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:OutbuildingRealPropertyIndicator" .
+
+case:UAD1055-conditions-split-across-instances-check-7 a m:FixtureCheck ;
+    m:count 0 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:HeatingSystemExistsIndicator" .
+
+case:UAD1055-conditions-split-across-instances-check-8 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "0" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:STRUCTURE/m:STRUCTURE_DETAIL/m:LivingUnitCount" .
+
+case:UAD1055-one-missing-one-supplied a m:TestCase ;
+    m:caseId "IT-1R1S2-UAD1055-one-missing-one-supplied" ;
+    m:expectedFinding case:UAD1055-one-missing-one-supplied-finding-1 ;
+    m:expectedFindingCount 1 ;
+    m:fixtureCheck case:UAD1055-one-missing-one-supplied-check-1,
+        case:UAD1055-one-missing-one-supplied-check-2,
+        case:UAD1055-one-missing-one-supplied-check-3,
+        case:UAD1055-one-missing-one-supplied-check-4,
+        case:UAD1055-one-missing-one-supplied-check-5,
+        case:UAD1055-one-missing-one-supplied-check-6,
+        case:UAD1055-one-missing-one-supplied-check-7,
+        case:UAD1055-one-missing-one-supplied-check-8 ;
+    m:fixtureFamily "outbuilding" ;
+    m:ruleId "UAD1055" ;
+    m:sourceRow 55 ;
+    m:sourceRuleLogic "If ImprovementType = \"Outbuilding\" and OutbuildingRealPropertyIndicator = \"true\", and LivingUnitCount = 0, and HeatingSystemExistsIndicator is not provided in a given instance of IMPROVEMENT_DETAIL" ;
+    m:sourceUniqueId "0300.0023" ;
+    m:state "applicable_missing" ;
+    m:xmlFile "UAD1055/one-missing-one-supplied.xml" ;
+    m:xmlSha256 "48c0239c6615e27562e91e99abdf9a672bce41c547126678a3f0740fd9828074" .
+
+case:UAD1055-one-missing-one-supplied-check-1 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Outbuilding" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1055-one-missing-one-supplied-check-2 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "true" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:OutbuildingRealPropertyIndicator" .
+
+case:UAD1055-one-missing-one-supplied-check-3 a m:FixtureCheck ;
+    m:count 0 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:HeatingSystemExistsIndicator" .
+
+case:UAD1055-one-missing-one-supplied-check-4 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "0" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:STRUCTURE/m:STRUCTURE_DETAIL/m:LivingUnitCount" .
+
+case:UAD1055-one-missing-one-supplied-check-5 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Outbuilding" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1055-one-missing-one-supplied-check-6 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "true" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:OutbuildingRealPropertyIndicator" .
+
+case:UAD1055-one-missing-one-supplied-check-7 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "true" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:HeatingSystemExistsIndicator" .
+
+case:UAD1055-one-missing-one-supplied-check-8 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "0" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:STRUCTURE/m:STRUCTURE_DETAIL/m:LivingUnitCount" .
+
+case:UAD1055-one-missing-one-supplied-finding-1 m:dataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:HeatingSystemExistsIndicator" ;
+    m:ruleId "UAD1055" ;
+    m:severity "warning" ;
+    m:violationKind "MissingRequiredValue" .
+
+case:UAD1055-two-applicable-missing a m:TestCase ;
+    m:caseId "IT-1R1S2-UAD1055-two-applicable-missing" ;
+    m:expectedFinding case:UAD1055-two-applicable-missing-finding-1,
+        case:UAD1055-two-applicable-missing-finding-2 ;
+    m:expectedFindingCount 2 ;
+    m:fixtureCheck case:UAD1055-two-applicable-missing-check-1,
+        case:UAD1055-two-applicable-missing-check-2,
+        case:UAD1055-two-applicable-missing-check-3,
+        case:UAD1055-two-applicable-missing-check-4,
+        case:UAD1055-two-applicable-missing-check-5,
+        case:UAD1055-two-applicable-missing-check-6,
+        case:UAD1055-two-applicable-missing-check-7,
+        case:UAD1055-two-applicable-missing-check-8 ;
+    m:fixtureFamily "outbuilding" ;
+    m:ruleId "UAD1055" ;
+    m:sourceRow 55 ;
+    m:sourceRuleLogic "If ImprovementType = \"Outbuilding\" and OutbuildingRealPropertyIndicator = \"true\", and LivingUnitCount = 0, and HeatingSystemExistsIndicator is not provided in a given instance of IMPROVEMENT_DETAIL" ;
+    m:sourceUniqueId "0300.0023" ;
+    m:state "applicable_missing" ;
+    m:xmlFile "UAD1055/two-applicable-missing.xml" ;
+    m:xmlSha256 "d42101b2ae4b3c7c7fdf3561436d461db58433897d46ef32bcf86d9c3ba8b2e7" .
+
+case:UAD1055-two-applicable-missing-check-1 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Outbuilding" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1055-two-applicable-missing-check-2 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "true" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:OutbuildingRealPropertyIndicator" .
+
+case:UAD1055-two-applicable-missing-check-3 a m:FixtureCheck ;
+    m:count 0 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:HeatingSystemExistsIndicator" .
+
+case:UAD1055-two-applicable-missing-check-4 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "0" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:STRUCTURE/m:STRUCTURE_DETAIL/m:LivingUnitCount" .
+
+case:UAD1055-two-applicable-missing-check-5 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Outbuilding" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1055-two-applicable-missing-check-6 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "true" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:OutbuildingRealPropertyIndicator" .
+
+case:UAD1055-two-applicable-missing-check-7 a m:FixtureCheck ;
+    m:count 0 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:HeatingSystemExistsIndicator" .
+
+case:UAD1055-two-applicable-missing-check-8 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "0" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:STRUCTURE/m:STRUCTURE_DETAIL/m:LivingUnitCount" .
+
+case:UAD1055-two-applicable-missing-finding-1 m:dataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:HeatingSystemExistsIndicator" ;
+    m:ruleId "UAD1055" ;
+    m:severity "warning" ;
+    m:violationKind "MissingRequiredValue" .
+
+case:UAD1055-two-applicable-missing-finding-2 m:dataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:HeatingSystemExistsIndicator" ;
+    m:ruleId "UAD1055" ;
+    m:severity "warning" ;
+    m:violationKind "MissingRequiredValue" .
+
+case:UAD1059-both-applicable-supplied a m:TestCase ;
+    m:caseId "IT-1R1S2-UAD1059-both-applicable-supplied" ;
+    m:expectedFindingCount 0 ;
+    m:fixtureCheck case:UAD1059-both-applicable-supplied-check-1,
+        case:UAD1059-both-applicable-supplied-check-2,
+        case:UAD1059-both-applicable-supplied-check-3,
+        case:UAD1059-both-applicable-supplied-check-4,
+        case:UAD1059-both-applicable-supplied-check-5,
+        case:UAD1059-both-applicable-supplied-check-6,
+        case:UAD1059-both-applicable-supplied-check-7,
+        case:UAD1059-both-applicable-supplied-check-8 ;
+    m:fixtureFamily "outbuilding" ;
+    m:ruleId "UAD1059" ;
+    m:sourceRow 59 ;
+    m:sourceRuleLogic "If ImprovementType = \"Outbuilding\" and OutbuildingRealPropertyIndicator = \"true\" and UtilityType = \"Other\" and UtilityTypeOtherDescription is not provided in a given instance of OUTBUILDING_UTILITY" ;
+    m:sourceUniqueId "0300.0029" ;
+    m:state "applicable_supplied" ;
+    m:xmlFile "UAD1059/both-applicable-supplied.xml" ;
+    m:xmlSha256 "b757e88f288399f754cf2fb919a08b9c53edc443803779272db5e244d71905ea" .
+
+case:UAD1059-both-applicable-supplied-check-1 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Outbuilding" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1059-both-applicable-supplied-check-2 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "true" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:OutbuildingRealPropertyIndicator" .
+
+case:UAD1059-both-applicable-supplied-check-3 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Municipal service" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:OUTBUILDING/m:OUTBUILDING_UTILITIES/m:OUTBUILDING_UTILITY/m:UtilityTypeOtherDescription" .
+
+case:UAD1059-both-applicable-supplied-check-4 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Other" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:OUTBUILDING/m:OUTBUILDING_UTILITIES/m:OUTBUILDING_UTILITY/m:UtilityType" .
+
+case:UAD1059-both-applicable-supplied-check-5 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Outbuilding" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1059-both-applicable-supplied-check-6 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "true" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:OutbuildingRealPropertyIndicator" .
+
+case:UAD1059-both-applicable-supplied-check-7 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Municipal service" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:OUTBUILDING/m:OUTBUILDING_UTILITIES/m:OUTBUILDING_UTILITY/m:UtilityTypeOtherDescription" .
+
+case:UAD1059-both-applicable-supplied-check-8 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Other" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:OUTBUILDING/m:OUTBUILDING_UTILITIES/m:OUTBUILDING_UTILITY/m:UtilityType" .
+
+case:UAD1059-conditions-split-across-instances a m:TestCase ;
+    m:caseId "IT-1R1S2-UAD1059-conditions-split-across-instances" ;
+    m:expectedFindingCount 0 ;
+    m:fixtureCheck case:UAD1059-conditions-split-across-instances-check-1,
+        case:UAD1059-conditions-split-across-instances-check-2,
+        case:UAD1059-conditions-split-across-instances-check-3,
+        case:UAD1059-conditions-split-across-instances-check-4,
+        case:UAD1059-conditions-split-across-instances-check-5,
+        case:UAD1059-conditions-split-across-instances-check-6,
+        case:UAD1059-conditions-split-across-instances-check-7,
+        case:UAD1059-conditions-split-across-instances-check-8 ;
+    m:fixtureFamily "outbuilding" ;
+    m:ruleId "UAD1059" ;
+    m:sourceRow 59 ;
+    m:sourceRuleLogic "If ImprovementType = \"Outbuilding\" and OutbuildingRealPropertyIndicator = \"true\" and UtilityType = \"Other\" and UtilityTypeOtherDescription is not provided in a given instance of OUTBUILDING_UTILITY" ;
+    m:sourceUniqueId "0300.0029" ;
+    m:state "not_applicable" ;
+    m:xmlFile "UAD1059/conditions-split-across-instances.xml" ;
+    m:xmlSha256 "54dde0aaffa37cb15b20eecaecff486a769270ecfaa1a5eabc893b34cbb4aa47" .
+
+case:UAD1059-conditions-split-across-instances-check-1 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Outbuilding" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1059-conditions-split-across-instances-check-2 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "false" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:OutbuildingRealPropertyIndicator" .
+
+case:UAD1059-conditions-split-across-instances-check-3 a m:FixtureCheck ;
+    m:count 0 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:OUTBUILDING/m:OUTBUILDING_UTILITIES/m:OUTBUILDING_UTILITY/m:UtilityTypeOtherDescription" .
+
+case:UAD1059-conditions-split-across-instances-check-4 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Water" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:OUTBUILDING/m:OUTBUILDING_UTILITIES/m:OUTBUILDING_UTILITY/m:UtilityType" .
+
+case:UAD1059-conditions-split-across-instances-check-5 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Dwelling" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1059-conditions-split-across-instances-check-6 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "true" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:OutbuildingRealPropertyIndicator" .
+
+case:UAD1059-conditions-split-across-instances-check-7 a m:FixtureCheck ;
+    m:count 0 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:OUTBUILDING/m:OUTBUILDING_UTILITIES/m:OUTBUILDING_UTILITY/m:UtilityTypeOtherDescription" .
+
+case:UAD1059-conditions-split-across-instances-check-8 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Other" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:OUTBUILDING/m:OUTBUILDING_UTILITIES/m:OUTBUILDING_UTILITY/m:UtilityType" .
+
+case:UAD1059-one-missing-one-supplied a m:TestCase ;
+    m:caseId "IT-1R1S2-UAD1059-one-missing-one-supplied" ;
+    m:expectedFinding case:UAD1059-one-missing-one-supplied-finding-1 ;
+    m:expectedFindingCount 1 ;
+    m:fixtureCheck case:UAD1059-one-missing-one-supplied-check-1,
+        case:UAD1059-one-missing-one-supplied-check-2,
+        case:UAD1059-one-missing-one-supplied-check-3,
+        case:UAD1059-one-missing-one-supplied-check-4,
+        case:UAD1059-one-missing-one-supplied-check-5,
+        case:UAD1059-one-missing-one-supplied-check-6,
+        case:UAD1059-one-missing-one-supplied-check-7,
+        case:UAD1059-one-missing-one-supplied-check-8 ;
+    m:fixtureFamily "outbuilding" ;
+    m:ruleId "UAD1059" ;
+    m:sourceRow 59 ;
+    m:sourceRuleLogic "If ImprovementType = \"Outbuilding\" and OutbuildingRealPropertyIndicator = \"true\" and UtilityType = \"Other\" and UtilityTypeOtherDescription is not provided in a given instance of OUTBUILDING_UTILITY" ;
+    m:sourceUniqueId "0300.0029" ;
+    m:state "applicable_missing" ;
+    m:xmlFile "UAD1059/one-missing-one-supplied.xml" ;
+    m:xmlSha256 "6ea06d9e273b21b3b5738b52726841f34d9d0664522110043199d993daf9a77f" .
+
+case:UAD1059-one-missing-one-supplied-check-1 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Outbuilding" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1059-one-missing-one-supplied-check-2 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "true" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:OutbuildingRealPropertyIndicator" .
+
+case:UAD1059-one-missing-one-supplied-check-3 a m:FixtureCheck ;
+    m:count 0 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:OUTBUILDING/m:OUTBUILDING_UTILITIES/m:OUTBUILDING_UTILITY/m:UtilityTypeOtherDescription" .
+
+case:UAD1059-one-missing-one-supplied-check-4 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Other" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:OUTBUILDING/m:OUTBUILDING_UTILITIES/m:OUTBUILDING_UTILITY/m:UtilityType" .
+
+case:UAD1059-one-missing-one-supplied-check-5 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Outbuilding" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1059-one-missing-one-supplied-check-6 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "true" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:OutbuildingRealPropertyIndicator" .
+
+case:UAD1059-one-missing-one-supplied-check-7 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Municipal service" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:OUTBUILDING/m:OUTBUILDING_UTILITIES/m:OUTBUILDING_UTILITY/m:UtilityTypeOtherDescription" .
+
+case:UAD1059-one-missing-one-supplied-check-8 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Other" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:OUTBUILDING/m:OUTBUILDING_UTILITIES/m:OUTBUILDING_UTILITY/m:UtilityType" .
+
+case:UAD1059-one-missing-one-supplied-finding-1 m:dataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:OUTBUILDING/m:OUTBUILDING_UTILITIES/m:OUTBUILDING_UTILITY/m:UtilityTypeOtherDescription" ;
+    m:ruleId "UAD1059" ;
+    m:severity "fatal" ;
+    m:violationKind "MissingRequiredValue" .
+
+case:UAD1059-two-applicable-missing a m:TestCase ;
+    m:caseId "IT-1R1S2-UAD1059-two-applicable-missing" ;
+    m:expectedFinding case:UAD1059-two-applicable-missing-finding-1,
+        case:UAD1059-two-applicable-missing-finding-2 ;
+    m:expectedFindingCount 2 ;
+    m:fixtureCheck case:UAD1059-two-applicable-missing-check-1,
+        case:UAD1059-two-applicable-missing-check-2,
+        case:UAD1059-two-applicable-missing-check-3,
+        case:UAD1059-two-applicable-missing-check-4,
+        case:UAD1059-two-applicable-missing-check-5,
+        case:UAD1059-two-applicable-missing-check-6,
+        case:UAD1059-two-applicable-missing-check-7,
+        case:UAD1059-two-applicable-missing-check-8 ;
+    m:fixtureFamily "outbuilding" ;
+    m:ruleId "UAD1059" ;
+    m:sourceRow 59 ;
+    m:sourceRuleLogic "If ImprovementType = \"Outbuilding\" and OutbuildingRealPropertyIndicator = \"true\" and UtilityType = \"Other\" and UtilityTypeOtherDescription is not provided in a given instance of OUTBUILDING_UTILITY" ;
+    m:sourceUniqueId "0300.0029" ;
+    m:state "applicable_missing" ;
+    m:xmlFile "UAD1059/two-applicable-missing.xml" ;
+    m:xmlSha256 "8cedc93a42a53b3732a99a9995b3bc4aaacc73e594b076a7af149c415664e812" .
+
+case:UAD1059-two-applicable-missing-check-1 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Outbuilding" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1059-two-applicable-missing-check-2 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "true" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:OutbuildingRealPropertyIndicator" .
+
+case:UAD1059-two-applicable-missing-check-3 a m:FixtureCheck ;
+    m:count 0 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:OUTBUILDING/m:OUTBUILDING_UTILITIES/m:OUTBUILDING_UTILITY/m:UtilityTypeOtherDescription" .
+
+case:UAD1059-two-applicable-missing-check-4 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Other" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:OUTBUILDING/m:OUTBUILDING_UTILITIES/m:OUTBUILDING_UTILITY/m:UtilityType" .
+
+case:UAD1059-two-applicable-missing-check-5 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Outbuilding" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1059-two-applicable-missing-check-6 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "true" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:OutbuildingRealPropertyIndicator" .
+
+case:UAD1059-two-applicable-missing-check-7 a m:FixtureCheck ;
+    m:count 0 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:OUTBUILDING/m:OUTBUILDING_UTILITIES/m:OUTBUILDING_UTILITY/m:UtilityTypeOtherDescription" .
+
+case:UAD1059-two-applicable-missing-check-8 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Other" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:OUTBUILDING/m:OUTBUILDING_UTILITIES/m:OUTBUILDING_UTILITY/m:UtilityType" .
+
+case:UAD1059-two-applicable-missing-finding-1 m:dataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:OUTBUILDING/m:OUTBUILDING_UTILITIES/m:OUTBUILDING_UTILITY/m:UtilityTypeOtherDescription" ;
+    m:ruleId "UAD1059" ;
+    m:severity "fatal" ;
+    m:violationKind "MissingRequiredValue" .
+
+case:UAD1059-two-applicable-missing-finding-2 m:dataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:OUTBUILDING/m:OUTBUILDING_UTILITIES/m:OUTBUILDING_UTILITY/m:UtilityTypeOtherDescription" ;
+    m:ruleId "UAD1059" ;
+    m:severity "fatal" ;
+    m:violationKind "MissingRequiredValue" .
+
+case:UAD1083-both-applicable-supplied a m:TestCase ;
+    m:caseId "IT-1R1S2-UAD1083-both-applicable-supplied" ;
+    m:expectedFindingCount 0 ;
+    m:fixtureCheck case:UAD1083-both-applicable-supplied-check-1,
+        case:UAD1083-both-applicable-supplied-check-2,
+        case:UAD1083-both-applicable-supplied-check-3,
+        case:UAD1083-both-applicable-supplied-check-4,
+        case:UAD1083-both-applicable-supplied-check-5,
+        case:UAD1083-both-applicable-supplied-check-6 ;
+    m:fixtureFamily "outbuilding" ;
+    m:ruleId "UAD1083" ;
+    m:sourceRow 83 ;
+    m:sourceRuleLogic "If ImprovementType = \"Outbuilding\" and OutbuildingRealPropertyIndicator = \"true\", and StructureAreaMeasure is not provided in a given instance of STRUCTURE_DETAIL" ;
+    m:sourceUniqueId "0300.0060" ;
+    m:state "applicable_supplied" ;
+    m:xmlFile "UAD1083/both-applicable-supplied.xml" ;
+    m:xmlSha256 "7a98ae959d9696c2d71452e1b49adbd482f3f9c43e071272b0e23fe2b4447322" .
+
+case:UAD1083-both-applicable-supplied-check-1 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Outbuilding" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1083-both-applicable-supplied-check-2 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "true" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:OutbuildingRealPropertyIndicator" .
+
+case:UAD1083-both-applicable-supplied-check-3 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "120" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:STRUCTURE/m:STRUCTURE_DETAIL/m:StructureAreaMeasure" .
+
+case:UAD1083-both-applicable-supplied-check-4 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Outbuilding" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1083-both-applicable-supplied-check-5 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "true" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:OutbuildingRealPropertyIndicator" .
+
+case:UAD1083-both-applicable-supplied-check-6 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "120" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:STRUCTURE/m:STRUCTURE_DETAIL/m:StructureAreaMeasure" .
+
+case:UAD1083-conditions-split-across-instances a m:TestCase ;
+    m:caseId "IT-1R1S2-UAD1083-conditions-split-across-instances" ;
+    m:expectedFindingCount 0 ;
+    m:fixtureCheck case:UAD1083-conditions-split-across-instances-check-1,
+        case:UAD1083-conditions-split-across-instances-check-2,
+        case:UAD1083-conditions-split-across-instances-check-3,
+        case:UAD1083-conditions-split-across-instances-check-4,
+        case:UAD1083-conditions-split-across-instances-check-5,
+        case:UAD1083-conditions-split-across-instances-check-6 ;
+    m:fixtureFamily "outbuilding" ;
+    m:ruleId "UAD1083" ;
+    m:sourceRow 83 ;
+    m:sourceRuleLogic "If ImprovementType = \"Outbuilding\" and OutbuildingRealPropertyIndicator = \"true\", and StructureAreaMeasure is not provided in a given instance of STRUCTURE_DETAIL" ;
+    m:sourceUniqueId "0300.0060" ;
+    m:state "not_applicable" ;
+    m:xmlFile "UAD1083/conditions-split-across-instances.xml" ;
+    m:xmlSha256 "1ff1fe27cf082cca6cad88e6631f1782eef725ac7574049b1af14d109346456e" .
+
+case:UAD1083-conditions-split-across-instances-check-1 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Outbuilding" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1083-conditions-split-across-instances-check-2 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "false" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:OutbuildingRealPropertyIndicator" .
+
+case:UAD1083-conditions-split-across-instances-check-3 a m:FixtureCheck ;
+    m:count 0 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:STRUCTURE/m:STRUCTURE_DETAIL/m:StructureAreaMeasure" .
+
+case:UAD1083-conditions-split-across-instances-check-4 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Dwelling" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1083-conditions-split-across-instances-check-5 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "true" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:OutbuildingRealPropertyIndicator" .
+
+case:UAD1083-conditions-split-across-instances-check-6 a m:FixtureCheck ;
+    m:count 0 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:STRUCTURE/m:STRUCTURE_DETAIL/m:StructureAreaMeasure" .
+
+case:UAD1083-one-missing-one-supplied a m:TestCase ;
+    m:caseId "IT-1R1S2-UAD1083-one-missing-one-supplied" ;
+    m:expectedFinding case:UAD1083-one-missing-one-supplied-finding-1 ;
+    m:expectedFindingCount 1 ;
+    m:fixtureCheck case:UAD1083-one-missing-one-supplied-check-1,
+        case:UAD1083-one-missing-one-supplied-check-2,
+        case:UAD1083-one-missing-one-supplied-check-3,
+        case:UAD1083-one-missing-one-supplied-check-4,
+        case:UAD1083-one-missing-one-supplied-check-5,
+        case:UAD1083-one-missing-one-supplied-check-6 ;
+    m:fixtureFamily "outbuilding" ;
+    m:ruleId "UAD1083" ;
+    m:sourceRow 83 ;
+    m:sourceRuleLogic "If ImprovementType = \"Outbuilding\" and OutbuildingRealPropertyIndicator = \"true\", and StructureAreaMeasure is not provided in a given instance of STRUCTURE_DETAIL" ;
+    m:sourceUniqueId "0300.0060" ;
+    m:state "applicable_missing" ;
+    m:xmlFile "UAD1083/one-missing-one-supplied.xml" ;
+    m:xmlSha256 "b048ae88bcc05f20f8e581aa19c792c4459bd3bb3c57f6e22fc5f339ba0e82c7" .
+
+case:UAD1083-one-missing-one-supplied-check-1 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Outbuilding" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1083-one-missing-one-supplied-check-2 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "true" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:OutbuildingRealPropertyIndicator" .
+
+case:UAD1083-one-missing-one-supplied-check-3 a m:FixtureCheck ;
+    m:count 0 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:STRUCTURE/m:STRUCTURE_DETAIL/m:StructureAreaMeasure" .
+
+case:UAD1083-one-missing-one-supplied-check-4 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Outbuilding" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1083-one-missing-one-supplied-check-5 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "true" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:OutbuildingRealPropertyIndicator" .
+
+case:UAD1083-one-missing-one-supplied-check-6 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "120" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:STRUCTURE/m:STRUCTURE_DETAIL/m:StructureAreaMeasure" .
+
+case:UAD1083-one-missing-one-supplied-finding-1 m:dataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:STRUCTURE/m:STRUCTURE_DETAIL/m:StructureAreaMeasure" ;
+    m:ruleId "UAD1083" ;
+    m:severity "fatal" ;
+    m:violationKind "MissingRequiredValue" .
+
+case:UAD1083-two-applicable-missing a m:TestCase ;
+    m:caseId "IT-1R1S2-UAD1083-two-applicable-missing" ;
+    m:expectedFinding case:UAD1083-two-applicable-missing-finding-1,
+        case:UAD1083-two-applicable-missing-finding-2 ;
+    m:expectedFindingCount 2 ;
+    m:fixtureCheck case:UAD1083-two-applicable-missing-check-1,
+        case:UAD1083-two-applicable-missing-check-2,
+        case:UAD1083-two-applicable-missing-check-3,
+        case:UAD1083-two-applicable-missing-check-4,
+        case:UAD1083-two-applicable-missing-check-5,
+        case:UAD1083-two-applicable-missing-check-6 ;
+    m:fixtureFamily "outbuilding" ;
+    m:ruleId "UAD1083" ;
+    m:sourceRow 83 ;
+    m:sourceRuleLogic "If ImprovementType = \"Outbuilding\" and OutbuildingRealPropertyIndicator = \"true\", and StructureAreaMeasure is not provided in a given instance of STRUCTURE_DETAIL" ;
+    m:sourceUniqueId "0300.0060" ;
+    m:state "applicable_missing" ;
+    m:xmlFile "UAD1083/two-applicable-missing.xml" ;
+    m:xmlSha256 "4c6a509c2c63e02624ba188f7cb61888f2ac3d77527ed1969b8cfedc6234fc86" .
+
+case:UAD1083-two-applicable-missing-check-1 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Outbuilding" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1083-two-applicable-missing-check-2 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "true" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:OutbuildingRealPropertyIndicator" .
+
+case:UAD1083-two-applicable-missing-check-3 a m:FixtureCheck ;
+    m:count 0 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:STRUCTURE/m:STRUCTURE_DETAIL/m:StructureAreaMeasure" .
+
+case:UAD1083-two-applicable-missing-check-4 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Outbuilding" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1083-two-applicable-missing-check-5 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "true" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:OutbuildingRealPropertyIndicator" .
+
+case:UAD1083-two-applicable-missing-check-6 a m:FixtureCheck ;
+    m:count 0 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:STRUCTURE/m:STRUCTURE_DETAIL/m:StructureAreaMeasure" .
+
+case:UAD1083-two-applicable-missing-finding-1 m:dataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:STRUCTURE/m:STRUCTURE_DETAIL/m:StructureAreaMeasure" ;
+    m:ruleId "UAD1083" ;
+    m:severity "fatal" ;
+    m:violationKind "MissingRequiredValue" .
+
+case:UAD1083-two-applicable-missing-finding-2 m:dataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:STRUCTURE/m:STRUCTURE_DETAIL/m:StructureAreaMeasure" ;
+    m:ruleId "UAD1083" ;
+    m:severity "fatal" ;
+    m:violationKind "MissingRequiredValue" .
+
+case:UAD1095-both-applicable-supplied a m:TestCase ;
+    m:caseId "IT-1R1S2-UAD1095-both-applicable-supplied" ;
+    m:expectedFindingCount 0 ;
+    m:fixtureCheck case:UAD1095-both-applicable-supplied-check-1,
+        case:UAD1095-both-applicable-supplied-check-2,
+        case:UAD1095-both-applicable-supplied-check-3,
+        case:UAD1095-both-applicable-supplied-check-4,
+        case:UAD1095-both-applicable-supplied-check-5,
+        case:UAD1095-both-applicable-supplied-check-6 ;
+    m:fixtureFamily "outbuilding" ;
+    m:ruleId "UAD1095" ;
+    m:sourceRow 95 ;
+    m:sourceRuleLogic "If ImprovementType = \"Outbuilding\" and OutbuildingRealPropertyIndicator = \"true\" and StructureExcludingVehicleStorageAndADUFinishedAreaMeasure is not provided in a given instance of STRUCTURE_DETAIL" ;
+    m:sourceUniqueId "0300.0112" ;
+    m:state "applicable_supplied" ;
+    m:xmlFile "UAD1095/both-applicable-supplied.xml" ;
+    m:xmlSha256 "7fde283ab7402e88be7ab512ee1151f8169c29565b1729efbaeb2d7730a1ee99" .
+
+case:UAD1095-both-applicable-supplied-check-1 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Outbuilding" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1095-both-applicable-supplied-check-2 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "true" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:OutbuildingRealPropertyIndicator" .
+
+case:UAD1095-both-applicable-supplied-check-3 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "90" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:STRUCTURE/m:STRUCTURE_DETAIL/m:StructureExcludingVehicleStorageAndADUFinishedAreaMeasure" .
+
+case:UAD1095-both-applicable-supplied-check-4 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Outbuilding" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1095-both-applicable-supplied-check-5 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "true" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:OutbuildingRealPropertyIndicator" .
+
+case:UAD1095-both-applicable-supplied-check-6 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "90" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:STRUCTURE/m:STRUCTURE_DETAIL/m:StructureExcludingVehicleStorageAndADUFinishedAreaMeasure" .
+
+case:UAD1095-conditions-split-across-instances a m:TestCase ;
+    m:caseId "IT-1R1S2-UAD1095-conditions-split-across-instances" ;
+    m:expectedFindingCount 0 ;
+    m:fixtureCheck case:UAD1095-conditions-split-across-instances-check-1,
+        case:UAD1095-conditions-split-across-instances-check-2,
+        case:UAD1095-conditions-split-across-instances-check-3,
+        case:UAD1095-conditions-split-across-instances-check-4,
+        case:UAD1095-conditions-split-across-instances-check-5,
+        case:UAD1095-conditions-split-across-instances-check-6 ;
+    m:fixtureFamily "outbuilding" ;
+    m:ruleId "UAD1095" ;
+    m:sourceRow 95 ;
+    m:sourceRuleLogic "If ImprovementType = \"Outbuilding\" and OutbuildingRealPropertyIndicator = \"true\" and StructureExcludingVehicleStorageAndADUFinishedAreaMeasure is not provided in a given instance of STRUCTURE_DETAIL" ;
+    m:sourceUniqueId "0300.0112" ;
+    m:state "not_applicable" ;
+    m:xmlFile "UAD1095/conditions-split-across-instances.xml" ;
+    m:xmlSha256 "1ff1fe27cf082cca6cad88e6631f1782eef725ac7574049b1af14d109346456e" .
+
+case:UAD1095-conditions-split-across-instances-check-1 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Outbuilding" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1095-conditions-split-across-instances-check-2 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "false" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:OutbuildingRealPropertyIndicator" .
+
+case:UAD1095-conditions-split-across-instances-check-3 a m:FixtureCheck ;
+    m:count 0 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:STRUCTURE/m:STRUCTURE_DETAIL/m:StructureExcludingVehicleStorageAndADUFinishedAreaMeasure" .
+
+case:UAD1095-conditions-split-across-instances-check-4 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Dwelling" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1095-conditions-split-across-instances-check-5 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "true" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:OutbuildingRealPropertyIndicator" .
+
+case:UAD1095-conditions-split-across-instances-check-6 a m:FixtureCheck ;
+    m:count 0 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:STRUCTURE/m:STRUCTURE_DETAIL/m:StructureExcludingVehicleStorageAndADUFinishedAreaMeasure" .
+
+case:UAD1095-one-missing-one-supplied a m:TestCase ;
+    m:caseId "IT-1R1S2-UAD1095-one-missing-one-supplied" ;
+    m:expectedFinding case:UAD1095-one-missing-one-supplied-finding-1 ;
+    m:expectedFindingCount 1 ;
+    m:fixtureCheck case:UAD1095-one-missing-one-supplied-check-1,
+        case:UAD1095-one-missing-one-supplied-check-2,
+        case:UAD1095-one-missing-one-supplied-check-3,
+        case:UAD1095-one-missing-one-supplied-check-4,
+        case:UAD1095-one-missing-one-supplied-check-5,
+        case:UAD1095-one-missing-one-supplied-check-6 ;
+    m:fixtureFamily "outbuilding" ;
+    m:ruleId "UAD1095" ;
+    m:sourceRow 95 ;
+    m:sourceRuleLogic "If ImprovementType = \"Outbuilding\" and OutbuildingRealPropertyIndicator = \"true\" and StructureExcludingVehicleStorageAndADUFinishedAreaMeasure is not provided in a given instance of STRUCTURE_DETAIL" ;
+    m:sourceUniqueId "0300.0112" ;
+    m:state "applicable_missing" ;
+    m:xmlFile "UAD1095/one-missing-one-supplied.xml" ;
+    m:xmlSha256 "d907023f62b82f311a55ff71b373a7dfea180f1db2ffb3be73f7d2e0fcf365f7" .
+
+case:UAD1095-one-missing-one-supplied-check-1 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Outbuilding" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1095-one-missing-one-supplied-check-2 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "true" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:OutbuildingRealPropertyIndicator" .
+
+case:UAD1095-one-missing-one-supplied-check-3 a m:FixtureCheck ;
+    m:count 0 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:STRUCTURE/m:STRUCTURE_DETAIL/m:StructureExcludingVehicleStorageAndADUFinishedAreaMeasure" .
+
+case:UAD1095-one-missing-one-supplied-check-4 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Outbuilding" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1095-one-missing-one-supplied-check-5 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "true" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:OutbuildingRealPropertyIndicator" .
+
+case:UAD1095-one-missing-one-supplied-check-6 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "90" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:STRUCTURE/m:STRUCTURE_DETAIL/m:StructureExcludingVehicleStorageAndADUFinishedAreaMeasure" .
+
+case:UAD1095-one-missing-one-supplied-finding-1 m:dataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:STRUCTURE/m:STRUCTURE_DETAIL/m:StructureExcludingVehicleStorageAndADUFinishedAreaMeasure" ;
+    m:ruleId "UAD1095" ;
+    m:severity "warning" ;
+    m:violationKind "MissingRequiredValue" .
+
+case:UAD1095-two-applicable-missing a m:TestCase ;
+    m:caseId "IT-1R1S2-UAD1095-two-applicable-missing" ;
+    m:expectedFinding case:UAD1095-two-applicable-missing-finding-1,
+        case:UAD1095-two-applicable-missing-finding-2 ;
+    m:expectedFindingCount 2 ;
+    m:fixtureCheck case:UAD1095-two-applicable-missing-check-1,
+        case:UAD1095-two-applicable-missing-check-2,
+        case:UAD1095-two-applicable-missing-check-3,
+        case:UAD1095-two-applicable-missing-check-4,
+        case:UAD1095-two-applicable-missing-check-5,
+        case:UAD1095-two-applicable-missing-check-6 ;
+    m:fixtureFamily "outbuilding" ;
+    m:ruleId "UAD1095" ;
+    m:sourceRow 95 ;
+    m:sourceRuleLogic "If ImprovementType = \"Outbuilding\" and OutbuildingRealPropertyIndicator = \"true\" and StructureExcludingVehicleStorageAndADUFinishedAreaMeasure is not provided in a given instance of STRUCTURE_DETAIL" ;
+    m:sourceUniqueId "0300.0112" ;
+    m:state "applicable_missing" ;
+    m:xmlFile "UAD1095/two-applicable-missing.xml" ;
+    m:xmlSha256 "4c6a509c2c63e02624ba188f7cb61888f2ac3d77527ed1969b8cfedc6234fc86" .
+
+case:UAD1095-two-applicable-missing-check-1 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Outbuilding" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1095-two-applicable-missing-check-2 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "true" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:OutbuildingRealPropertyIndicator" .
+
+case:UAD1095-two-applicable-missing-check-3 a m:FixtureCheck ;
+    m:count 0 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:STRUCTURE/m:STRUCTURE_DETAIL/m:StructureExcludingVehicleStorageAndADUFinishedAreaMeasure" .
+
+case:UAD1095-two-applicable-missing-check-4 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Outbuilding" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1095-two-applicable-missing-check-5 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "true" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:OutbuildingRealPropertyIndicator" .
+
+case:UAD1095-two-applicable-missing-check-6 a m:FixtureCheck ;
+    m:count 0 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:STRUCTURE/m:STRUCTURE_DETAIL/m:StructureExcludingVehicleStorageAndADUFinishedAreaMeasure" .
+
+case:UAD1095-two-applicable-missing-finding-1 m:dataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:STRUCTURE/m:STRUCTURE_DETAIL/m:StructureExcludingVehicleStorageAndADUFinishedAreaMeasure" ;
+    m:ruleId "UAD1095" ;
+    m:severity "warning" ;
+    m:violationKind "MissingRequiredValue" .
+
+case:UAD1095-two-applicable-missing-finding-2 m:dataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:STRUCTURE/m:STRUCTURE_DETAIL/m:StructureExcludingVehicleStorageAndADUFinishedAreaMeasure" ;
+    m:ruleId "UAD1095" ;
+    m:severity "warning" ;
+    m:violationKind "MissingRequiredValue" .
+
+case:UAD1096-both-applicable-supplied a m:TestCase ;
+    m:caseId "IT-1R1S2-UAD1096-both-applicable-supplied" ;
+    m:expectedFindingCount 0 ;
+    m:fixtureCheck case:UAD1096-both-applicable-supplied-check-1,
+        case:UAD1096-both-applicable-supplied-check-2,
+        case:UAD1096-both-applicable-supplied-check-3,
+        case:UAD1096-both-applicable-supplied-check-4,
+        case:UAD1096-both-applicable-supplied-check-5,
+        case:UAD1096-both-applicable-supplied-check-6 ;
+    m:fixtureFamily "outbuilding" ;
+    m:ruleId "UAD1096" ;
+    m:sourceRow 96 ;
+    m:sourceRuleLogic "If ImprovementType = \"Outbuilding\" and OutbuildingRealPropertyIndicator = \"true\" and StructureExcludingVehicleStorageAndADUUnfinishedAreaMeasure is not provided in a given instance of STRUCTURE_DETAIL" ;
+    m:sourceUniqueId "0300.0113" ;
+    m:state "applicable_supplied" ;
+    m:xmlFile "UAD1096/both-applicable-supplied.xml" ;
+    m:xmlSha256 "8d7305a8ba82dd564c89fe677251eb3790226712b64e0976e4c4940ee1b23856" .
+
+case:UAD1096-both-applicable-supplied-check-1 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Outbuilding" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1096-both-applicable-supplied-check-2 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "true" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:OutbuildingRealPropertyIndicator" .
+
+case:UAD1096-both-applicable-supplied-check-3 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "30" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:STRUCTURE/m:STRUCTURE_DETAIL/m:StructureExcludingVehicleStorageAndADUUnfinishedAreaMeasure" .
+
+case:UAD1096-both-applicable-supplied-check-4 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Outbuilding" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1096-both-applicable-supplied-check-5 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "true" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:OutbuildingRealPropertyIndicator" .
+
+case:UAD1096-both-applicable-supplied-check-6 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "30" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:STRUCTURE/m:STRUCTURE_DETAIL/m:StructureExcludingVehicleStorageAndADUUnfinishedAreaMeasure" .
+
+case:UAD1096-conditions-split-across-instances a m:TestCase ;
+    m:caseId "IT-1R1S2-UAD1096-conditions-split-across-instances" ;
+    m:expectedFindingCount 0 ;
+    m:fixtureCheck case:UAD1096-conditions-split-across-instances-check-1,
+        case:UAD1096-conditions-split-across-instances-check-2,
+        case:UAD1096-conditions-split-across-instances-check-3,
+        case:UAD1096-conditions-split-across-instances-check-4,
+        case:UAD1096-conditions-split-across-instances-check-5,
+        case:UAD1096-conditions-split-across-instances-check-6 ;
+    m:fixtureFamily "outbuilding" ;
+    m:ruleId "UAD1096" ;
+    m:sourceRow 96 ;
+    m:sourceRuleLogic "If ImprovementType = \"Outbuilding\" and OutbuildingRealPropertyIndicator = \"true\" and StructureExcludingVehicleStorageAndADUUnfinishedAreaMeasure is not provided in a given instance of STRUCTURE_DETAIL" ;
+    m:sourceUniqueId "0300.0113" ;
+    m:state "not_applicable" ;
+    m:xmlFile "UAD1096/conditions-split-across-instances.xml" ;
+    m:xmlSha256 "1ff1fe27cf082cca6cad88e6631f1782eef725ac7574049b1af14d109346456e" .
+
+case:UAD1096-conditions-split-across-instances-check-1 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Outbuilding" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1096-conditions-split-across-instances-check-2 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "false" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:OutbuildingRealPropertyIndicator" .
+
+case:UAD1096-conditions-split-across-instances-check-3 a m:FixtureCheck ;
+    m:count 0 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:STRUCTURE/m:STRUCTURE_DETAIL/m:StructureExcludingVehicleStorageAndADUUnfinishedAreaMeasure" .
+
+case:UAD1096-conditions-split-across-instances-check-4 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Dwelling" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1096-conditions-split-across-instances-check-5 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "true" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:OutbuildingRealPropertyIndicator" .
+
+case:UAD1096-conditions-split-across-instances-check-6 a m:FixtureCheck ;
+    m:count 0 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:STRUCTURE/m:STRUCTURE_DETAIL/m:StructureExcludingVehicleStorageAndADUUnfinishedAreaMeasure" .
+
+case:UAD1096-one-missing-one-supplied a m:TestCase ;
+    m:caseId "IT-1R1S2-UAD1096-one-missing-one-supplied" ;
+    m:expectedFinding case:UAD1096-one-missing-one-supplied-finding-1 ;
+    m:expectedFindingCount 1 ;
+    m:fixtureCheck case:UAD1096-one-missing-one-supplied-check-1,
+        case:UAD1096-one-missing-one-supplied-check-2,
+        case:UAD1096-one-missing-one-supplied-check-3,
+        case:UAD1096-one-missing-one-supplied-check-4,
+        case:UAD1096-one-missing-one-supplied-check-5,
+        case:UAD1096-one-missing-one-supplied-check-6 ;
+    m:fixtureFamily "outbuilding" ;
+    m:ruleId "UAD1096" ;
+    m:sourceRow 96 ;
+    m:sourceRuleLogic "If ImprovementType = \"Outbuilding\" and OutbuildingRealPropertyIndicator = \"true\" and StructureExcludingVehicleStorageAndADUUnfinishedAreaMeasure is not provided in a given instance of STRUCTURE_DETAIL" ;
+    m:sourceUniqueId "0300.0113" ;
+    m:state "applicable_missing" ;
+    m:xmlFile "UAD1096/one-missing-one-supplied.xml" ;
+    m:xmlSha256 "37aa6004dbf4b0499166e775f558cfe54d9f011172d31c7ce98fb7e89273eced" .
+
+case:UAD1096-one-missing-one-supplied-check-1 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Outbuilding" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1096-one-missing-one-supplied-check-2 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "true" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:OutbuildingRealPropertyIndicator" .
+
+case:UAD1096-one-missing-one-supplied-check-3 a m:FixtureCheck ;
+    m:count 0 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:STRUCTURE/m:STRUCTURE_DETAIL/m:StructureExcludingVehicleStorageAndADUUnfinishedAreaMeasure" .
+
+case:UAD1096-one-missing-one-supplied-check-4 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Outbuilding" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1096-one-missing-one-supplied-check-5 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "true" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:OutbuildingRealPropertyIndicator" .
+
+case:UAD1096-one-missing-one-supplied-check-6 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "30" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:STRUCTURE/m:STRUCTURE_DETAIL/m:StructureExcludingVehicleStorageAndADUUnfinishedAreaMeasure" .
+
+case:UAD1096-one-missing-one-supplied-finding-1 m:dataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:STRUCTURE/m:STRUCTURE_DETAIL/m:StructureExcludingVehicleStorageAndADUUnfinishedAreaMeasure" ;
+    m:ruleId "UAD1096" ;
+    m:severity "warning" ;
+    m:violationKind "MissingRequiredValue" .
+
+case:UAD1096-two-applicable-missing a m:TestCase ;
+    m:caseId "IT-1R1S2-UAD1096-two-applicable-missing" ;
+    m:expectedFinding case:UAD1096-two-applicable-missing-finding-1,
+        case:UAD1096-two-applicable-missing-finding-2 ;
+    m:expectedFindingCount 2 ;
+    m:fixtureCheck case:UAD1096-two-applicable-missing-check-1,
+        case:UAD1096-two-applicable-missing-check-2,
+        case:UAD1096-two-applicable-missing-check-3,
+        case:UAD1096-two-applicable-missing-check-4,
+        case:UAD1096-two-applicable-missing-check-5,
+        case:UAD1096-two-applicable-missing-check-6 ;
+    m:fixtureFamily "outbuilding" ;
+    m:ruleId "UAD1096" ;
+    m:sourceRow 96 ;
+    m:sourceRuleLogic "If ImprovementType = \"Outbuilding\" and OutbuildingRealPropertyIndicator = \"true\" and StructureExcludingVehicleStorageAndADUUnfinishedAreaMeasure is not provided in a given instance of STRUCTURE_DETAIL" ;
+    m:sourceUniqueId "0300.0113" ;
+    m:state "applicable_missing" ;
+    m:xmlFile "UAD1096/two-applicable-missing.xml" ;
+    m:xmlSha256 "4c6a509c2c63e02624ba188f7cb61888f2ac3d77527ed1969b8cfedc6234fc86" .
+
+case:UAD1096-two-applicable-missing-check-1 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Outbuilding" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1096-two-applicable-missing-check-2 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "true" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:IMPROVEMENT_DETAIL/m:OutbuildingRealPropertyIndicator" .
+
+case:UAD1096-two-applicable-missing-check-3 a m:FixtureCheck ;
+    m:count 0 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:STRUCTURE/m:STRUCTURE_DETAIL/m:StructureExcludingVehicleStorageAndADUUnfinishedAreaMeasure" .
+
+case:UAD1096-two-applicable-missing-check-4 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "Outbuilding" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:ImprovementType" .
+
+case:UAD1096-two-applicable-missing-check-5 a m:FixtureCheck ;
+    m:count 1 ;
+    m:expectedText "true" ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:IMPROVEMENT_DETAIL/m:OutbuildingRealPropertyIndicator" .
+
+case:UAD1096-two-applicable-missing-check-6 a m:FixtureCheck ;
+    m:count 0 ;
+    m:path ".//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:STRUCTURE/m:STRUCTURE_DETAIL/m:StructureExcludingVehicleStorageAndADUUnfinishedAreaMeasure" .
+
+case:UAD1096-two-applicable-missing-finding-1 m:dataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[1]/m:STRUCTURE/m:STRUCTURE_DETAIL/m:StructureExcludingVehicleStorageAndADUUnfinishedAreaMeasure" ;
+    m:ruleId "UAD1096" ;
+    m:severity "warning" ;
+    m:violationKind "MissingRequiredValue" .
+
+case:UAD1096-two-applicable-missing-finding-2 m:dataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:IMPROVEMENTS/m:IMPROVEMENT[2]/m:STRUCTURE/m:STRUCTURE_DETAIL/m:StructureExcludingVehicleStorageAndADUUnfinishedAreaMeasure" ;
+    m:ruleId "UAD1096" ;
+    m:severity "warning" ;
+    m:violationKind "MissingRequiredValue" .
+
+case:schema a m:SourceArtifact ;
+    m:path "chatgpt-sources/sources/schemas/UAD/GSE_UAD_3.6.0_v1.3/Combined/GSE_UAD_3.6.0_v1.3.xsd" ;
+    m:sha256 "0bb6650ab465753fe2023be14d414ad6db45820201b7fdee1d90023e49cbf129" .
+

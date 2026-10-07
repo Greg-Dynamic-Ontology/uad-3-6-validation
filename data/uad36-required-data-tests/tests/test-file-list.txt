@@ -1,0 +1,60 @@
+ Volume in drive C is Local Disk
+ Volume Serial Number is 0037-246E
+
+ Directory of C:\Users\grego\projects\uad-3-6-validation\data\uad36-required-data-tests\tests
+
+09/21/2026  02:59 PM           149,134 0100.0007-UAD1001-missing-AddressLineText.xml
+09/21/2026  02:59 PM           149,158 0100.0009-UAD1002-missing-CityName.xml
+09/21/2026  02:59 PM           149,155 0100.0010-UAD1003-missing-CountyName.xml
+09/21/2026  02:59 PM           149,158 0100.0011-UAD1004-missing-PostalCode.xml
+09/21/2026  02:59 PM           149,163 0100.0012-UAD1006-missing-StateCode.xml
+09/21/2026  02:59 PM           149,120 0100.0019-UAD1010-missing-AccessoryDwellingUnitTotalCount.xml
+09/21/2026  02:59 PM           149,147 0100.0020-UAD1012-missing-AttachmentType.xml
+09/21/2026  02:59 PM           149,156 0100.0021-UAD1013-missing-DwellingCount.xml
+09/21/2026  02:59 PM           149,128 0100.0022-UAD1017-missing-LivingUnitExcludingADUCount.xml
+09/21/2026  02:59 PM           149,155 0100.0026-UAD1023-missing-PUDIndicator.xml
+09/21/2026  02:59 PM           149,118 0100.0033-UAD1027-missing-SpecialTaxAssessmentsIndicator.xml
+09/21/2026  02:59 PM           149,077 0100.0046-UAD1035-missing-HomeownerResponsibleForExteriorMaintenanceIndicator.xml
+09/21/2026  02:59 PM           149,126 0100.0047-UAD1036-missing-LandOwnedInCommonIndicator.xml
+09/21/2026  02:59 PM           149,122 0100.0054-UAD1040-missing-NativeAmericanLandsIndicator.xml
+09/21/2026  02:59 PM           149,126 0100.0065-UAD1042-missing-PropertyInProjectIndicator.xml
+09/21/2026  02:59 PM           149,119 0200.0015-UAD1045-missing-PropertyAmenityExistsIndicator.xml
+09/21/2026  02:59 PM           149,130 0300.0010-UAD1049-missing-NewConstructionIndicator.xml
+09/21/2026  02:59 PM           149,123 0600.0016-UAD1134-missing-SalesContractExistsIndicator.xml
+09/21/2026  02:59 PM           149,042 0800.0005-UAD1191-missing-PriorSalesOrTransfersIndicator.xml
+09/21/2026  02:59 PM           149,113 0900.0004-UAD1203-missing-ListedWithinPreviousYearIndicator.xml
+09/21/2026  02:59 PM           149,136 1000.0027-UAD1210-missing-CostApproachIndicator.xml
+09/21/2026  02:59 PM           149,110 1000.0028-UAD1211-missing-GovernmentAgencyAppraisalIndicator.xml
+09/21/2026  02:59 PM           149,132 1000.0030-UAD1213-missing-IncomeApproachIndicator.xml
+09/21/2026  02:59 PM           149,136 1000.0031-UAD1216-missing-RentScheduleIndicator.xml
+09/21/2026  02:59 PM           149,115 1000.0032-UAD1218-missing-SalesComparisonApproachIndicator.xml
+09/21/2026  02:59 PM           149,129 1000.0034-UAD1219-missing-ValuationAssignmentType.xml
+09/21/2026  02:59 PM           149,124 1000.0043-UAD1519-missing-PropertyDataReportIndicator.xml
+09/21/2026  02:59 PM           149,109 1000.0158-UAD1222-missing-PropertyValuationMethodType.xml
+09/21/2026  02:59 PM           149,117 1300.0012-UAD1257-missing-AppraisalReportEffectiveDate.xml
+09/21/2026  02:59 PM           149,137 1300.0017-UAD1262-missing-OpinionOfValueAmount.xml
+09/21/2026  02:59 PM           149,016 1300.0021-UAD1266-missing-ValuationReconciliationSummaryCommentDescription.xml
+09/21/2026  02:59 PM           149,103 1500.0054-UAD1317-missing-PropertyAccessTypicalToMarketIndicator.xml
+09/21/2026  02:59 PM           149,103 1500.0055-UAD1318-missing-PropertyPrimaryEntryExitMethodType.xml
+09/21/2026  02:59 PM           149,130 1500.0125-UAD1369-missing-SiteZoningComplianceType.xml
+09/21/2026  02:59 PM           149,128 1500.0178-UAD1373-missing-SiteDefectsExistIndicator.xml
+09/21/2026  02:59 PM           149,129 1600.0006-UAD1384-missing-OverallConditionRatingCode.xml
+09/21/2026  02:59 PM           149,133 1600.0007-UAD1385-missing-OverallQualityRatingCode.xml
+09/21/2026  02:59 PM           149,098 2200.0017-UAD1508-missing-AppraiserPriorServicesPerformedIndicator.xml
+09/21/2026  02:59 PM           149,080 2200.0038-UAD1511-missing-ValuationReportInspectionCertificationType.xml
+09/21/2026  02:59 PM           149,117 2600.0003-UAD1616-missing-EfficiencyRatingExistsIndicator.xml
+09/21/2026  02:59 PM           149,112 2600.0004-UAD1617-missing-GreenCertificationExistsIndicator.xml
+09/21/2026  02:59 PM           149,100 2600.0005-UAD1618-missing-RenewableEnergyComponentExistsIndicator.xml
+09/21/2026  02:59 PM           149,044 3000.0008-UAD1626-missing-MarketBoundariesDescription.xml
+09/21/2026  02:59 PM           149,113 3000.0009-UAD1627-missing-MarketInventoryLookbackMonthsCount.xml
+09/21/2026  02:59 PM           149,133 3000.0033-UAD1652-missing-MarketSupplyTrendType.xml
+09/21/2026  02:59 PM           149,098 3000.0034-UAD1653-missing-MarketTrendsForeclosureActivityIndicator.xml
+09/21/2026  02:59 PM           149,123 3100.0003-UAD1659-missing-FinanciallyFeasibleIndicator.xml
+09/21/2026  02:59 PM           149,125 3100.0004-UAD1660-missing-LegallyPermissibleIndicator.xml
+09/21/2026  02:59 PM           149,123 3100.0005-UAD1661-missing-MaximallyProductiveIndicator.xml
+09/21/2026  02:59 PM           149,125 3100.0006-UAD1662-missing-PhysicallyPossibleIndicator.xml
+09/21/2026  02:59 PM           149,125 3100.0007-UAD1663-missing-SiteHighestBestUseIndicator.xml
+09/21/2026  02:59 PM           149,137 3300.0002-UAD1676-missing-SketchExistsIndicator.xml
+09/21/2026  02:59 PM           149,116 4000.0004-UAD1750-missing-ReconsiderationOfValueIndicator.xml
+              53 File(s)      7,903,326 bytes
+               0 Dir(s)  488,394,145,792 bytes free

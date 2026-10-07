@@ -47,6 +47,10 @@ from app.services.value_consistency_required_data import (
     binding_for as value_consistency_binding_for,
     evaluate_value_consistency,
 )
+from app.services.aggregate_cross_record_required_data import (
+    binding_for as aggregate_cross_record_binding_for,
+    evaluate_aggregate_cross_record,
+)
 from app.services.date_chronology_required_data import (
     binding_for as date_chronology_binding_for,
     evaluate_date_chronology,
@@ -371,6 +375,9 @@ def load_required_rules() -> tuple[dict[str, str], ...]:
 
     rules = []
     for row in rows:
+        if aggregate_cross_record_binding_for(row) is not None:
+            rules.append(row)
+            continue
         if date_chronology_binding_for(row) is not None:
             rules.append(row)
             continue
@@ -434,6 +441,9 @@ def load_required_rules() -> tuple[dict[str, str], ...]:
     valid_rules = []
 
     for rule in rules:
+        if aggregate_cross_record_binding_for(rule) is not None:
+            valid_rules.append(rule)
+            continue
         if date_chronology_binding_for(rule) is not None:
             valid_rules.append(rule)
             continue
@@ -681,6 +691,9 @@ def evaluate_required_data(
     for rule in sorted(
         load_required_rules(), key=lambda row: row["Unique ID"]
     ):
+        if aggregate_cross_record_binding_for(rule) is not None:
+            findings.extend(evaluate_aggregate_cross_record(root, investor, rule))
+            continue
         if date_chronology_binding_for(rule) is not None:
             findings.extend(evaluate_date_chronology(root, investor, rule))
             continue

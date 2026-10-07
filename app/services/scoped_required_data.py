@@ -30,9 +30,173 @@ class ScopedRule:
     condition: tuple | None = None
     equality_trigger: tuple[str, str] | None = None
     trigger_at_subject: bool = False
+    correlated_instance: str | None = None
 
 
 SCOPED_RULES = {
+    # IT-1R1S2-Slice-03: source-pinned manufactured-home requirements.
+    ('0500.0011', 'UAD1107'): ScopedRule(
+        element='ManufacturedHomeInstalledDate',
+        logic='If ImprovementType = "Dwelling" and ConstructionMethodType = "Manufactured", and ManufacturedHomeInstalledDate is not provided in a given instance of MANUFACTURED_HOME_DETAIL',
+        severity='Warning',
+        parent_path='../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/MANUFACTURED_HOME/MANUFACTURED_HOME_DETAIL/',
+        correlated_instance="manufactured_home",
+    ),
+    ('0500.0014', 'UAD1109'): ScopedRule(
+        element='ManufacturedHomeInvoiceReviewedIndicator',
+        logic='If ImprovementType = "Dwelling", and ConstructionMethodType = "Manufactured", and NewConstructionIndicator = "true", and ManufacturedHomeInvoiceReviewedIndicator is not provided in a given instance of MANUFACTURED_HOME_DETAIL',
+        severity='Fatal',
+        parent_path='../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/MANUFACTURED_HOME/MANUFACTURED_HOME_DETAIL/',
+        correlated_instance="manufactured_home",
+    ),
+    ('0500.0016', 'UAD1110'): ScopedRule(
+        element='ManufacturedHomeManufactureDate',
+        logic='If ImprovementType = "Dwelling" and ConstructionMethod = "Manufactured" and ManufacturedHomeHUDDataPlateAttachedIndicator = "true", and ManufacturedHomeManufactureDate is not provided',
+        severity='Fatal',
+        parent_path='../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/MANUFACTURED_HOME/MANUFACTURED_HOME_DETAIL/',
+        correlated_instance="manufactured_home",
+    ),
+    ('0500.0021', 'UAD1114'): ScopedRule(
+        element='ManufacturedHomeMovedAfterOriginalInstallationIndicator',
+        logic='If ImprovementType = "Dwelling" and ConstructionMethodType = "Manufactured", and ManufacturedHomeMovedAfterOriginalInstallationIndicator is not provided in a given instance of MANUFACTURED_HOME_DETAIL',
+        severity='Fatal',
+        parent_path='../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/MANUFACTURED_HOME/MANUFACTURED_HOME_DETAIL/',
+        correlated_instance="manufactured_home",
+    ),
+    ('0500.0022', 'UAD1115'): ScopedRule(
+        element='ManufacturedHomePurchasedFromRetailerIndicator',
+        logic='If ImprovementType = "Dwelling", and ConstructionMethodType = "Manufactured", and NewConstructionIndicator = "true", and ManufacturedHomePurchasedFromRetailerIndicator is not provided in a given instance of MANUFACTURED_HOME_DETAIL',
+        severity='Fatal',
+        parent_path='../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/MANUFACTURED_HOME/MANUFACTURED_HOME_DETAIL/',
+        correlated_instance="manufactured_home",
+    ),
+    ('0500.0023', 'UAD1116'): ScopedRule(
+        element='ManufacturedHomeRetailerInvoiceReviewedIndicator',
+        logic='If ImprovementType = "Dwelling", and ConstructionMethod = "Manufactured", and ManufacturedHomePurchasedFromRetailerIndicator = "true", and ManufacturedHomeRetailerInvoiceReviewedIndicator is not provided in a given instance of MANUFACTURED_HOME_DETAIL',
+        severity='Fatal',
+        parent_path='../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/MANUFACTURED_HOME/MANUFACTURED_HOME_DETAIL/',
+        correlated_instance="manufactured_home",
+    ),
+    ('0500.0028', 'UAD1117'): ScopedRule(
+        element='RoofLoadZoneCode',
+        logic='If ImprovementType = "Dwelling" and ConstructionMethod = "Manufactured" and ManufacturedHomeHUDDataPlateAttachedIndicator = "true", and RoofLoadZoneCode is not provided in a given instance of MANUFACTURED_HOME_DETAIL',
+        severity='Warning',
+        parent_path='../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/MANUFACTURED_HOME/MANUFACTURED_HOME_DETAIL/',
+        correlated_instance="manufactured_home",
+    ),
+    ('0500.0030', 'UAD1118'): ScopedRule(
+        element='SkirtingExistsIndicator',
+        logic='If ImprovementType = "Dwelling", and ConstructionMethodType = "Manufactured", and SkirtingExistsIndicator is not provided in a given instance of MANUFACTURED_HOME_DETAIL',
+        severity='Fatal',
+        parent_path='../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/MANUFACTURED_HOME/MANUFACTURED_HOME_DETAIL/',
+        correlated_instance="manufactured_home",
+    ),
+    ('0500.0031', 'UAD1119'): ScopedRule(
+        element='ThermalZoneCode',
+        logic='If ImprovementType = "Dwelling" and ConstructionMethod = "Manufactured" and ManufacturedHomeHUDDataPlateAttachedIndicator = "true", and ThermalZoneCode is not provided',
+        severity='Warning',
+        parent_path='../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/MANUFACTURED_HOME/MANUFACTURED_HOME_DETAIL/',
+        correlated_instance="manufactured_home",
+    ),
+    ('0500.0033', 'UAD1120'): ScopedRule(
+        element='WindZoneCode',
+        logic='If ImprovementType = "Dwelling" and ConstructionMethod = "Manufactured" and ManufacturedHomeHUDDataPlateAttachedIndicator = "true", and WindZoneCode is not provided in a given instance of MANUFACTURED_HOME_DETAIL',
+        severity='Warning',
+        parent_path='../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/MANUFACTURED_HOME/MANUFACTURED_HOME_DETAIL/',
+        correlated_instance="manufactured_home",
+    ),
+    ('0500.0041', 'UAD1125'): ScopedRule(
+        element='ManufacturedHomeInstalledDateEstimatedIndicator',
+        logic='If ImprovementType = "Dwelling" and ConstructionMethodType = "Manufactured" and ManufacturedHomeInstalledDateEstimatedIndicator is not provided',
+        severity='Warning',
+        parent_path='../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/MANUFACTURED_HOME/MANUFACTURED_HOME_DETAIL/',
+        correlated_instance="manufactured_home",
+    ),
+    ('0500.0044', 'UAD1126'): ScopedRule(
+        element='ManufacturedHomeWidthType',
+        logic='If ImprovementType = "Dwelling" and ConstructionMethodType = "Manufactured" and ManufacturedHomeWidthType is not provided',
+        severity='Fatal',
+        parent_path='../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/MANUFACTURED_HOME/MANUFACTURED_HOME_DETAIL/',
+        correlated_instance="manufactured_home",
+    ),
+    # IT-1R1S2-Slice-02: dwelling heating-system requirement.
+    ("0300.0116", "UAD1098"): ScopedRule(
+        element="CoreHeatingSystemBelowGradeIndicator",
+        logic=(
+            'If ImprovementType = "Dwelling" and HeatingSystemType <> "None", and '
+            'CoreHeatingSystemBelowGradeIndicator is not provided in SYSTEM_DETAIL '
+            'for a given instance of IMPROVEMENT'
+        ),
+        severity="Fatal",
+        parent_path=(
+            PROPERTY_PATH + "IMPROVEMENTS/IMPROVEMENT/SYSTEM/SYSTEM_DETAIL/"
+        ),
+        correlated_instance="dwelling_system",
+    ),
+    # IT-1R1S2-Slice-01: dwelling-structure requirements, verified against CSV.
+    ('0300.0032', 'UAD1060'): ScopedRule(
+        element='StructuralDesignType',
+        logic='If ImprovementType = "Dwelling" and AttachmentType = "Attached", and StructuralDesignType is not provided in ARCHITECTURAL_DESIGN in a given instance of IMPROVEMENT',
+        severity='Fatal',
+        parent_path='../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/STRUCTURE/ARCHITECTURAL_DESIGN/',
+        correlated_instance='dwelling_structure',
+    ),
+    ('0300.0041', 'UAD1064'): ScopedRule(
+        element='EstimatedRemainingEconomicLifeYearsCount',
+        logic='If CostApproachIndicator = "true" and ImprovementType = "Dwelling" and EstimatedRemainingEconomicLifeYearsCount is not provided in a given instance of STRUCTURE_ANALYSIS_DETAIL',
+        severity='Warning',
+        parent_path='../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/STRUCTURE/STRUCTURE_ANALYSES/STRUCTURE_ANALYSIS/STRUCTURE_ANALYSIS_DETAIL/',
+        correlated_instance='dwelling_structure',
+    ),
+    ('0300.0055\n', 'UAD1065'): ScopedRule(
+        element='ImprovementComponentType',
+        logic='If ImprovementType = "Dwelling" and HomeownerResponsibleForExteriorMaintenanceIndicator = "true" and ImprovementComponentType is not provided in a given instance of STRUCTURE_COMPONENT_DETAIL',
+        severity='Fatal',
+        parent_path='../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/STRUCTURE/STRUCTURE_COMPONENTS/STRUCTURE_COMPONENT/STRUCTURE_COMPONENT_DETAIL/',
+        correlated_instance='dwelling_structure',
+    ),
+    ('0300.0052', 'UAD1077'): ScopedRule(
+        element='ImprovementComponentTypeAdditionalDescription',
+        logic='If ImprovementType = "Dwelling", and HomeownerResponsibleForExteriorMaintenanceIndicator = "true", and ImprovementComponentType = "Windows" or "Other", and ImprovementComponentTypeAdditionalDescription is not provided in a given instance of STRUCTURE_COMPONENT_DETAIL',
+        severity='Warning',
+        parent_path='../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/STRUCTURE/STRUCTURE_COMPONENTS/STRUCTURE_COMPONENT/STRUCTURE_COMPONENT_DETAIL/',
+        correlated_instance='dwelling_structure',
+    ),
+    ('0300.0074', 'UAD1088'): ScopedRule(
+        element='FactoryBuiltCertificationExaminedIndicator',
+        logic='If ImprovementType = "Dwelling", and ConstructionMethodType = "Modular" or "OnFrameModular", and FactoryBuiltCertificationExaminedIndicator is not provided in a given instance of STRUCTURE_DETAIL',
+        severity='Warning',
+        parent_path='../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/STRUCTURE/STRUCTURE_DETAIL/',
+        correlated_instance='dwelling_structure',
+    ),
+    ('0300.0101', 'UAD1091'): ScopedRule(
+        element='StructureIdentifier',
+        logic='If ImprovementType = "Dwelling" and LivingUnitExcludingADUCount > 1, and StructureIdentifier is not provided in a given instance of STRUCTURE_DETAIL',
+        severity='Fatal',
+        parent_path='../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/STRUCTURE/STRUCTURE_DETAIL/',
+        correlated_instance='dwelling_structure',
+    ),
+    ('0300.0114', 'UAD1097'): ScopedRule(
+        element='NonContinuousFinishedAreaIndicator',
+        logic='If ImprovementType = "Dwelling" and LivingUnitExcludingADUCount = 1, and NonContinuousFinishedAreaIndicator is not provided in in a given instance of IMPROVEMENT_DETAIL',
+        severity='Fatal',
+        parent_path='../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/IMPROVEMENT_DETAIL/',
+        correlated_instance='dwelling_structure',
+    ),
+    ('1600.0004', 'UAD1382'): ScopedRule(
+        element='ExteriorConditionRatingCode',
+        logic='If ImprovementType = "Dwelling" and HomeownerResponsibleForExteriorMaintenanceIndicator = "true" and ExteriorConditionRatingCode is not provided in a given instance of STRUCTURE_DETAIL',
+        severity='Fatal',
+        parent_path='../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/STRUCTURE/STRUCTURE_DETAIL/',
+        correlated_instance='dwelling_structure',
+    ),
+    ('1600.0005', 'UAD1383'): ScopedRule(
+        element='ExteriorQualityRatingCode',
+        logic='If ImprovementType = "Dwelling" and HomeownerResponsibleForExteriorMaintenanceIndicator = "true" and ExteriorQualityRatingCode is not provided in a given instance of STRUCTURE_DETAIL',
+        severity='Fatal',
+        parent_path='../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/STRUCTURE/STRUCTURE_DETAIL/',
+        correlated_instance='dwelling_structure',
+    ),
     ("1500.0088", "UAD1329"): ScopedRule(
         element="SiteInfluenceTypeOtherDescription",
         logic='If SiteInfluenceType = "Other" and SiteInfluenceTypeOtherDescription is not provided in a given instance of SITE_INFLUENCE_DETAIL',
@@ -118,6 +282,76 @@ SCOPED_RULES = {
             + "IMPROVEMENTS/IMPROVEMENT/IMPROVEMENT_DETAIL/"
         ),
         equality_trigger=("m:OutbuildingType", "Other"),
+    ),
+    ("0300.0023", "UAD1055"): ScopedRule(
+        element="HeatingSystemExistsIndicator",
+        logic=(
+            'If ImprovementType = "Outbuilding" and '
+            'OutbuildingRealPropertyIndicator = "true", and '
+            'LivingUnitCount = 0, and HeatingSystemExistsIndicator is not provided '
+            "in a given instance of IMPROVEMENT_DETAIL"
+        ),
+        severity="Warning",
+        parent_path=(
+            PROPERTY_PATH + "IMPROVEMENTS/IMPROVEMENT/IMPROVEMENT_DETAIL/"
+        ),
+        correlated_instance="outbuilding_heating",
+    ),
+    ("0300.0029", "UAD1059"): ScopedRule(
+        element="UtilityTypeOtherDescription",
+        logic=(
+            'If ImprovementType = "Outbuilding" and '
+            'OutbuildingRealPropertyIndicator = "true" and '
+            'UtilityType = "Other" and UtilityTypeOtherDescription is not provided '
+            "in a given instance of OUTBUILDING_UTILITY"
+        ),
+        severity="Fatal",
+        parent_path=(
+            PROPERTY_PATH + "IMPROVEMENTS/IMPROVEMENT/OUTBUILDING/"
+            "OUTBUILDING_UTILITIES/OUTBUILDING_UTILITY/"
+        ),
+        correlated_instance="outbuilding_utility_other",
+    ),
+    ("0300.0060", "UAD1083"): ScopedRule(
+        element="StructureAreaMeasure",
+        logic=(
+            'If ImprovementType = "Outbuilding" and '
+            'OutbuildingRealPropertyIndicator = "true", and '
+            "StructureAreaMeasure is not provided in a given instance of STRUCTURE_DETAIL"
+        ),
+        severity="Fatal",
+        parent_path=(
+            PROPERTY_PATH + "IMPROVEMENTS/IMPROVEMENT/STRUCTURE/STRUCTURE_DETAIL/"
+        ),
+        correlated_instance="outbuilding_structure",
+    ),
+    ("0300.0112", "UAD1095"): ScopedRule(
+        element="StructureExcludingVehicleStorageAndADUFinishedAreaMeasure",
+        logic=(
+            'If ImprovementType = "Outbuilding" and '
+            'OutbuildingRealPropertyIndicator = "true" and '
+            "StructureExcludingVehicleStorageAndADUFinishedAreaMeasure is not provided "
+            "in a given instance of STRUCTURE_DETAIL"
+        ),
+        severity="Warning",
+        parent_path=(
+            PROPERTY_PATH + "IMPROVEMENTS/IMPROVEMENT/STRUCTURE/STRUCTURE_DETAIL/"
+        ),
+        correlated_instance="outbuilding_structure",
+    ),
+    ("0300.0113", "UAD1096"): ScopedRule(
+        element="StructureExcludingVehicleStorageAndADUUnfinishedAreaMeasure",
+        logic=(
+            'If ImprovementType = "Outbuilding" and '
+            'OutbuildingRealPropertyIndicator = "true" and '
+            "StructureExcludingVehicleStorageAndADUUnfinishedAreaMeasure is not provided "
+            "in a given instance of STRUCTURE_DETAIL"
+        ),
+        severity="Warning",
+        parent_path=(
+            PROPERTY_PATH + "IMPROVEMENTS/IMPROVEMENT/STRUCTURE/STRUCTURE_DETAIL/"
+        ),
+        correlated_instance="outbuilding_structure",
     ),
     ("0900.0007", "UAD1204"): ScopedRule(
         element="DaysOnMarketCount",
@@ -619,6 +853,271 @@ def _path_from(
     return "/".join(reversed(parts))
 
 
+def _dwelling_structure_containers(
+    analysis: Element,
+    subject: Element,
+    improvement: Element,
+    rule: dict[str, str],
+    specification: ScopedRule,
+    identity: str,
+) -> list[Element]:
+    """IT-1R1S2-Slice-01: bind each dependent to its own dwelling and property.
+
+    Property inputs belong to this subject; CostApproachIndicator belongs to
+    this valuation analysis. Component predicates remain local to each
+    STRUCTURE_COMPONENT_DETAIL, even when components repeat in one dwelling.
+    """
+    if _equals(improvement, "m:IMPROVEMENT_DETAIL/m:ImprovementType", "Dwelling", identity) is not True:
+        return []
+    rid = rule["Message ID"]
+    detail = subject.find("m:PROPERTY_DETAIL", NS)
+    if rid == "UAD1060":
+        if _equals(subject, "m:PROPERTY_DETAIL/m:AttachmentType", "Attached", identity) is not True:
+            return []
+    elif rid == "UAD1064":
+        indicator = analysis.findall(
+            "m:VALUATION_REPORT/m:SCOPE_OF_WORK/m:SCOPE_OF_WORK_DETAIL", NS
+        )
+        if len(indicator) > 1:
+            raise ValueError(f"{identity}: ambiguous valuation report scope")
+        if not indicator or _local_condition(
+            indicator[0], ("in", "CostApproachIndicator", "true", "1"), identity
+        ) is not True:
+            return []
+    elif rid in {"UAD1065", "UAD1077", "UAD1382", "UAD1383"}:
+        if detail is None or _local_condition(
+            detail, ("in", "HomeownerResponsibleForExteriorMaintenanceIndicator", "true", "1"), identity
+        ) is not True:
+            return []
+    elif rid == "UAD1088":
+        methods = improvement.findall(
+            "m:STRUCTURE/m:CONSTRUCTION_METHODS/m:CONSTRUCTION_METHOD", NS
+        )
+        if not any(_local_condition(
+            method, ("in", "ConstructionMethodType", "Modular", "OnFrameModular"), identity
+        ) is True for method in methods):
+            return []
+    elif rid in {"UAD1091", "UAD1097"}:
+        nodes = subject.findall("m:PROPERTY_DETAIL/m:LivingUnitExcludingADUCount", NS)
+        if not nodes:
+            return []
+        if len(nodes) != 1 or list(nodes[0]) or not _has_value(nodes[0]):
+            raise ValueError(f"{identity}: invalid or ambiguous living-unit count")
+        try:
+            count = Decimal((nodes[0].text or "").strip())
+        except InvalidOperation as error:
+            raise ValueError(f"{identity}: nonnumeric living-unit count") from error
+        if not count.is_finite():
+            raise ValueError(f"{identity}: nonfinite living-unit count")
+        if not (count > 1 if rid == "UAD1091" else count == 1):
+            return []
+    else:
+        raise ValueError(f"{identity}: unsupported dwelling-structure binding")
+
+    prefix = PROPERTY_PATH + "IMPROVEMENTS/IMPROVEMENT/"
+    if not specification.parent_path.startswith(prefix):
+        raise ValueError(f"{identity}: dependent escapes its improvement")
+    relative = specification.parent_path.removeprefix(prefix).strip("/")
+    lookup = "/".join("m:" + name for name in relative.split("/"))
+    containers = improvement.findall(lookup, NS)
+    if rid == "UAD1077":
+        containers = [container for container in containers if _local_condition(
+            container, ("in", "ImprovementComponentType", "Windows", "Other"), identity
+        ) is True]
+    return containers
+
+
+def _manufactured_home_containers(
+    subject: Element,
+    improvement: Element,
+    rule: dict[str, str],
+    identity: str,
+) -> list[Element]:
+    """IT-1R1S2-Slice-03: evaluate conditions in their governed occurrence.
+
+    Source prose sometimes says ConstructionMethod. The XSD and published
+    MH1 appraisal bind that concept to ConstructionMethodType in STRUCTURE.
+    NewConstructionIndicator is property-level; plate and retailer inputs
+    belong to the same MANUFACTURED_HOME_DETAIL as the dependent.
+    """
+    if _equals(
+        improvement, "m:IMPROVEMENT_DETAIL/m:ImprovementType", "Dwelling", identity
+    ) is not True:
+        return []
+    methods = improvement.findall(
+        "m:STRUCTURE/m:CONSTRUCTION_METHODS/m:CONSTRUCTION_METHOD", NS
+    )
+    if not any(
+        _local_condition(method, ("in", "ConstructionMethodType", "Manufactured"), identity)
+        is True for method in methods
+    ):
+        return []
+    rule_id = rule["Message ID"]
+    if rule_id in {"UAD1109", "UAD1115"}:
+        details = subject.findall("m:PROPERTY_DETAIL", NS)
+        if len(details) > 1:
+            raise ValueError(f"{identity}: ambiguous property detail")
+        if not details or _local_condition(
+            details[0], ("in", "NewConstructionIndicator", "true", "1"), identity
+        ) is not True:
+            return []
+    containers = improvement.findall(
+        "m:MANUFACTURED_HOME/m:MANUFACTURED_HOME_DETAIL", NS
+    )
+    trigger = None
+    if rule_id in {"UAD1110", "UAD1117", "UAD1119", "UAD1120"}:
+        trigger = "ManufacturedHomeHUDDataPlateAttachedIndicator"
+    elif rule_id == "UAD1116":
+        trigger = "ManufacturedHomePurchasedFromRetailerIndicator"
+    if trigger is not None:
+        containers = [
+            container for container in containers
+            if _local_condition(container, ("in", trigger, "true", "1"), identity) is True
+        ]
+    return containers
+
+
+def _evaluate_correlated_instance(
+    root: Element,
+    analysis: Element,
+    subject: Element,
+    subject_count: int,
+    investor: Investor,
+    parents: dict[Element, Element],
+    rule: dict[str, str],
+    specification: ScopedRule,
+    identity: str,
+) -> list[Finding]:
+    """Evaluate correlated predicates within one Improvement at a time."""
+    improvements = subject.findall("m:IMPROVEMENTS/m:IMPROVEMENT", NS)
+    findings = []
+
+    for improvement in improvements:
+        if specification.correlated_instance == "manufactured_home":
+            containers = _manufactured_home_containers(
+                subject, improvement, rule, identity
+            )
+        elif specification.correlated_instance == "dwelling_structure":
+            containers = _dwelling_structure_containers(
+                analysis, subject, improvement, rule, specification, identity
+            )
+        elif specification.correlated_instance == "dwelling_system":
+            if _equals(
+                improvement, "m:IMPROVEMENT_DETAIL/m:ImprovementType",
+                "Dwelling", identity,
+            ) is not True:
+                continue
+            containers = []
+            for system in improvement.findall("m:SYSTEM", NS):
+                heaters = system.findall("m:HEATING_SYSTEMS/m:HEATING_SYSTEM", NS)
+                # The heating input and dependent belong to this system in
+                # this dwelling; a sibling improvement cannot supply either.
+                if any(
+                    _local_condition(
+                        heater, ("ne", "HeatingSystemType", "None"), identity
+                    ) is True
+                    for heater in heaters
+                ):
+                    containers.extend(system.findall("m:SYSTEM_DETAIL", NS))
+        else:
+            common = (
+                _equals(
+                    improvement,
+                    "m:IMPROVEMENT_DETAIL/m:ImprovementType",
+                    "Outbuilding",
+                    identity,
+                ),
+                _equals(
+                    improvement,
+                    "m:IMPROVEMENT_DETAIL/m:OutbuildingRealPropertyIndicator",
+                    "true",
+                    identity,
+                ),
+            )
+            if not all(value is True for value in common):
+                continue
+
+            if specification.correlated_instance == "outbuilding_heating":
+                structures = improvement.findall(
+                    "m:STRUCTURE/m:STRUCTURE_DETAIL", NS
+                )
+                # LivingUnitCount is on the same Improvement, though in its
+                # STRUCTURE_DETAIL sibling to the dependent IMPROVEMENT_DETAIL.
+                living = []
+                for structure in structures:
+                    result = _equals(
+                        structure, "m:LivingUnitCount", "0", identity
+                    )
+                    if result is True:
+                        living.append(structure)
+                if not living:
+                    continue
+                containers = improvement.findall("m:IMPROVEMENT_DETAIL", NS)
+
+            elif specification.correlated_instance == "outbuilding_utility_other":
+                containers = improvement.findall(
+                    "m:OUTBUILDING/m:OUTBUILDING_UTILITIES/m:OUTBUILDING_UTILITY",
+                    NS,
+                )
+                containers = [
+                    container for container in containers
+                    if _equals(container, "m:UtilityType", "Other", identity) is True
+                ]
+
+            elif specification.correlated_instance == "outbuilding_structure":
+                containers = improvement.findall(
+                    "m:STRUCTURE/m:STRUCTURE_DETAIL", NS
+                )
+
+            else:
+                raise ValueError(
+                    f"{identity}: unsupported correlated-instance binding "
+                    f"{specification.correlated_instance}"
+                )
+
+        for container in containers:
+            elements = container.findall(
+                f"m:{specification.element}", NS
+            )
+            if elements and all(_has_value(node) for node in elements):
+                continue
+
+            location = (
+                "//m:VALUATION_ANALYSIS/"
+                + _path_from(analysis, container, parents, subject_count)
+                + f"/m:{specification.element}"
+            )
+            nearest = None
+            if not elements:
+                relative = _path_from(root, container, parents)
+                nearest = "./" + relative if relative else "."
+
+            findings.append(
+                Finding(
+                    finding_id=f"F-{uuid4().hex[:8]}",
+                    severity=Severity(specification.severity.casefold()),
+                    investor=investor,
+                    rule_type=RuleType.APPENDIX_H,
+                    rule_id=rule["Message ID"],
+                    row_id=rule["Unique ID"],
+                    primary_data_element=specification.element,
+                    property_affected=rule["Property Affected"],
+                    violation_kind="MissingRequiredValue",
+                    data_location=location,
+                    nearest_existing_ancestor=nearest,
+                    observed_value="missing, empty, or nil",
+                    expected_condition=specification.logic,
+                    source=Provenance(
+                        source_document="data/data-constraints.csv",
+                        source_version="UAD 3.6",
+                        source_section=rule["Unique ID"],
+                    ),
+                    finding=rule["Message Text"],
+                )
+            )
+    return findings
+
+
 def evaluate_scoped_rule(
     root: Element,
     investor: Investor,
@@ -652,6 +1151,22 @@ def evaluate_scoped_rule(
 
         for subject in subjects:
             rule_id = rule["Message ID"]
+
+            if specification.correlated_instance is not None:
+                findings.extend(
+                    _evaluate_correlated_instance(
+                        root,
+                        analysis,
+                        subject,
+                        len(subjects),
+                        investor,
+                        parents,
+                        rule,
+                        specification,
+                        identity,
+                    )
+                )
+                continue
 
             # A present dependent value cannot violate a missing-data rule.
             # Do not demand unrelated condition inputs to establish that.
