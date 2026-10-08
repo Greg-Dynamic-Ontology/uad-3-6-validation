@@ -43,6 +43,12 @@ class UserAccountUpdateRepository(Protocol):
     def save(self, user_account: UserAccount) -> None: ...
 
 
+class UserCompanyAssociationRepository(UserAccountUpdateRepository, Protocol):
+    """Retrieve and save accounts and check company records."""
+
+    def company_exists(self, company_id: str) -> bool: ...
+
+
 def _validate_user_data(user_data: Mapping[str, str]) -> None:
     display_name = user_data.get("display_name")
     if not isinstance(display_name, str) or not display_name.strip():
@@ -94,5 +100,30 @@ def update_user_account(
         raise ValueError(f"User account {user_account_id!r} does not exist.")
 
     updated = replace(existing, user_data=dict(user_data))
+    account_repository.save(updated)
+    return updated
+
+
+def change_user_company(
+    user_account_id: str,
+    company_id: str | None,
+    account_repository: UserCompanyAssociationRepository,
+) -> UserAccount:
+    """Change the company link while preserving account identity and user data."""
+    existing = account_repository.get_by_id(user_account_id)
+    if existing is None:
+        raise ValueError(f"User account {user_account_id!r} does not exist.")
+    if company_id is not None and not account_repository.company_exists(company_id):
+        raise ValueError(f"Company {company_id!r} does not exist.")
+
+    updated = replace(
+        existing,
+        company_id=company_id,
+        account_kind=(
+            UserAccountKind.SINGLE_USER
+            if company_id is None
+            else UserAccountKind.COMPANY_USER
+        ),
+    )
     account_repository.save(updated)
     return updated
