@@ -30,6 +30,9 @@ class AccountRepositorySpy:
     companies: dict[str, CompanyRecord]
     saved_accounts: list[UserAccount] = field(default_factory=list)
 
+    def company_exists(self, company_id: str) -> bool:
+        return company_id in self.companies
+
     def add(self, user_account: UserAccount) -> None:
         self.saved_accounts.append(user_account)
 

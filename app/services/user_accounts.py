@@ -30,6 +30,8 @@ class UserAccountIdGenerator(Protocol):
 
 
 class UserAccountRepository(Protocol):
+    def company_exists(self, company_id: str) -> bool: ...
+
     def add(self, user_account: UserAccount) -> None: ...
 
 
@@ -41,13 +43,15 @@ def create_user_account(
 ) -> UserAccount:
     """Create either account kind using the same user data and persistence.
 
-    For company-user creation, the caller supplies an existing company ID.
-    Checking company existence is the separate IT-2R2 requirement.
+    Company links are checked against existing records before account creation.
     """
 
     display_name = user_data.get("display_name")
     if not isinstance(display_name, str) or not display_name.strip():
         raise ValueError("display_name is required and must contain non-whitespace text.")
+
+    if company_id is not None and not account_repository.company_exists(company_id):
+        raise ValueError(f"Company {company_id!r} does not exist.")
 
     account = UserAccount(
         user_account_id=id_generator.new_user_account_id(),
