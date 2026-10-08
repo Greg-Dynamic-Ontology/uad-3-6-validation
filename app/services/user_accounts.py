@@ -7,7 +7,7 @@ they are defined.
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from enum import StrEnum
 from typing import Mapping, Protocol
 
@@ -35,6 +35,20 @@ class UserAccountRepository(Protocol):
     def add(self, user_account: UserAccount) -> None: ...
 
 
+class UserAccountUpdateRepository(Protocol):
+    """Retrieve and save an existing UAD account."""
+
+    def get_by_id(self, user_account_id: str) -> UserAccount | None: ...
+
+    def save(self, user_account: UserAccount) -> None: ...
+
+
+def _validate_user_data(user_data: Mapping[str, str]) -> None:
+    display_name = user_data.get("display_name")
+    if not isinstance(display_name, str) or not display_name.strip():
+        raise ValueError("display_name is required and must contain non-whitespace text.")
+
+
 def create_user_account(
     user_data: Mapping[str, str],
     company_id: str | None,
@@ -46,9 +60,7 @@ def create_user_account(
     Company links are checked against existing records before account creation.
     """
 
-    display_name = user_data.get("display_name")
-    if not isinstance(display_name, str) or not display_name.strip():
-        raise ValueError("display_name is required and must contain non-whitespace text.")
+    _validate_user_data(user_data)
 
     if company_id is not None and not account_repository.company_exists(company_id):
         raise ValueError(f"Company {company_id!r} does not exist.")
@@ -65,3 +77,22 @@ def create_user_account(
     )
     account_repository.add(account)
     return account
+
+
+def update_user_account(
+    user_account_id: str,
+    user_data: Mapping[str, str],
+    account_repository: UserAccountUpdateRepository,
+) -> UserAccount:
+    """Update shared user data while preserving identity and company membership.
+
+    user_data supplies the complete replacement shared-data mapping.
+    """
+    _validate_user_data(user_data)
+    existing = account_repository.get_by_id(user_account_id)
+    if existing is None:
+        raise ValueError(f"User account {user_account_id!r} does not exist.")
+
+    updated = replace(existing, user_data=dict(user_data))
+    account_repository.save(updated)
+    return updated
