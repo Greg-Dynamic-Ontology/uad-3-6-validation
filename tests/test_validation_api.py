@@ -1,5 +1,6 @@
 from pathlib import Path
 
+import pytest
 from fastapi.testclient import TestClient
 
 from app.main import app
@@ -8,7 +9,84 @@ from app.main import app
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 VENDOR_XML_DIR = PROJECT_ROOT / "examples" / "xml"
 
+CLIENT_ID = "client_test_validation_api"
+API_KEY = "sk_test_validation_api"
+COOKIE_PASSWORD = "test-validation-api-cookie-password"
+SESSION_COOKIE = "sealed-validation-api-session"
+WORKOS_USER_ID = "user_test_validation_api"
+
 client = TestClient(app)
+
+
+class FakeAuthenticatedSession:
+    def authenticate(self):
+        return type(
+            "AuthenticationResult",
+            (),
+            {
+                "authenticated": True,
+                "user": {
+                    "id": WORKOS_USER_ID,
+                    "email": "validation-api@example.test",
+                },
+            },
+        )()
+
+
+class FakeUserManagement:
+    def load_sealed_session(
+        self,
+        *,
+        session_data: str,
+        cookie_password: str,
+    ):
+        assert session_data == SESSION_COOKIE
+        assert cookie_password == COOKIE_PASSWORD
+        return FakeAuthenticatedSession()
+
+
+class FakeWorkOSClient:
+    def __init__(
+        self,
+        *,
+        api_key: str | None,
+        client_id: str,
+    ):
+        assert api_key == API_KEY
+        assert client_id == CLIENT_ID
+        self.user_management = FakeUserManagement()
+
+
+@pytest.fixture(scope="module", autouse=True)
+def linked_workos_identity_for_validation_api_tests():
+    """Give these validation tests an authenticated, linked test identity."""
+    import app.main as main
+
+    patch = pytest.MonkeyPatch()
+    previous_links = dict(
+        getattr(app.state, "workos_identity_account_links", {})
+    )
+
+    patch.setenv("WORKOS_CLIENT_ID", CLIENT_ID)
+    patch.setenv("WORKOS_API_KEY", API_KEY)
+    patch.setenv("WORKOS_COOKIE_PASSWORD", COOKIE_PASSWORD)
+    patch.setenv(
+        "WORKOS_REDIRECT_URI",
+        "http://127.0.0.1:8000/auth/callback",
+    )
+    patch.setattr(main, "WorkOSClient", FakeWorkOSClient)
+
+    app.state.workos_identity_account_links = {
+        WORKOS_USER_ID: "uad-test-account-validation-api"
+    }
+    client.cookies.set("wos_session", SESSION_COOKIE)
+
+    try:
+        yield
+    finally:
+        client.cookies.clear()
+        app.state.workos_identity_account_links = previous_links
+        patch.undo()
 
 
 def test_validate_uad36_applies_both_gse_rule_sets_by_default():

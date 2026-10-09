@@ -16,7 +16,7 @@ Feature: Manage single-user and company-user accounts
 
   # R1-R4 describe local UAD account behavior. They do not implement authentication.
   # Existing R1S1 and R1S2 tests remain local service regression evidence.
-  # R5-R6 add WorkOS integration acceptance criteria; they are not yet GREEN.
+  # The S1 WorkOS availability check verifies a hosted redirect; UAD callback and session behavior remain separate scenarios.
   # No global authentication Background is added to the existing local scenarios.
 
   @IT-2R1
@@ -101,7 +101,6 @@ Feature: Manage single-user and company-user accounts
       And it is a single-user account
       And its shared user data is preserved
 
-
     @IT-2R4S3 @Reject_an_invalid_company_association_change
     Scenario: Reject an invalid company association change
       Given an existing user account
@@ -113,13 +112,11 @@ Feature: Manage single-user and company-user accounts
   Rule: WorkOS authentication controls entry to protected UAD functions
 
     @IT-2R5S1
-    Scenario: Sign in through hosted WorkOS AuthKit
-      Given a visitor has no authenticated UAD session
-      When the visitor chooses to sign in
-      Then UAD sends the visitor to hosted WorkOS AuthKit
-      When the visitor completes authentication and UAD validates the sign-in result
-      Then UAD establishes an authenticated session for the WorkOS user
-      And account setup is required before protected appraisal functions are available if no local account is linked
+    Scenario: WorkOS accepts a configured hosted AuthKit sign-in request
+      Given the WorkOS client ID and registered UAD callback URL are configured
+      When a sign-in authorization request is sent to WorkOS AuthKit using the registered callback URL
+      Then WorkOS returns an HTTPS redirect to hosted sign-in
+      And the redirect destination is not the registered UAD callback URL
 
     @IT-2R5S2
     Scenario: Refuse an unsuccessful or invalid authentication result
@@ -143,6 +140,28 @@ Feature: Manage single-user and company-user accounts
       When the user signs out
       Then UAD ends its local session and the associated WorkOS session
       And the signed-out session cannot authorize a protected UAD operation
+
+    @IT-2R5S5
+    Scenario: Send an unauthenticated visitor to hosted AuthKit
+      Given a visitor is not authenticated
+      When the visitor requests a protected appraisal function
+      Then UAD redirects the visitor to hosted WorkOS AuthKit
+      And the sign-in request uses the registered UAD callback URL
+
+    @IT-2R5S6
+    Scenario: Establish a UAD session after validating successful authentication
+      Given a visitor returns from hosted WorkOS AuthKit with a successful sign-in result
+      When UAD processes the authentication callback
+      Then UAD validates the returned sign-in result
+      And establishes an authenticated UAD session
+
+    @IT-2R5S7
+    Scenario: Require account setup before protected access for an unlinked identity
+      Given a visitor has authenticated through WorkOS AuthKit
+      And the authenticated identity has no linked UAD account
+      When the visitor requests a protected appraisal function
+      Then UAD requires account setup
+      And does not grant access to the protected appraisal function
 
   @IT-2R6
   Rule: A verified WorkOS identity resolves to one local UAD user account

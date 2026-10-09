@@ -5,6 +5,7 @@ import socket
 from pathlib import Path
 from threading import Thread
 from time import monotonic, sleep
+from types import SimpleNamespace
 
 import pytest
 import uvicorn
@@ -18,17 +19,88 @@ FIXTURES = (
     ROOT / "data/uad36-test-suite/tests/fixtures/required_data"
 )
 
+CLIENT_ID = "client_test_required_data_browser"
+API_KEY = "sk_test_required_data_browser"
+COOKIE_PASSWORD = "test-required-data-browser-cookie-password"
+SESSION_COOKIE = "sealed-required-data-browser-session"
+WORKOS_USER_ID = "user_test_required_data_browser"
+AUTHORIZATION_URL = (
+    "https://api.workos.com/user_management/authorize"
+    "?provider=authkit"
+    "&redirect_uri=http%3A%2F%2F127.0.0.1%3A8000%2Fauth%2Fcallback"
+)
 
-@pytest.fixture(scope="module")
-def required_data_server_url():
+
+class FakeAuthenticatedSession:
+    def authenticate(self):
+        return SimpleNamespace(
+            authenticated=True,
+            user={
+                "id": WORKOS_USER_ID,
+                "email": "required-data-browser@example.test",
+            },
+        )
+
+
+class FakeUserManagement:
+    def load_sealed_session(
+        self,
+        *,
+        session_data: str,
+        cookie_password: str,
+    ):
+        assert session_data == SESSION_COOKIE
+        assert cookie_password == COOKIE_PASSWORD
+        return FakeAuthenticatedSession()
+
+    def get_authorization_url(self, **_kwargs: object) -> str:
+        return AUTHORIZATION_URL
+
+
+class FakeWorkOSClient:
+    def __init__(
+        self,
+        *,
+        api_key: str | None,
+        client_id: str,
+    ):
+        assert api_key == API_KEY
+        assert client_id == CLIENT_ID
+        self.user_management = FakeUserManagement()
+
+
+@pytest.fixture
+def required_data_server_url(
+    monkeypatch: pytest.MonkeyPatch,
+    page: Page,
+):
+    import app.main as main
+
     previous_configuration = app.state.configuration_file
+    previous_links = dict(
+        app.state.workos_identity_account_links
+    )
+
+    monkeypatch.setenv("WORKOS_CLIENT_ID", CLIENT_ID)
+    monkeypatch.setenv("WORKOS_API_KEY", API_KEY)
+    monkeypatch.setenv("WORKOS_COOKIE_PASSWORD", COOKIE_PASSWORD)
+    monkeypatch.setenv(
+        "WORKOS_REDIRECT_URI",
+        "http://127.0.0.1:8000/auth/callback",
+    )
+    monkeypatch.setattr(main, "WorkOSClient", FakeWorkOSClient)
+
     app.state.configuration_file = (
         ROOT / "config/configuration.developer.ttl"
     )
+    app.state.workos_identity_account_links = {
+        WORKOS_USER_ID: "uad-test-account-required-data-browser"
+    }
 
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server_socket.bind(("127.0.0.1", 0))
     host, port = server_socket.getsockname()
+    server_url = f"http://{host}:{port}"
 
     server = uvicorn.Server(
         uvicorn.Config(
@@ -54,12 +126,25 @@ def required_data_server_url():
         if not server.started:
             pytest.fail("The local validation server did not start.")
 
-        yield f"http://{host}:{port}"
+        page.context.add_cookies(
+            [
+                {
+                    "name": "wos_session",
+                    "value": SESSION_COOKIE,
+                    "url": server_url,
+                    "httpOnly": True,
+                    "sameSite": "Lax",
+                }
+            ]
+        )
+
+        yield server_url
     finally:
         server.should_exit = True
         thread.join(timeout=10)
         server_socket.close()
         app.state.configuration_file = previous_configuration
+        app.state.workos_identity_account_links = previous_links
 
 
 @pytest.mark.parametrize(
