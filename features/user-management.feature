@@ -163,6 +163,7 @@ Feature: Manage single-user and company-user accounts
       Then UAD requires account setup
       And does not grant access to the protected appraisal function
 
+
   @IT-2R6
   Rule: A verified WorkOS identity resolves to one local UAD user account
 
