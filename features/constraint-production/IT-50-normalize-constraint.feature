@@ -1,17 +1,11 @@
 @IT-50 @constraint-production
 Feature: Normalize governed constraints
   As the governed constraint-production process
-  I want a normalization agent to transform governed source rows into normalized constraint knowledge
+  I want a normalization agent to transform governed rows from data-constraints.csv into normalized constraint knowledge
   So that downstream agents receive a stable, traceable, implementation-independent constraint representation
 
   Background:
-    Given a governed source constraint is available
-    And the governed source constraint has a governed Unique ID
-    And the governed source location is known
-    And source provenance is available
-    And the normalization agent has an explicit input, output, and error contract
-
-
+    Given the normalization agent has an explicit input, output, and error contract
 
   @IT-50R1
   Rule: Produce normalized constraint RDF from sufficient governed source knowledge
@@ -25,6 +19,8 @@ Feature: Normalize governed constraints
       And the governed source row contains the violation condition
       And the governed source row contains the severity
       And the governed source row contains the source context fields
+      And the governed source location is known
+      And source provenance is available
       When the normalization agent executes
       Then a normalized governed constraint resource is produced
       And the normalized constraint preserves the governed Unique ID
@@ -38,8 +34,6 @@ Feature: Normalize governed constraints
       And the normalized constraint does not depend on a SHACL representation
       And the normalized constraint RDF is written to its governed project location
 
-
-
   @IT-50R2
   Rule: Normalization must not replace governed source knowledge with implementation-specific knowledge
 
@@ -52,7 +46,6 @@ Feature: Normalize governed constraints
       And implementation-specific identifiers do not replace governed identifiers
       And implementation-specific structures do not become the source of governed meaning
       And no SHACL-specific knowledge is required to state the normalized constraint
-
 
   @IT-50R3
   Rule: Do not invent normalized constraint knowledge when governed input is insufficient
@@ -79,12 +72,11 @@ Feature: Normalize governed constraints
       And the exception records the ambiguous governed knowledge
       And the constraint is routed for review
 
-
   @IT-50R4
   Rule: The normalization agent behaves as a bounded worker
 
     @IT-50R4S1
-      Scenario: Return only contracted output or a contracted exception
+    Scenario: Return only contracted output or a contracted exception
       Given the normalization agent receives a governed source constraint
       When the normalization agent completes its work
       Then it returns normalized governed constraint RDF or a normalization exception
@@ -96,53 +88,53 @@ Feature: Normalize governed constraints
       And it does not generate report findings
 
   @IT-50R5
-  Rule: Normalize constraints from the governed source workbook
+  Rule: Read and normalize constraints directly from the authoritative CSV source
 
     @IT-50R5S1
-    Scenario: Read a governed constraint row from the governed Excel workbook
-      Given the governed UAD compliance-rules workbook
-      And a governed batch identifies a source row in that workbook
-      When the normalization process materializes the governed source row
-      Then the materialized source knowledge is derived from that workbook row
+    Scenario: Read a governed constraint row from data-constraints.csv
+      Given data-constraints.csv is the authoritative governed source
+      And a governed batch identifies one row by its Unique ID
+      When the normalization process reads the selected row directly from the CSV
+      Then the materialized source knowledge is derived from that CSV row
       And its governed Unique ID is preserved
-      And its source location is preserved
+      And its source row location is preserved
+      And no XLS or XLSX conversion is required
 
     @IT-50R5S2
-    Scenario: Produce normalized RDF from an actual governed workbook row
-      Given a governed source row materialized from the UAD compliance-rules workbook
+    Scenario: Produce normalized RDF from an actual governed CSV row
+      Given a governed source row has been read from data-constraints.csv
       When the normalization agent processes that governed source knowledge
       Then normalized constraint RDF is produced
-      And the normalized constraint remains traceable to the workbook row
+      And the normalized constraint remains traceable to the CSV row
 
     @IT-50R5S3
-    Scenario: Reject a workbook whose headers do not match the governed structure
-      Given the governed workbook does not contain the expected UAD compliance-rule columns
-      When the normalization process materializes a selected row
-      Then the workbook structure is rejected
+    Scenario: Reject a CSV whose headers do not match the governed structure
+      Given data-constraints.csv does not contain the required governed source columns
+      When the normalization process reads a selected row
+      Then the CSV structure is rejected
       And no normalized governed constraint is produced
       And the rejection identifies the header mismatch
 
     @IT-50R5S4
-    Scenario Outline: Reject a workbook selection that does not identify one source row
-      Given the governed workbook selection uses worksheet "<worksheet>" and range "<cell_range>"
-      When the normalization process materializes the selected row
+    Scenario Outline: Reject a CSV selection that does not identify exactly one source row
+      Given the requested governed Unique ID matches <matching_rows> rows in data-constraints.csv
+      When the normalization process selects the source row
       Then the selection is rejected
       And no normalized governed constraint is produced
       And the rejection identifies "<reason>"
 
       Examples:
-        | worksheet         | cell_range | reason                           |
-        | Missing Worksheet | A2:Q2      | worksheet not found              |
-        | Sheet1            | A2:Q3      | exactly one worksheet row        |
+        | matching_rows | reason                              |
+        | 0             | no matching governed source row    |
+        | 2             | multiple matching governed rows   |
 
     @IT-50R5S5
-    Scenario: Reject a workbook row with blank required governed knowledge
-      Given a selected governed workbook row has a blank required field
+    Scenario: Reject a CSV row with blank required governed knowledge
+      Given a selected governed CSV row has a blank required field
       When the normalization agent processes the row
       Then no normalized governed constraint is produced
       And insufficient governed source knowledge is reported
-      And the rejection identifies the missing field
-
+      And the rejection identifies the missing CSV column
 
   @IT-50R6
   Rule: Record normalization test results as governed construction knowledge

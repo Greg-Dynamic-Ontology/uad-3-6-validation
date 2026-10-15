@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from hashlib import sha256
 from pathlib import Path
 
 from rdflib import Graph, Literal, Namespace, RDF, URIRef
@@ -65,12 +66,30 @@ def _format_ambiguous_value(value: object) -> str:
     return repr(value)
 
 
+def _normalized_constraint_iri(governed_source: dict) -> URIRef:
+    """Mint a valid, row-specific IRI from governed source identity."""
+
+    source_identity = governed_source.get("source_constraint_uri")
+    if _is_missing_required_value(source_identity):
+        source_identity = governed_source.get("source_locator")
+
+    if _is_missing_required_value(source_identity):
+        raise ValueError(
+            "Insufficient governed source knowledge; missing: "
+            "source_constraint_uri or source_locator"
+        )
+
+    identity_digest = sha256(str(source_identity).encode("utf-8")).hexdigest()
+    return URIRef(f"{UADCON}{identity_digest}")
+
+
 def normalize_governed_constraint(
     *,
     governed_source: dict,
     output_graph,
 ) -> NormalizedConstraintResult:
     """Produce normalized constraint RDF from sufficient governed source knowledge."""
+
     required_fields = (
         "unique_id",
         "data_point_name",
@@ -118,7 +137,7 @@ def normalize_governed_constraint(
         )
 
     unique_id = str(governed_source["unique_id"])
-    constraint = URIRef(f"{UADCON}{unique_id}")
+    constraint = _normalized_constraint_iri(governed_source)
 
     output_graph.add((constraint, RDF.type, UADCV.NormalizedConstraint))
     output_graph.add(
@@ -200,6 +219,7 @@ def normalize_governed_constraint_to_file(
     output_path: str | Path,
 ) -> NormalizedConstraintResult:
     """Normalize one governed source constraint and write its RDF as Turtle."""
+
     source_constraint_uri = governed_source.get("source_constraint_uri")
     if not source_constraint_uri:
         raise ValueError(
@@ -240,9 +260,9 @@ def normalize_governed_constraint_from_workbook(
     output_graph,
 ) -> NormalizedConstraintResult:
     """
-    Read one governed workbook row and normalize that source knowledge into RDF.
+    Read one governed source row and normalize its knowledge into RDF.
 
-    The workbook reader owns source extraction. The normalization agent owns the
+    The source reader owns extraction. The normalization agent owns the
     transformation from materialized governed source knowledge to the stable,
     implementation-independent normalized constraint representation.
     """
