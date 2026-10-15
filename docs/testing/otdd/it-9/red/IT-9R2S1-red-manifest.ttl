@@ -78,7 +78,7 @@ otdd:testOutcome
 <https://dynamicontology.com/uad36/otdd/IT-9R2S1/artifact/feature>
     a otdd:EvidenceArtifact ;
     dcterms:identifier
-        "features/govern-schema-source-identities-in-a-knowledge-graph.feature" ;
+        "features/IT-9-govern-schema-source-identities-in-a-knowledge-graph.feature" ;
     otdd:sha256
         "5bb474c69cf624c6dca1aa7cc03bd705190ed17fed828761711d7a900213d30d" .
 

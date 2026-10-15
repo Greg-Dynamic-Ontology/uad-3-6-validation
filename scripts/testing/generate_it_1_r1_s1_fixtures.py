@@ -17,7 +17,7 @@ from lxml import etree as ET
 from rdflib import Graph, Literal, Namespace, RDF
 from rdflib.compare import isomorphic
 
-from it_1_r1_s1_slice_02_cases import case_plans, rule_plans
+from generate_it_1_r1_s1_slice_02_cases import case_plans, rule_plans
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -355,7 +355,7 @@ def build():
         (M.generator, C.generator, Path(__file__).resolve()),
         (
             M.caseDefinitions, C.caseDefinitions,
-            Path(__file__).resolve().with_name("it_1_r1_s1_slice_02_cases.py"),
+            Path(__file__).resolve().with_name("generate_it_1_r1_s1_slice_02_cases.py"),
         ),
     ]:
         graph.add((C.manifest, predicate, node))

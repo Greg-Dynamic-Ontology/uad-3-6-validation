@@ -24592,7 +24592,7 @@ case:UAD1687-two-applicable-missing-finding-2 a m:ExpectedFinding ;
     m:violationKind "MissingRequiredValue" .
 
 case:caseDefinitions a m:SourceArtifact ;
-    m:path "scripts/testing/it_1_r1_s1_slice_02_cases.py" ;
+    m:path "scripts/testing/generate_it_1_r1_s1_slice_02_cases.py" ;
     m:sha256 "343555e5241e1fef2d38d9061a283f2d7b77c2745294ac6942cae61d215e8bb2" .
 
 case:generator a m:SourceArtifact ;

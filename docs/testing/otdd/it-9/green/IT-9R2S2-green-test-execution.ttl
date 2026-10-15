@@ -109,4 +109,4 @@ otdd:testOutcome
 
 <https://dynamicontology.com/uad36/feature/govern-schema-source-identities-in-a-knowledge-graph.feature>
     dcterms:identifier
-        "features/govern-schema-source-identities-in-a-knowledge-graph.feature" .
+        "features/IT-9-govern-schema-source-identities-in-a-knowledge-graph.feature" .

@@ -20,7 +20,7 @@ follow their governed applicability
 applicable condition and scope
 
 Authoritative feature:
-`features/spreadsheet-rule-category-validation.feature`
+`../../features/IT-1-spreadsheet-rule-category-validation.feature`
 
 The Scenario requires three observable states:
 

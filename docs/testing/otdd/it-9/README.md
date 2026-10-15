@@ -318,7 +318,7 @@ Before an implementation is created or changed to make an OTDD scenario green:
 
 The evidence refers to these project artifacts rather than duplicating them:
 
-- `features/govern-schema-source-identities-in-a-knowledge-graph.feature`
+- `../../../../features/IT-9-govern-schema-source-identities-in-a-knowledge-graph.feature`
 - `operators/namespace_correction/operator.ttl`
 - `operators/namespace_correction/shapes.ttl`
 - `tests/test_namespace_correction_operator_contract.py`

@@ -43,7 +43,7 @@
         scenario:aggregate_cross_record_consistency .
 
 :feature a t:Feature ;
-    t:path "features/spreadsheet-rule-category-validation.feature" ;
+    t:path "features/IT-1-spreadsheet-rule-category-validation.feature" ;
     t:sha256 "23d87cd115aca6991b7c8b28a5e9cc80a8a6eace0b6483904a2a26e8bc044d9f" ;
     rdfs:label "Validate appraisal data against governed rule categories" .
 

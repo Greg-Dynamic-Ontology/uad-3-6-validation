@@ -19,7 +19,7 @@ applicable condition and scope
 
 The authoritative behavior remains in:
 
-`features/spreadsheet-rule-category-validation.feature`
+`../../features/IT-1-spreadsheet-rule-category-validation.feature`
 
 The selected membership is recorded in:
 

@@ -478,6 +478,6 @@ namespace policy without a demonstrated architectural benefit.
 - ADR-0005: Single Logical Ontology
 - ADR-0014: RDF Representation of XML Schema Components
 - ADR-0015: SHACL Representation of XML Schema Components
-- `features/logical_schema_to_ontology.feature`
-- `features/canonical_logical_schema_artifact.feature`
-- `features/governed_schema_source_iris.feature`
+- `../../features/IT-7-logical_schema_to_ontology.feature`
+- `../../features/IT-8-canonical_logical_schema_artifact.feature`
+- `../../features/IT-8-governed_schema_source_iris.feature`

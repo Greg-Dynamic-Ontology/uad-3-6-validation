@@ -3,14 +3,14 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from pathlib import Path
 
-from rdflib import Literal, Namespace, RDF, URIRef
-
-from app.services.governed_constraint_source_reader import read_governed_constraint_row
+from rdflib import Graph, Literal, Namespace, RDF, URIRef
 
 
 UADCON = Namespace("https://dynamicontology.com/uad36/constraint/")
 UADCV = Namespace("https://dynamicontology.com/uad36/constraint-vocabulary#")
+PROV = Namespace("http://www.w3.org/ns/prov#")
 
 NORMALIZATION_STAGE = "normalized-constraint-representation"
 
@@ -45,6 +45,26 @@ class ConstraintNormalizationExecutionResult:
     exception: NormalizationException | None
 
 
+def _is_missing_required_value(value: object) -> bool:
+    """Return whether a required governed value is absent or empty."""
+    if value is None:
+        return True
+    if isinstance(value, str):
+        return not value.strip()
+    if isinstance(value, (list, tuple, set, dict)):
+        return not value
+    return False
+
+
+def _format_ambiguous_value(value: object) -> str:
+    """Format all candidate values deterministically for a review exception."""
+    if isinstance(value, set):
+        value = sorted(value, key=repr)
+    elif isinstance(value, dict):
+        value = dict(sorted(value.items(), key=lambda item: repr(item[0])))
+    return repr(value)
+
+
 def normalize_governed_constraint(
     *,
     governed_source: dict,
@@ -65,6 +85,7 @@ def normalize_governed_constraint(
         field
         for field in required_fields
         if field not in governed_source
+        or _is_missing_required_value(governed_source[field])
     ]
     if missing_fields:
         raise ValueError(
@@ -87,9 +108,13 @@ def normalize_governed_constraint(
         if isinstance(governed_source[field], (list, tuple, set, dict))
     ]
     if ambiguous_fields:
+        ambiguity_details = ", ".join(
+            f"{field}={_format_ambiguous_value(governed_source[field])}"
+            for field in ambiguous_fields
+        )
         raise ValueError(
             "Ambiguous governed source knowledge; multiple values supplied for: "
-            + ", ".join(ambiguous_fields)
+            + ambiguity_details
         )
 
     unique_id = str(governed_source["unique_id"])
@@ -169,6 +194,44 @@ def normalize_governed_constraint(
     )
 
 
+def normalize_governed_constraint_to_file(
+    *,
+    governed_source: dict,
+    output_path: str | Path,
+) -> NormalizedConstraintResult:
+    """Normalize one governed source constraint and write its RDF as Turtle."""
+    source_constraint_uri = governed_source.get("source_constraint_uri")
+    if not source_constraint_uri:
+        raise ValueError(
+            "Insufficient governed source knowledge; missing: "
+            "source_constraint_uri"
+        )
+
+    output_graph = Graph()
+    result = normalize_governed_constraint(
+        governed_source=governed_source,
+        output_graph=output_graph,
+    )
+
+    normalized_constraint = URIRef(result.constraint_id)
+    output_graph.add(
+        (
+            normalized_constraint,
+            PROV.wasDerivedFrom,
+            URIRef(str(source_constraint_uri)),
+        )
+    )
+
+    destination = Path(output_path)
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    output_graph.serialize(
+        destination=str(destination),
+        format="turtle",
+    )
+
+    return result
+
+
 def normalize_governed_constraint_from_workbook(
     *,
     workbook_path,
@@ -183,6 +246,10 @@ def normalize_governed_constraint_from_workbook(
     transformation from materialized governed source knowledge to the stable,
     implementation-independent normalized constraint representation.
     """
+    from app.services.governed_constraint_source_reader import (
+        read_governed_constraint_row,
+    )
+
     governed_source = read_governed_constraint_row(
         workbook_path=workbook_path,
         worksheet_name=worksheet_name,
@@ -247,4 +314,5 @@ __all__ = [
     "execute_constraint_normalization",
     "normalize_governed_constraint",
     "normalize_governed_constraint_from_workbook",
+    "normalize_governed_constraint_to_file",
 ]

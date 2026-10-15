@@ -347,5 +347,5 @@ explicitly required and traced.
 - ADR-0015: SHACL Representation of XML Schema Components
 - ADR-0017: IRI and Collision Policy
 - `docs/methodology/otdd-development-flow.md`
-- `features/logical_schema_to_ontology.feature`
-- `features/uad_xml_to_rdf_instance.feature`
+- `../../features/IT-7-logical_schema_to_ontology.feature`
+- `../../features/IT-6-uad_xml_to_rdf_instance.feature`
