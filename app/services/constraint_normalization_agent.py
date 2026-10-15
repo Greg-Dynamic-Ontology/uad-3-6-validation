@@ -5,6 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from hashlib import sha256
 from pathlib import Path
+from uuid import uuid4
 
 from rdflib import Graph, Literal, Namespace, RDF, URIRef
 
@@ -252,6 +253,111 @@ def normalize_governed_constraint_to_file(
     return result
 
 
+def record_normalization_test_result(
+    *,
+    output_path: str | Path,
+    scenario_id: str,
+    status: str,
+    execution_activity_uri: str,
+    source_artifact_uris: list[str] | tuple[str, ...],
+    tested_constraint_id: str | None = None,
+    warnings: list[str] | tuple[str, ...] = (),
+) -> URIRef:
+    """Record a completed normalization-test result as traceable Turtle RDF.
+
+    Existing Turtle at ``output_path`` is loaded and extended, allowing results
+    from multiple test executions to accumulate in one construction-knowledge
+    graph. Each result receives a distinct IRI. Warning statements are recorded
+    independently and do not change the supplied result status.
+    """
+    if _is_missing_required_value(scenario_id):
+        raise ValueError("A normalization test scenario identifier is required.")
+    if _is_missing_required_value(status):
+        raise ValueError("A normalization test result status is required.")
+    if _is_missing_required_value(execution_activity_uri):
+        raise ValueError("A test execution activity IRI is required.")
+    if _is_missing_required_value(source_artifact_uris):
+        raise ValueError(
+            "At least one governed source artifact IRI is required."
+        )
+    if isinstance(warnings, str):
+        raise ValueError(
+            "Warnings must be supplied as a sequence of warning messages."
+        )
+
+    source_artifacts = tuple(
+        URIRef(str(artifact_uri))
+        for artifact_uri in source_artifact_uris
+        if not _is_missing_required_value(artifact_uri)
+    )
+    if not source_artifacts:
+        raise ValueError(
+            "At least one non-empty governed source artifact IRI is required."
+        )
+
+    warning_messages = tuple(warnings)
+    for warning in warning_messages:
+        if not isinstance(warning, str) or not warning.strip():
+            raise ValueError(
+                "Each normalization warning must be a non-empty string."
+            )
+
+    destination = Path(output_path)
+    destination.parent.mkdir(parents=True, exist_ok=True)
+
+    result_graph = Graph()
+    if destination.is_file():
+        result_graph.parse(destination=str(destination), format="turtle")
+
+    result_resource = URIRef(
+        f"urn:uad36:normalization-test-result:{uuid4()}"
+    )
+    execution_activity = URIRef(str(execution_activity_uri))
+
+    result_graph.add(
+        (result_resource, RDF.type, UADCV.GovernedTestResult)
+    )
+    result_graph.add(
+        (result_resource, UADCV.scenarioId, Literal(str(scenario_id)))
+    )
+    result_graph.add(
+        (result_resource, UADCV.status, Literal(str(status).upper()))
+    )
+    result_graph.add(
+        (result_resource, PROV.wasGeneratedBy, execution_activity)
+    )
+    result_graph.add((execution_activity, RDF.type, PROV.Activity))
+
+    if not _is_missing_required_value(tested_constraint_id):
+        result_graph.add(
+            (
+                result_resource,
+                UADCV.testedConstraintId,
+                Literal(str(tested_constraint_id)),
+            )
+        )
+
+    for source_artifact in source_artifacts:
+        result_graph.add(
+            (
+                result_resource,
+                UADCV.usedSourceArtifact,
+                source_artifact,
+            )
+        )
+        result_graph.add(
+            (execution_activity, PROV.used, source_artifact)
+        )
+
+    for warning in warning_messages:
+        result_graph.add(
+            (result_resource, UADCV.warning, Literal(warning))
+        )
+
+    result_graph.serialize(destination=str(destination), format="turtle")
+    return result_resource
+
+
 def normalize_governed_constraint_from_workbook(
     *,
     workbook_path,
@@ -335,4 +441,5 @@ __all__ = [
     "normalize_governed_constraint",
     "normalize_governed_constraint_from_workbook",
     "normalize_governed_constraint_to_file",
+    "record_normalization_test_result",
 ]
