@@ -79,3 +79,16 @@ dist/
 .env
 .env.local
 /config/configuration.ttl
+
+# --------------------------------------------------------------------
+# ChatGPT collaboration boundary
+# --------------------------------------------------------------------
+
+/chatgpt-sources/input/*
+!/chatgpt-sources/input/.gitkeep
+/chatgpt-sources/work/*
+!/chatgpt-sources/work/.gitkeep
+
+# Keep extracted reference materials; omit ZIP archive files.
+/chatgpt-sources/sources/**/*.zip
+!/chatgpt-sources/sources/**/*.zip/
