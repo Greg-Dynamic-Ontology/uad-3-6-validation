@@ -6,7 +6,31 @@
     rdf:type cfg:ApplicationConfiguration ;
     rdfs:label "UAD 3.6 developer configuration" ;
     cfg:usesExperience cfg:DeveloperExperience ;
-    cfg:usesPipeline cfg:UadValidationPipeline .
+    cfg:usesPipeline cfg:UadValidationPipeline ;
+    cfg:hasSourceWorkbooks cfg:sourceWorkbooks ;
+    cfg:activeComplianceSource cfg:FannieMaeComplianceRulesWorkbook .
+
+cfg:sourceWorkbooks
+    rdf:type cfg:GovernedSourceWorkbookCollection ;
+    rdfs:label "Governed GSE source workbooks" ;
+    cfg:containsWorkbook cfg:FannieMaeComplianceRulesWorkbook ;
+    cfg:containsWorkbook cfg:FreddieMacComplianceRulesWorkbook .
+
+cfg:FannieMaeComplianceRulesWorkbook
+    rdf:type cfg:GovernedSourceArtifact ;
+    rdfs:label "Fannie Mae Appendix H-1 UAD Compliance Rules - URAR v1.5" ;
+    cfg:sourceFileLocation "C:\\Users\\grego\\projects\\uad-3-6-validation\\specs\\fannie-mae\\Appendix H-1 UAD Compliance Rules - URAR v1.5.xlsm" ;
+    cfg:sourceSheetName "UAD Compliance Rules(Marked up)" ;
+    cfg:sourceSheetName "UAD Compliance Rules v1.5" ;
+    cfg:ruleDataSheetName "UAD Compliance Rules v1.5" .
+
+cfg:FreddieMacComplianceRulesWorkbook
+    rdf:type cfg:GovernedSourceArtifact ;
+    rdfs:label "Freddie Mac Appendix H-1 UAD Compliance Rules - URAR" ;
+    cfg:sourceFileLocation "C:\\Users\\grego\\projects\\uad-3-6-validation\\specs\\freddie-mac\\appendix-h-1-uad-compliance-rules-urar.xlsx" ;
+    cfg:sourceSheetName "UAD Compliance Rules(Marked up)" ;
+    cfg:sourceSheetName "UAD Compliance Rules v1.5" ;
+    cfg:ruleDataSheetName "UAD Compliance Rules v1.5" .
 
 cfg:DeveloperExperience
     rdf:type cfg:UserExperienceProfile ;

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from datetime import datetime
+from urllib.parse import urlsplit
 from uuid import uuid4
 
 from rdflib import Graph, Literal, Namespace, RDF, URIRef
@@ -13,6 +14,18 @@ from rdflib.namespace import PROV
 UADCON = Namespace("https://dynamicontology.com/uad36/constraint/")
 UADEX = Namespace("https://dynamicontology.com/uad36/construction-exchange#")
 UADRESULT_BASE = "https://dynamicontology.com/uad36/construction-exchange/result/"
+
+
+def _constraint_iri(constraint_id: str) -> URIRef:
+    """Return the supplied absolute constraint IRI or mint one from a local ID."""
+    value = constraint_id.strip()
+    if not value:
+        raise ValueError("constraint_id is required")
+
+    if urlsplit(value).scheme:
+        return URIRef(value)
+
+    return URIRef(f"{UADCON}{value}")
 
 
 @dataclass(frozen=True)
@@ -44,27 +57,15 @@ def record_construction_stage_result(
         raise ValueError("construction_status is required")
 
     result_id = URIRef(f"{UADRESULT_BASE}{uuid4().hex}")
-    constraint_iri = URIRef(f"{UADCON}{constraint_id}")
+    constraint_iri = _constraint_iri(constraint_id)
 
+    output_graph.add((result_id, RDF.type, UADEX.ConstructionStageResult))
+    output_graph.add((result_id, UADEX.forConstraint, constraint_iri))
     output_graph.add(
-        (result_id, RDF.type, UADEX.ConstructionStageResult)
+        (result_id, UADEX.constructionStage, Literal(construction_stage))
     )
     output_graph.add(
-        (result_id, UADEX.forConstraint, constraint_iri)
-    )
-    output_graph.add(
-        (
-            result_id,
-            UADEX.constructionStage,
-            Literal(construction_stage),
-        )
-    )
-    output_graph.add(
-        (
-            result_id,
-            UADEX.constructionStatus,
-            Literal(construction_status),
-        )
+        (result_id, UADEX.constructionStatus, Literal(construction_status))
     )
 
     return ConstructionStageResultRecord(
@@ -72,6 +73,75 @@ def record_construction_stage_result(
         constraint_id=constraint_id,
         construction_stage=construction_stage,
         construction_status=construction_status,
+    )
+
+
+def read_construction_stage_result(
+    *,
+    exchange_graph: Graph,
+    result_id: str,
+) -> ConstructionStageResultRecord:
+    """Read an existing stage result without minting a replacement identity."""
+    result = URIRef(result_id)
+
+    if (result, RDF.type, UADEX.ConstructionStageResult) not in exchange_graph:
+        raise ValueError(
+            "result_id must identify a ConstructionStageResult "
+            "present in the exchange graph"
+        )
+
+    def exactly_one_object(predicate: URIRef) -> URIRef | Literal:
+        values = set(exchange_graph.objects(result, predicate))
+        if len(values) != 1:
+            raise ValueError(
+                f"construction-stage result must have exactly one "
+                f"{predicate} value"
+            )
+        return next(iter(values))
+
+    constraint = exactly_one_object(UADEX.forConstraint)
+    stage = exactly_one_object(UADEX.constructionStage)
+    status = exactly_one_object(UADEX.constructionStatus)
+
+    if not isinstance(constraint, URIRef):
+        raise ValueError("forConstraint must identify a governed RDF resource")
+    if not isinstance(stage, Literal):
+        raise ValueError("constructionStage must be an RDF literal")
+    if not isinstance(status, Literal):
+        raise ValueError("constructionStatus must be an RDF literal")
+
+    available_values = set(
+        exchange_graph.objects(result, UADEX.availableForDownstream)
+    )
+    exception_values = set(exchange_graph.objects(result, UADEX.exceptionReason))
+    review_values = set(exchange_graph.objects(result, UADEX.requiresReview))
+
+    if len(available_values) > 1:
+        raise ValueError(
+            "construction-stage result must have at most one "
+            "availableForDownstream value"
+        )
+    if len(exception_values) > 1:
+        raise ValueError(
+            "construction-stage result must have at most one exceptionReason value"
+        )
+    if len(review_values) > 1:
+        raise ValueError(
+            "construction-stage result must have at most one requiresReview value"
+        )
+
+    available = next(iter(available_values), Literal(False))
+    exception = next(iter(exception_values), None)
+    review = next(iter(review_values), Literal(False))
+
+    return ConstructionStageResultRecord(
+        result_id=result,
+        constraint_id=str(constraint),
+        construction_stage=str(stage),
+        construction_status=str(status),
+        available_for_downstream=bool(available.toPython()),
+        exception_reason=str(exception) if exception is not None else None,
+        requires_review=bool(review.toPython()),
     )
 
 
@@ -93,7 +163,7 @@ def record_construction_stage_provenance(
     agent_id: str,
     used_knowledge_ids: list[str],
 ) -> ConstructionStageProvenanceRecord:
-    """Record the provenance chain for one construction-stage result."""
+    """Record the provenance chain for one governed construction-stage result."""
     result = URIRef(result_id)
     activity = URIRef(activity_id)
     agent = URIRef(agent_id)
@@ -142,14 +212,20 @@ def record_construction_stage_timing(
         (
             activity,
             PROV.startedAtTime,
-            Literal(started_at, datatype=URIRef("http://www.w3.org/2001/XMLSchema#dateTime")),
+            Literal(
+                started_at,
+                datatype=URIRef("http://www.w3.org/2001/XMLSchema#dateTime"),
+            ),
         )
     )
     output_graph.add(
         (
             activity,
             PROV.endedAtTime,
-            Literal(ended_at, datatype=URIRef("http://www.w3.org/2001/XMLSchema#dateTime")),
+            Literal(
+                ended_at,
+                datatype=URIRef("http://www.w3.org/2001/XMLSchema#dateTime"),
+            ),
         )
     )
 
@@ -188,20 +264,8 @@ def record_downstream_stage_input(
             "present in the exchange graph"
         )
 
-    exchange_graph.add(
-        (
-            downstream_activity,
-            RDF.type,
-            PROV.Activity,
-        )
-    )
-    exchange_graph.add(
-        (
-            downstream_activity,
-            PROV.used,
-            upstream_result,
-        )
-    )
+    exchange_graph.add((downstream_activity, RDF.type, PROV.Activity))
+    exchange_graph.add((downstream_activity, PROV.used, upstream_result))
 
     return DownstreamStageInputRecord(
         downstream_activity_id=downstream_activity,
@@ -311,25 +375,13 @@ def exchange_construction_stage_exception(
     )
 
     exchange_graph.add(
-        (
-            stage_result.result_id,
-            UADEX.exceptionReason,
-            Literal(exception_reason),
-        )
+        (stage_result.result_id, UADEX.exceptionReason, Literal(exception_reason))
     )
     exchange_graph.add(
-        (
-            stage_result.result_id,
-            UADEX.requiresReview,
-            Literal(requires_review),
-        )
+        (stage_result.result_id, UADEX.requiresReview, Literal(requires_review))
     )
     exchange_graph.add(
-        (
-            stage_result.result_id,
-            UADEX.availableForDownstream,
-            Literal(False),
-        )
+        (stage_result.result_id, UADEX.availableForDownstream, Literal(False))
     )
 
     return ConstructionStageResultRecord(
@@ -393,13 +445,7 @@ def carry_stage_specific_knowledge(
             "stage-specific knowledge type"
         )
 
-    exchange_graph.add(
-        (
-            result,
-            UADEX.stageKnowledge,
-            stage_knowledge,
-        )
-    )
+    exchange_graph.add((result, UADEX.stageKnowledge, stage_knowledge))
 
     return StageSpecificKnowledgeRecord(
         result_id=result,
@@ -425,47 +471,34 @@ def record_construction_failure(
     constraint_id: str,
     construction_stage: str,
     failure_reason: str,
+    construction_status: str = "EXCEPTION",
 ) -> ConstructionFailureRecord:
-    """Record a construction failure without asserting appraisal validation knowledge."""
+    """Record RED or exception construction knowledge, not validation results."""
     if not failure_reason.strip():
         raise ValueError("failure_reason is required")
+    if construction_status not in {"RED", "EXCEPTION"}:
+        raise ValueError(
+            "construction_status must be 'RED' or 'EXCEPTION'"
+        )
 
     result = URIRef(result_id)
-    constraint = URIRef(f"{UADCON}{constraint_id}")
+    constraint = _constraint_iri(constraint_id)
 
+    exchange_graph.add((result, RDF.type, UADEX.ConstructionStageResult))
+    exchange_graph.add((result, UADEX.forConstraint, constraint))
     exchange_graph.add(
-        (result, RDF.type, UADEX.ConstructionStageResult)
+        (result, UADEX.constructionStage, Literal(construction_stage))
     )
     exchange_graph.add(
-        (result, UADEX.forConstraint, constraint)
+        (result, UADEX.constructionStatus, Literal(construction_status))
     )
-    exchange_graph.add(
-        (
-            result,
-            UADEX.constructionStage,
-            Literal(construction_stage),
-        )
-    )
-    exchange_graph.add(
-        (
-            result,
-            UADEX.constructionStatus,
-            Literal("EXCEPTION"),
-        )
-    )
-    exchange_graph.add(
-        (
-            result,
-            UADEX.failureReason,
-            Literal(failure_reason),
-        )
-    )
+    exchange_graph.add((result, UADEX.failureReason, Literal(failure_reason)))
 
     return ConstructionFailureRecord(
         result_id=result,
         constraint_id=constraint_id,
         construction_stage=construction_stage,
-        construction_status="EXCEPTION",
+        construction_status=construction_status,
         failure_reason=failure_reason,
     )
 
@@ -520,13 +553,7 @@ def exchange_finding_definition_knowledge(
             "finding_definition_id must identify governed FindingDefinition knowledge"
         )
 
-    exchange_graph.add(
-        (
-            result,
-            UADEX.stageKnowledge,
-            finding_definition,
-        )
-    )
+    exchange_graph.add((result, UADEX.stageKnowledge, finding_definition))
 
     return FindingDefinitionExchangeRecord(
         result_id=result,
@@ -543,6 +570,7 @@ __all__ = [
     "ConstructionFailureRecord",
     "FindingDefinitionExchangeRecord",
     "record_construction_stage_result",
+    "read_construction_stage_result",
     "record_construction_stage_provenance",
     "record_construction_stage_timing",
     "record_downstream_stage_input",
