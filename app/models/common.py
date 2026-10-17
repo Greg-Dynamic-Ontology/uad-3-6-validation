@@ -10,6 +10,7 @@ class Provenance(BaseModel):
     source_document: str
     source_version: str
     source_section: str
+    source_sheet: str | None = None
     ingestion_timestamp: datetime = Field(default_factory=utc_now)
 
 

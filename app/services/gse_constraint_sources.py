@@ -3,7 +3,12 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Protocol, TypeVar
+from datetime import date, datetime, time
+from decimal import Decimal, InvalidOperation
+from pathlib import Path
+from typing import Mapping, Protocol, TypeVar
+
+from rdflib import Graph, Literal, Namespace, RDF, URIRef
 
 
 class AmbiguousGseAuthorityError(ValueError):
@@ -295,3 +300,230 @@ def register_authoritative_gse_constraint_source(
     )
     repository.save(registered_source)
     return registered_source
+
+# IT-60 governed workbook reading
+
+
+CFG = Namespace("https://dynamicontology.com/uad36/configuration#")
+APP_CONFIGURATION_TYPE = CFG.ApplicationConfiguration
+REQUIRED_CONSTRAINT_HEADERS = frozenset(
+    {
+        "Unique ID",
+        "Primary Data Element",
+        "Message ID",
+        "Rule Logic",
+        " xPath",
+    }
+)
+
+
+class GovernedWorkbookConfigurationError(ValueError):
+    """Raised when configured governed workbook selection is invalid."""
+
+
+@dataclass(frozen=True)
+class ActiveComplianceWorkbookRows:
+    """Rows read from the configured active GSE workbook worksheet."""
+
+    workbook_path: Path
+    worksheet_name: str
+    rows: tuple[Mapping[str, str], ...]
+
+
+def _one_object(
+    graph: Graph,
+    subject: URIRef,
+    predicate: URIRef,
+    *,
+    setting_name: str,
+) -> URIRef | Literal:
+    values = tuple(graph.objects(subject, predicate))
+    if len(values) != 1:
+        raise ValueError(
+            f"Configuration must provide exactly one {setting_name}; "
+            f"found {len(values)}."
+        )
+    return values[0]
+
+
+def _read_active_workbook_settings(
+    configuration_path: str | Path,
+) -> tuple[Path, str]:
+    config_path = Path(configuration_path).expanduser().resolve()
+    if not config_path.is_file():
+        raise FileNotFoundError(
+            f"UAD configuration file does not exist: {config_path}"
+        )
+
+    graph = Graph()
+    graph.parse(config_path, format="turtle")
+    applications = tuple(graph.subjects(RDF.type, APP_CONFIGURATION_TYPE))
+    if len(applications) != 1:
+        raise ValueError(
+            "Configuration must identify exactly one application configuration; "
+            f"found {len(applications)}."
+        )
+    application = applications[0]
+
+    collection = _one_object(
+        graph,
+        application,
+        CFG.hasSourceWorkbooks,
+        setting_name="source workbook collection",
+    )
+    active_source = _one_object(
+        graph,
+        application,
+        CFG.activeComplianceSource,
+        setting_name="active compliance source",
+    )
+    if active_source not in set(graph.objects(collection, CFG.containsWorkbook)):
+        raise ValueError(
+            "The active compliance source must be a member of the configured "
+            "source workbook collection."
+        )
+
+    workbook_location = _one_object(
+        graph,
+        active_source,
+        CFG.sourceFileLocation,
+        setting_name="active workbook file location",
+    )
+    worksheet_name = _one_object(
+        graph,
+        active_source,
+        CFG.ruleDataSheetName,
+        setting_name="active workbook rule data worksheet",
+    )
+    if not isinstance(workbook_location, Literal):
+        raise ValueError("The active workbook location must be a literal path.")
+    if not isinstance(worksheet_name, Literal):
+        raise ValueError("The active workbook worksheet name must be a literal.")
+
+    path = Path(str(workbook_location)).expanduser()
+    if not path.is_absolute():
+        path = (config_path.parent / path).resolve()
+    else:
+        path = path.resolve()
+    sheet = str(worksheet_name).strip()
+    if not sheet:
+        raise ValueError("The active workbook worksheet name cannot be blank.")
+    return path, sheet
+
+
+def _cell_value_as_text(value: object, number_format: str) -> str:
+    """Return stable text, respecting simple Excel zero-padding formats."""
+
+    if value is None:
+        return ""
+    if isinstance(value, bool):
+        return "TRUE" if value else "FALSE"
+    if isinstance(value, (datetime, date, time)):
+        return value.isoformat()
+    if isinstance(value, (int, float, Decimal)):
+        fmt = number_format.split(";", maxsplit=1)[0].strip()
+        # Preserve leading zeroes for numeric identifiers when the source cell
+        # uses an explicit Excel mask such as 0000.0000.
+        if fmt and all(ch in "0#.?," for ch in fmt) and "." in fmt:
+            integer_mask, fraction_mask = fmt.split(".", maxsplit=1)
+            decimals = len(fraction_mask)
+            try:
+                number = Decimal(str(value))
+                rendered = f"{number:.{decimals}f}"
+                integer_part, fraction_part = rendered.split(".", maxsplit=1)
+                required_integer_digits = sum(ch == "0" for ch in integer_mask)
+                sign = "-" if integer_part.startswith("-") else ""
+                digits = integer_part.lstrip("-")
+                integer_part = sign + digits.zfill(required_integer_digits)
+                if decimals:
+                    return f"{integer_part}.{fraction_part}"
+                return integer_part
+            except (InvalidOperation, ValueError):
+                pass
+        if isinstance(value, float) and value.is_integer():
+            return str(int(value))
+        return str(value)
+    return str(value)
+
+
+def read_active_compliance_workbook_rows(
+    configuration_path: str | Path,
+) -> ActiveComplianceWorkbookRows:
+    """Read all governed constraint rows from the configured active workbook.
+
+    The RDF configuration selects one active workbook and its rule-data sheet.
+    The worksheet header row is located by its governed column names so title
+    or note rows above the table do not shift interpretation. Every cell value
+    is returned as text; no CSV conversion or numeric ID coercion is performed.
+    """
+
+    workbook_path, worksheet_name = _read_active_workbook_settings(
+        configuration_path
+    )
+    if workbook_path.suffix.casefold() not in {".xlsx", ".xlsm"}:
+        raise ValueError(
+            "The configured compliance source must be an .xlsx or .xlsm workbook."
+        )
+    if not workbook_path.is_file():
+        raise FileNotFoundError(
+            f"Configured compliance workbook does not exist: {workbook_path}"
+        )
+
+    from openpyxl import load_workbook
+
+    workbook = load_workbook(
+        workbook_path,
+        read_only=True,
+        data_only=True,
+        keep_vba=workbook_path.suffix.casefold() == ".xlsm",
+    )
+    try:
+        if worksheet_name not in workbook.sheetnames:
+            raise GovernedWorkbookConfigurationError(
+                f"Configured worksheet {worksheet_name!r} is not present in "
+                f"{workbook_path.name}; available worksheets: "
+                f"{', '.join(workbook.sheetnames)}"
+            )
+        worksheet = workbook[worksheet_name]
+        header_row_number: int | None = None
+        headers: tuple[str, ...] = ()
+        for row_number, cells in enumerate(
+            worksheet.iter_rows(),
+            start=1,
+        ):
+            candidate = tuple(
+                str(cell.value) if cell.value is not None else ""
+                for cell in cells
+            )
+            if REQUIRED_CONSTRAINT_HEADERS.issubset(candidate):
+                header_row_number = row_number
+                headers = candidate
+                break
+        if header_row_number is None:
+            raise ValueError(
+                "Configured worksheet does not contain the required governed "
+                "constraint headers: "
+                + ", ".join(sorted(REQUIRED_CONSTRAINT_HEADERS))
+            )
+
+        rows: list[Mapping[str, str]] = []
+        for cells in worksheet.iter_rows(min_row=header_row_number + 1):
+            values = tuple(
+                _cell_value_as_text(cell.value, cell.number_format)
+                for cell in cells
+            )
+            if not any(value.strip() for value in values):
+                continue
+            record = {
+                header: values[index] if index < len(values) else ""
+                for index, header in enumerate(headers)
+                if header
+            }
+            rows.append(record)
+        return ActiveComplianceWorkbookRows(
+            workbook_path=workbook_path,
+            worksheet_name=worksheet_name,
+            rows=tuple(rows),
+        )
+    finally:
+        workbook.close()

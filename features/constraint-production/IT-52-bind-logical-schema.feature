@@ -1,5 +1,5 @@
 @IT-52 @constraint-production
-Feature: 2 Bind governed constraints to the Logical Schema
+Feature: 52 Bind governed constraints to the Logical Schema
   As the governed constraint-production process
   I want a Logical Schema binding agent to bind normalized constraint knowledge to governed Logical Schema resources
   So that downstream agents operate on stable schema identities rather than guessed element names or implementation-specific paths

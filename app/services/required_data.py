@@ -7,7 +7,6 @@ with their governed severity.
 RDF test definitions are never read by this module.
 """
 
-import csv
 import logging
 from dataclasses import dataclass
 from functools import lru_cache
@@ -18,6 +17,9 @@ from xml.etree.ElementTree import Element
 from app.models.common import Provenance
 from app.models.enums import Investor, RuleType, Severity
 from app.models.validation import Finding
+from app.services.gse_constraint_sources import (
+    read_active_compliance_workbook_rows,
+)
 from app.services.single_equality_required_data import binding_for, evaluate_single_equality
 from app.services.required_structure_required_data import (
     binding_for as required_structure_binding_for,
@@ -369,9 +371,27 @@ def is_conditional_rule(rule: dict[str, str]) -> bool:
 
 
 @lru_cache(maxsize=1)
-def load_required_rules() -> tuple[dict[str, str], ...]:
-    with RULE_FILE.open(encoding="utf-8-sig", newline="") as stream:
-        rows = list(csv.DictReader(stream))
+def load_required_rules(
+    configuration_path: str | Path | None = None,
+) -> tuple[dict[str, str], ...]:
+    """Load supported required-data rules from the configured GSE workbook."""
+
+    active_configuration = (
+        Path(configuration_path)
+        if configuration_path is not None
+        else ROOT / "config" / "configuration.ttl"
+    )
+    source = read_active_compliance_workbook_rows(
+        configuration_path=active_configuration,
+    )
+    rows = [
+        {
+            **row,
+            "_source_document": str(source.workbook_path),
+            "_source_sheet": source.worksheet_name,
+        }
+        for row in source.rows
+    ]
 
     rules = []
     for row in rows:
@@ -672,6 +692,7 @@ def nearest_existing_ancestor_path(
 def evaluate_required_data(
     root: Element,
     investor: Investor,
+    configuration_path: str | Path | None = None,
 ) -> list[Finding]:
     """Evaluate rules within each valuation and subject-property context."""
     findings: list[Finding] = []
@@ -688,9 +709,12 @@ def evaluate_required_data(
         for child in parent
     }
 
-    for rule in sorted(
-        load_required_rules(), key=lambda row: row["Unique ID"]
-    ):
+    rules = (
+        load_required_rules()
+        if configuration_path is None
+        else load_required_rules(configuration_path=configuration_path)
+    )
+    for rule in sorted(rules, key=lambda row: row["Unique ID"]):
         if aggregate_cross_record_binding_for(rule) is not None:
             findings.extend(evaluate_aggregate_cross_record(root, investor, rule))
             continue
@@ -768,9 +792,10 @@ def evaluate_required_data(
                     observed_value="missing, empty, or nil",
                     expected_condition=f"{element_name} must be provided.",
                     source=Provenance(
-                        source_document="data/data-constraints.csv",
+                        source_document=rule["_source_document"],
                         source_version="UAD 3.6",
                         source_section=rule["Unique ID"],
+                        source_sheet=rule["_source_sheet"],
                     ),
                     finding=rule["Message Text"],
                 )
@@ -879,9 +904,10 @@ def evaluate_required_data(
                         observed_value="missing, empty, or nil",
                         expected_condition=expected_condition,
                         source=Provenance(
-                            source_document="data/data-constraints.csv",
+                            source_document=rule["_source_document"],
                             source_version="UAD 3.6",
                             source_section=rule["Unique ID"],
+                            source_sheet=rule["_source_sheet"],
                         ),
                         finding=rule["Message Text"],
                     )
