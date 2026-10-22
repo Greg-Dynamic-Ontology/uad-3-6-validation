@@ -1,12 +1,39 @@
-"""IT-33R2S1 — Evaluate the subject property's physical address in its governed context."""
+"""IT-33R2S1: evaluate the subject address in its governed context."""
 
-import csv
+from pathlib import Path
 from xml.etree import ElementTree as ET
 
 import pytest
 
 from app.models.enums import Investor
 from app.services import required_data
+from app.services.gse_constraint_sources import (
+    read_active_compliance_workbook_rows,
+)
+
+
+ROOT = Path(__file__).resolve().parents[1]
+
+
+@pytest.fixture(scope="module")
+def governed_rule():
+    workbook = read_active_compliance_workbook_rows(
+        configuration_path=ROOT / "config" / "configuration.ttl",
+    )
+    rows = [
+        row for row in workbook.rows
+        if row["Unique ID"] == "0100.0007"
+        and row["Message ID"] == "UAD1001"
+    ]
+    assert len(rows) == 1, (
+        "The published workbook must contain governed row "
+        "0100.0007 / UAD1001 exactly once."
+    )
+    return {
+        **rows[0],
+        "_source_document": str(workbook.workbook_path),
+        "_source_sheet": workbook.worksheet_name,
+    }
 
 
 @pytest.mark.parametrize(
@@ -18,37 +45,9 @@ from app.services import required_data
     ids=["missing-element", "wrong-namespace-element"],
 )
 def test_it_33_r2_s1_subject_address_context(
-    tmp_path, monkeypatch, subject_address_content
+    monkeypatch, governed_rule, subject_address_content
 ):
-    """
-    Rule: Locate required data within its governed XML context.
-
-    Scenario: Evaluate the subject property's physical address
-    in its governed context.
-    """
-    with required_data.RULE_FILE.open(
-        encoding="utf-8-sig", newline=""
-    ) as stream:
-        reader = csv.DictReader(stream)
-        fieldnames = reader.fieldnames
-        rows = [
-            row for row in reader
-            if row["Unique ID"] == "0100.0007"
-        ]
-
-    assert len(rows) == 1, "Test setup requires governed row 0100.0007."
-    assert rows[0]["Message ID"] == "UAD1001"
-
-    inventory = tmp_path / "selected-required-data.csv"
-    with inventory.open("w", encoding="utf-8", newline="") as stream:
-        writer = csv.DictWriter(stream, fieldnames=fieldnames)
-        writer.writeheader()
-        writer.writerows(rows)
-
-    monkeypatch.setattr(required_data, "RULE_FILE", inventory)
-    required_data.load_required_rules.cache_clear()
-
-    # Use a different prefix to verify namespace URI-based matching.
+    """Find required address data only in the subject's governed context."""
     root = ET.fromstring(
         f"""
         <u:VALUATION_ANALYSIS
@@ -68,8 +67,20 @@ def test_it_33_r2_s1_subject_address_context(
         """
     )
 
-    try:
-        findings = required_data.evaluate_required_data(root, Investor.BOTH)
+    def selected_rules(configuration_path=None):
+        return (dict(governed_rule),)
+
+    with monkeypatch.context() as patch:
+        patch.setattr(
+            required_data,
+            "load_required_rules",
+            selected_rules,
+        )
+        before = ET.tostring(root)
+        findings = required_data.evaluate_required_data(
+            root, Investor.BOTH
+        )
+        assert ET.tostring(root) == before
 
         assert len(findings) == 1
         finding = findings[0]
@@ -93,8 +104,8 @@ def test_it_33_r2_s1_subject_address_context(
             f"{{{required_data.NAMESPACE}}}AddressLineText",
         ).text = "200 Subject Street"
 
+        supplied = ET.tostring(root)
         assert required_data.evaluate_required_data(
             root, Investor.BOTH
         ) == []
-    finally:
-        required_data.load_required_rules.cache_clear()
+        assert ET.tostring(root) == supplied

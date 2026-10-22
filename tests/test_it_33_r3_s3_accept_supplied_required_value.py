@@ -1,12 +1,39 @@
-"""IT-33R3S3 — Accept a supplied required value."""
+"""IT-33R3S3: accept a supplied required value."""
 
-import csv
+from pathlib import Path
 from xml.etree import ElementTree as ET
 
 import pytest
 
 from app.models.enums import Investor
 from app.services import required_data
+from app.services.gse_constraint_sources import (
+    read_active_compliance_workbook_rows,
+)
+
+
+ROOT = Path(__file__).resolve().parents[1]
+
+
+@pytest.fixture(scope="module")
+def governed_rule():
+    workbook = read_active_compliance_workbook_rows(
+        configuration_path=ROOT / "config" / "configuration.ttl",
+    )
+    rows = [
+        row for row in workbook.rows
+        if row["Unique ID"] == "0100.0007"
+        and row["Message ID"] == "UAD1001"
+    ]
+    assert len(rows) == 1, (
+        "The published workbook must contain governed row "
+        "0100.0007 / UAD1001 exactly once."
+    )
+    return {
+        **rows[0],
+        "_source_document": str(workbook.workbook_path),
+        "_source_sheet": workbook.worksheet_name,
+    }
 
 
 @pytest.mark.parametrize(
@@ -31,35 +58,9 @@ from app.services import required_data
     ],
 )
 def test_it_33_r3_s3_accept_supplied_required_value(
-    tmp_path, monkeypatch, value, nil_value
+    monkeypatch, governed_rule, value, nil_value
 ):
-    """
-    Scenario: Accept a supplied required value.
-
-    Required-data validation checks presence, including zero and false.
-    Domain and format validity belong to separate evaluators.
-    """
-    with required_data.RULE_FILE.open(
-        encoding="utf-8-sig", newline=""
-    ) as stream:
-        reader = csv.DictReader(stream)
-        fieldnames = reader.fieldnames
-        rows = [
-            row for row in reader
-            if row["Unique ID"] == "0100.0007"
-        ]
-
-    assert len(rows) == 1, "Test setup requires governed row 0100.0007."
-    assert rows[0]["Message ID"] == "UAD1001"
-
-    inventory = tmp_path / "selected-required-data.csv"
-    with inventory.open("w", encoding="utf-8", newline="") as stream:
-        writer = csv.DictWriter(stream, fieldnames=fieldnames)
-        writer.writeheader()
-        writer.writerows(rows)
-
-    monkeypatch.setattr(required_data, "RULE_FILE", inventory)
-    required_data.load_required_rules.cache_clear()
+    """Presence includes zero and false; domain checks are separate."""
 
     def qname(name):
         return f"{{{required_data.NAMESPACE}}}{name}"
@@ -84,8 +85,18 @@ def test_it_33_r3_s3_accept_supplied_required_value(
 
     original_xml = ET.tostring(root)
 
-    try:
-        findings = required_data.evaluate_required_data(root, Investor.BOTH)
+    def selected_rules(configuration_path=None):
+        return (dict(governed_rule),)
+
+    with monkeypatch.context() as patch:
+        patch.setattr(
+            required_data,
+            "load_required_rules",
+            selected_rules,
+        )
+        findings = required_data.evaluate_required_data(
+            root, Investor.BOTH
+        )
 
         assert findings == [], (
             f"Supplied value {value!r} must satisfy required-data presence."
@@ -94,6 +105,7 @@ def test_it_33_r3_s3_accept_supplied_required_value(
 
         # Prove the rule was active rather than silently skipped.
         address.remove(element)
+        missing_xml = ET.tostring(root)
         missing_findings = required_data.evaluate_required_data(
             root, Investor.BOTH
         )
@@ -101,5 +113,4 @@ def test_it_33_r3_s3_accept_supplied_required_value(
         assert len(missing_findings) == 1
         assert missing_findings[0].row_id == "0100.0007"
         assert missing_findings[0].rule_id == "UAD1001"
-    finally:
-        required_data.load_required_rules.cache_clear()
+        assert ET.tostring(root) == missing_xml

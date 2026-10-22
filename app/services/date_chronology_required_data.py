@@ -1,4 +1,4 @@
-"""Evaluate the 14 CSV-governed UAD chronological requirements.
+"""Evaluate the 14 governed UAD chronological requirements.
 
 Date comparisons use the owning property, report, service, or document.
 RDF manifests and test fixtures are not runtime inputs.
@@ -236,9 +236,12 @@ def evaluate_date_chronology(root, investor, row):
             observed_value=text(target),
             expected_condition=row["Rule Logic"],
             source=Provenance(
-                source_document="data/data-constraints.csv",
-                source_version="UAD 3.6",
+                source_document=row.get(
+                    "_source_document", "data/data-constraints.csv"
+                ),
+                source_version=row.get("_source_version", "UAD 3.6"),
                 source_section=row["Unique ID"],
+                source_sheet=row.get("_source_sheet"),
             ),
             finding=row["Message Text"],
         )

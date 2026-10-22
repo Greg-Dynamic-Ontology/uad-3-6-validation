@@ -194,14 +194,16 @@
 
 <urn:uad36:uniqueness-cardinality-rule:UAD1535> a b:Binding ;
     b:element "ExecutionDate" ;
-    b:evaluationMode "exact-count-per-scope" ;
-    b:expectedDataLocation "(//m:SIGNATORY/m:EXECUTION/m:EXECUTION_DETAIL/m:ExecutionDate)[1]" ;
+    b:evaluationMode "exact-count-linked-signatories-per-party" ;
+    b:expectedDataLocation "(//m:PARTY[m:ROLES/m:ROLE/m:ROLE_DETAIL/m:PartyRoleType='Appraiser' or m:ROLES/m:ROLE/m:ROLE_DETAIL/m:PartyRoleType='AppraiserSupervisor'])[1]" ;
     b:governedCount 1 ;
-    b:memberXPath "m:ExecutionDate" ;
+    b:governedValue "Appraiser" ;
+    b:governedValue "AppraiserSupervisor" ;
+    b:memberXPath "m:EXECUTION/m:EXECUTION_DETAIL/m:ExecutionDate" ;
     b:ruleId "UAD1535" ;
-    b:scopeXPath "//m:SIGNATORY/m:EXECUTION/m:EXECUTION_DETAIL" ;
-    b:selectionXPath "" ;
-    b:sourceFingerprint "cfc0c125487568e1ddd109d3d2a2f9552a5ee9741c45db28c8989c40111652b0" ;
+    b:scopeXPath "//m:PARTY[m:ROLES/m:ROLE/m:ROLE_DETAIL/m:PartyRoleType='Appraiser' or m:ROLES/m:ROLE/m:ROLE_DETAIL/m:PartyRoleType='AppraiserSupervisor']" ;
+    b:selectionXPath "m:SIGNATORIES/m:SIGNATORY" ;
+    b:sourceFingerprint "f8d91cec5065a70a43579c7635450bc70b2f260769c248ac1cfbf04d04cd167d" ;
     b:violationKind "CardinalityViolation" .
 
 <urn:uad36:uniqueness-cardinality-rule:UAD1637> a b:Binding ;

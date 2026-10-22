@@ -637,17 +637,17 @@ case:UAD1279 a t:TestCase ;
     t:ruleId "UAD1279" ;
     t:sourceUniqueIdCell "" ;
     t:primaryDataElement "IMAGE" ;
-    t:ruleLogic "If there is no instance of IMAGE in a given instance of ROOM with RoomType = \"Kitchen\" or \"HalfBathroom\" or \"FullBathroom\"" ;
+    t:ruleLogic "If PropertyValuationMethodType <> \"ExteriorAppraisal\" and (NewConstructionIndicator <> \"true\" or PropertyValuationConditionalConclusionType <> \"SubjectToCompletionPerPlans\") and there is no instance of IMAGE in a given instance of ROOM with RoomType = (\"Kitchen\" or \"HalfBathroom\" or \"FullBathroom\")" ;
     t:severity "Fatal" ;
     t:propertyAffected "Subject" ;
     t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/IMPROVEMENTS/IMPROVEMENT/PROPERTY_UNITS/PROPERTY_UNIT/ROOMS/ROOM/IMAGES/IMAGE/" ;
     t:messageText "The mandatory room photos (i.e., kitchen, full-bathroom, half-bathroom) must be included." ;
     t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1279> ;
     t:baselinePath "examples/xml/2- to 4-unit_Appraisal_v1.4.xml" ;
-    t:requiredStructureXPath "//m:ROOM[m:ROOM_DETAIL/m:RoomType='Kitchen' or m:ROOM_DETAIL/m:RoomType='HalfBathroom' or m:ROOM_DETAIL/m:RoomType='FullBathroom']/m:IMAGES/m:IMAGE" ;
-    t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:IMPROVEMENTS/m:IMPROVEMENT/m:PROPERTY_UNITS/m:PROPERTY_UNIT/m:ROOMS/m:ROOM/m:IMAGES/m:IMAGE" ;
+    t:requiredStructureXPath "(//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty'][m:PROPERTY_VALUATIONS/m:PROPERTY_VALUATION/m:PROPERTY_VALUATION_DETAIL/m:PropertyValuationMethodType != 'ExteriorAppraisal'][m:PROPERTY_DETAIL/m:NewConstructionIndicator != 'true' or ancestor::m:VALUATION_ANALYSIS//m:VALUATION_RECONCILIATION/m:VALUATION_RECONCILIATION_SUMMARY/m:VALUATION_CONDITIONS/m:VALUATION_CONDITION/m:PropertyValuationConditionalConclusionType != 'SubjectToCompletionPerPlans']/m:IMPROVEMENTS/m:IMPROVEMENT/m:PROPERTY_UNITS/m:PROPERTY_UNIT/m:ROOMS/m:ROOM[m:ROOM_DETAIL/m:RoomType='Kitchen' or m:ROOM_DETAIL/m:RoomType='HalfBathroom' or m:ROOM_DETAIL/m:RoomType='FullBathroom'])[1]/m:IMAGES/m:IMAGE" ;
+    t:expectedDataLocation "/m:MESSAGE[1]/m:DOCUMENT_SETS[1]/m:DOCUMENT_SET[1]/m:DOCUMENTS[1]/m:DOCUMENT[1]/m:DEAL_SETS[1]/m:DEAL_SET[1]/m:DEALS[1]/m:DEAL[1]/m:SERVICES[1]/m:SERVICE[1]/m:VALUATION[1]/m:VALUATION_RESPONSE[1]/m:VALUATION_ANALYSES[1]/m:VALUATION_ANALYSIS[1]/m:PROPERTIES[1]/m:PROPERTY[1]/m:IMPROVEMENTS[1]/m:IMPROVEMENT[1]/m:PROPERTY_UNITS[1]/m:PROPERTY_UNIT[1]/m:ROOMS[1]/m:ROOM[3]/m:IMAGES/m:IMAGE" ;
     t:xsdValidAfterRemoval false ;
-    t:applicabilityXPath "" .
+    t:applicabilityXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty'][m:PROPERTY_VALUATIONS/m:PROPERTY_VALUATION/m:PROPERTY_VALUATION_DETAIL/m:PropertyValuationMethodType != 'ExteriorAppraisal'][m:PROPERTY_DETAIL/m:NewConstructionIndicator != 'true' or ancestor::m:VALUATION_ANALYSIS//m:VALUATION_RECONCILIATION/m:VALUATION_RECONCILIATION_SUMMARY/m:VALUATION_CONDITIONS/m:VALUATION_CONDITION/m:PropertyValuationConditionalConclusionType != 'SubjectToCompletionPerPlans']" .
 
 case:UAD1280 a t:TestCase ;
     t:ruleId "UAD1280" ;

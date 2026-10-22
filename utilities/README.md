@@ -1,10 +1,11 @@
 # Utilities
 
-The **utilities** directory contains engineering tools used to create, extract, transform, and 
-maintain artifacts used by the **UAD 3.6 Compliance** project.
+The **utilities** directory contains engineering tools used to create, extract,
+transform, and maintain artifacts used by the **UAD 3.6 Compliance** project.
 
-Utilities are **development-time tools**. They are not part of the production validation service 
-and are not required for normal operation of the API.
+Utilities are **development-time tools**.
+They are not part of the production validation service and are not required for
+normal operation of the API.
 
 ## Purpose
 

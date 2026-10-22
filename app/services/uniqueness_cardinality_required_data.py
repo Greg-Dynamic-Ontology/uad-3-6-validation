@@ -1,8 +1,8 @@
 """Evaluate governed uniqueness and cardinality bindings.
 
-Production reads source rows from the supplied CSV and executable policy from
-``data/uniqueness-cardinality-bindings.ttl``. Test fixtures and expected test
-results are never read here.
+Source rows are supplied by the governed source loader. Executable policy
+comes from data/uniqueness-cardinality-bindings.ttl.
+Test fixtures and expected test results are never runtime inputs.
 """
 
 import hashlib
@@ -27,10 +27,15 @@ BINDINGS = (
     / "data/uniqueness-cardinality-bindings.ttl"
 )
 NAMESPACE = "http://www.mismo.org/residential/2009/schemas"
+XLINK = "http://www.w3.org/1999/xlink"
 NS = {
     "m": NAMESPACE,
-    "xlink": "http://www.w3.org/1999/xlink",
+    "xlink": XLINK,
 }
+SIGNATORY_ROLE = (
+    "urn:fdc:mismo.org:2009:residential/"
+    "SIGNATORY_IsAssociatedWith_ROLE"
+)
 SOURCE_COLUMNS = (
     "Message ID",
     "Unique ID",
@@ -76,12 +81,14 @@ def load_bindings() -> dict[str, dict[str, object]]:
             if len(values) != 1 or not isinstance(values[0], Literal):
                 raise ValueError(f"{node}: expected one literal {name}")
             record[name] = values[0].toPython()
+
         governed_values = list(graph.objects(node, B.governedValue))
         if not all(isinstance(item, Literal) for item in governed_values):
             raise ValueError(f"{node}: governedValue must be a literal")
         record["governedValues"] = tuple(
             sorted(str(item) for item in governed_values)
         )
+
         rule_id = str(record["ruleId"])
         if rule_id in bindings:
             raise ValueError(
@@ -116,6 +123,84 @@ def has_duplicate_values(values, governed_values=()) -> bool:
     return any(count > 1 for count in Counter(normalized).values())
 
 
+def linked_signature_count_violates(document, record):
+    """Count members across signatures linked to each governed party.
+
+    Role relationships are resolved within the party's SERVICE.
+    Signature labels are resolved within the containing DOCUMENT.
+    Duplicate relationship edges do not multiply the date count.
+    """
+    allowed_roles = set(record["governedValues"])
+    if not allowed_roles:
+        raise ValueError(
+            "Linked-signature cardinality requires governed party roles."
+        )
+
+    expected_count = int(record["governedCount"])
+    scope_path = str(record["scopeXPath"])
+    selection_path = str(record["selectionXPath"])
+    member_path = str(record["memberXPath"])
+    tree = document.getroottree()
+
+    for party in tree.xpath(scope_path, namespaces=NS):
+        roles = [
+            role
+            for role in party.xpath("m:ROLES/m:ROLE", namespaces=NS)
+            if any(
+                scalar_value(value) in allowed_roles
+                for value in role.xpath(
+                    "m:ROLE_DETAIL/m:PartyRoleType",
+                    namespaces=NS,
+                )
+            )
+        ]
+        if not roles:
+            continue
+
+        documents = party.xpath("ancestor::m:DOCUMENT[1]", namespaces=NS)
+        services = party.xpath("ancestor::m:SERVICE[1]", namespaces=NS)
+
+        if not documents or not services:
+            raise ValueError(
+                "An applicable signature party must belong to "
+                "a DOCUMENT and SERVICE."
+            )
+
+        owner_document = documents[0]
+        owner_service = services[0]
+        role_labels = {
+            role.get(f"{{{XLINK}}}label")
+            for role in roles
+            if role.get(f"{{{XLINK}}}label")
+        }
+
+        signature_labels = {
+            relationship.get(f"{{{XLINK}}}from")
+            for relationship in owner_service.xpath(
+                "m:RELATIONSHIPS/m:RELATIONSHIP",
+                namespaces=NS,
+            )
+            if relationship.get(f"{{{XLINK}}}arcrole") == SIGNATORY_ROLE
+            and relationship.get(f"{{{XLINK}}}to") in role_labels
+            and relationship.get(f"{{{XLINK}}}from")
+        }
+
+        members = set()
+        for signature in owner_document.xpath(
+            selection_path,
+            namespaces=NS,
+        ):
+            if signature.get(f"{{{XLINK}}}label") in signature_labels:
+                members.update(
+                    signature.xpath(member_path, namespaces=NS)
+                )
+
+        if len(members) != expected_count:
+            return True
+
+    return False
+
+
 def violates(document, record: dict[str, object]) -> bool:
     mode = str(record["evaluationMode"])
     count = int(record["governedCount"])
@@ -124,6 +209,9 @@ def violates(document, record: dict[str, object]) -> bool:
     member_path = str(record["memberXPath"])
     governed_values = tuple(record["governedValues"])
     tree = document.getroottree()
+
+    if mode == "exact-count-linked-signatories-per-party":
+        return linked_signature_count_violates(document, record)
 
     if mode == "max-count-global":
         return len(tree.xpath(selection, namespaces=NS)) > count
@@ -199,9 +287,12 @@ def evaluate_uniqueness_cardinality(root, investor, row):
             observed_value="prohibited duplicate or occurrence count",
             expected_condition=row["Rule Logic"],
             source=Provenance(
-                source_document="data/data-constraints.csv",
-                source_version="UAD 3.6",
+                source_document=row.get(
+                    "_source_document", "data/data-constraints.csv"
+                ),
+                source_version=row.get("_source_version", "UAD 3.6"),
                 source_section=row["Unique ID"],
+                source_sheet=row.get("_source_sheet"),
             ),
             finding=row["Message Text"],
         )

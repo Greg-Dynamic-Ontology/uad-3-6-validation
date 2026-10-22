@@ -1,6 +1,5 @@
-"""IT-34R1S1 — Enforce a requirement when its condition is true."""
+"""IT-34R1S1: enforce a requirement when its condition is true."""
 
-import csv
 from pathlib import Path
 from xml.etree import ElementTree as ET
 
@@ -8,6 +7,9 @@ import pytest
 
 from app.models.enums import Investor, Severity
 from app.services import required_data
+from app.services.gse_constraint_sources import (
+    read_active_compliance_workbook_rows,
+)
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -21,7 +23,6 @@ BASELINE = (
     / "baseline"
     / "SF1_Appraisal_v1.4.xml"
 )
-
 CONTEXT = (
     ".//m:VALUATION_ANALYSIS/m:PROPERTIES/"
     "m:PROPERTY[@ValuationUseType='SubjectProperty']/"
@@ -33,40 +34,42 @@ EXPECTED_PATH = (
 XSI_NIL = "{http://www.w3.org/2001/XMLSchema-instance}nil"
 
 
+@pytest.fixture(scope="module")
+def governed_rule():
+    workbook = read_active_compliance_workbook_rows(
+        configuration_path=PROJECT_ROOT / "config" / "configuration.ttl",
+    )
+    rows = [
+        row for row in workbook.rows
+        if row["Unique ID"] == "0100.0053"
+        and row["Message ID"] == "UAD1022"
+    ]
+    assert len(rows) == 1, (
+        "The published workbook must contain governed row "
+        "0100.0053 / UAD1022 exactly once."
+    )
+    rule = {
+        **rows[0],
+        "_source_document": str(workbook.workbook_path),
+        "_source_sheet": workbook.worksheet_name,
+    }
+    assert rule["Rule Logic"] == (
+        'If PropertyEstateType = "Other" and '
+        "PropertyEstateTypeOtherDescription is not provided"
+    )
+    return rule
+
+
 @pytest.mark.parametrize(
     "value_state",
     ["missing", "empty", "whitespace", "nil"],
 )
 def test_it_34_r1_s1_enforce_true_condition(
-    tmp_path, monkeypatch, value_state
+    monkeypatch, governed_rule, value_state
 ):
-    """Reuse required-data behavior when the governed condition is true."""
-    with required_data.RULE_FILE.open(
-        encoding="utf-8-sig", newline=""
-    ) as stream:
-        reader = csv.DictReader(stream)
-        fieldnames = reader.fieldnames
-        rows = [
-            row for row in reader
-            if row["Unique ID"] == "0100.0053"
-            and row["Message ID"] == "UAD1022"
-        ]
-
-    assert len(rows) == 1, "Test setup requires governed rule UAD1022."
-    rule = rows[0]
-    assert rule["Rule Logic"] == (
-        'If PropertyEstateType = "Other" and '
-        "PropertyEstateTypeOtherDescription is not provided"
-    )
-
-    inventory = tmp_path / "selected-conditional-required.csv"
-    with inventory.open("w", encoding="utf-8", newline="") as stream:
-        writer = csv.DictWriter(stream, fieldnames=fieldnames)
-        writer.writeheader()
-        writer.writerow(rule)
-
-    monkeypatch.setattr(required_data, "RULE_FILE", inventory)
-    required_data.load_required_rules.cache_clear()
+    """Require the dependent value when its governed condition is true."""
+    rule = governed_rule
+    original_rule = dict(rule)
 
     baseline_bytes = BASELINE.read_bytes()
     root = ET.fromstring(baseline_bytes)
@@ -93,10 +96,19 @@ def test_it_34_r1_s1_enforce_true_condition(
             target.set(XSI_NIL, "true")
 
     original_xml = ET.tostring(root)
-    original_inventory = inventory.read_bytes()
 
-    try:
-        findings = required_data.evaluate_required_data(root, Investor.BOTH)
+    def selected_rules(configuration_path=None):
+        return (dict(rule),)
+
+    with monkeypatch.context() as patch:
+        patch.setattr(
+            required_data,
+            "load_required_rules",
+            selected_rules,
+        )
+        findings = required_data.evaluate_required_data(
+            root, Investor.BOTH
+        )
 
         assert len(findings) == 1, (
             "A true condition with missing, blank, or nil dependent data "
@@ -112,7 +124,6 @@ def test_it_34_r1_s1_enforce_true_condition(
         assert finding.violation_kind == "MissingRequiredValue"
         assert finding.finding == rule["Message Text"]
 
-        # The correction guidance must explain the triggering condition.
         assert finding.expected_condition
         assert "PropertyEstateType" in finding.expected_condition
         assert "Other" in finding.expected_condition
@@ -129,10 +140,11 @@ def test_it_34_r1_s1_enforce_true_condition(
             "Description of the other ownership interest"
         )
 
+        supplied_xml = ET.tostring(root)
         assert required_data.evaluate_required_data(
             root, Investor.BOTH
         ) == []
-        assert inventory.read_bytes() == original_inventory
-        assert BASELINE.read_bytes() == baseline_bytes
-    finally:
-        required_data.load_required_rules.cache_clear()
+        assert ET.tostring(root) == supplied_xml
+
+    assert rule == original_rule
+    assert BASELINE.read_bytes() == baseline_bytes

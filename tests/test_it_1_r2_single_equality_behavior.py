@@ -1,21 +1,13 @@
 """IT-1R2S1: three behavior checks for each governed equality-rule record.
 
-The inventory remains the source of case membership and rule identity. Each
-case also needs these reviewed t: predicates before it can execute:
+The RDF inventory defines case membership, XML bindings, and expectations.
+The configured published workbook supplies governed source values.
 
-  baselinePath         repository-relative path to a complete XML fixture
-  triggerXPath         absolute XPath selecting one element or attribute
-  dependentXPath       absolute XPath selecting one supplied scalar element
-  nonmatchingValue     schema-valid value unequal to the governed trigger value
-  expectedDataLocation exact location expected in the missing-data finding
-
-Paths use the m namespace defined below. The baseline must have the matching
-trigger and supplied dependent value. The runner changes only those two data
-points in memory. Missing bindings fail explicitly; they are not behavior RED.
-No RDF inventory, XML fixture, or production file is written by this runner.
+The workbook is read once per module. Each evaluator call receives only
+the selected workbook row through a temporary replacement of its rule
+loader. No CSV derivative or selected-rule file is created.
 """
 
-import csv
 import re
 from pathlib import Path, PurePosixPath
 from xml.etree import ElementTree as ET
@@ -27,6 +19,9 @@ from rdflib import Graph, Literal, Namespace, RDF, URIRef
 
 from app.models.enums import Investor, RuleType, Severity
 from app.services import required_data
+from app.services.gse_constraint_sources import (
+    read_active_compliance_workbook_rows,
+)
 
 
 ROOT = Path(app.__file__).resolve().parents[1]
@@ -39,7 +34,11 @@ T = Namespace("urn:uad36:test-suite:vocab:")
 SUITE = URIRef("urn:uad36:test-suite:single-equality")
 NS = {"m": "http://www.mismo.org/residential/2009/schemas"}
 NIL = "{http://www.w3.org/2001/XMLSchema-instance}nil"
-VARIANTS = ("nonmatching-missing", "matching-missing", "matching-supplied")
+VARIANTS = (
+    "nonmatching-missing",
+    "matching-missing",
+    "matching-supplied",
+)
 FIELDS = {
     "Message ID": T.ruleId,
     "Unique ID": T.sourceUniqueIdCell,
@@ -51,8 +50,11 @@ FIELDS = {
     "Message Text": T.messageText,
 }
 BINDINGS = (
-    "baselinePath", "triggerXPath", "dependentXPath",
-    "nonmatchingValue", "expectedDataLocation",
+    "baselinePath",
+    "triggerXPath",
+    "dependentXPath",
+    "nonmatchingValue",
+    "expectedDataLocation",
 )
 
 
@@ -69,6 +71,7 @@ def load_inventory():
     graph = Graph().parse(DATA, format="turtle")
     members = sorted(set(graph.objects(SUITE, T.hasCase)), key=str)
     assert len(members) == 174, "Inventory must contain 174 distinct cases"
+
     rule_ids = set()
     for node in members:
         assert isinstance(node, URIRef)
@@ -84,11 +87,17 @@ INVENTORY, CASES = load_inventory()
 
 @pytest.fixture(scope="module")
 def source_rows():
-    with required_data.RULE_FILE.open(encoding="utf-8-sig", newline="") as stream:
-        reader = csv.DictReader(stream)
-        columns = reader.fieldnames
-        rows = list(reader)
-    return columns, rows
+    source = read_active_compliance_workbook_rows(
+        configuration_path=ROOT / "config" / "configuration.ttl",
+    )
+    return tuple(
+        {
+            **row,
+            "_source_document": str(source.workbook_path),
+            "_source_sheet": source.worksheet_name,
+        }
+        for row in source.rows
+    )
 
 
 @pytest.fixture(scope="module")
@@ -136,10 +145,14 @@ def set_trigger(node, value):
     "case", CASES, ids=lambda node: text(INVENTORY, node, T.ruleId)
 )
 def test_it_1_r2_s1_single_equality_behavior(
-    case, variant, source_rows, request, tmp_path, monkeypatch
+    case, variant, source_rows, schema, monkeypatch
 ):
     rule_id = text(INVENTORY, case, T.ruleId)
-    missing = [name for name in BINDINGS if not list(INVENTORY.objects(case, T[name]))]
+    missing = [
+        name
+        for name in BINDINGS
+        if not list(INVENTORY.objects(case, T[name]))
+    ]
     if missing:
         pytest.fail(
             f"NOT EXECUTABLE: {rule_id}: missing reviewed RDF bindings: "
@@ -147,24 +160,36 @@ def test_it_1_r2_s1_single_equality_behavior(
             + ". The validator has not been called; this is not behavior RED.",
             pytrace=False,
         )
-    binding = {name: text(INVENTORY, case, T[name]) for name in BINDINGS}
-    columns, rows = source_rows
-    matches = [row for row in rows if row["Message ID"] == rule_id]
+
+    binding = {
+        name: text(INVENTORY, case, T[name])
+        for name in BINDINGS
+    }
+    matches = [
+        row for row in source_rows
+        if row["Message ID"] == rule_id
+    ]
     assert len(matches) == 1, f"Source rule not unique: {rule_id}"
     rule = matches[0]
+
     for column, predicate in FIELDS.items():
-        assert text(INVENTORY, case, predicate, allow_blank=True) == rule[column], (
-            f"{rule_id}: source mismatch for {column}"
+        actual = text(INVENTORY, case, predicate, allow_blank=True)
+        assert actual == rule[column], (
+            f"{rule_id}: published workbook and RDF disagree on {column}: "
+            f"workbook={rule[column]!r}; RDF={actual!r}. "
+            "Review the governed source difference; this is not behavior RED."
         )
 
-    # Recognize the governed equality, without inventing its XML binding.
     condition = re.fullmatch(
-        r'(?i:if)\s+(@?[A-Za-z_][A-Za-z0-9_]*)\s*=\s*"([^"]+)"\s*,?\s*and\s+'
+        r'(?i:if)\s+(@?[A-Za-z_][A-Za-z0-9_]*)\s*=\s*"([^"]+)"'
+        r'\s*,?\s*and\s+'
         + re.escape(rule["Primary Data Element"])
         + r' is not provided(?: in a given instance of [A-Z_0-9]+)?\s*',
         rule["Rule Logic"],
     )
-    assert condition is not None, f"{rule_id}: rule wording needs explicit review"
+    assert condition is not None, (
+        f"{rule_id}: rule wording needs explicit review"
+    )
     trigger_name, matching = condition.groups()
     assert binding["nonmatchingValue"].strip() != matching
 
@@ -172,16 +197,25 @@ def test_it_1_r2_s1_single_equality_behavior(
     original = path.read_bytes()
     parser = etree.XMLParser(resolve_entities=False, no_network=True)
     root = etree.fromstring(original, parser)
-    xsd = request.getfixturevalue("schema")
-    xsd.assertValid(root)
+    schema.assertValid(root)
+
     trigger = select_one(root, binding["triggerXPath"])
     dependent = select_one(root, binding["dependentXPath"])
     assert isinstance(dependent, etree._Element) and len(dependent) == 0
-    assert dependent.tag == "{" + NS["m"] + "}" + rule["Primary Data Element"]
-    assert dependent.get(NIL) not in {"true", "1"} and (dependent.text or "").strip()
+    assert dependent.tag == (
+        "{" + NS["m"] + "}" + rule["Primary Data Element"]
+    )
+    assert (
+        dependent.get(NIL) not in {"true", "1"}
+        and (dependent.text or "").strip()
+    )
     assert trigger is not dependent, "Trigger and dependent must be distinct"
+
     if trigger_name.startswith("@"):
-        assert isinstance(trigger, etree._ElementUnicodeResult) and trigger.is_attribute
+        assert (
+            isinstance(trigger, etree._ElementUnicodeResult)
+            and trigger.is_attribute
+        )
         assert trigger.attrname == trigger_name[1:]
     else:
         assert isinstance(trigger, etree._Element)
@@ -192,28 +226,29 @@ def test_it_1_r2_s1_single_equality_behavior(
         set_trigger(trigger, binding["nonmatchingValue"])
     if variant != "matching-supplied":
         dependent.getparent().remove(dependent)
-    xsd.assertValid(root)
-    prepared = etree.tostring(root)
-    xml = ET.fromstring(prepared)
+    schema.assertValid(root)
+
+    xml = ET.fromstring(etree.tostring(root))
     before = ET.tostring(xml)
-    selected = tmp_path / "selected-rule.csv"
-    with selected.open("w", encoding="utf-8", newline="") as stream:
-        writer = csv.DictWriter(stream, fieldnames=columns)
-        writer.writeheader()
-        writer.writerow(rule)
-    monkeypatch.setattr(required_data, "RULE_FILE", selected)
-    required_data.load_required_rules.cache_clear()
-    try:
+
+    def selected_rules(configuration_path=None):
+        return (dict(rule),)
+
+    # Isolate this evaluator behavior test at the rule-loader boundary.
+    # The production workbook loader is exercised by the IT-60 tests.
+    with monkeypatch.context() as patch:
+        patch.setattr(required_data, "load_required_rules", selected_rules)
         findings = required_data.evaluate_required_data(xml, Investor.BOTH)
-    finally:
-        required_data.load_required_rules.cache_clear()
+
     assert ET.tostring(xml) == before, "Validator mutated its XML input"
     assert path.read_bytes() == original, "Saved baseline changed"
+
     expected = 1 if variant == "matching-missing" else 0
     assert len(findings) == expected, (
         f"IT-1R2S1 / {rule_id} / {variant}: expected {expected} findings; "
         f"received {len(findings)}"
     )
+
     for finding in findings:
         assert finding.rule_id == rule_id
         assert finding.row_id == rule["Unique ID"]
@@ -223,8 +258,6 @@ def test_it_1_r2_s1_single_equality_behavior(
         assert finding.property_affected == rule["Property Affected"]
         assert finding.violation_kind == "MissingRequiredValue"
         assert finding.data_location == binding["expectedDataLocation"]
-        # The finding may explain the governed condition in reader-friendly
-        # wording. Verbatim CSV wording is not a scenario requirement.
         assert finding.expected_condition
         assert trigger_name in finding.expected_condition
         assert matching in finding.expected_condition

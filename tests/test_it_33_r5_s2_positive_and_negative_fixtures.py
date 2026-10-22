@@ -1,4 +1,8 @@
-"""IT-33R5S2 — Prove unconditional positive and negative fixtures."""
+"""IT-33R5S2: prove unconditional positive and negative fixtures.
+
+The fixture manifest remains CSV test data.
+Governed rules and provenance come from the production workbook loader.
+"""
 
 import csv
 from pathlib import Path
@@ -89,7 +93,7 @@ def test_it_33_r5_s2_negative_fixture(
     supported_rules,
     required_data_baseline_clock,
 ):
-    """Each controlled defect produces exactly its expected finding."""
+    """Each controlled defect produces its expected finding."""
     rule = supported_rules[case["row_id"]]
     fixture_path = FIXTURES / "tests" / case["filename"]
     original = fixture_path.read_bytes()
@@ -104,8 +108,8 @@ def test_it_33_r5_s2_negative_fixture(
     assert len(root.findall(parent_path, required_data.NS)) == 1
     assert root.findall(lookup_path, required_data.NS) == []
 
-    # Exercise all loaded rules, including later rule categories. A mutation
-    # may legitimately create a cascading finding in another category.
+    # Exercise all loaded rules, including later rule categories.
+    # A mutation may legitimately create a cascading finding.
     findings = required_data.evaluate_required_data(root, Investor.BOTH)
     matching = [
         finding
@@ -131,8 +135,11 @@ def test_it_33_r5_s2_negative_fixture(
         f"{rule['Primary Data Element']} must be provided."
     )
 
+    assert rule["_source_document"]
+    assert rule["_source_sheet"]
     assert finding.source is not None
-    assert finding.source.source_document == "data/data-constraints.csv"
+    assert finding.source.source_document == rule["_source_document"]
+    assert finding.source.source_sheet == rule["_source_sheet"]
     assert finding.source.source_section == rule["Unique ID"]
 
     assert ET.tostring(root) == original_tree

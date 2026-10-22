@@ -1,12 +1,10 @@
 """IT-1R1S1: UAD1025 ground-lease expiration requirement.
 
-Additive RED slice; preserves the existing 350-case suite.
-RDF cases are embedded here to deliver one independently reviewable file.
-Existing saved UAD1024 fixtures provide the same two applicability inputs.
-Only the supplied-date case adds an element, in memory; saved XML is unchanged.
+Preserve the five reviewed cases and existing saved UAD1024 fixtures.
+Read governed source values from the configured published workbook.
+Only the supplied-date case adds an element, in memory.
 """
 
-import csv
 from pathlib import Path
 from xml.etree import ElementTree as ET
 
@@ -17,6 +15,9 @@ from rdflib import Graph, Namespace, RDF
 
 from app.models.enums import Investor, RuleType, Severity
 from app.services import required_data
+from app.services.gse_constraint_sources import (
+    read_active_compliance_workbook_rows,
+)
 
 
 ROOT = Path(app.__file__).resolve().parents[1]
@@ -38,7 +39,6 @@ LOCATION = (
     "m:PROPERTY_GROUND_RENT/m:PropertyGroundLeaseExpirationDate"
 )
 
-# Explicit expected results: no applicability evaluator in the test runner.
 CASES_TTL = """
 @prefix m: <urn:uad36:test-manifest:vocab:> .
 @prefix c: <urn:uad36:test-case:IT-1R1S1:UAD1025:> .
@@ -70,13 +70,17 @@ def cases():
     graph = Graph().parse(data=CASES_TTL, format="turtle")
     result = []
     for node in sorted(graph.subjects(RDF.type, M.TestCase), key=str):
-        date = graph.value(node, M.suppliedDate)
+        supplied_date = graph.value(node, M.suppliedDate)
         result.append({
             "id": str(node).rsplit(":", 1)[-1],
             "file": str(graph.value(node, M.xmlFile)),
             "estate": str(graph.value(node, M.estate)),
             "common_land": str(graph.value(node, M.commonLand)),
-            "date": str(date) if date is not None else None,
+            "date": (
+                str(supplied_date)
+                if supplied_date is not None
+                else None
+            ),
             "expected": int(graph.value(node, M.expectedCount)),
         })
     return result
@@ -84,13 +88,21 @@ def cases():
 
 @pytest.fixture(scope="module")
 def source_rule():
-    """Check source identity and R1 membership before testing behavior."""
-    with required_data.RULE_FILE.open(encoding="utf-8-sig", newline="") as f:
-        reader = csv.DictReader(f)
-        columns = reader.fieldnames
-        matches = [r for r in reader if r["Message ID"] == RULE_ID]
+    """Check workbook source identity and reviewed R1 membership."""
+    workbook = read_active_compliance_workbook_rows(
+        configuration_path=ROOT / "config" / "configuration.ttl",
+    )
+    matches = [
+        row for row in workbook.rows
+        if row["Message ID"] == RULE_ID
+    ]
     assert len(matches) == 1
-    row = matches[0]
+    row = {
+        **matches[0],
+        "_source_document": str(workbook.workbook_path),
+        "_source_sheet": workbook.worksheet_name,
+    }
+
     assert row["Unique ID"] == "0100.0029"
     assert row["Primary Data Element"] == ELEMENT
     assert row["Severity"] == "Fatal"
@@ -98,15 +110,25 @@ def source_rule():
     assert row["Rule Logic"] == (
         'If PropertyEstateType = "Leasehold" and '
         'LandOwnedInCommonIndicator = "false", and '
-        'PropertyGroundLeaseExpirationDate is not provided'
+        "PropertyGroundLeaseExpirationDate is not provided"
     )
     assert row[" xPath"] == (
         "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_GROUND_RENT/"
     )
+
     graph = Graph().parse(TRACKER, format="turtle")
-    members = list(graph.objects(SCENARIO.other_conditional_scoped, T.coversRule))
-    nodes = [n for n in members if str(graph.value(n, T.ruleId)) == RULE_ID]
+    members = list(
+        graph.objects(
+            SCENARIO.other_conditional_scoped,
+            T.coversRule,
+        )
+    )
+    nodes = [
+        node for node in members
+        if str(graph.value(node, T.ruleId)) == RULE_ID
+    ]
     assert len(nodes) == 1
+
     for column, predicate in {
         "Unique ID": T.sourceUniqueIdCell,
         "Primary Data Element": T.primaryDataElement,
@@ -115,8 +137,12 @@ def source_rule():
         "Property Affected": T.propertyAffected,
         " xPath": T.xpath,
     }.items():
-        assert str(graph.value(nodes[0], predicate)) == row[column]
-    return columns, row
+        assert str(graph.value(nodes[0], predicate)) == row[column], (
+            f"{RULE_ID}: tracker and published workbook disagree "
+            f"on {column}."
+        )
+
+    return row
 
 
 @pytest.fixture(scope="module")
@@ -125,50 +151,74 @@ def schema():
     return etree.XMLSchema(etree.parse(str(SCHEMA), parser))
 
 
-@pytest.mark.parametrize("case", cases(), ids=lambda c: "UAD1025-" + c["id"])
+@pytest.mark.parametrize(
+    "case",
+    cases(),
+    ids=lambda case: "UAD1025-" + case["id"],
+)
 def test_it_1_r1_s1_ground_lease_expiration(
-    case, source_rule, schema, tmp_path, monkeypatch
+    case, source_rule, schema, monkeypatch
 ):
-    columns, rule = source_rule
+    rule = source_rule
     path = FIXTURES / case["file"]
     original = path.read_bytes()
     root = ET.fromstring(original)
+
     properties = root.findall(
         ".//m:VALUATION_ANALYSIS/m:PROPERTIES/"
-        "m:PROPERTY[@ValuationUseType='SubjectProperty']", NS
+        "m:PROPERTY[@ValuationUseType='SubjectProperty']",
+        NS,
     )
     assert len(properties) == 1
     subject = properties[0]
-    assert subject.findtext("m:PROPERTY_DETAIL/m:PropertyEstateType", namespaces=NS) == case["estate"]
+    assert subject.findtext(
+        "m:PROPERTY_DETAIL/m:PropertyEstateType",
+        namespaces=NS,
+    ) == case["estate"]
+
     common = subject.findall(".//m:LandOwnedInCommonIndicator", NS)
-    assert len(common) == 1 and common[0].text == case["common_land"]
+    assert len(common) == 1
+    assert common[0].text == case["common_land"]
+
     parents = subject.findall("m:PROPERTY_GROUND_RENT", NS)
     assert len(parents) == 1
     assert parents[0].find("m:" + ELEMENT, NS) is None
+
     if case["date"] is not None:
-        ET.SubElement(parents[0], "{" + NS["m"] + "}" + ELEMENT).text = case["date"]
+        ET.SubElement(
+            parents[0],
+            "{" + NS["m"] + "}" + ELEMENT,
+        ).text = case["date"]
+
     prepared = ET.tostring(root)
     schema.assertValid(etree.fromstring(prepared))
 
-    # Isolate this source requirement without bypassing production selection.
-    selected = tmp_path / "selected-rules.csv"
-    with selected.open("w", encoding="utf-8", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=columns)
-        writer.writeheader()
-        writer.writerow(rule)
-    monkeypatch.setattr(required_data, "RULE_FILE", selected)
-    required_data.load_required_rules.cache_clear()
-    try:
-        findings = required_data.evaluate_required_data(root, Investor.BOTH)
-    finally:
-        required_data.load_required_rules.cache_clear()
-    assert ET.tostring(root) == prepared, "Validation mutated the XML input."
-    assert path.read_bytes() == original, "Saved baseline fixture changed."
+    def selected_rules(configuration_path=None):
+        return (dict(rule),)
+
+    with monkeypatch.context() as patch:
+        patch.setattr(
+            required_data,
+            "load_required_rules",
+            selected_rules,
+        )
+        findings = required_data.evaluate_required_data(
+            root, Investor.BOTH
+        )
+
+    assert ET.tostring(root) == prepared, (
+        "Validation mutated the XML input."
+    )
+    assert path.read_bytes() == original, (
+        "Saved baseline fixture changed."
+    )
     assert len(findings) == case["expected"], (
         f"IT-1R1S1 / {RULE_ID} / {case['id']}: expected "
-        f"{case['expected']} missing-data findings; received {len(findings)}. "
+        f"{case['expected']} missing-data findings; "
+        f"received {len(findings)}. "
         "Leasehold with land not owned in common requires an expiration date."
     )
+
     for finding in findings:
         assert finding.rule_id == RULE_ID
         assert finding.row_id == "0100.0029"

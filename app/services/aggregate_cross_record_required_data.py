@@ -1,4 +1,4 @@
-"""Evaluate eight CSV-governed aggregate and cross-record requirements.
+"""Evaluate governed aggregate and cross-record requirements.
 
 Counts and sums remain within their owning property or improvement.
 Additional comparison rows are compared within each valuation analysis.
@@ -35,7 +35,7 @@ FINGERPRINTS = {
     "UAD1019": "c94fce7ed56cf537fdd299944f6d663aaddde43bb7c7b759d5355515d79f2146",
     "UAD1086": "a29eba5b13db2f9d673620f1be2b0339842e56e1c084a63c7f0b12c6ce364833",
     "UAD1250": "7f66ebfb5348c5aad26a8f13652d5fd10371ff29a328ba56d824bdd2fad363d1",
-    "UAD1455": "8565dcf4bf2e9d178e6135c9eb8c4b3e66dc69b46872fa6c9f0279c0cdbfe1d8",
+    "UAD1455": "934aa169d7afa2a5324d4e96002b18a38c672cdf0269caf5f59cb9c389995282",
     "UAD1461": "514b0f1e30d0e97eefcaa24e9957e0f4192f0e50ae06c75e0999284393467956",
     "UAD1693": "110ec70fb17dec3c40d0a43ef1b341aec31d71c084163525f990b3a742e667f8",
 }
@@ -189,9 +189,12 @@ def evaluate_aggregate_cross_record(root, investor, row):
             observed_value=observed,
             expected_condition=row["Rule Logic"],
             source=Provenance(
-                source_document="data/data-constraints.csv",
-                source_version="UAD 3.6",
+                source_document=row.get(
+                    "_source_document", "data/data-constraints.csv"
+                ),
+                source_version=row.get("_source_version", "UAD 3.6"),
                 source_section=row["Unique ID"],
+                source_sheet=row.get("_source_sheet"),
             ),
             finding=row["Message Text"],
         )

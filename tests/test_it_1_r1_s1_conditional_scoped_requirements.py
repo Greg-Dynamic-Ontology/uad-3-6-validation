@@ -1,10 +1,10 @@
 """IT-1R1S1: Test conditional and scoped requirements.
 
 Load standalone XML cases and expectations from manifest.ttl.
+Read governed source values from the configured published workbook.
 Do not construct appraisal XML or implement applicability logic here.
 """
 
-import csv
 import hashlib
 from collections import Counter
 from functools import lru_cache
@@ -17,6 +17,9 @@ from rdflib import Graph, Literal, Namespace, RDF
 
 from app.models.enums import Investor, RuleType, Severity
 from app.services import required_data
+from app.services.gse_constraint_sources import (
+    read_active_compliance_workbook_rows,
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -27,12 +30,14 @@ INVENTORY = ROOT / "data" / "spreadsheet-rule-category-tracking.ttl"
 TRACKING = Namespace("urn:uad36:work-tracking:vocab:")
 SCENARIO = Namespace("urn:uad36:work-tracking:scenario:")
 M = Namespace("urn:uad36:test-manifest:vocab:")
-
 R1 = Namespace("urn:uad36:work-tracking:r1-classification:")
+
 SCHEMA = ROOT / (
-    "chatgpt-sources/sources/schemas/UAD/GSE_UAD_3.6.0_v1.3/Combined/GSE_UAD_3.6.0_v1.3.xsd"
+    "chatgpt-sources/sources/schemas/UAD/GSE_UAD_3.6.0_v1.3/"
+    "Combined/GSE_UAD_3.6.0_v1.3.xsd"
 )
 NS = {"m": "http://www.mismo.org/residential/2009/schemas"}
+
 PRIOR_RULE_IDS = ("UAD1021", "UAD1024", "UAD1054")
 SLICE_02_RULE_IDS = (
     "UAD1094", "UAD1100", "UAD1101", "UAD1147", "UAD1156",
@@ -107,9 +112,14 @@ def read_corpus():
     )
 
     assert nonnegative_integer(graph, manifest, M.caseCount) == 350
-    assert len(case_nodes) == 350, "Expected 17 prior and 333 slice-02 cases."
+    assert len(case_nodes) == 350, (
+        "Expected 17 prior and 333 slice-02 cases."
+    )
+
     schema_node = single(graph, manifest, M.validationSchema)
-    assert text(graph, schema_node, M.path) == SCHEMA.relative_to(ROOT).as_posix()
+    assert text(graph, schema_node, M.path) == (
+        SCHEMA.relative_to(ROOT).as_posix()
+    )
     assert text(graph, schema_node, M.sha256) == hashlib.sha256(
         SCHEMA.read_bytes()
     ).hexdigest(), "Validation schema changed; review fixture compatibility."
@@ -162,28 +172,40 @@ def read_corpus():
             "expected_findings": expected,
         }
         assert case["state"] in STATES
-        expected_slice = "01" if case["rule_id"] in PRIOR_RULE_IDS else "02"
+        expected_slice = (
+            "01" if case["rule_id"] in PRIOR_RULE_IDS else "02"
+        )
         assert case["slice_id"] == expected_slice
-        assert bool(expected) == (case["state"] == "applicable_missing")
+        assert bool(expected) == (
+            case["state"] == "applicable_missing"
+        )
         assert checks, f"{case['case_id']}: missing fixture checks."
         cases.append(case)
 
     case_ids = [case["case_id"] for case in cases]
     assert len(case_ids) == len(set(case_ids)), "Duplicate case IDs."
     assert {case["rule_id"] for case in cases} == set(SOURCE_RULE_IDS)
+
     filenames = [case["xml_file"] for case in cases]
     assert len(filenames) == len(set(filenames)), "Duplicate XML filenames."
-    assert Counter(case["slice_id"] for case in cases) == {"01": 17, "02": 333}
+    assert Counter(case["slice_id"] for case in cases) == {
+        "01": 17,
+        "02": 333,
+    }
+
     for rule_id in SOURCE_RULE_IDS:
         assert {
-            case["state"] for case in cases if case["rule_id"] == rule_id
+            case["state"]
+            for case in cases
+            if case["rule_id"] == rule_id
         } == STATES, f"Missing Scenario state for {rule_id}."
+
     return tuple(sorted(cases, key=lambda case: case["case_id"]))
 
 
 @pytest.fixture(scope="module")
 def governed_rules():
-    """Verify selected source rows and their R1 category membership."""
+    """Verify workbook source values and reviewed R1 category membership."""
     graph = Graph().parse(INVENTORY, format="turtle")
     members = set(
         graph.objects(
@@ -192,27 +214,37 @@ def governed_rules():
         )
     )
 
-    proposed = set(graph.objects(R1.nextSlice, TRACKING.proposedSliceRule))
+    proposed = set(
+        graph.objects(R1.nextSlice, TRACKING.proposedSliceRule)
+    )
     assert proposed <= members
     assert len(proposed) == 30
     assert {
-        text(graph, subject, TRACKING.ruleId) for subject in proposed
-    } == set(SLICE_02_RULE_IDS), "Test selection differs from the reviewed TTL."
+        text(graph, subject, TRACKING.ruleId)
+        for subject in proposed
+    } == set(SLICE_02_RULE_IDS), (
+        "Test selection differs from the reviewed TTL."
+    )
 
-    with required_data.RULE_FILE.open(
-        encoding="utf-8-sig", newline=""
-    ) as stream:
-        reader = csv.DictReader(stream)
-        fieldnames = reader.fieldnames
-        rows = list(reader)
+    workbook = read_active_compliance_workbook_rows(
+        configuration_path=ROOT / "config" / "configuration.ttl",
+    )
 
     selected = {}
     for rule_id in SOURCE_RULE_IDS:
-        matches = [row for row in rows if row["Message ID"] == rule_id]
+        matches = [
+            row
+            for row in workbook.rows
+            if row["Message ID"] == rule_id
+        ]
         assert len(matches) == 1, (
-            f"Test setup requires exactly one CSV row for {rule_id}."
+            f"Test setup requires exactly one workbook row for {rule_id}."
         )
-        row = matches[0]
+        row = {
+            **matches[0],
+            "_source_document": str(workbook.workbook_path),
+            "_source_sheet": workbook.worksheet_name,
+        }
 
         subjects = [
             subject
@@ -225,25 +257,36 @@ def governed_rules():
         subject = subjects[0]
 
         for column, predicate in SOURCE_FIELDS.items():
-            assert row[column] == text(graph, subject, predicate), (
-                f"{rule_id}: CSV and TTL disagree on {column}. "
-                "Resolve the source discrepancy before evaluating RED."
+            recorded_value = text(graph, subject, predicate)
+            assert row[column] == recorded_value, (
+                f"{rule_id}: published workbook and TTL disagree "
+                f"on {column}. Workbook={row[column]!r}; "
+                f"TTL={recorded_value!r}. Resolve the source discrepancy "
+                "before evaluating behavior."
             )
 
         selected[rule_id] = {
             "row": row,
+            # Preserve the manifest-to-tracker reference check.
+            # This historical inventory coordinate is not asserted to
+            # be the physical row number in the active workbook.
             "source_row": nonnegative_integer(
                 graph, subject, TRACKING.sourceRow
             ),
         }
 
-    return fieldnames, selected
+    return selected
 
 
 @pytest.fixture(scope="module")
 def validation_schema():
-    parser = XSD_ET.XMLParser(resolve_entities=False, no_network=True)
-    return XSD_ET.XMLSchema(XSD_ET.parse(str(SCHEMA), parser))
+    parser = XSD_ET.XMLParser(
+        resolve_entities=False,
+        no_network=True,
+    )
+    return XSD_ET.XMLSchema(
+        XSD_ET.parse(str(SCHEMA), parser)
+    )
 
 
 def load_case_xml(case, validation_schema):
@@ -256,16 +299,22 @@ def load_case_xml(case, validation_schema):
     assert hashlib.sha256(content).hexdigest() == case["xml_sha256"], (
         f"{case['case_id']}: XML differs from the reviewed manifest."
     )
-    parser = XSD_ET.XMLParser(resolve_entities=False, no_network=True)
+
+    parser = XSD_ET.XMLParser(
+        resolve_entities=False,
+        no_network=True,
+    )
     schema_root = XSD_ET.fromstring(content, parser)
     assert validation_schema.validate(schema_root), (
-        f"{case['case_id']}: fixture is not XSD-valid; not behavioral RED.\n"
+        f"{case['case_id']}: fixture is not XSD-valid; "
+        "not behavioral RED.\n"
         f"{validation_schema.error_log}"
     )
     root = ET.fromstring(content)
 
     checks = case["fixture_checks"]
     assert checks, f"{case['case_id']}: fixture checks are required."
+
     for check in checks:
         nodes = root.findall(check["path"], NS)
         assert len(nodes) == check["count"], (
@@ -282,12 +331,17 @@ def load_case_xml(case, validation_schema):
         location = finding["data_location"]
         assert location.startswith("//m:VALUATION_ANALYSIS/")
         lookup = "." + location
-        assert len(root.findall(lookup.rsplit("/", 1)[0], NS)) == 1, (
-            f"{case['case_id']}: expected finding lacks a unique XML context."
+        assert len(
+            root.findall(lookup.rsplit("/", 1)[0], NS)
+        ) == 1, (
+            f"{case['case_id']}: expected finding lacks "
+            "a unique XML context."
         )
         assert root.findall(lookup, NS) == [], (
-            f"{case['case_id']}: expected missing dependent element is present."
+            f"{case['case_id']}: expected missing dependent "
+            "element is present."
         )
+
     return path, content, root
 
 
@@ -321,7 +375,7 @@ def assert_case(case, rule, findings):
     )
     assert actual_outcomes == expected_outcomes, (
         f"{case['case_id']}: findings differ from the expected "
-        f"rule, severity, XML context, or violation kind.\n"
+        "rule, severity, XML context, or violation kind.\n"
         f"Expected: {expected_outcomes}\n"
         f"Actual: {actual_outcomes}"
     )
@@ -342,36 +396,40 @@ def assert_case(case, rule, findings):
     ids=lambda case: f"slice-{case['slice_id']}-{case['case_id']}",
 )
 def test_it_1_r1_s1_conditional_scoped_requirement(
-    case, governed_rules, validation_schema, tmp_path, monkeypatch
+    case, governed_rules, validation_schema, monkeypatch
 ):
     """Report each saved XML case independently, including prior coverage."""
-    fieldnames, selected = governed_rules
-    source = selected[case["rule_id"]]
+    source = governed_rules[case["rule_id"]]
     rule = source["row"]
+
     assert case["source_row"] == source["source_row"]
     assert case["source_unique_id"] == rule["Unique ID"]
     assert case["source_logic"] == rule["Rule Logic"]
 
-    path, original_bytes, root = load_case_xml(case, validation_schema)
+    path, original_bytes, root = load_case_xml(
+        case, validation_schema
+    )
     original_tree = ET.tostring(root)
 
-    # Use the production loader; do not bypass its selection behavior.
-    inventory = tmp_path / "selected-rules.csv"
-    with inventory.open("w", encoding="utf-8", newline="") as stream:
-        writer = csv.DictWriter(stream, fieldnames=fieldnames)
-        writer.writeheader()
-        writer.writerow(rule)
+    def selected_rules(configuration_path=None):
+        return (dict(rule),)
 
-    monkeypatch.setattr(required_data, "RULE_FILE", inventory)
-    required_data.load_required_rules.cache_clear()
-    try:
-        findings = required_data.evaluate_required_data(root, Investor.BOTH)
-        assert ET.tostring(root) == original_tree, (
-            f"{case['case_id']}: validation changed the XML tree."
+    # Isolate evaluator behavior using the selected published source row.
+    # Workbook loading itself is covered by IT-60.
+    with monkeypatch.context() as patch:
+        patch.setattr(
+            required_data,
+            "load_required_rules",
+            selected_rules,
         )
-        assert path.read_bytes() == original_bytes, (
-            f"{case['case_id']}: validation changed the saved fixture."
+        findings = required_data.evaluate_required_data(
+            root, Investor.BOTH
         )
-        assert_case(case, rule, findings)
-    finally:
-        required_data.load_required_rules.cache_clear()
+
+    assert ET.tostring(root) == original_tree, (
+        f"{case['case_id']}: validation changed the XML tree."
+    )
+    assert path.read_bytes() == original_bytes, (
+        f"{case['case_id']}: validation changed the saved fixture."
+    )
+    assert_case(case, rule, findings)

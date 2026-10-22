@@ -249,12 +249,13 @@
     b:sourceFingerprint "7467484e5204bf2289cd76cffd4cb42fed3644056439924fba5a160872be77e7" .
 
 <urn:uad36:required-structure-rule:UAD1279> a b:Binding ;
-    b:applicabilityXPath "" ;
+    b:applicabilityXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty'][m:PROPERTY_VALUATIONS/m:PROPERTY_VALUATION/m:PROPERTY_VALUATION_DETAIL/m:PropertyValuationMethodType != 'ExteriorAppraisal'][m:PROPERTY_DETAIL/m:NewConstructionIndicator != 'true' or ancestor::m:VALUATION_ANALYSIS//m:VALUATION_RECONCILIATION/m:VALUATION_RECONCILIATION_SUMMARY/m:VALUATION_CONDITIONS/m:VALUATION_CONDITION/m:PropertyValuationConditionalConclusionType != 'SubjectToCompletionPerPlans']" ;
     b:element "IMAGE" ;
-    b:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY/m:IMPROVEMENTS/m:IMPROVEMENT/m:PROPERTY_UNITS/m:PROPERTY_UNIT/m:ROOMS/m:ROOM/m:IMAGES/m:IMAGE" ;
-    b:requiredStructureXPath "//m:ROOM[m:ROOM_DETAIL/m:RoomType='Kitchen' or m:ROOM_DETAIL/m:RoomType='HalfBathroom' or m:ROOM_DETAIL/m:RoomType='FullBathroom']/m:IMAGES/m:IMAGE" ;
+    b:evaluationContextXPath "m:IMPROVEMENTS/m:IMPROVEMENT/m:PROPERTY_UNITS/m:PROPERTY_UNIT/m:ROOMS/m:ROOM[m:ROOM_DETAIL/m:RoomType='Kitchen' or m:ROOM_DETAIL/m:RoomType='HalfBathroom' or m:ROOM_DETAIL/m:RoomType='FullBathroom']" ;
+    b:expectedDataLocation "m:IMAGES/m:IMAGE" ;
+    b:requiredStructureXPath "m:IMAGES/m:IMAGE" ;
     b:ruleId "UAD1279" ;
-    b:sourceFingerprint "af12bd26ce948f8a48a86a9a7cc6bf7589443129c52b5825f15b903c22c37478" .
+    b:sourceFingerprint "eaae63ecbd32959b9f0a3b994c5cfb6d74038d2b22cb0db9d2eb8c30ce948c67" .
 
 <urn:uad36:required-structure-rule:UAD1280> a b:Binding ;
     b:applicabilityXPath "//m:PROPERTY[@ValuationUseType='GrossRentMultiplierComparable']" ;

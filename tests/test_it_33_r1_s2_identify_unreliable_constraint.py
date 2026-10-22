@@ -1,63 +1,85 @@
-"""IT-33R1S2 — Identify a constraint that cannot be evaluated reliably."""
+"""IT-33R1S2: identify a constraint that cannot be evaluated reliably.
 
-import csv
+Use published workbook rows and exercise the real production rule loader.
+Only the selected in-memory test row receives a missing XML path.
+"""
+
 import logging
+from dataclasses import replace
+from pathlib import Path
 
 from app.services import required_data
+from app.services.gse_constraint_sources import (
+    read_active_compliance_workbook_rows,
+)
+
+
+ROOT = Path(__file__).resolve().parents[1]
+CONFIGURATION = ROOT / "config" / "configuration.ttl"
 
 
 def test_it_33_r1_s2_identify_unreliable_constraint(
-    tmp_path, monkeypatch, caplog
+    monkeypatch, caplog
 ):
-    """
-    Scenario: Identify a constraint that cannot be evaluated reliably.
-
-    Report configuration errors through structured logging while retaining
-    the existing loader's return contract for executable rules.
-    """
+    """Report an invalid row without preventing valid rows from loading."""
     selected_ids = ["0100.0007", "0100.0009", "0100.0010"]
 
-    with required_data.RULE_FILE.open(
-        encoding="utf-8-sig", newline=""
-    ) as stream:
-        reader = csv.DictReader(stream)
-        fieldnames = reader.fieldnames
-        source_rows = {
-            row["Unique ID"]: row
-            for row in reader
-            if row["Unique ID"] in selected_ids
-        }
-
-    assert set(source_rows) == set(selected_ids), (
-        "Test setup requires the three governed address rows."
+    workbook = read_active_compliance_workbook_rows(
+        configuration_path=CONFIGURATION,
     )
+
+    source_rows = {}
+    for row_id in selected_ids:
+        matches = [
+            row for row in workbook.rows
+            if row["Unique ID"] == row_id
+        ]
+        assert len(matches) == 1, (
+            f"The published workbook must contain exactly one {row_id}."
+        )
+        source_rows[row_id] = dict(matches[0])
 
     rows = [dict(source_rows[row_id]) for row_id in selected_ids]
     rows[1][" xPath"] = ""
+    original_rows = tuple(dict(row) for row in rows)
 
-    inventory = tmp_path / "selected-required-data.csv"
-    with inventory.open("w", encoding="utf-8", newline="") as stream:
-        writer = csv.DictWriter(stream, fieldnames=fieldnames)
-        writer.writeheader()
-        writer.writerows(rows)
+    selected_workbook = replace(workbook, rows=tuple(rows))
 
-    original_inventory = inventory.read_bytes()
-    monkeypatch.setattr(required_data, "RULE_FILE", inventory)
+    def read_selected_workbook(*, configuration_path):
+        assert Path(configuration_path).resolve() == CONFIGURATION.resolve()
+        return selected_workbook
+
+    expected = [
+        {
+            **row,
+            "_source_document": str(workbook.workbook_path),
+            "_source_sheet": workbook.worksheet_name,
+        }
+        for row in (rows[0], rows[2])
+    ]
+
     required_data.load_required_rules.cache_clear()
-
     try:
-        with caplog.at_level(
-            logging.ERROR, logger=required_data.__name__
-        ):
-            loaded = required_data.load_required_rules()
+        with monkeypatch.context() as patch:
+            patch.setattr(
+                required_data,
+                "read_active_compliance_workbook_rows",
+                read_selected_workbook,
+            )
+            with caplog.at_level(
+                logging.ERROR,
+                logger=required_data.__name__,
+            ):
+                loaded = required_data.load_required_rules(
+                    configuration_path=CONFIGURATION,
+                )
 
         # The invalid middle row must not stop valid rows from loading.
-        assert list(loaded) == [rows[0], rows[2]]
+        assert list(loaded) == expected
         assert "0100.0009" not in {
             row["Unique ID"] for row in loaded
         }
 
-        # Identify the source row and configuration problem explicitly.
         errors = [
             record
             for record in caplog.records
@@ -71,7 +93,9 @@ def test_it_33_r1_s2_identify_unreliable_constraint(
         assert "missing" in error.getMessage().lower()
         assert "path" in error.getMessage().lower()
 
-        # Do not invent a replacement path or rewrite the inventory.
-        assert inventory.read_bytes() == original_inventory
+        # Do not invent a replacement path or modify the supplied rows.
+        assert selected_workbook.rows == original_rows
+        assert selected_workbook.rows[1][" xPath"] == ""
+        assert source_rows["0100.0009"][" xPath"]
     finally:
         required_data.load_required_rules.cache_clear()

@@ -1,10 +1,10 @@
-"""IT-1R11S1: chronological requirements using saved XML and RDF expectations.
+"""IT-1R11S1: chronology using saved XML and RDF expectations.
 
-Original CSV rows drive production. The test reads the saved corpus without
-generating or changing XML files. Current-date comparisons use a fixed clock.
+The configured published workbook supplies governed source values.
+The test does not generate or change XML fixtures.
+Current-date comparisons use a fixed clock.
 """
 
-import csv
 import datetime
 import hashlib
 import json
@@ -19,6 +19,9 @@ from rdflib import Graph, Literal, Namespace, RDF, URIRef
 
 from app.models.enums import Investor, RuleType, Severity
 from app.services import required_data
+from app.services.gse_constraint_sources import (
+    read_active_compliance_workbook_rows,
+)
 
 
 ROOT = Path(app.__file__).resolve().parents[1]
@@ -82,7 +85,9 @@ AGE_RULES = {"UAD1259", "UAD1506", "UAD1757"}
 def value(graph, node, predicate, allow_blank=False):
     values = list(graph.objects(node, predicate))
     assert len(values) == 1, f"{node}: expected exactly one {predicate}"
-    assert isinstance(values[0], Literal), f"{node}: {predicate} must be literal"
+    assert isinstance(values[0], Literal), (
+        f"{node}: {predicate} must be literal"
+    )
     result = values[0].toPython()
     if isinstance(result, str):
         assert allow_blank or result.strip(), f"{node}: blank {predicate}"
@@ -98,7 +103,10 @@ def checked_path(relative):
     assert not path.is_absolute() and ".." not in path.parts
     assert "\\" not in relative and ":" not in relative
     resolved = (ROOT / path).resolve()
-    assert resolved.is_relative_to(ROOT.resolve()) and resolved.is_file()
+    assert resolved.is_relative_to(ROOT.resolve()), (
+        f"Path escapes repository: {relative}"
+    )
+    assert resolved.is_file(), f"Missing fixture or reference: {resolved}"
     return resolved
 
 
@@ -117,8 +125,8 @@ def load_inventory():
     assert set(graph.subjects(RDF.type, T.TestCase)) == set(cases)
 
     expected = {
-        (rid, name)
-        for rid, names in EXPECTED_CASES.items()
+        (rule_id, name)
+        for rule_id, names in EXPECTED_CASES.items()
         for name in names
     }
     actual = [
@@ -143,15 +151,17 @@ def load_inventory():
         links = list(graph.objects(case, T.sourceRule))
         assert len(links) == 1 and links[0] in governed
         assert value(tracking, links[0], WT.ruleId) == value(
-            graph, case, T.ruleId,
+            graph, case, T.ruleId
         )
+
         for column, predicate in FIELDS.items():
             local_name = str(predicate).removeprefix(str(T))
             assert value(
-                graph, case, predicate, allow_blank=True,
+                graph, case, predicate, allow_blank=True
             ) == value(
-                tracking, links[0], WT[local_name], allow_blank=True,
+                tracking, links[0], WT[local_name], allow_blank=True
             ), f"Tracking/manifest source mismatch: {case}: {column}"
+
         pair = list(graph.objects(case, T.hasFixture))
         assert len(pair) == 2
         fixtures.extend(pair)
@@ -173,17 +183,24 @@ INVENTORY, CASES = load_inventory()
 
 @pytest.fixture(scope="module")
 def source_rows():
-    with (ROOT / "data/data-constraints.csv").open(
-        encoding="utf-8-sig", newline="",
-    ) as stream:
-        reader = csv.DictReader(stream)
-        rows, columns = list(reader), reader.fieldnames
+    workbook = read_active_compliance_workbook_rows(
+        configuration_path=ROOT / "config" / "configuration.ttl",
+    )
     selected = {}
-    for rid in EXPECTED_CASES:
-        matches = [row for row in rows if row["Message ID"] == rid]
-        assert len(matches) == 1, f"{rid}: expected one original CSV row"
-        selected[rid] = matches[0]
-    return columns, selected
+    for rule_id in EXPECTED_CASES:
+        matches = [
+            row for row in workbook.rows
+            if row["Message ID"] == rule_id
+        ]
+        assert len(matches) == 1, (
+            f"{rule_id}: expected exactly one published workbook row"
+        )
+        selected[rule_id] = {
+            **matches[0],
+            "_source_document": str(workbook.workbook_path),
+            "_source_sheet": workbook.worksheet_name,
+        }
+    return selected
 
 
 @pytest.fixture(scope="module")
@@ -191,16 +208,19 @@ def schema():
     for node in INVENTORY.objects(SUITE, T.schemaSource):
         path = checked_path(binding(node, "path"))
         assert hashlib.sha256(path.read_bytes()).hexdigest() == binding(
-            node, "sha256",
+            node, "sha256"
         )
+
     path = checked_path(binding(SUITE, "schemaPath"))
     assert hashlib.sha256(path.read_bytes()).hexdigest() == binding(
-        SUITE, "schemaSha256",
+        SUITE, "schemaSha256"
     )
+
     published = checked_path(binding(SUITE, "publishedSourcePath"))
     assert hashlib.sha256(published.read_bytes()).hexdigest() == binding(
-        SUITE, "publishedSourceSha256",
+        SUITE, "publishedSourceSha256"
     )
+
     parser = etree.XMLParser(resolve_entities=False, no_network=True)
     return etree.XMLSchema(etree.parse(str(path), parser))
 
@@ -221,45 +241,48 @@ def owning(node, name):
 
 
 def is_prohibited(case, root):
-    """Check the fixture's declared relationship independently of production."""
-    rid = binding(case, "ruleId")
+    """Check the fixture's relationship independently of production."""
+    rule_id = binding(case, "ruleId")
     target = one(root, binding(case, "targetXPath"))
     raw = target.text
     reference_path = binding(case, "referenceXPath", allow_blank=True)
     reference = binding(case, "referenceValue")
+
     if reference_path:
         assert one(root, reference_path).text == reference
     else:
-        assert rid in FUTURE_RULES | AGE_RULES
+        assert rule_id in FUTURE_RULES | AGE_RULES
         assert reference == TODAY.isoformat()
 
-    if rid in {"UAD1051", "UAD1053"}:
+    if rule_id in {"UAD1051", "UAD1053"}:
         improvement = owning(target, "IMPROVEMENT")
         kind = one(
-            improvement, "m:IMPROVEMENT_DETAIL/m:ImprovementType",
+            improvement, "m:IMPROVEMENT_DETAIL/m:ImprovementType"
         ).text
         if kind != "Dwelling":
             return False
+
         year = int(raw)
         effective_year = REAL_DATE.fromisoformat(reference).year
-        if rid == "UAD1051":
+        if rule_id == "UAD1051":
             subject = owning(target, "PROPERTY")
             indicator = one(
-                subject, "m:PROPERTY_DETAIL/m:NewConstructionIndicator",
+                subject, "m:PROPERTY_DETAIL/m:NewConstructionIndicator"
             ).text
             return indicator == "true" and abs(year - effective_year) > 1
+
         rating = one(
             improvement,
             "m:STRUCTURE/m:STRUCTURE_DETAIL/m:ExteriorConditionRatingCode",
         ).text
         return year > effective_year + (2 if rating == "C1" else 0)
 
-    if rid == "UAD1611":
-        return tuple(map(int, raw[:7].split("-"))) < (
-            tuple(map(int, reference[:7].split("-")))
+    if rule_id == "UAD1611":
+        return tuple(map(int, raw[:7].split("-"))) < tuple(
+            map(int, reference[:7].split("-"))
         )
 
-    if rid == "UAD1529":
+    if rule_id == "UAD1529":
         role = owning(target, "ROLE")
         role_type = one(role, "m:ROLE_DETAIL/m:PartyRoleType").text
         if role_type not in {"Appraiser", "AppraiserSupervisor"}:
@@ -267,21 +290,14 @@ def is_prohibited(case, root):
 
     parsed = REAL_DATE.fromisoformat(raw)
     other = REAL_DATE.fromisoformat(reference)
-    if rid in AGE_RULES:
+    if rule_id in AGE_RULES:
         return (other - parsed).days > 367
-    if rid in FUTURE_RULES | {"UAD1131", "UAD1206", "UAD1557"}:
+    if rule_id in FUTURE_RULES | {"UAD1131", "UAD1206", "UAD1557"}:
         return parsed > other
     return parsed < other
 
 
-def evaluate_original_row(
-    rule, columns, root, tmp_path, monkeypatch, as_of=TODAY,
-):
-    selected = tmp_path / f"{rule['Message ID']}.csv"
-    with selected.open("w", encoding="utf-8", newline="") as stream:
-        writer = csv.DictWriter(stream, fieldnames=columns)
-        writer.writeheader()
-        writer.writerow(rule)
+def evaluate_original_row(rule, root, monkeypatch, as_of=TODAY):
     xml = ET.fromstring(etree.tostring(root))
     before = ET.tostring(xml)
 
@@ -290,36 +306,35 @@ def evaluate_original_row(
         def today(cls):
             return cls(as_of.year, as_of.month, as_of.day)
 
+    def selected_rules(configuration_path=None):
+        return (dict(rule),)
+
     with monkeypatch.context() as patch:
-        # Cover datetime.date.today() and already imported date aliases.
-        # No production interface or evaluator behavior is added by this test.
         patch.setattr(datetime, "date", FixedDate)
         for name, module in list(sys.modules.items()):
             if name.startswith("app.services.") and module is not None:
                 for attribute, item in list(vars(module).items()):
                     if item is REAL_DATE:
                         patch.setattr(module, attribute, FixedDate)
+
         assert datetime.date.today().isoformat() == as_of.isoformat()
-        patch.setattr(required_data, "RULE_FILE", selected)
-        required_data.load_required_rules.cache_clear()
-        try:
-            findings = required_data.evaluate_required_data(
-                xml, Investor.BOTH,
-            )
-            assert ET.tostring(xml) == before, "Validator changed input XML"
-            return findings
-        finally:
-            required_data.load_required_rules.cache_clear()
+        patch.setattr(required_data, "load_required_rules", selected_rules)
+        findings = required_data.evaluate_required_data(
+            xml, Investor.BOTH
+        )
+
+    assert ET.tostring(xml) == before, "Validator changed input XML"
+    return findings
 
 
 def assert_findings(findings, expected, case, rule, root):
-    rid = binding(case, "ruleId")
+    rule_id = binding(case, "ruleId")
     assert len(findings) == expected, (
-        f"IT-1R11S1 / {rid} / {binding(case, 'caseId')}: "
+        f"IT-1R11S1 / {rule_id} / {binding(case, 'caseId')}: "
         f"expected {expected} chronology finding(s), received {len(findings)}"
     )
     for finding in findings:
-        assert finding.rule_id == rid
+        assert finding.rule_id == rule_id
         assert finding.row_id == rule["Unique ID"]
         assert finding.primary_data_element == rule["Primary Data Element"]
         assert finding.property_affected == rule["Property Affected"]
@@ -334,38 +349,48 @@ def assert_findings(findings, expected, case, rule, root):
             one(root, binding(case, "targetXPath"))
         ]
         assert finding.source is not None
-        assert finding.source.source_document == "data/data-constraints.csv"
+        assert finding.source.source_document == rule["_source_document"]
+        assert finding.source.source_sheet == rule["_source_sheet"]
         assert finding.source.source_section == rule["Unique ID"]
 
 
 @pytest.mark.parametrize(
-    "case", CASES,
+    "case",
+    CASES,
     ids=lambda node: (
         f"{binding(node, 'ruleId')}-{binding(node, 'caseId')}"
     ),
 )
 def test_it_1_r11_s1_rejects_prohibited_date_relationship(
-    case, source_rows, schema, tmp_path, monkeypatch,
+    case, source_rows, schema, monkeypatch
 ):
-    rid = binding(case, "ruleId")
+    rule_id = binding(case, "ruleId")
     name = binding(case, "caseId")
-    columns, rows = source_rows
-    rule = rows[rid]
+    rule = source_rows[rule_id]
+
     for column, predicate in FIELDS.items():
-        assert value(
-            INVENTORY, case, predicate, allow_blank=True,
-        ) == rule[column]
+        recorded = value(
+            INVENTORY, case, predicate, allow_blank=True
+        )
+        assert recorded == rule[column], (
+            f"{rule_id}: published workbook and RDF disagree "
+            f"on {column}. Workbook={rule[column]!r}; RDF={recorded!r}."
+        )
+
     fingerprint = hashlib.sha256(json.dumps(
         [rule[column] for column in FIELDS],
-        ensure_ascii=False, separators=(",", ":"),
+        ensure_ascii=False,
+        separators=(",", ":"),
     ).encode("utf-8")).hexdigest()
     assert fingerprint == binding(case, "sourceFingerprint")
 
-    expected = 0 if (rid, name) in CONTROLS else 1
+    expected = 0 if (rule_id, name) in CONTROLS else 1
     assert binding(case, "expectedApplicable") is bool(expected)
+
     pair = list(INVENTORY.objects(case, T.hasFixture))
     baseline = next(
-        node for node in pair if binding(node, "state") == "permitted"
+        node for node in pair
+        if binding(node, "state") == "permitted"
     )
     changed = next(node for node in pair if node != baseline)
     assert binding(baseline, "expectedFindingCount") == 0
@@ -377,29 +402,33 @@ def test_it_1_r11_s1_rejects_prohibited_date_relationship(
     documents, saved = {}, {}
     for fixture in (baseline, changed):
         relative = binding(fixture, "path")
-        assert relative.startswith(f"{FIXTURES}/{rid}/")
+        assert relative.startswith(f"{FIXTURES}/{rule_id}/")
         path = checked_path(relative)
         original = path.read_bytes()
         saved[path] = original
+
         assert hashlib.sha256(original).hexdigest() == binding(
-            fixture, "sha256",
+            fixture, "sha256"
         )
         assert binding(fixture, "xsdValid") is True
         assert binding(
-            fixture, "expectedViolationKind",
+            fixture, "expectedViolationKind"
         ) == "ProhibitedDateRelationship"
-        root = etree.fromstring(original, etree.XMLParser(
-            resolve_entities=False, no_network=True,
-        ))
+
+        root = etree.fromstring(
+            original,
+            etree.XMLParser(resolve_entities=False, no_network=True),
+        )
         schema.assertValid(root)
         target = one(root, binding(case, "targetXPath"))
         assert not len(target)
         assert etree.QName(target).localname == binding(
-            case, "targetElement",
+            case, "targetElement"
         )
         assert target.text == binding(fixture, "targetValue")
         assert bool(root.xpath(
-            binding(case, "applicabilityXPath"), namespaces=NS,
+            binding(case, "applicabilityXPath"),
+            namespaces=NS,
         )) is bool(expected)
         documents[fixture] = root
 
@@ -407,6 +436,7 @@ def test_it_1_r11_s1_rejects_prohibited_date_relationship(
     prohibited = documents[changed]
     good_target = one(permitted, binding(case, "targetXPath"))
     changed_target = one(prohibited, binding(case, "targetXPath"))
+
     assert good_target.text == binding(case, "baselineValue")
     assert changed_target.text == binding(case, "changedValue")
     assert good_target.text != changed_target.text
@@ -422,32 +452,33 @@ def test_it_1_r11_s1_rejects_prohibited_date_relationship(
     assert etree.tostring(prohibited) == before
 
     baseline_findings = evaluate_original_row(
-        rule, columns, permitted, tmp_path, monkeypatch,
+        rule, permitted, monkeypatch
     )
     assert_findings(baseline_findings, 0, case, rule, permitted)
-    findings = evaluate_original_row(
-        rule, columns, prohibited, tmp_path, monkeypatch,
-    )
+
+    findings = evaluate_original_row(rule, prohibited, monkeypatch)
     assert all(
-        path.read_bytes() == original for path, original in saved.items()
+        path.read_bytes() == original
+        for path, original in saved.items()
     )
     assert_findings(findings, expected, case, rule, prohibited)
 
     # Prove that current-date results respond to the controlled clock.
-    if rid in FUTURE_RULES:
+    if rule_id in FUTURE_RULES:
         later = TODAY + datetime.timedelta(days=1)
         findings = evaluate_original_row(
-            rule, columns, prohibited, tmp_path, monkeypatch, as_of=later,
+            rule, prohibited, monkeypatch, as_of=later
         )
         assert_findings(findings, 0, case, rule, prohibited)
-    elif rid in AGE_RULES:
+    elif rule_id in AGE_RULES:
         earlier = TODAY - datetime.timedelta(days=1)
         findings = evaluate_original_row(
-            rule, columns, prohibited, tmp_path, monkeypatch, as_of=earlier,
+            rule, prohibited, monkeypatch, as_of=earlier
         )
         assert_findings(findings, 0, case, rule, prohibited)
+
         later = TODAY + datetime.timedelta(days=1)
         findings = evaluate_original_row(
-            rule, columns, permitted, tmp_path, monkeypatch, as_of=later,
+            rule, permitted, monkeypatch, as_of=later
         )
         assert_findings(findings, 1, case, rule, permitted)

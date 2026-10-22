@@ -1,18 +1,12 @@
 """IT-1R3S1: data-driven required-container and collection behavior.
 
-The RDF inventory owns test membership and source-row identity. Each case also
-needs these reviewed executable bindings before the validator is called:
+The RDF inventory owns test membership and reviewed XML bindings.
+The configured published workbook supplies governed source values.
 
-  baselinePath              repository-relative XML fixture
-  requiredStructureXPath    structure present in the applicable baseline
-  expectedDataLocation      location expected in the resulting finding
-  xsdValidAfterRemoval      whether the negative fixture must remain XSD-valid
-
-Missing bindings fail explicitly as NOT EXECUTABLE. They are inventory work,
-not behavior failures. The test mutates XML only in memory.
+Missing bindings fail explicitly as NOT EXECUTABLE. They are inventory
+work, not behavior failures. The test mutates XML only in memory.
 """
 
-import csv
 from pathlib import Path, PurePosixPath
 from xml.etree import ElementTree as ET
 
@@ -23,6 +17,9 @@ from rdflib import Graph, Literal, Namespace, RDF, URIRef
 
 from app.models.enums import Investor, RuleType, Severity
 from app.services import required_data
+from app.services.gse_constraint_sources import (
+    read_active_compliance_workbook_rows,
+)
 
 
 ROOT = Path(app.__file__).resolve().parents[1]
@@ -65,7 +62,9 @@ def value(graph, node, predicate, allow_blank=False):
     assert isinstance(result, Literal)
     converted = result.toPython()
     if isinstance(converted, str):
-        assert allow_blank or converted.strip(), f"{node}: blank {predicate}"
+        assert allow_blank or converted.strip(), (
+            f"{node}: blank {predicate}"
+        )
     return converted
 
 
@@ -75,11 +74,15 @@ def load_inventory():
     members = sorted(set(graph.objects(SUITE, T.hasCase)), key=str)
     assert len(members) == 98, "Inventory must contain 98 distinct cases"
     assert len(set(members)) == 98
+
     for node in members:
         assert (node, RDF.type, T.TestCase) in graph
+
     source_rules = set(graph.objects(None, T.sourceRule))
     governed = set(tracking.objects(SCENARIO, WT.coversRule))
-    assert source_rules == governed, "RDF suite must cover the governed category"
+    assert source_rules == governed, (
+        "RDF suite must cover the governed category"
+    )
     return graph, members
 
 
@@ -88,11 +91,17 @@ INVENTORY, CASES = load_inventory()
 
 @pytest.fixture(scope="module")
 def source_rows():
-    with required_data.RULE_FILE.open(encoding="utf-8-sig", newline="") as stream:
-        reader = csv.DictReader(stream)
-        columns = reader.fieldnames
-        rows = list(reader)
-    return columns, rows
+    workbook = read_active_compliance_workbook_rows(
+        configuration_path=ROOT / "config" / "configuration.ttl",
+    )
+    return tuple(
+        {
+            **row,
+            "_source_document": str(workbook.workbook_path),
+            "_source_sheet": workbook.worksheet_name,
+        }
+        for row in workbook.rows
+    )
 
 
 @pytest.fixture(scope="module")
@@ -111,37 +120,41 @@ def fixture_path(relative):
     return path
 
 
-def validate_with_only(rule, columns, xml, tmp_path, monkeypatch):
-    selected = tmp_path / f"{rule['Message ID']}.csv"
-    with selected.open("w", encoding="utf-8", newline="") as stream:
-        writer = csv.DictWriter(stream, fieldnames=columns)
-        writer.writeheader()
-        writer.writerow(rule)
+def validate_with_only(rule, xml, monkeypatch):
+    def selected_rules(configuration_path=None):
+        return (dict(rule),)
 
-    monkeypatch.setattr(required_data, "RULE_FILE", selected)
-    required_data.load_required_rules.cache_clear()
-    try:
+    with monkeypatch.context() as patch:
+        patch.setattr(required_data, "load_required_rules", selected_rules)
         return required_data.evaluate_required_data(xml, Investor.BOTH)
-    finally:
-        required_data.load_required_rules.cache_clear()
 
 
 @pytest.mark.parametrize(
-    "case", CASES, ids=lambda node: value(INVENTORY, node, T.ruleId)
+    "case",
+    CASES,
+    ids=lambda node: value(INVENTORY, node, T.ruleId),
 )
 def test_it_1_r3_s1_detects_an_absent_required_structure(
-    case, source_rows, schema, tmp_path, monkeypatch
+    case, source_rows, schema, monkeypatch
 ):
     rule_id = value(INVENTORY, case, T.ruleId)
-    columns, rows = source_rows
-    assert columns is not None
-    matches = [row for row in rows if row["Message ID"] == rule_id]
+    matches = [
+        row for row in source_rows
+        if row["Message ID"] == rule_id
+    ]
     assert len(matches) == 1, f"Source rule not unique: {rule_id}"
     rule = matches[0]
+
     for column, predicate in FIELDS.items():
-        assert value(
+        recorded_value = value(
             INVENTORY, case, predicate, allow_blank=True
-        ) == rule[column], f"{rule_id}: source mismatch for {column}"
+        )
+        assert recorded_value == rule[column], (
+            f"{rule_id}: published workbook and RDF disagree "
+            f"on {column}. Workbook={rule[column]!r}; "
+            f"RDF={recorded_value!r}. "
+            "Review the source difference before evaluating behavior."
+        )
 
     missing = [
         name
@@ -152,11 +165,15 @@ def test_it_1_r3_s1_detects_an_absent_required_structure(
         pytest.fail(
             f"NOT EXECUTABLE: {rule_id}: missing reviewed RDF bindings: "
             + ", ".join(missing)
-            + ". The validator has not been called; this is not behavior RED.",
+            + ". The validator has not been called; "
+            "this is not behavior RED.",
             pytrace=False,
         )
 
-    binding = {name: value(INVENTORY, case, T[name]) for name in BINDINGS}
+    binding = {
+        name: value(INVENTORY, case, T[name])
+        for name in BINDINGS
+    }
     assert isinstance(binding["xsdValidAfterRemoval"], bool)
 
     path = fixture_path(binding["baselinePath"])
@@ -164,31 +181,35 @@ def test_it_1_r3_s1_detects_an_absent_required_structure(
     parser = etree.XMLParser(resolve_entities=False, no_network=True)
     baseline_root = etree.fromstring(original, parser)
     schema.assertValid(baseline_root)
+
     baseline = ET.fromstring(etree.tostring(baseline_root))
     before = ET.tostring(baseline)
-    assert validate_with_only(
-        rule, columns, baseline, tmp_path, monkeypatch
-    ) == []
-    assert ET.tostring(baseline) == before, "Validator mutated its XML input"
+    assert validate_with_only(rule, baseline, monkeypatch) == []
+    assert ET.tostring(baseline) == before, (
+        "Validator mutated its XML input"
+    )
 
     negative_root = etree.fromstring(original, parser)
     structures = negative_root.getroottree().xpath(
-        binding["requiredStructureXPath"], namespaces=NS
+        binding["requiredStructureXPath"],
+        namespaces=NS,
     )
     assert structures, (
         f"{rule_id}: baseline does not contain the required structure"
     )
-    assert all(isinstance(node, etree._Element) for node in structures)
+    assert all(
+        isinstance(node, etree._Element)
+        for node in structures
+    )
     for structure in structures:
         structure.getparent().remove(structure)
+
     if binding["xsdValidAfterRemoval"]:
         schema.assertValid(negative_root)
 
     negative = ET.fromstring(etree.tostring(negative_root))
     negative_before = ET.tostring(negative)
-    findings = validate_with_only(
-        rule, columns, negative, tmp_path, monkeypatch
-    )
+    findings = validate_with_only(rule, negative, monkeypatch)
     assert ET.tostring(negative) == negative_before, (
         "Validator mutated its XML input"
     )

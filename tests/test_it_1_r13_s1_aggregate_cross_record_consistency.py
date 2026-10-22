@@ -1,10 +1,9 @@
 """IT-1R13S1: aggregate consistency using saved schema-valid XML and RDF.
 
-Original CSV rows drive production. This runner never generates or modifies
+Published workbook rows drive production. This runner never generates or modifies
 the saved corpus and does not import the generator's fixture oracle.
 """
 
-import csv
 import hashlib
 import json
 from copy import deepcopy
@@ -19,6 +18,9 @@ from rdflib import Graph, Literal, Namespace, RDF, URIRef
 
 from app.models.enums import Investor, RuleType, Severity
 from app.services import required_data
+from app.services.gse_constraint_sources import (
+    read_active_compliance_workbook_rows,
+)
 
 
 ROOT = Path(app.__file__).resolve().parents[1]
@@ -131,6 +133,7 @@ def load_inventory():
         assert value(graph, case, T.sourceUniqueIdCell) == SOURCE_IDS[rule]
         links = list(graph.objects(case, T.sourceRule))
         assert len(links) == 1 and links[0] in governed
+        # Historical CSV-to-tracker audit; active source checks use the workbook.
         discrepancies = {}
         for node in graph.objects(case, T.sourceDiscrepancy):
             column = value(graph, node, T.sourceColumn)
@@ -151,13 +154,25 @@ def load_inventory():
             ttl_value = value(tracking, links[0], WT[local_name], allow_blank=True)
             if column in discrepancies:
                 node = discrepancies[column]
-                assert value(graph, node, T.csvValue, allow_blank=True) == csv_value
-                assert value(graph, node, T.trackingValue, allow_blank=True) == ttl_value
-                approved = (
-                    csv_value.replace("Basement Access", "Below Grade Exterior Access")
-                    if rule == "UAD1455" else csv_value.replace("\n", "\r\n")
+                # Keep the historical CSV value in its audit record.
+                # The active case value may have been reconciled already;
+                # the test below still requires exact workbook agreement.
+                historical_csv_value = value(
+                    graph, node, T.csvValue, allow_blank=True
                 )
-                assert ttl_value == approved and ttl_value != csv_value
+                assert value(
+                    graph, node, T.trackingValue, allow_blank=True
+                ) == ttl_value
+                approved = (
+                    historical_csv_value.replace(
+                        "Basement Access", "Below Grade Exterior Access"
+                    )
+                    if rule == "UAD1455"
+                    else historical_csv_value.replace("\n", "\r\n")
+                )
+                assert ttl_value == approved
+                assert ttl_value != historical_csv_value
+                assert csv_value in {historical_csv_value, ttl_value}
             else:
                 assert ttl_value == csv_value
         pair = list(graph.objects(case, T.hasFixture))
@@ -184,15 +199,28 @@ def binding(node, name, allow_blank=False):
 
 @pytest.fixture(scope="module")
 def source_rows():
-    with (ROOT / "data/data-constraints.csv").open(encoding="utf-8-sig", newline="") as stream:
-        reader = csv.DictReader(stream)
-        rows, columns = list(reader), reader.fieldnames
+    workbook = read_active_compliance_workbook_rows(
+        configuration_path=ROOT / "config" / "configuration.ttl",
+    )
     selected = {}
-    for rule, unique_id in SOURCE_IDS.items():
-        matches = [row for row in rows if row["Message ID"] == rule]
-        assert len(matches) == 1 and matches[0]["Unique ID"] == unique_id
-        selected[rule] = matches[0]
-    return columns, selected
+    for rule_id, unique_id in SOURCE_IDS.items():
+        matches = [
+            row for row in workbook.rows
+            if row["Message ID"] == rule_id
+        ]
+        assert len(matches) == 1, (
+            f"The configured workbook must contain exactly one {rule_id}."
+        )
+        assert matches[0]["Unique ID"] == unique_id, (
+            f"{rule_id}: published source identity changed: "
+            f"{matches[0]['Unique ID']!r} != {unique_id!r}"
+        )
+        selected[rule_id] = {
+            **matches[0],
+            "_source_document": str(workbook.workbook_path),
+            "_source_sheet": workbook.worksheet_name,
+        }
+    return selected
 
 
 @pytest.fixture(scope="module")
@@ -291,13 +319,17 @@ def inconsistent_contexts(root, rule):
 
 @pytest.mark.parametrize("case", CASES, ids=lambda case: str(case).removeprefix(str(SUITE) + ":"))
 def test_it_1_r13_s1_aggregate_cross_record_consistency(
-    case, source_rows, schema, tmp_path, monkeypatch,
+    case, source_rows, schema, monkeypatch,
 ):
-    columns, rows = source_rows
+    rows = source_rows
     rule_id, case_id = binding(case, "ruleId"), binding(case, "caseId")
     row = rows[rule_id]
     for column, predicate in FIELDS.items():
-        assert value(INVENTORY, case, predicate, allow_blank=True) == row[column]
+        recorded = value(INVENTORY, case, predicate, allow_blank=True)
+        assert recorded == row[column], (
+            f"{rule_id}: published workbook and RDF disagree on {column}. "
+            f"Workbook={row[column]!r}; RDF={recorded!r}."
+        )
     assert fingerprint(row) == binding(case, "sourceFingerprint")
     fixtures = sorted(INVENTORY.objects(case, T.hasFixture), key=lambda node: binding(node, "state") != "permitted")
     parsed, files = [], []
@@ -332,14 +364,11 @@ def test_it_1_r13_s1_aggregate_cross_record_consistency(
         mutation.getparent().remove(mutation)
     assert etree.tostring(replay, method="c14n") == etree.tostring(parsed[1], method="c14n"), "Pair contains changes beyond the declared mutation"
 
-    selected_csv = tmp_path / "selected-original-rule.csv"
-    with selected_csv.open("w", encoding="utf-8", newline="") as stream:
-        writer = csv.DictWriter(stream, fieldnames=columns)
-        writer.writeheader()
-        writer.writerow(row)
-    monkeypatch.setattr(required_data, "RULE_FILE", selected_csv)
-    required_data.load_required_rules.cache_clear()
-    try:
+    def selected_rules(configuration_path=None):
+        return (dict(row),)
+
+    with monkeypatch.context() as patch:
+        patch.setattr(required_data, "load_required_rules", selected_rules)
         for fixture, path, original in files:
             root = ET.fromstring(original)
             before = ET.tostring(root)
@@ -366,11 +395,10 @@ def test_it_1_r13_s1_aggregate_cross_record_consistency(
             assert finding.finding == row["Message Text"]
             assert finding.expected_condition == row["Rule Logic"]
             assert finding.source is not None
-            assert finding.source.source_document == "data/data-constraints.csv"
+            assert finding.source.source_document == row["_source_document"]
+            assert finding.source.source_sheet == row["_source_sheet"]
             assert finding.source.source_version == "UAD 3.6"
             assert finding.source.source_section == row["Unique ID"]
             xml = etree.fromstring(original, etree.XMLParser(resolve_entities=False, no_network=True))
             expected_context = one(xml, binding(case, "targetXPath"))
             assert select(xml, finding.data_location) == [expected_context]
-    finally:
-        required_data.load_required_rules.cache_clear()

@@ -1,7 +1,11 @@
-"""IT-1R9S1: governed relationship and reference integrity behavior."""
+"""IT-1R9S1: governed relationship and reference integrity behavior.
+
+RDF supplies test membership, XML fixtures, and mutations.
+The configured published workbook supplies governed source values.
+Each evaluator call receives only the selected rule.
+"""
 
 import copy
-import csv
 from pathlib import Path, PurePosixPath
 from xml.etree import ElementTree as ET
 
@@ -12,6 +16,9 @@ from rdflib import Graph, Literal, Namespace, RDF, URIRef
 
 from app.models.enums import Investor, RuleType, Severity
 from app.services import required_data
+from app.services.gse_constraint_sources import (
+    read_active_compliance_workbook_rows,
+)
 
 
 ROOT = Path(app.__file__).resolve().parents[1]
@@ -62,7 +69,9 @@ def value(graph, node, predicate, allow_blank=False):
     assert isinstance(result, Literal)
     converted = result.toPython()
     if isinstance(converted, str):
-        assert allow_blank or converted.strip(), f"{node}: blank {predicate}"
+        assert allow_blank or converted.strip(), (
+            f"{node}: blank {predicate}"
+        )
     return converted
 
 
@@ -70,8 +79,12 @@ def load_inventory():
     graph = Graph().parse(DATA, format="turtle")
     tracking = Graph().parse(TRACKING, format="turtle")
     members = sorted(set(graph.objects(SUITE, T.hasCase)), key=str)
+
     assert len(members) == 20, "Inventory must contain 20 distinct cases"
-    assert all((node, RDF.type, T.TestCase) in graph for node in members)
+    assert all(
+        (node, RDF.type, T.TestCase) in graph
+        for node in members
+    )
     assert set(graph.objects(None, T.sourceRule)) == set(
         tracking.objects(SCENARIO, WT.coversRule)
     )
@@ -83,11 +96,17 @@ INVENTORY, CASES = load_inventory()
 
 @pytest.fixture(scope="module")
 def source_rows():
-    with required_data.RULE_FILE.open(
-        encoding="utf-8-sig", newline=""
-    ) as stream:
-        reader = csv.DictReader(stream)
-        return reader.fieldnames, list(reader)
+    workbook = read_active_compliance_workbook_rows(
+        configuration_path=ROOT / "config" / "configuration.ttl",
+    )
+    return tuple(
+        {
+            **row,
+            "_source_document": str(workbook.workbook_path),
+            "_source_sheet": workbook.worksheet_name,
+        }
+        for row in workbook.rows
+    )
 
 
 @pytest.fixture(scope="module")
@@ -101,23 +120,22 @@ def fixture_path(relative):
     assert not portable.is_absolute() and ".." not in portable.parts
     assert "\\" not in relative and ":" not in relative
     path = (ROOT / portable).resolve()
-    assert path.is_relative_to(ROOT.resolve())
-    assert path.suffix.lower() == ".xml" and path.is_file()
+    assert path.is_relative_to(ROOT.resolve()), (
+        f"Fixture escapes repository: {relative}"
+    )
+    assert path.suffix.lower() == ".xml" and path.is_file(), (
+        f"Missing XML fixture: {path}"
+    )
     return path
 
 
-def validate_with_only(rule, columns, xml, tmp_path, monkeypatch):
-    selected = tmp_path / f"{rule['Message ID']}.csv"
-    with selected.open("w", encoding="utf-8", newline="") as stream:
-        writer = csv.DictWriter(stream, fieldnames=columns)
-        writer.writeheader()
-        writer.writerow(rule)
-    monkeypatch.setattr(required_data, "RULE_FILE", selected)
-    required_data.load_required_rules.cache_clear()
-    try:
+def validate_with_only(rule, xml, monkeypatch):
+    def selected_rules(configuration_path=None):
+        return (dict(rule),)
+
+    with monkeypatch.context() as patch:
+        patch.setattr(required_data, "load_required_rules", selected_rules)
         return required_data.evaluate_required_data(xml, Investor.BOTH)
-    finally:
-        required_data.load_required_rules.cache_clear()
 
 
 def relationship_key(node):
@@ -129,55 +147,85 @@ def relationship_key(node):
 
 
 @pytest.mark.parametrize(
-    "case", CASES, ids=lambda node: value(INVENTORY, node, T.ruleId)
+    "case",
+    CASES,
+    ids=lambda node: value(INVENTORY, node, T.ruleId),
 )
 def test_it_1_r9_s1_rejects_invalid_relationship_or_reference(
-    case, source_rows, schema, tmp_path, monkeypatch
+    case, source_rows, schema, monkeypatch
 ):
     rule_id = value(INVENTORY, case, T.ruleId)
-    columns, rows = source_rows
-    matches = [row for row in rows if row["Message ID"] == rule_id]
-    assert len(matches) == 1
+    matches = [
+        row for row in source_rows
+        if row["Message ID"] == rule_id
+    ]
+    assert len(matches) == 1, (
+        f"The configured workbook must contain exactly one {rule_id}."
+    )
     rule = matches[0]
-    for column, predicate in FIELDS.items():
-        assert value(
-            INVENTORY, case, predicate, allow_blank=True
-        ) == (rule[column] or "")
 
-    binding = {name: value(INVENTORY, case, T[name]) for name in BINDINGS}
+    for column, predicate in FIELDS.items():
+        recorded_value = value(
+            INVENTORY, case, predicate, allow_blank=True
+        )
+        source_value = rule[column] or ""
+        assert recorded_value == source_value, (
+            f"{rule_id}: published workbook and RDF disagree "
+            f"on {column}. Workbook={source_value!r}; "
+            f"RDF={recorded_value!r}. "
+            "Review the source difference before evaluating behavior."
+        )
+
+    binding = {
+        name: value(INVENTORY, case, T[name])
+        for name in BINDINGS
+    }
     assert isinstance(binding["xsdValidAfterMutation"], bool)
+
     path = fixture_path(binding["baselinePath"])
     original = path.read_bytes()
     parser = etree.XMLParser(resolve_entities=False, no_network=True)
     baseline_root = etree.fromstring(original, parser)
     schema.assertValid(baseline_root)
+
     relationships = baseline_root.getroottree().xpath(
-        binding["relationshipXPath"], namespaces=NS
+        binding["relationshipXPath"],
+        namespaces=NS,
     )
     assert relationships
     labels = set(
-        baseline_root.getroottree().xpath("//@xlink:label", namespaces=NS)
+        baseline_root.getroottree().xpath(
+            "//@xlink:label",
+            namespaces=NS,
+        )
     )
-    assert all(node.get(X + "from") in labels for node in relationships)
-    assert all(node.get(X + "to") in labels for node in relationships)
+    assert all(
+        node.get(X + "from") in labels
+        for node in relationships
+    )
+    assert all(
+        node.get(X + "to") in labels
+        for node in relationships
+    )
 
     baseline = ET.fromstring(etree.tostring(baseline_root))
     before = ET.tostring(baseline)
-    assert validate_with_only(
-        rule, columns, baseline, tmp_path, monkeypatch
-    ) == []
+    assert validate_with_only(rule, baseline, monkeypatch) == []
     assert ET.tostring(baseline) == before
 
     negative_root = etree.fromstring(original, parser)
     targets = negative_root.getroottree().xpath(
-        binding["relationshipXPath"], namespaces=NS
+        binding["relationshipXPath"],
+        namespaces=NS,
     )
     mode = binding["mutationMode"]
+
     if mode == "remove-relationships":
         for target in targets:
             target.getparent().remove(target)
         assert not negative_root.getroottree().xpath(
-            binding["relationshipXPath"], namespaces=NS
+            binding["relationshipXPath"],
+            namespaces=NS,
         )
     elif mode == "duplicate-relationship":
         assert len(targets) == 1
@@ -198,14 +246,13 @@ def test_it_1_r9_s1_rejects_invalid_relationship_or_reference(
         assert targets[0].get(X + "to") not in labels
     else:
         pytest.fail(f"Unsupported mutation mode: {mode}")
+
     if binding["xsdValidAfterMutation"]:
         schema.assertValid(negative_root)
 
     negative = ET.fromstring(etree.tostring(negative_root))
     negative_before = ET.tostring(negative)
-    findings = validate_with_only(
-        rule, columns, negative, tmp_path, monkeypatch
-    )
+    findings = validate_with_only(rule, negative, monkeypatch)
     assert ET.tostring(negative) == negative_before
 
     assert len(findings) == 1

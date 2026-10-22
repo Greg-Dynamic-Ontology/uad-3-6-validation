@@ -1115,11 +1115,11 @@
         "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[3]/m:COMPARABLE/m:COMPARABLE_ADJUSTMENTS/m:COMPARABLE_ADJUSTMENT[2]",
         "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[4]/m:COMPARABLE/m:COMPARABLE_ADJUSTMENTS/m:COMPARABLE_ADJUSTMENT[8]" ;
     t:ruleId "UAD1455" ;
-    t:ruleLogic "For each combination of ComparableAdjustmentType = (\"SalesComparableAdditionalAdjustableComparisonItem\" or \"SalesComparableAdditionalNonAdjustableComparisonItem\") and AdditionalComparisonLineItemIdentifier, if there are not matching occurrences of COMPARABLE_ADJUSTMENT across all instances of PROPERTY with @ValuationUseType = \"SalesComparable\", and the instance of PROPERTY with @ValuationUseType = \"SubjectProperty\". Example: In Appendix D-1: Sample Scenario SF1, an additional row was added with the Report Label \"Basement Access\". AdditionalComparisonLineItemIdentifier = \"Basement Access\" must be provided for the Subject and all Comps along with the associated data points." ;
+    t:ruleLogic "For each combination of ComparableAdjustmentType = (\"SalesComparableAdditionalAdjustableComparisonItem\" or \"SalesComparableAdditionalNonAdjustableComparisonItem\") and AdditionalComparisonLineItemIdentifier, if there are not matching occurrences of COMPARABLE_ADJUSTMENT across all instances of PROPERTY with @ValuationUseType = \"SalesComparable\", and the instance of PROPERTY with @ValuationUseType = \"SubjectProperty\". Example: In Appendix D-1: Sample Scenario SF1, an additional row was added with the Report Label \"Below Grade Exterior Access\". AdditionalComparisonLineItemIdentifier = \"Below Grade Exterior Access\" must be provided for the Subject and all Comps along with the associated data points." ;
     t:scenarioId "IT-1R13S1" ;
     t:severity "Warning" ;
     t:sourceDiscrepancy <urn:uad36:test-suite:aggregate-cross-record-consistency:UAD1455:extra-comparable-row:reconciliation:0> ;
-    t:sourceFingerprint "8565dcf4bf2e9d178e6135c9eb8c4b3e66dc69b46872fa6c9f0279c0cdbfe1d8" ;
+    t:sourceFingerprint "934aa169d7afa2a5324d4e96002b18a38c672cdf0269caf5f59cb9c389995282" ;
     t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1455> ;
     t:sourceUniqueIdCell "1800.0319" ;
     t:targetXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES" ;
@@ -1174,11 +1174,11 @@
         "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[3]/m:COMPARABLE/m:COMPARABLE_ADJUSTMENTS/m:COMPARABLE_ADJUSTMENT[2]",
         "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[4]/m:COMPARABLE/m:COMPARABLE_ADJUSTMENTS/m:COMPARABLE_ADJUSTMENT[8]" ;
     t:ruleId "UAD1455" ;
-    t:ruleLogic "For each combination of ComparableAdjustmentType = (\"SalesComparableAdditionalAdjustableComparisonItem\" or \"SalesComparableAdditionalNonAdjustableComparisonItem\") and AdditionalComparisonLineItemIdentifier, if there are not matching occurrences of COMPARABLE_ADJUSTMENT across all instances of PROPERTY with @ValuationUseType = \"SalesComparable\", and the instance of PROPERTY with @ValuationUseType = \"SubjectProperty\". Example: In Appendix D-1: Sample Scenario SF1, an additional row was added with the Report Label \"Basement Access\". AdditionalComparisonLineItemIdentifier = \"Basement Access\" must be provided for the Subject and all Comps along with the associated data points." ;
+    t:ruleLogic "For each combination of ComparableAdjustmentType = (\"SalesComparableAdditionalAdjustableComparisonItem\" or \"SalesComparableAdditionalNonAdjustableComparisonItem\") and AdditionalComparisonLineItemIdentifier, if there are not matching occurrences of COMPARABLE_ADJUSTMENT across all instances of PROPERTY with @ValuationUseType = \"SalesComparable\", and the instance of PROPERTY with @ValuationUseType = \"SubjectProperty\". Example: In Appendix D-1: Sample Scenario SF1, an additional row was added with the Report Label \"Below Grade Exterior Access\". AdditionalComparisonLineItemIdentifier = \"Below Grade Exterior Access\" must be provided for the Subject and all Comps along with the associated data points." ;
     t:scenarioId "IT-1R13S1" ;
     t:severity "Warning" ;
     t:sourceDiscrepancy <urn:uad36:test-suite:aggregate-cross-record-consistency:UAD1455:identifier-mismatch:reconciliation:0> ;
-    t:sourceFingerprint "8565dcf4bf2e9d178e6135c9eb8c4b3e66dc69b46872fa6c9f0279c0cdbfe1d8" ;
+    t:sourceFingerprint "934aa169d7afa2a5324d4e96002b18a38c672cdf0269caf5f59cb9c389995282" ;
     t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1455> ;
     t:sourceUniqueIdCell "1800.0319" ;
     t:targetXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES" ;
@@ -1233,11 +1233,11 @@
         "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[3]/m:COMPARABLE/m:COMPARABLE_ADJUSTMENTS/m:COMPARABLE_ADJUSTMENT[2]",
         "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[4]/m:COMPARABLE/m:COMPARABLE_ADJUSTMENTS/m:COMPARABLE_ADJUSTMENT[8]" ;
     t:ruleId "UAD1455" ;
-    t:ruleLogic "For each combination of ComparableAdjustmentType = (\"SalesComparableAdditionalAdjustableComparisonItem\" or \"SalesComparableAdditionalNonAdjustableComparisonItem\") and AdditionalComparisonLineItemIdentifier, if there are not matching occurrences of COMPARABLE_ADJUSTMENT across all instances of PROPERTY with @ValuationUseType = \"SalesComparable\", and the instance of PROPERTY with @ValuationUseType = \"SubjectProperty\". Example: In Appendix D-1: Sample Scenario SF1, an additional row was added with the Report Label \"Basement Access\". AdditionalComparisonLineItemIdentifier = \"Basement Access\" must be provided for the Subject and all Comps along with the associated data points." ;
+    t:ruleLogic "For each combination of ComparableAdjustmentType = (\"SalesComparableAdditionalAdjustableComparisonItem\" or \"SalesComparableAdditionalNonAdjustableComparisonItem\") and AdditionalComparisonLineItemIdentifier, if there are not matching occurrences of COMPARABLE_ADJUSTMENT across all instances of PROPERTY with @ValuationUseType = \"SalesComparable\", and the instance of PROPERTY with @ValuationUseType = \"SubjectProperty\". Example: In Appendix D-1: Sample Scenario SF1, an additional row was added with the Report Label \"Below Grade Exterior Access\". AdditionalComparisonLineItemIdentifier = \"Below Grade Exterior Access\" must be provided for the Subject and all Comps along with the associated data points." ;
     t:scenarioId "IT-1R13S1" ;
     t:severity "Warning" ;
     t:sourceDiscrepancy <urn:uad36:test-suite:aggregate-cross-record-consistency:UAD1455:missing-comparable-row:reconciliation:0> ;
-    t:sourceFingerprint "8565dcf4bf2e9d178e6135c9eb8c4b3e66dc69b46872fa6c9f0279c0cdbfe1d8" ;
+    t:sourceFingerprint "934aa169d7afa2a5324d4e96002b18a38c672cdf0269caf5f59cb9c389995282" ;
     t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1455> ;
     t:sourceUniqueIdCell "1800.0319" ;
     t:targetXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES" ;
@@ -1292,11 +1292,11 @@
         "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[3]/m:COMPARABLE/m:COMPARABLE_ADJUSTMENTS/m:COMPARABLE_ADJUSTMENT[2]",
         "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[4]/m:COMPARABLE/m:COMPARABLE_ADJUSTMENTS/m:COMPARABLE_ADJUSTMENT[8]" ;
     t:ruleId "UAD1455" ;
-    t:ruleLogic "For each combination of ComparableAdjustmentType = (\"SalesComparableAdditionalAdjustableComparisonItem\" or \"SalesComparableAdditionalNonAdjustableComparisonItem\") and AdditionalComparisonLineItemIdentifier, if there are not matching occurrences of COMPARABLE_ADJUSTMENT across all instances of PROPERTY with @ValuationUseType = \"SalesComparable\", and the instance of PROPERTY with @ValuationUseType = \"SubjectProperty\". Example: In Appendix D-1: Sample Scenario SF1, an additional row was added with the Report Label \"Basement Access\". AdditionalComparisonLineItemIdentifier = \"Basement Access\" must be provided for the Subject and all Comps along with the associated data points." ;
+    t:ruleLogic "For each combination of ComparableAdjustmentType = (\"SalesComparableAdditionalAdjustableComparisonItem\" or \"SalesComparableAdditionalNonAdjustableComparisonItem\") and AdditionalComparisonLineItemIdentifier, if there are not matching occurrences of COMPARABLE_ADJUSTMENT across all instances of PROPERTY with @ValuationUseType = \"SalesComparable\", and the instance of PROPERTY with @ValuationUseType = \"SubjectProperty\". Example: In Appendix D-1: Sample Scenario SF1, an additional row was added with the Report Label \"Below Grade Exterior Access\". AdditionalComparisonLineItemIdentifier = \"Below Grade Exterior Access\" must be provided for the Subject and all Comps along with the associated data points." ;
     t:scenarioId "IT-1R13S1" ;
     t:severity "Warning" ;
     t:sourceDiscrepancy <urn:uad36:test-suite:aggregate-cross-record-consistency:UAD1455:missing-subject-row:reconciliation:0> ;
-    t:sourceFingerprint "8565dcf4bf2e9d178e6135c9eb8c4b3e66dc69b46872fa6c9f0279c0cdbfe1d8" ;
+    t:sourceFingerprint "934aa169d7afa2a5324d4e96002b18a38c672cdf0269caf5f59cb9c389995282" ;
     t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1455> ;
     t:sourceUniqueIdCell "1800.0319" ;
     t:targetXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES" ;
@@ -1351,11 +1351,11 @@
         "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[3]/m:COMPARABLE/m:COMPARABLE_ADJUSTMENTS/m:COMPARABLE_ADJUSTMENT[2]",
         "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[4]/m:COMPARABLE/m:COMPARABLE_ADJUSTMENTS/m:COMPARABLE_ADJUSTMENT[8]" ;
     t:ruleId "UAD1455" ;
-    t:ruleLogic "For each combination of ComparableAdjustmentType = (\"SalesComparableAdditionalAdjustableComparisonItem\" or \"SalesComparableAdditionalNonAdjustableComparisonItem\") and AdditionalComparisonLineItemIdentifier, if there are not matching occurrences of COMPARABLE_ADJUSTMENT across all instances of PROPERTY with @ValuationUseType = \"SalesComparable\", and the instance of PROPERTY with @ValuationUseType = \"SubjectProperty\". Example: In Appendix D-1: Sample Scenario SF1, an additional row was added with the Report Label \"Basement Access\". AdditionalComparisonLineItemIdentifier = \"Basement Access\" must be provided for the Subject and all Comps along with the associated data points." ;
+    t:ruleLogic "For each combination of ComparableAdjustmentType = (\"SalesComparableAdditionalAdjustableComparisonItem\" or \"SalesComparableAdditionalNonAdjustableComparisonItem\") and AdditionalComparisonLineItemIdentifier, if there are not matching occurrences of COMPARABLE_ADJUSTMENT across all instances of PROPERTY with @ValuationUseType = \"SalesComparable\", and the instance of PROPERTY with @ValuationUseType = \"SubjectProperty\". Example: In Appendix D-1: Sample Scenario SF1, an additional row was added with the Report Label \"Below Grade Exterior Access\". AdditionalComparisonLineItemIdentifier = \"Below Grade Exterior Access\" must be provided for the Subject and all Comps along with the associated data points." ;
     t:scenarioId "IT-1R13S1" ;
     t:severity "Warning" ;
     t:sourceDiscrepancy <urn:uad36:test-suite:aggregate-cross-record-consistency:UAD1455:nonadjustable-identifier-mismatch:reconciliation:0> ;
-    t:sourceFingerprint "8565dcf4bf2e9d178e6135c9eb8c4b3e66dc69b46872fa6c9f0279c0cdbfe1d8" ;
+    t:sourceFingerprint "934aa169d7afa2a5324d4e96002b18a38c672cdf0269caf5f59cb9c389995282" ;
     t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1455> ;
     t:sourceUniqueIdCell "1800.0319" ;
     t:targetXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES" ;
@@ -1412,11 +1412,11 @@
         "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[3]/m:COMPARABLE/m:COMPARABLE_ADJUSTMENTS/m:COMPARABLE_ADJUSTMENT[2]",
         "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[4]/m:COMPARABLE/m:COMPARABLE_ADJUSTMENTS/m:COMPARABLE_ADJUSTMENT[8]" ;
     t:ruleId "UAD1455" ;
-    t:ruleLogic "For each combination of ComparableAdjustmentType = (\"SalesComparableAdditionalAdjustableComparisonItem\" or \"SalesComparableAdditionalNonAdjustableComparisonItem\") and AdditionalComparisonLineItemIdentifier, if there are not matching occurrences of COMPARABLE_ADJUSTMENT across all instances of PROPERTY with @ValuationUseType = \"SalesComparable\", and the instance of PROPERTY with @ValuationUseType = \"SubjectProperty\". Example: In Appendix D-1: Sample Scenario SF1, an additional row was added with the Report Label \"Basement Access\". AdditionalComparisonLineItemIdentifier = \"Basement Access\" must be provided for the Subject and all Comps along with the associated data points." ;
+    t:ruleLogic "For each combination of ComparableAdjustmentType = (\"SalesComparableAdditionalAdjustableComparisonItem\" or \"SalesComparableAdditionalNonAdjustableComparisonItem\") and AdditionalComparisonLineItemIdentifier, if there are not matching occurrences of COMPARABLE_ADJUSTMENT across all instances of PROPERTY with @ValuationUseType = \"SalesComparable\", and the instance of PROPERTY with @ValuationUseType = \"SubjectProperty\". Example: In Appendix D-1: Sample Scenario SF1, an additional row was added with the Report Label \"Below Grade Exterior Access\". AdditionalComparisonLineItemIdentifier = \"Below Grade Exterior Access\" must be provided for the Subject and all Comps along with the associated data points." ;
     t:scenarioId "IT-1R13S1" ;
     t:severity "Warning" ;
     t:sourceDiscrepancy <urn:uad36:test-suite:aggregate-cross-record-consistency:UAD1455:other-property-control:reconciliation:0> ;
-    t:sourceFingerprint "8565dcf4bf2e9d178e6135c9eb8c4b3e66dc69b46872fa6c9f0279c0cdbfe1d8" ;
+    t:sourceFingerprint "934aa169d7afa2a5324d4e96002b18a38c672cdf0269caf5f59cb9c389995282" ;
     t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1455> ;
     t:sourceUniqueIdCell "1800.0319" ;
     t:targetXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES" ;
@@ -1472,7 +1472,7 @@
         "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[3]/m:COMPARABLE/m:COMPARABLE_ADJUSTMENTS/m:COMPARABLE_ADJUSTMENT[2]",
         "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[4]/m:COMPARABLE/m:COMPARABLE_ADJUSTMENTS/m:COMPARABLE_ADJUSTMENT[8]" ;
     t:ruleId "UAD1455" ;
-    t:ruleLogic "For each combination of ComparableAdjustmentType = (\"SalesComparableAdditionalAdjustableComparisonItem\" or \"SalesComparableAdditionalNonAdjustableComparisonItem\") and AdditionalComparisonLineItemIdentifier, if there are not matching occurrences of COMPARABLE_ADJUSTMENT across all instances of PROPERTY with @ValuationUseType = \"SalesComparable\", and the instance of PROPERTY with @ValuationUseType = \"SubjectProperty\". Example: In Appendix D-1: Sample Scenario SF1, an additional row was added with the Report Label \"Basement Access\". AdditionalComparisonLineItemIdentifier = \"Basement Access\" must be provided for the Subject and all Comps along with the associated data points." ;
+    t:ruleLogic "For each combination of ComparableAdjustmentType = (\"SalesComparableAdditionalAdjustableComparisonItem\" or \"SalesComparableAdditionalNonAdjustableComparisonItem\") and AdditionalComparisonLineItemIdentifier, if there are not matching occurrences of COMPARABLE_ADJUSTMENT across all instances of PROPERTY with @ValuationUseType = \"SalesComparable\", and the instance of PROPERTY with @ValuationUseType = \"SubjectProperty\". Example: In Appendix D-1: Sample Scenario SF1, an additional row was added with the Report Label \"Below Grade Exterior Access\". AdditionalComparisonLineItemIdentifier = \"Below Grade Exterior Access\" must be provided for the Subject and all Comps along with the associated data points." ;
     t:scenarioId "IT-1R13S1" ;
     t:setupChange <urn:uad36:test-suite:aggregate-cross-record-consistency:UAD1455:separate-analysis-groups:setup:0>,
         <urn:uad36:test-suite:aggregate-cross-record-consistency:UAD1455:separate-analysis-groups:setup:1>,
@@ -1484,7 +1484,7 @@
         <urn:uad36:test-suite:aggregate-cross-record-consistency:UAD1455:separate-analysis-groups:setup:7> ;
     t:severity "Warning" ;
     t:sourceDiscrepancy <urn:uad36:test-suite:aggregate-cross-record-consistency:UAD1455:separate-analysis-groups:reconciliation:0> ;
-    t:sourceFingerprint "8565dcf4bf2e9d178e6135c9eb8c4b3e66dc69b46872fa6c9f0279c0cdbfe1d8" ;
+    t:sourceFingerprint "934aa169d7afa2a5324d4e96002b18a38c672cdf0269caf5f59cb9c389995282" ;
     t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1455> ;
     t:sourceUniqueIdCell "1800.0319" ;
     t:targetXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE[1]/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES" ;
@@ -1571,11 +1571,11 @@
         "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[3]/m:COMPARABLE/m:COMPARABLE_ADJUSTMENTS/m:COMPARABLE_ADJUSTMENT[2]",
         "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[4]/m:COMPARABLE/m:COMPARABLE_ADJUSTMENTS/m:COMPARABLE_ADJUSTMENT[8]" ;
     t:ruleId "UAD1455" ;
-    t:ruleLogic "For each combination of ComparableAdjustmentType = (\"SalesComparableAdditionalAdjustableComparisonItem\" or \"SalesComparableAdditionalNonAdjustableComparisonItem\") and AdditionalComparisonLineItemIdentifier, if there are not matching occurrences of COMPARABLE_ADJUSTMENT across all instances of PROPERTY with @ValuationUseType = \"SalesComparable\", and the instance of PROPERTY with @ValuationUseType = \"SubjectProperty\". Example: In Appendix D-1: Sample Scenario SF1, an additional row was added with the Report Label \"Basement Access\". AdditionalComparisonLineItemIdentifier = \"Basement Access\" must be provided for the Subject and all Comps along with the associated data points." ;
+    t:ruleLogic "For each combination of ComparableAdjustmentType = (\"SalesComparableAdditionalAdjustableComparisonItem\" or \"SalesComparableAdditionalNonAdjustableComparisonItem\") and AdditionalComparisonLineItemIdentifier, if there are not matching occurrences of COMPARABLE_ADJUSTMENT across all instances of PROPERTY with @ValuationUseType = \"SalesComparable\", and the instance of PROPERTY with @ValuationUseType = \"SubjectProperty\". Example: In Appendix D-1: Sample Scenario SF1, an additional row was added with the Report Label \"Below Grade Exterior Access\". AdditionalComparisonLineItemIdentifier = \"Below Grade Exterior Access\" must be provided for the Subject and all Comps along with the associated data points." ;
     t:scenarioId "IT-1R13S1" ;
     t:severity "Warning" ;
     t:sourceDiscrepancy <urn:uad36:test-suite:aggregate-cross-record-consistency:UAD1455:type-and-identifier-key:reconciliation:0> ;
-    t:sourceFingerprint "8565dcf4bf2e9d178e6135c9eb8c4b3e66dc69b46872fa6c9f0279c0cdbfe1d8" ;
+    t:sourceFingerprint "934aa169d7afa2a5324d4e96002b18a38c672cdf0269caf5f59cb9c389995282" ;
     t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1455> ;
     t:sourceUniqueIdCell "1800.0319" ;
     t:targetXPath "/m:MESSAGE/m:DOCUMENT_SETS/m:DOCUMENT_SET/m:DOCUMENTS/m:DOCUMENT/m:DEAL_SETS/m:DEAL_SET/m:DEALS/m:DEAL/m:SERVICES/m:SERVICE/m:VALUATION/m:VALUATION_RESPONSE/m:VALUATION_ANALYSES/m:VALUATION_ANALYSIS/m:PROPERTIES" ;

@@ -24,7 +24,7 @@
 
 <urn:uad36:test-suite:value-cross-field-consistency:UAD1007> a t:TestCase ;
     t:applicabilityXPath "true()" ;
-    t:baselinePath "tests/fixtures/it_1/r10/s1/UAD1007-baseline.xml" ;
+    t:baselinePath "tests/fixtures/it_1/r10/s1/valid/UAD1007-baseline.xml" ;
     t:baselineSha256 "42d88cff5e5d0051aed9aaf06d6c546cf4e88e02c36671c4caaec07861ca2ee6" ;
     t:baselineValue "VA" ;
     t:expectedViolationKind "InconsistentFieldValues" ;

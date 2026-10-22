@@ -7,10 +7,13 @@ name = "uad36-compliance"
 version = "0.1.0"
 description = "MVP scaffold for graph-backed UAD 3.6 compliance validation API"
 requires-python = ">=3.11"
+
 dependencies = [
     "fastapi>=0.111.0",
     "uvicorn[standard]>=0.30.0",
     "pydantic>=2.7.0",
+    "pydantic-settings>=2.0.0",
+    "python-dotenv>=1.0.0",
     "python-multipart>=0.0.9",
     "xmlschema>=4.0.0",
     "rdflib>=7.0.0",
@@ -35,4 +38,13 @@ include = ["app*"]
 testpaths = ["tests"]
 markers = [
     "canonical_artifact: comprehensive tests that read or regenerate canonical project artifacts",
+]
+
+# Suppress only the known openpyxl print-layout warnings during tests.
+# These filters do not repair or modify the published workbook.
+# Hex escapes keep message colons out of pytest's field separators.
+filterwarnings = [
+    'ignore:^Print area cannot be set to Defined name\x3a \x27(UAD Compliance Rules v1\.5|UAD Compliance Rules\(Marked up\))\x27!\$A\x3a\$P\.$:UserWarning:^openpyxl\.reader\.workbook$',
+    'ignore:^Print area cannot be set to Defined name\x3a \x27(Column Description|Read Me|Tab Description)\x27!\$A\x3a\$B\.$:UserWarning:^openpyxl\.reader\.workbook$',
+    'ignore:^Cannot parse header or footer so it will be ignored$:UserWarning:^openpyxl\.worksheet\.header_footer$',
 ]
