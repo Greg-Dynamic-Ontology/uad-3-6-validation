@@ -1,5 +1,5 @@
-@IT-54 @constraint-production
-Feature: 4 Classify governed validation behavior
+@IT-54
+Feature: Classify governed validation behavior
   As the governed constraint-production process
   I want a validation-behavior agent to classify the behavior required by each context-resolved constraint
   So that executable representations can be derived from governed meaning rather than invented independently
