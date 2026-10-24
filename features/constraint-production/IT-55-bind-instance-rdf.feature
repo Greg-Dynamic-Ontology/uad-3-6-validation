@@ -1,4 +1,4 @@
-@IT-55 @constraint-production
+@IT-55
 Feature: Bind governed validation behavior to Instance RDF
   As the governed constraint-production process
   I want an Instance RDF binding agent to bind context-resolved validation behavior to the established Instance RDF representation
