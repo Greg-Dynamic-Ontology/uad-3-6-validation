@@ -1,5 +1,5 @@
-@IT-57 @constraint-production
-Feature: 7 Project SHACL validation results into governed report findings
+@IT-57
+Feature: Project SHACL validation results into governed report findings
   As the governed validation process
   I want a report-finding agent to project SHACL validation results into governed validation findings
   So that validation output reports governed meaning, severity, identity, and provenance rather than exposing SHACL mechanics as the domain result
