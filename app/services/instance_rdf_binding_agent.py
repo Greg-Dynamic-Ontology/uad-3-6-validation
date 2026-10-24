@@ -134,7 +134,22 @@ def bind_governed_constraint_to_instance_rdf(
     if len(schema_path) < 2 or any(not isinstance(item, URIRef) for item in schema_path):
         raise ValueError("The context must supply an ordered governed element path.")
     if schema_path[-1] != schema_resource:
-        raise ValueError("The bound schema resource must terminate the governed path.")
+        # IT-52 preserves an ElementDeclaration identity, while IT-53 records
+        # its governed QName in the ordered context path. Verify the explicit
+        # schema relationship without replacing either governed identity.
+        schema_names = set()
+        declaration_is_known = False
+        for knowledge in (classified_graph, projection_model_graph):
+            declaration_is_known = declaration_is_known or (
+                schema_resource, RDF.type, LSM.ElementDeclaration
+            ) in knowledge
+            schema_names.update(knowledge.objects(schema_resource, LSM.name))
+            schema_names.update(knowledge.objects(schema_resource, LSM.ref))
+        if not declaration_is_known or schema_names != {schema_path[-1]}:
+            raise ValueError(
+                "The bound schema resource must terminate the governed path "
+                "or explicitly declare its terminal governed QName."
+            )
 
     try:
         projection_options = [

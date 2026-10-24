@@ -1,11 +1,15 @@
-@IT-58 @constraint-production
+@IT-58
 Feature: Execute the governed constraint-production pipeline
   As a user of the constraint-production process
-  I want to process one governed CSV row or all governed CSV rows
+  I want to process one governed row or all governed rows from a configured CSV, Excel, or other supported governed source
   So that each selected constraint becomes a reusable, traceable RDF and SHACL artifact
 
   Background:
-    Given data-constraints.csv is the authoritative governed constraint source
+    Given the configuration identifies the active governed constraint source
+    And the configuration identifies its source format and file location
+    And an Excel source identifies its configured worksheet
+    And the governed source reader supplies the same row contract for each supported format
+    And governed source row identifiers are preserved as text
     And the constraint-production workers for IT-50 through IT-56 are available
     And each worker has an explicit input, output, and error contract
     And the Batch Results Graph is available for persistent production state
@@ -25,7 +29,7 @@ Feature: Execute the governed constraint-production pipeline
       Then only the requested source row is selected for production
       And its data advances through normalization, Logical Schema binding, context resolution, validation-behavior classification, Instance RDF binding, and SHACL generation
       And every production stage consumes only verified output from its preceding stage
-      And the completed RDF and SHACL artifacts remain traceable to the selected CSV row
+      And the completed RDF and SHACL artifacts remain traceable to the selected governed source row
       And no appraisal XML report is required to produce or complete the constraint artifacts
       And other source rows are not processed by this request
 
@@ -36,7 +40,7 @@ Feature: Execute the governed constraint-production pipeline
       Then every governed source row is considered for production
       And each row is processed independently through normalization, Logical Schema binding, context resolution, validation-behavior classification, Instance RDF binding, and SHACL generation
       And every production stage consumes only verified output from its preceding stage
-      And each successfully processed row has reusable RDF and SHACL artifacts traceable to that CSV row
+      And each successfully processed row has reusable RDF and SHACL artifacts traceable to that governed source row
       And each row that cannot complete production has its exception recorded
       And a row-level exception does not prevent other eligible rows from being processed
       And no appraisal XML report is required to produce the constraint artifacts
@@ -132,5 +136,5 @@ Feature: Execute the governed constraint-production pipeline
       Then the row is marked complete
       And the Batch Results Graph records the completed production state
       And the persistent graph identifies the verified production stages
-      And the artifacts remain traceable to the governed CSV row
+      And the artifacts remain traceable to the governed source row
       And completion does not depend on appraisal XML evaluation or runtime findings
