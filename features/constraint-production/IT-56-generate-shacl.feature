@@ -1,4 +1,4 @@
-@IT-56 @constraint-production
+@IT-56
 Feature:  Generate SHACL from governed constraint knowledge
   As the governed constraint-production process
   I want a SHACL-generation agent to derive executable SHACL from verified governed constraint knowledge
@@ -71,7 +71,7 @@ Feature:  Generate SHACL from governed constraint knowledge
   Rule: Do not invent executable SHACL when governed knowledge does not determine an implementation
 
     @IT-56R4S1
-    Scenario: Reject a constraint whose validation behavior has no governed SHACL implementation pattern
+      Scenario: Reject a constraint whose validation behavior has no governed SHACL implementation pattern
       Given the governed validation behavior has been classified
       And no governed SHACL implementation pattern exists for that behavior
       When the SHACL-generation agent executes
@@ -85,7 +85,7 @@ Feature:  Generate SHACL from governed constraint knowledge
       And the constraint is routed for review
 
     @IT-56R4S2
-    Scenario: Reject a constraint when more than one incompatible SHACL representation is permitted
+      Scenario: Reject a constraint when more than one incompatible SHACL representation is permitted
       Given the governed validation behavior has an established implementation pattern
       And more than one incompatible SHACL representation is consistent with the governed knowledge
       When the SHACL-generation agent executes
