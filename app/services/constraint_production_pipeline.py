@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import csv
 from dataclasses import dataclass
+from datetime import datetime, timezone
 from hashlib import sha256
 from pathlib import Path
 from uuid import uuid4
@@ -272,6 +273,7 @@ def _construct_governed_source(
             batch.parse(batch_path, format="turtle")
         stage_paths: list[Path] = []
         normalized_path = run_directory / "01-normalized-constraint.ttl"
+        stage_started_at = datetime.now(timezone.utc)
         normalized = constraint_normalization_agent.normalize_governed_constraint_to_file(
             governed_source=source, output_path=normalized_path,
         )
@@ -298,6 +300,22 @@ def _construct_governed_source(
     def persist_stage(graph: Graph, index: int) -> None:
         record = _verify_stage(graph, constraint_id, STAGES[index])
         graph.add((record.result_id, PROV.wasDerivedFrom, source_iri))
+        # The coordinator observes this actual invocation. Capture its provenance
+        # before serializing the verified snapshot; never reconstruct it on replay.
+        activities = set(graph.objects(record.result_id, PROV.wasGeneratedBy))
+        if not activities:
+            activity = URIRef(f"{record.result_id}/execution")
+            agent = URIRef(f"https://dynamicontology.com/uad36/construction/worker/{STAGES[index]}")
+            graph.add((record.result_id, PROV.wasGeneratedBy, activity))
+            graph.add((activity, RDF.type, PROV.Activity))
+            graph.add((activity, PROV.wasAssociatedWith, agent))
+            graph.add((agent, RDF.type, PROV.Agent))
+            graph.add((activity, PROV.startedAtTime, Literal(stage_started_at)))
+            graph.add((activity, PROV.endedAtTime, Literal(datetime.now(timezone.utc))))
+            graph.add((activity, PROV.used, source_iri))
+            if index:
+                upstream = _verify_stage(graph, constraint_id, STAGES[index - 1])
+                graph.add((activity, PROV.used, upstream.result_id))
         snapshot = run_directory / f"{index + 1:02d}-{STAGES[index]}.ttl"
         if index == 0:
             snapshot = run_directory / "01-normalized-constraint.ttl"
@@ -335,6 +353,7 @@ def _construct_governed_source(
             continue
         _verify_stage(current, constraint_id, STAGES[index - 1])
         output = Graph()
+        stage_started_at = datetime.now(timezone.utc)
         try:
             worker(**{
                 input_name: current,
