@@ -53,21 +53,23 @@ Feature: Manage constraint construction through the pipeline UI
   Rule: The UI runs construction stages in their governed order
 
     @IT-61R2S1
-    Scenario: Execute the constraint-construction stages in order
+    Scenario: Execute the constraint-construction workers in governed order
       Given the user has started a construction run
       When the pipeline processes a selected constraint row
-      Then the stages execute in this order:
-        | order | stage                                      |
-        | 1     | IT-50 Normalize governed constraints       |
-        | 2     | IT-51 Exchange governed RDF                |
-        | 3     | IT-52 Bind to the Logical Schema            |
-        | 4     | IT-53 Resolve context                      |
-        | 5     | IT-54 Classify validation behavior          |
-        | 6     | IT-55 Bind instance RDF                    |
-        | 7     | IT-56 Generate SHACL                       |
-        | 8     | IT-57 Project report findings              |
-        | 9     | IT-58 Execute the construction pipeline    |
-      And each completed stage makes its output available to the next stage
+      Then the construction workers execute in this order:
+        | order | worker                              |
+        | 1     | IT-50 Normalize governed constraints |
+        | 2     | IT-52 Bind to the Logical Schema      |
+        | 3     | IT-53 Resolve context                |
+        | 4     | IT-54 Classify validation behavior    |
+        | 5     | IT-55 Bind Instance RDF              |
+        | 6     | IT-56 Generate SHACL                  |
+      And IT-58 coordinates the construction run
+      And each worker handoff follows the governed RDF exchange contract defined by IT-51
+      And each downstream worker consumes only verified GREEN output from its preceding worker
+      And each completed worker makes its governed RDF result available to the next worker
+      And construction does not require an appraisal XML report
+      And IT-57 runtime report-finding projection is not executed during constraint construction
 
     @IT-61R2S2
     Scenario: Show the RDF result produced by each completed stage

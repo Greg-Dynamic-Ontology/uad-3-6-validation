@@ -636,8 +636,93 @@ def _workbench_run_file(value, directory: Path) -> Path:
     return path
 
 
+def _workbench_stage_provenance(snapshot, manifest: Graph, run, configuration: Graph, directory: Path) -> str:
+    """Describe the selected original result, without guessing missing provenance."""
+    from urllib.parse import urlsplit
+    from urllib.request import url2pathname
+
+    cv, cfg, exchange = _WORKBENCH_CV, _WORKBENCH_CFG, _WORKBENCH_EX
+    graph, result = snapshot[2], URIRef(snapshot[1])
+
+    def sole(data, subject, predicate):
+        if subject is None:
+            return None
+        values = set(data.objects(subject, predicate))
+        return next(iter(values)) if len(values) == 1 else None
+
+    # Prefer the run's preserved configuration. Current configuration is used
+    # only for older bundles that do not identify a saved configuration artifact.
+    source_configuration = configuration
+    configuration_artifacts = set(manifest.objects(run, cv.configurationArtifact))
+    configuration_note = ''
+    if configuration_artifacts:
+        source_configuration = Graph()
+        if len(configuration_artifacts) == 1:
+            try:
+                saved_path = _workbench_run_file(next(iter(configuration_artifacts)), directory)
+                source_configuration.parse(saved_path, format="turtle")
+            except (OSError, ValueError, SyntaxError):
+                configuration_note = '<p>The saved source configuration could not be read.</p>'
+        else:
+            configuration_note = '<p>The saved source configuration reference is ambiguous.</p>'
+    workbook = sole(manifest, run, cv.sourceWorkbook)
+    label = sole(source_configuration, workbook, RDFS.label)
+    workbook_label = str(label) if label is not None else str(workbook) if workbook is not None else 'Workbook identity not recorded.'
+    worksheet = sole(manifest, run, cv.sourceWorksheet)
+    if worksheet is None:
+        worksheet = sole(source_configuration, workbook, cfg.ruleDataSheetName)
+    artifact = sole(manifest, run, cv.sourceWorkbookArtifact)
+    location = sole(source_configuration, workbook, cfg.sourceFileLocation)
+    filename = 'Source filename not recorded.'
+    if artifact is not None:
+        parsed = urlsplit(str(artifact))
+        if parsed.scheme == 'file' and parsed.netloc in ('', 'localhost'):
+            filename = PureWindowsPath(url2pathname(parsed.path)).name
+    elif location is not None:
+        filename = PureWindowsPath(str(location)).name
+    constraint = sole(graph, result, exchange.forConstraint)
+    row_id = sole(graph, constraint, cv.governedUniqueId)
+    # A group manifest contains multiple selections, so it must never substitute
+    # its row list for the particular displayed constraint's source identifier.
+    if row_id is None and sole(manifest, run, cv.rowScope) == Literal('one'):
+        row_id = sole(manifest, run, cv.governedUniqueId)
+    activities = sorted(set(graph.objects(result, PROV.wasGeneratedBy)), key=str)
+    valid_activities = [activity for activity in activities if (activity, RDF.type, PROV.Activity) in graph]
+    activity_attribute = (
+        f' data-stage-activity-id="{escape(str(valid_activities[0]))}"'
+        if len(activities) == len(valid_activities) == 1 else ''
+    )
+    attributes = f' data-stage-result-id="{escape(str(result))}"'
+    if workbook is not None:
+        attributes += f' data-source-workbook-id="{escape(str(workbook))}"'
+    if worksheet is not None:
+        attributes += f' data-source-worksheet="{escape(str(worksheet))}"'
+    if row_id is not None:
+        attributes += f' data-source-row-id="{escape(str(row_id))}"'
+    activity_text = (
+        ''.join(f'<li>{escape(str(activity))}</li>' for activity in valid_activities)
+        if valid_activities else '<li>Stage execution activity not recorded.</li>'
+    )
+    return (
+        f'<details id="stage-provenance"{attributes}{activity_attribute}>'
+        '<summary>Provenance</summary>'
+        f'{configuration_note}<dl>'
+        f'<dt>Source workbook</dt><dd>{escape(workbook_label)}</dd>'
+        f'<dt>File</dt><dd>{escape(filename)}</dd>'
+        f'<dt>Rule-data worksheet</dt><dd>{escape(str(worksheet)) if worksheet is not None else "Worksheet not recorded."}</dd>'
+        f'<dt>Source row identifier</dt><dd>{escape(str(row_id)) if row_id is not None else "Source row identifier not recorded."}</dd>'
+        f'<dt>Construction stage</dt><dd>{escape(snapshot[3])}</dd>'
+        f'<dt>Stage result</dt><dd>{escape(str(result))}</dd>'
+        f'<dt>Generating stage activity</dt><dd><ul>{activity_text}</ul></dd>'
+        '</dl></details>'
+    )
+
 def _workbench_rdf_svg(graph: Graph) -> str:
-    """Draw each actual RDF assertion as a directed, labelled graph edge."""
+    """Draw RDF assertions with complete term identities and readable type labels."""
+    def term_attribute(term):
+        # Keep RDF escapes, datatypes and language tags. Character references
+        # preserve whitespace even when the browser parses HTML attributes.
+        return escape(term.n3()).replace("\n", "&#10;").replace("\r", "&#13;").replace("\t", "&#9;")
     triples = sorted(graph, key=lambda triple: tuple(term.n3() for term in triple))
     if not triples:
         return '<p role="status">No stage RDF has been saved yet.</p>'
@@ -655,18 +740,33 @@ def _workbench_rdf_svg(graph: Graph) -> str:
         parts.append(
             f'<g data-rdf-subject="{escape(str(subject))}" '
             f'data-rdf-predicate="{escape(str(predicate))}" '
-            f'data-rdf-object="{escape(str(obj))}">'
+            f'data-rdf-object="{escape(str(obj))}" '
+            f'data-rdf-subject-n3="{term_attribute(subject)}" '
+            f'data-rdf-predicate-n3="{term_attribute(predicate)}" '
+            f'data-rdf-object-n3="{term_attribute(obj)}">'
             f'<path d="M 385 {y} L 805 {y}" stroke="#42678d" '
             'stroke-width="2" marker-end="url(#rdf-arrow)"/>'
         )
         for x, term in ((15, subject), (815, obj)):
-            label = str(term)
+            label = term.n3()
             shortened = label if len(label) <= 42 else label[:39] + "..."
+            if isinstance(term, URIRef):
+                kind, colour = "IRI", "#edf4fb"
+            elif isinstance(term, Literal):
+                kind, colour = "Literal", "#fff7e6"
+                if term.language:
+                    kind += f" @{term.language}"
+                elif term.datatype:
+                    datatype_name = str(term.datatype).rsplit("#", 1)[-1].rsplit("/", 1)[-1]
+                    kind += f" ({datatype_name})"
+            else:
+                kind, colour = "Blank node", "#f3edff"
             parts.append(
-                f'<g><title>{escape(label)}</title>'
+                f'<g data-rdf-term-n3="{term_attribute(term)}"><title>{escape(label)}</title>'
                 f'<rect x="{x}" y="{y - 22}" width="370" height="44" rx="8" '
-                'fill="#edf4fb" stroke="#8da9c5"/>'
-                f'<text x="{x + 10}" y="{y + 5}" font-size="13">{escape(shortened)}</text></g>'
+                f'fill="{colour}" stroke="#8da9c5"/>'
+                f'<text x="{x + 10}" y="{y - 3}" font-size="13">{escape(shortened)}</text>'
+                f'<text x="{x + 10}" y="{y + 14}" font-size="10" fill="#526173">{escape(kind)}</text></g>'
             )
         predicate_label = str(predicate)
         short_predicate = predicate_label if len(predicate_label) <= 44 else predicate_label[:41] + "..."
@@ -714,7 +814,7 @@ def view_constraint_build_run(
             raise HTTPException(status_code=404, detail="Build run not found.")
         manifest_path = _workbench_run_file(Literal(str(directory / "run.ttl")), directory)
         manifest = Graph().parse(manifest_path, format="turtle")
-        runs = set(manifest.subjects(RDF.type, cv.ConstraintSetBuildRun))
+        runs = set(manifest.subjects(RDF.type, cv.ConstraintSetBuildRun)) | set(manifest.subjects(RDF.type, cv.ConstraintPipelineRun))
         if len(runs) != 1:
             raise ValueError("A manifest must identify exactly one run.")
         run = next(iter(runs))
@@ -738,6 +838,25 @@ def view_constraint_build_run(
             batch = Graph()
         else:
             batch = Graph().parse(batch_path, format="turtle")
+        # Count actual saved completion states. During an all-row pipeline call,
+        # the manifest may still contain the initial zero completed-row count.
+        completed_constraints = {
+            constraint
+            for state in batch.subjects(RDF.type, cv.ConstraintProductionState)
+            if (state, cv.status, Literal("COMPLETE")) in batch
+            for constraint in batch.objects(state, cv.governedConstraint)
+        }
+        completed_row_count = len(completed_constraints)
+        totals = set(manifest.objects(run, cv.totalRowCount))
+        if totals:
+            if len(totals) != 1:
+                raise ValueError("The run has conflicting total-row counts.")
+            total_row_count = int(str(next(iter(totals))))
+            if total_row_count < 0:
+                raise ValueError("The total-row count cannot be negative.")
+        else:
+            selected_ids = set(manifest.objects(run, cv.governedUniqueId))
+            total_row_count = len(selected_ids) if selected_ids else len(set(batch.subjects(RDF.type, cv.NormalizedConstraint)))
         # Failed results have contracted knowledge even without a verified RDF
         # snapshot. Read that knowledge directly from this run's saved batch.
         failure_results = set(manifest.objects(run, cv.productionException))
@@ -779,6 +898,12 @@ def view_constraint_build_run(
                 continue
             result_status = _workbench_text(batch, result, exchange.constructionStatus)
             if result_status != "GREEN":
+                continue
+            availability = set(batch.objects(result, exchange.availableForDownstream))
+            # A GREEN label alone must not override an explicit withheld or
+            # conflicting verification decision. Exclude this result before
+            # building timeline links, playback navigation or direct selection.
+            if availability and availability != {Literal(True)}:
                 continue
             location = _workbench_one(batch, result, exchange.rdfSnapshotPath)
             snapshot_path = _workbench_run_file(location, directory)
@@ -868,7 +993,7 @@ def view_constraint_build_run(
         query = {"playback": state}
         if snapshot is not None:
             query["result_id"] = snapshot[1]
-        return str(request.url.path) + "?" + urlencode(query)
+        return f"/constraint-workbench/runs/{run_token}?" + urlencode(query)
 
     def playback_control(action, label, snapshot, state):
         return (
@@ -922,6 +1047,10 @@ def view_constraint_build_run(
     serialized_rdf = (
         '<details open><summary>Exact saved Turtle</summary>'
         f'<pre id="stage-rdf">{escape(selected_snapshot[4])}</pre></details>'
+        if selected_snapshot and not integrity_mismatch else ''
+    )
+    provenance_details = (
+        _workbench_stage_provenance(selected_snapshot, manifest, run, configuration, directory)
         if selected_snapshot and not integrity_mismatch else ''
     )
     integrity_report = ''
@@ -1001,8 +1130,10 @@ li {{ overflow-wrap: anywhere; }} a {{ color: #164e83; }}
 .construction-failure {{ border-left: 5px solid #a52921; background: #fff4f2; }}
 .playback-controls {{ display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; }}
 .playback-controls a {{ padding: .6rem .85rem; border: 1px solid #164e83; border-radius: .35rem; }}
-</style></head><body><main data-build-run-id="{escape(str(run))}" data-run-status="{escape(status)}">
+</style></head><body><main data-build-run-id="{escape(str(run))}" data-run-status="{escape(status)}"
+ data-completed-row-count="{completed_row_count}" data-total-row-count="{total_row_count}">
 <h1>{escape(view_heading)}</h1><p role="status">{escape(progress)}</p>
+<p role="status">Rows completed: {completed_row_count} of {total_row_count}.</p>
 {''.join(failure_sections)}
 <section aria-label="Construction stages"><ol>{''.join(steps)}</ol></section>
 <section aria-label="Playback controls" data-playback-state="{playback_state}">
@@ -1014,6 +1145,241 @@ li {{ overflow-wrap: anywhere; }} a {{ color: #164e83; }}
 <section aria-label="Saved stage RDF"{selection_attribute}><h2>{escape(graph_title)}</h2>
 {integrity_report}
 <ul>{constraint_labels}</ul><div class="graph">{rendered_graph}</div>
-{serialized_rdf}</section>
+{serialized_rdf}
+{provenance_details}</section>
 <p><a href="/constraint-workbench">Return to constraint sets</a></p>
+</main></body></html>''')
+
+
+@dataclass(frozen=True)
+class _PipelineSourceWorkbook:
+    identity: str
+    label: str
+    location: str
+    worksheet: str
+
+
+def _pipeline_source_workbooks(configuration_path: Path) -> list[_PipelineSourceWorkbook]:
+    """Read registered workbook metadata without opening or changing sources."""
+    cfg = _WORKBENCH_CFG
+    configuration = Graph().parse(configuration_path, format="turtle")
+    roots = set(configuration.subjects(RDF.type, cfg.ApplicationConfiguration))
+    if len(roots) != 1:
+        raise ValueError("The pipeline requires one application configuration.")
+    root = next(iter(roots))
+    collection = _workbench_one(configuration, root, cfg.hasSourceWorkbooks)
+    if (collection, RDF.type, cfg.GovernedSourceWorkbookCollection) not in configuration:
+        raise ValueError("The source-workbook collection must be explicitly registered.")
+    workbooks = []
+    for identity in set(configuration.objects(collection, cfg.containsWorkbook)):
+        if not isinstance(identity, URIRef) or (
+            identity, RDF.type, cfg.GovernedSourceArtifact
+        ) not in configuration:
+            raise ValueError("Each source workbook requires an explicit governed registration.")
+        workbooks.append(_PipelineSourceWorkbook(
+            identity=str(identity),
+            label=_workbench_text(configuration, identity, RDFS.label),
+            location=_workbench_text(configuration, identity, cfg.sourceFileLocation),
+            worksheet=_workbench_text(configuration, identity, cfg.ruleDataSheetName),
+        ))
+    return sorted(workbooks, key=lambda item: (item.label.casefold(), item.identity))
+
+
+@router.get("/constraint-pipeline", response_class=HTMLResponse)
+def constraint_pipeline(
+    request: Request, source_workbook_id: str | None = None,
+) -> HTMLResponse:
+    """Select workbook input for this run without changing active configuration."""
+    configuration_file = getattr(request.app.state, "configuration_file", None)
+    if configuration_file is None:
+        raise HTTPException(status_code=503, detail="The source-workbook collection is not configured.")
+    if len(request.query_params.getlist("source_workbook_id")) > 1:
+        raise HTTPException(status_code=400, detail="Select exactly one source workbook.")
+    try:
+        workbooks = _pipeline_source_workbooks(Path(configuration_file))
+    except (OSError, ValueError, SyntaxError) as error:
+        raise HTTPException(
+            status_code=503, detail="The configured source-workbook collection could not be loaded.",
+        ) from error
+    selected = None
+    if source_workbook_id is not None:
+        matches = [item for item in workbooks if item.identity == source_workbook_id]
+        if len(matches) != 1:
+            raise HTTPException(status_code=400, detail="Select a workbook from the configured source collection.")
+        selected = matches[0]
+    placeholder_selected = ' selected' if selected is None else ''
+    options = [f'<option value="" disabled{placeholder_selected}>Select a governed workbook</option>']
+    for workbook in workbooks:
+        checked = ' selected' if selected is not None and workbook.identity == selected.identity else ''
+        options.append(
+            f'<option value="{escape(workbook.identity)}"{checked}>{escape(workbook.label)}</option>'
+        )
+    selected_summary = ''
+    if selected is not None:
+        from app.services.constraint_pipeline_workbench import list_workbook_row_identifiers
+
+        try:
+            row_ids = list_workbook_row_identifiers(
+                configuration_path=Path(configuration_file), source_workbook_id=selected.identity,
+            )
+        except (OSError, ValueError, SyntaxError) as error:
+            raise HTTPException(status_code=503, detail="The configured worksheet's row identifiers could not be loaded.") from error
+        row_options = ''.join(f'<option value="{escape(value)}">{escape(value)}</option>' for value in row_ids)
+        selected_summary = (
+            '<section id="selected-source-workbook" '
+            f'data-source-workbook-id="{escape(selected.identity)}" '
+            'aria-labelledby="selected-source-heading">'
+            '<h2 id="selected-source-heading">Selected source workbook</h2><dl>'
+            f'<dt>Workbook</dt><dd>{escape(selected.label)}</dd>'
+            f'<dt>File</dt><dd>{escape(PureWindowsPath(selected.location).name)}</dd>'
+            f'<dt>Rule-data worksheet</dt><dd>{escape(selected.worksheet)}</dd>'
+            '</dl><p>This workbook is selected for this construction run.</p>'
+            '<form id="construction-run-form" method="post" action="/constraint-pipeline/runs" aria-label="Construction run input">'
+            f'<input type="hidden" name="source_workbook_id" value="{escape(selected.identity)}">'
+            '<fieldset><legend>Rows to process</legend>'
+            '<label><input type="radio" name="row_scope" value="one" checked> One row</label>'
+            '<label><input type="radio" name="row_scope" value="group"> Selected group of rows</label>'
+            '<label><input type="radio" name="row_scope" value="all"> All rows in this worksheet</label>'
+            '<div id="single-row-choice"><label for="unique-id">Exact governed row identifier</label>'
+            '<input id="unique-id" name="unique_id" type="text" required autocomplete="off" '
+            'aria-describedby="unique-id-help">'
+            '<p id="unique-id-help">Enter the identifier exactly as published, including leading zeroes.</p></div>'
+            '<div id="group-row-choice" hidden><label for="unique-ids">Select governed row identifiers</label>'
+            f'<select id="unique-ids" name="unique_ids" multiple size="8" disabled>{row_options}</select>'
+            '<p>Use Ctrl or Shift to select multiple rows.</p></div>'
+            '</fieldset><button type="submit">Start construction</button>'
+            '</form></section>'
+        )
+    collection_message = (
+        'Choose the governed workbook to use for this construction run.'
+        if workbooks else 'No source workbooks have been registered.'
+    )
+    disabled = '' if workbooks else ' disabled'
+    return HTMLResponse(content=f'''<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Constraint pipeline</title>
+<style>
+body {{ margin: 0; background: #f4f6f8; color: #182333; font-family: system-ui, sans-serif; }}
+main {{ max-width: 60rem; margin: 3rem auto; padding: 0 1.25rem; }}
+section {{ background: white; padding: 1.5rem; margin: 1.25rem 0;
+           border: 1px solid #d7dfe8; border-radius: .75rem; }}
+label {{ display: block; font-weight: 600; margin-bottom: .5rem; }}
+select, button {{ max-width: 100%; font: inherit; padding: .65rem .8rem;
+                  border-radius: .35rem; border: 1px solid #7a8796; }}
+button {{ background: #164e83; color: white; cursor: pointer; }}
+button:disabled {{ background: #687583; cursor: default; }}
+dl {{ display: grid; grid-template-columns: minmax(8rem, auto) 1fr; gap: .6rem 1rem; }}
+dt {{ font-weight: 600; }} dd {{ margin: 0; overflow-wrap: anywhere; }}
+a {{ color: #164e83; }}
+</style></head><body><main>
+<h1>Constraint pipeline</h1>
+<section aria-label="Choose governed source">
+<h2>Source workbook</h2><p>{escape(collection_message)}</p>
+<form method="get" action="/constraint-pipeline">
+<label for="source-workbook">Governed source workbook</label>
+<select id="source-workbook" name="source_workbook_id" required{disabled}>{''.join(options)}</select>
+<button type="submit"{disabled}>Select workbook</button>
+</form></section>
+{selected_summary}
+<p><a href="/constraint-workbench">Open the constraint-set workbench</a></p>
+<script>
+(() => {{
+  const form = document.getElementById('construction-run-form');
+  if (!form) return;
+  const single = document.getElementById('unique-id');
+  const group = document.getElementById('unique-ids');
+  const updateScope = () => {{
+    const scope = form.querySelector('input[name="row_scope"]:checked').value;
+    const grouped = scope === 'group';
+    const one = scope === 'one';
+    document.getElementById('single-row-choice').hidden = !one;
+    document.getElementById('group-row-choice').hidden = !grouped;
+    single.disabled = !one;
+    single.required = one;
+    group.disabled = !grouped;
+    group.required = grouped;
+  }};
+  form.querySelectorAll('input[name="row_scope"]').forEach(control => control.addEventListener('change', updateScope));
+  updateScope();
+}})();
+</script>
+</main></body></html>''')
+
+
+@router.post("/constraint-pipeline/runs", response_class=HTMLResponse)
+def start_constraint_pipeline_run(
+    request: Request,
+    source_workbook_id: str | None = Form(default=None),
+    row_scope: str | None = Form(default=None),
+    unique_id: str | None = Form(default=None),
+    unique_ids: list[str] | None = Form(default=None),
+) -> HTMLResponse:
+    """Construct the selected exact textual IDs inside one saved workbook run."""
+    from app.services.constraint_pipeline_workbench import (
+        process_one_workbook_row, process_selected_workbook_rows, process_all_workbook_rows,
+    )
+
+    if not source_workbook_id or not source_workbook_id.strip():
+        raise HTTPException(status_code=400, detail="Select a configured source workbook.")
+    if row_scope not in {"one", "group", "all"}:
+        raise HTTPException(status_code=400, detail="Select a supported row scope.")
+    if row_scope == "one" and (unique_id is None or not unique_id.strip()):
+        raise HTTPException(status_code=400, detail="Enter the exact governed row identifier.")
+    if row_scope == "group" and not unique_ids:
+        raise HTTPException(status_code=400, detail="Select at least one governed row identifier.")
+    configuration_file = getattr(request.app.state, "configuration_file", None)
+    if configuration_file is None:
+        raise HTTPException(status_code=503, detail="The source-workbook collection is not configured.")
+    try:
+        if row_scope == "one":
+            result = process_one_workbook_row(
+                configuration_path=Path(configuration_file),
+                source_workbook_id=source_workbook_id, unique_id=unique_id,
+            )
+        elif row_scope == "group":
+            result = process_selected_workbook_rows(
+                configuration_path=Path(configuration_file),
+                source_workbook_id=source_workbook_id, unique_ids=unique_ids,
+            )
+        else:
+            result = process_all_workbook_rows(
+                configuration_path=Path(configuration_file), source_workbook_id=source_workbook_id,
+            )
+    except ValueError as error:
+        raise HTTPException(
+            status_code=400,
+            detail="Construction could not complete the selected rows. Check the exact identifiers and governed input knowledge.",
+        ) from error
+    except (OSError, SyntaxError) as error:
+        raise HTTPException(status_code=503, detail="The configured construction inputs or saved results could not be accessed.") from error
+    if result.status == "EXCEPTION" or result.exception_row_count:
+        # A contracted worker failure is a saved construction outcome. Show its
+        # original diagnostic and the retained verified-stage links immediately.
+        return view_constraint_build_run(request, result.run_directory.name, playback="paused")
+    view_url = f"/constraint-workbench/runs/{result.run_directory.name}"
+    selected_rows = ''.join(f'<li>{escape(value)}</li>' for value in result.unique_ids)
+    heading = "Constraint construction completed with exceptions" if result.exception_row_count else "Constraint construction completed"
+    return HTMLResponse(content=f'''<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{escape(heading)}</title>
+<style>
+body {{ background: #f4f6f8; color: #182333; font-family: system-ui, sans-serif; }}
+main {{ max-width: 55rem; margin: 3rem auto; padding: 1.5rem; background: white;
+        border: 1px solid #d7dfe8; border-radius: .75rem; }}
+dl {{ display: grid; grid-template-columns: minmax(8rem, auto) 1fr; gap: .7rem 1rem; }}
+dt {{ font-weight: 600; }} dd {{ margin: 0; overflow-wrap: anywhere; }} a {{ color: #164e83; }}
+</style></head><body><main data-build-run-id="{escape(result.run_id)}" data-run-status="{result.status}"
+ data-completed-row-count="{result.completed_row_count}" data-total-row-count="{len(result.unique_ids)}">
+<h1>{escape(heading)}</h1>
+<p role="status">Rows completed: {result.completed_row_count} of {len(result.unique_ids)}.</p>
+<dl><dt>Source workbook</dt><dd>{escape(result.workbook_label)}</dd>
+<dt>Worksheet</dt><dd>{escape(result.worksheet)}</dd>
+<dt>Row identifiers</dt><dd><ul>{selected_rows}</ul></dd>
+<dt>Rows completed</dt><dd>{result.completed_row_count}</dd>
+<dt>Rows with exceptions</dt><dd>{result.exception_row_count}</dd></dl>
+<p role="status">The selected rows' reusable RDF and SHACL artifacts have been saved.</p>
+<p><a href="{escape(view_url)}">Inspect the run's stage RDF</a></p>
+<p><a href="/constraint-pipeline">Return to the constraint pipeline</a></p>
 </main></body></html>''')
