@@ -24,6 +24,10 @@ from app.models.validation import (
 from app.services.constraint_set_build_workbench import build_registered_constraint_set
 from app.services.experience import ExperienceProfile, load_experience_profile
 from app.services.ingestion import ingestion_service
+from app.services.schema_ingestion_gatekeeper import (
+    IncorrectSchemaRootError,
+    MalformedSchemaXmlError,
+)
 from app.services.rdf_projection import RdfProjectionStage, RdfProjector
 from app.services.schema_loader import SchemaLoader
 from app.services.schema_loader.processing_coverage import (
@@ -79,7 +83,12 @@ def get_uad36_component_processing_coverage(
 
 @router.post("/ingest/schema", response_model=IngestResponse)
 def ingest_schema(request: SchemaIngestRequest) -> IngestResponse:
-    return ingestion_service.ingest_schema(request)
+    try:
+        return ingestion_service.ingest_schema(request)
+    except MalformedSchemaXmlError as error:
+        raise HTTPException(status_code=400, detail=str(error)) from error
+    except IncorrectSchemaRootError as error:
+        raise HTTPException(status_code=400, detail=error.detail) from error
 
 
 @router.post("/ingest/mappings", response_model=IngestResponse)
@@ -227,7 +236,8 @@ async def run_uad36_pipeline(
         ],
     }
 
-
+# Implements IT-1: Validate appraisal data against governed rule categories.
+# Receives a ValidationRequest with the appraisal data and returns a ValidationRun with the results.
 @router.post("/validate/uad36", response_model=ValidationRun)
 def validate_uad36(request: ValidationRequest) -> ValidationRun:
     request.investor_scope = Investor.BOTH

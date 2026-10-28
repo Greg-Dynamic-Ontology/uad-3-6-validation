@@ -1,0 +1,30 @@
+@prefix rdfs: <http://w3.org> .
+@prefix owl:  <http://w3.org> .
+@prefix xsd:  <http://w3.org> .
+@prefix ex:   <http://example.org> .
+
+# 1. Define the target Identification Class
+ex:XMLSchemaDocument a owl:Class ;
+    rdfs:label "XML Schema Document" ;
+    rdfs:comment "A document structurally identified as an XML Schema (XSD)." ;
+
+    # Classification Logic (Intersection/Union of structural signatures)
+    owl:equivalentClass [
+        a owl:Class ;
+        owl:intersectionOf (
+            ex:Document
+            [
+                a owl:Restriction ;
+                owl:onProperty ex:containsComponent ;
+                owl:someValuesFrom ex:XSDStructuralComponent
+            ]
+        )
+    ] .
+
+# 2. Structural Signatures of an XSD
+ex:XSDStructuralComponent a owl:Class ;
+    owl:oneOf ( ex:ElementDeclaration ex:ComplexTypeDeclaration ex:SimpleTypeDeclaration ) .
+
+# 3. Properties to map the structural relationship
+ex:containsComponent a owl:ObjectProperty ;
+    rdfs:domain ex:Document .

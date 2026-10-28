@@ -11,6 +11,7 @@ from workos import WorkOSClient
 from app.api.routes import router
 from app.core.config import settings
 from app.services.user_accounts import UserAccount, create_user_account
+from app.api.customer_validation_entry import router as customer_validation_entry_router
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -340,6 +341,7 @@ def workos_authentication_callback(
     return response
 
 
+app.include_router(customer_validation_entry_router)
 app.include_router(router)
 app.mount(
     "/",

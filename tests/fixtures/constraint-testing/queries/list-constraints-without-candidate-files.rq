@@ -1,0 +1,35 @@
+# List inventoried constraints that have no incoming candidate-file links.
+# Check the relationships themselves rather than a cached candidate count.
+# A missing candidate link does not establish missing behavioral coverage:
+# the fixture may be useful for a non-trigger or missing-data test.
+# Rows with selector issues need review before drawing a coverage conclusion.
+
+PREFIX tk: <https://dynamicontology.com/uad36/test-knowledge#>
+
+SELECT DISTINCT
+    ?constraintId
+    ?sourceUniqueId
+    ?primaryDataElement
+    ?severity
+    ?propertyAffected
+    ?sourceXPath
+    ?ruleLogic
+    ?selectorIssue
+    ?constraint
+WHERE {
+    ?constraint a tk:GovernedSourceConstraint .
+
+    FILTER NOT EXISTS {
+        ?file tk:hasCandidateDataForConstraint ?constraint .
+    }
+
+    OPTIONAL { ?constraint tk:messageId ?constraintId . }
+    OPTIONAL { ?constraint tk:sourceUniqueIdCell ?sourceUniqueId . }
+    OPTIONAL { ?constraint tk:primaryDataElement ?primaryDataElement . }
+    OPTIONAL { ?constraint tk:severity ?severity . }
+    OPTIONAL { ?constraint tk:propertyAffected ?propertyAffected . }
+    OPTIONAL { ?constraint tk:sourceXPath ?sourceXPath . }
+    OPTIONAL { ?constraint tk:ruleLogic ?ruleLogic . }
+    OPTIONAL { ?constraint tk:selectorIssue ?selectorIssue . }
+}
+ORDER BY ?constraintId ?constraint

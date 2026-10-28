@@ -1,9 +1,19 @@
+from hashlib import sha256
+from uuid import uuid4
+
 from app.adapters.graph_store import graph_store
 from app.adapters.iri import IriMintingService
 from app.models.common import GraphResource, Provenance
 from app.models.enums import Investor, RuleType, Severity
-from app.models.ingestion import IngestResponse, MappingIngestRequest, RulesIngestRequest, SchemaIngestRequest
+from app.models.ingestion import (
+    IngestResponse,
+    MappingIngestRequest,
+    RulesIngestRequest,
+    SchemaCandidateResource,
+    SchemaIngestRequest,
+)
 from app.models.rules import ValidationRule
+from app.services.schema_ingestion_gatekeeper import check_schema_candidate_xml
 
 
 class IngestionService:
@@ -11,11 +21,36 @@ class IngestionService:
         self.iri = IriMintingService()
 
     def ingest_schema(self, request: SchemaIngestRequest) -> IngestResponse:
+        # Check XML syntax and schema root before creating or storing resources.
+        # Metadata-only requests retain their existing behavior.
+        if request.raw_text is not None:
+            check_schema_candidate_xml(request.raw_text)
         provenance = Provenance(
             source_document=request.source_document,
             source_version=request.schema_version,
             source_section=request.source_section,
         )
+        if request.raw_text is not None:
+            # Each submission gets its own identity and provenance, including
+            # repeated content. Hash the original text, not a reserialization.
+            token = uuid4().hex
+            candidate = SchemaCandidateResource(
+                resource_id=f"schema-candidate:{token}",
+                iri=self.iri.mint("schema-candidate", token),
+                label=request.schema_name,
+                provenance=provenance,
+                raw_text=request.raw_text,
+                content_sha256=sha256(request.raw_text.encode("utf-8")).hexdigest(),
+            )
+            graph_store.put_resource(candidate)
+            return IngestResponse(
+                message="Schema candidate accepted for analysis",
+                resources_created=[candidate],
+                provenance=provenance,
+                candidate_id=candidate.resource_id,
+                ingestion_status=candidate.ingestion_status,
+            )
+
         resources = [
             GraphResource(
                 resource_id="schema:root",

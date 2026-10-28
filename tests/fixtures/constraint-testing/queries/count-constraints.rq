@@ -1,0 +1,6 @@
+PREFIX tk: <https://dynamicontology.com/uad36/test-knowledge#>
+
+SELECT (COUNT(DISTINCT ?constraint) AS ?constraintCount)
+WHERE {
+    ?constraint a tk:GovernedSourceConstraint .
+}
