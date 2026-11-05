@@ -693,8 +693,15 @@ def evaluate_required_data(
     root: Element,
     investor: Investor,
     configuration_path: str | Path | None = None,
+    *,
+    evaluation_coverage: list[dict[str, str]] | None = None,
 ) -> list[Finding]:
-    """Evaluate rules within each valuation and subject-property context."""
+    """Evaluate rules within each valuation and subject-property context.
+
+    With an explicit coverage collector, isolate a failed rule and record its
+    reason while continuing independent rules. Legacy direct callers retain
+    exception propagation. A completed assessment includes applicability checks.
+    """
     findings: list[Finding] = []
 
     analyses = list(root.iter(f"{{{NAMESPACE}}}VALUATION_ANALYSIS"))
@@ -715,178 +722,69 @@ def evaluate_required_data(
         else load_required_rules(configuration_path=configuration_path)
     )
     for rule in sorted(rules, key=lambda row: row["Unique ID"]):
-        if aggregate_cross_record_binding_for(rule) is not None:
-            findings.extend(evaluate_aggregate_cross_record(root, investor, rule))
-            continue
-        if date_chronology_binding_for(rule) is not None:
-            findings.extend(evaluate_date_chronology(root, investor, rule))
-            continue
-        if value_consistency_binding_for(rule) is not None:
-            findings.extend(evaluate_value_consistency(root, investor, rule))
-            continue
-        if binding_for(rule) is not None:
-            findings.extend(evaluate_single_equality(root, investor, rule))
-            continue
-        if required_structure_binding_for(rule) is not None:
-            findings.extend(
-                evaluate_required_structure(root, investor, rule)
-            )
-            continue
-        if uniqueness_cardinality_binding_for(rule) is not None:
-            findings.extend(
-                evaluate_uniqueness_cardinality(root, investor, rule)
-            )
-            continue
-        if numeric_bound_binding_for(rule) is not None:
-            findings.extend(evaluate_numeric_bound(root, investor, rule))
-            continue
-        if representation_restriction_binding_for(rule) is not None:
-            findings.extend(
-                evaluate_representation_restriction(root, investor, rule)
-            )
-            continue
-        if existing_context_binding_for(rule) is not None:
-            findings.extend(
-                evaluate_existing_context_required(root, investor, rule)
-            )
-            continue
-        if relationship_reference_binding_for(rule) is not None:
-            findings.extend(
-                evaluate_relationship_reference(root, investor, rule)
-            )
-            continue
-        if scoped_spec(rule) is not None:
-            findings.extend(
-                evaluate_scoped_rule(root, investor, rule)
-            )
-            continue
-
-        parts = (
-            rule[" xPath"].removeprefix("../").strip("/").split("/")
-        )
-        element_name = rule["Primary Data Element"]
-        specification = conditional_spec(rule)
-
-        if parts == ["MESSAGE"] and element_name.startswith("@"):
-            attribute_name = element_name.removeprefix("@")
-            if root.tag != f"{{{NAMESPACE}}}MESSAGE":
-                raise ValueError(
-                    f"Unsupported root path: {rule['Message ID']}"
+        finding_start = len(findings)
+        outcome = {"rule_id": rule["Message ID"], "status": "evaluated"}
+        try:
+            if aggregate_cross_record_binding_for(rule) is not None:
+                findings.extend(evaluate_aggregate_cross_record(root, investor, rule))
+                continue
+            if date_chronology_binding_for(rule) is not None:
+                findings.extend(evaluate_date_chronology(root, investor, rule))
+                continue
+            if value_consistency_binding_for(rule) is not None:
+                findings.extend(evaluate_value_consistency(root, investor, rule))
+                continue
+            if binding_for(rule) is not None:
+                findings.extend(evaluate_single_equality(root, investor, rule))
+                continue
+            if required_structure_binding_for(rule) is not None:
+                findings.extend(
+                    evaluate_required_structure(root, investor, rule)
                 )
-            if (root.get(attribute_name) or "").strip():
+                continue
+            if uniqueness_cardinality_binding_for(rule) is not None:
+                findings.extend(
+                    evaluate_uniqueness_cardinality(root, investor, rule)
+                )
+                continue
+            if numeric_bound_binding_for(rule) is not None:
+                findings.extend(evaluate_numeric_bound(root, investor, rule))
+                continue
+            if representation_restriction_binding_for(rule) is not None:
+                findings.extend(
+                    evaluate_representation_restriction(root, investor, rule)
+                )
+                continue
+            if existing_context_binding_for(rule) is not None:
+                findings.extend(
+                    evaluate_existing_context_required(root, investor, rule)
+                )
+                continue
+            if relationship_reference_binding_for(rule) is not None:
+                findings.extend(
+                    evaluate_relationship_reference(root, investor, rule)
+                )
+                continue
+            if scoped_spec(rule) is not None:
+                findings.extend(
+                    evaluate_scoped_rule(root, investor, rule)
+                )
                 continue
 
-            findings.append(
-                Finding(
-                    finding_id=f"F-{uuid4().hex[:8]}",
-                    severity=Severity(rule["Severity"].casefold()),
-                    investor=investor,
-                    rule_type=RuleType.APPENDIX_H,
-                    rule_id=rule["Message ID"],
-                    row_id=rule["Unique ID"],
-                    primary_data_element=element_name,
-                    property_affected=rule["Property Affected"],
-                    violation_kind="MissingRequiredValue",
-                    data_location=rule_path(rule),
-                    nearest_existing_ancestor=".",
-                    observed_value="missing, empty, or nil",
-                    expected_condition=f"{element_name} must be provided.",
-                    source=Provenance(
-                        source_document=rule["_source_document"],
-                        source_version="UAD 3.6",
-                        source_section=rule["Unique ID"],
-                        source_sheet=rule["_source_sheet"],
-                    ),
-                    finding=rule["Message Text"],
-                )
+            parts = (
+                rule[" xPath"].removeprefix("../").strip("/").split("/")
             )
-            continue
+            element_name = rule["Primary Data Element"]
+            specification = conditional_spec(rule)
 
-        for analysis in analyses:
-            if rule["Property Affected"] == "Subject":
-                if parts[1:3] != ["PROPERTIES", "PROPERTY"]:
+            if parts == ["MESSAGE"] and element_name.startswith("@"):
+                attribute_name = element_name.removeprefix("@")
+                if root.tag != f"{{{NAMESPACE}}}MESSAGE":
                     raise ValueError(
-                        f"Unsupported subject path: {rule['Message ID']}"
+                        f"Unsupported root path: {rule['Message ID']}"
                     )
-
-                contexts = analysis.findall(
-                    "m:PROPERTIES/m:PROPERTY"
-                    "[@ValuationUseType='SubjectProperty']",
-                    NS,
-                )
-                remaining = parts[3:]
-            elif specification is not None and specification.property_affected == "N/A":
-                if parts[1] != "VALUATION_REPORT":
-                    raise ValueError(
-                        f"Unsupported report path: {rule['Message ID']}"
-                    )
-                contexts = analysis.findall("m:VALUATION_REPORT", NS)
-                remaining = parts[2:]
-            else:
-                contexts = [analysis]
-                remaining = parts[1:]
-
-            relative_path = "/".join(
-                "m:" + part for part in remaining + [element_name]
-            )
-
-            for context in contexts or [None]:
-                if specification is not None:
-                    elements = conditional_elements(
-                        context, remaining, rule
-                    )
-                    if elements is None:
-                        continue
-                else:
-                    elements = (
-                        context.findall(relative_path, NS)
-                        if context is not None
-                        else []
-                    )
-
-                if elements and all(has_value(node) for node in elements):
+                if (root.get(attribute_name) or "").strip():
                     continue
-
-                data_location = rule_path(rule)
-
-                if (
-                    rule["Property Affected"] == "Subject"
-                    and context is not None
-                    and len(contexts) > 1
-                ):
-                    # Count all PROPERTY siblings, including comparables.
-                    siblings = [
-                        child
-                        for child in parents[context]
-                        if child.tag == context.tag
-                    ]
-                    position = siblings.index(context) + 1
-                    data_location = data_location.replace(
-                        "m:PROPERTY[@ValuationUseType='SubjectProperty']",
-                        f"m:PROPERTY[{position}]"
-                        "[@ValuationUseType='SubjectProperty']",
-                        1,
-                    )
-
-                ancestor_path = None
-                if not elements:
-                    ancestor_path = nearest_existing_ancestor_path(
-                        root, analysis, data_location, parents
-                    )
-
-                expected_condition = (
-                    f"{element_name} must be provided."
-                )
-                if specification is not None:
-                    expected_condition = (
-                        f'{element_name} must be provided when '
-                        f'{specification.trigger} = "{specification.value}" '
-                        + (
-                            "within the same valuation report."
-                            if specification.property_affected == "N/A"
-                            else "within the same subject property."
-                        )
-                    )
 
                 findings.append(
                     Finding(
@@ -899,10 +797,10 @@ def evaluate_required_data(
                         primary_data_element=element_name,
                         property_affected=rule["Property Affected"],
                         violation_kind="MissingRequiredValue",
-                        data_location=data_location,
-                        nearest_existing_ancestor=ancestor_path,
+                        data_location=rule_path(rule),
+                        nearest_existing_ancestor=".",
                         observed_value="missing, empty, or nil",
-                        expected_condition=expected_condition,
+                        expected_condition=f"{element_name} must be provided.",
                         source=Provenance(
                             source_document=rule["_source_document"],
                             source_version="UAD 3.6",
@@ -912,5 +810,130 @@ def evaluate_required_data(
                         finding=rule["Message Text"],
                     )
                 )
+                continue
+
+            for analysis in analyses:
+                if rule["Property Affected"] == "Subject":
+                    if parts[1:3] != ["PROPERTIES", "PROPERTY"]:
+                        raise ValueError(
+                            f"Unsupported subject path: {rule['Message ID']}"
+                        )
+
+                    contexts = analysis.findall(
+                        "m:PROPERTIES/m:PROPERTY"
+                        "[@ValuationUseType='SubjectProperty']",
+                        NS,
+                    )
+                    remaining = parts[3:]
+                elif specification is not None and specification.property_affected == "N/A":
+                    if parts[1] != "VALUATION_REPORT":
+                        raise ValueError(
+                            f"Unsupported report path: {rule['Message ID']}"
+                        )
+                    contexts = analysis.findall("m:VALUATION_REPORT", NS)
+                    remaining = parts[2:]
+                else:
+                    contexts = [analysis]
+                    remaining = parts[1:]
+
+                relative_path = "/".join(
+                    "m:" + part for part in remaining + [element_name]
+                )
+
+                for context in contexts or [None]:
+                    if specification is not None:
+                        elements = conditional_elements(
+                            context, remaining, rule
+                        )
+                        if elements is None:
+                            continue
+                    else:
+                        elements = (
+                            context.findall(relative_path, NS)
+                            if context is not None
+                            else []
+                        )
+
+                    if elements and all(has_value(node) for node in elements):
+                        continue
+
+                    data_location = rule_path(rule)
+
+                    if (
+                        rule["Property Affected"] == "Subject"
+                        and context is not None
+                        and len(contexts) > 1
+                    ):
+                        # Count all PROPERTY siblings, including comparables.
+                        siblings = [
+                            child
+                            for child in parents[context]
+                            if child.tag == context.tag
+                        ]
+                        position = siblings.index(context) + 1
+                        data_location = data_location.replace(
+                            "m:PROPERTY[@ValuationUseType='SubjectProperty']",
+                            f"m:PROPERTY[{position}]"
+                            "[@ValuationUseType='SubjectProperty']",
+                            1,
+                        )
+
+                    ancestor_path = None
+                    if not elements:
+                        ancestor_path = nearest_existing_ancestor_path(
+                            root, analysis, data_location, parents
+                        )
+
+                    expected_condition = (
+                        f"{element_name} must be provided."
+                    )
+                    if specification is not None:
+                        expected_condition = (
+                            f'{element_name} must be provided when '
+                            f'{specification.trigger} = "{specification.value}" '
+                            + (
+                                "within the same valuation report."
+                                if specification.property_affected == "N/A"
+                                else "within the same subject property."
+                            )
+                        )
+
+                    findings.append(
+                        Finding(
+                            finding_id=f"F-{uuid4().hex[:8]}",
+                            severity=Severity(rule["Severity"].casefold()),
+                            investor=investor,
+                            rule_type=RuleType.APPENDIX_H,
+                            rule_id=rule["Message ID"],
+                            row_id=rule["Unique ID"],
+                            primary_data_element=element_name,
+                            property_affected=rule["Property Affected"],
+                            violation_kind="MissingRequiredValue",
+                            data_location=data_location,
+                            nearest_existing_ancestor=ancestor_path,
+                            observed_value="missing, empty, or nil",
+                            expected_condition=expected_condition,
+                            source=Provenance(
+                                source_document=rule["_source_document"],
+                                source_version="UAD 3.6",
+                                source_section=rule["Unique ID"],
+                                source_sheet=rule["_source_sheet"],
+                            ),
+                            finding=rule["Message Text"],
+                        )
+                    )
+        except Exception as error:
+            if evaluation_coverage is None:
+                raise
+            # A partially evaluated rule cannot supply authoritative findings.
+            del findings[finding_start:]
+            outcome = {
+                "rule_id": rule["Message ID"],
+                "status": "not_evaluated",
+                "reason": f"{type(error).__name__}: {error}",
+            }
+        finally:
+            if evaluation_coverage is not None:
+                evaluation_coverage.append(outcome)
 
     return findings

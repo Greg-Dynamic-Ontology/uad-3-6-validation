@@ -45,7 +45,7 @@ SOURCE_FIELDS = {
 SOURCE_COLUMNS = tuple(SOURCE_FIELDS)
 
 SF1 = "examples/xml/SF1_Appraisal_v1.4.xml"
-CONDO1 = "examples/xml/Condo1_Appraisal_v1.4.xml"
+CONDO1 = "test-files/fannie-mae/Appendix D-1 Condo1_Appraisal/Condo1_Appraisal_v1.4-less-InspectorFileIdentifier-value.xml"
 MH1 = "examples/xml/MH1_Appraisal_v1.4.xml"
 MULTI = "examples/xml/2- to 4-unit_Appraisal_v1.4.xml"
 

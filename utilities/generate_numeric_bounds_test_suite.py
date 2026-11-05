@@ -41,7 +41,7 @@ def example(name):
 
 
 SF1 = example("SF1_Appraisal_v1.4.xml")
-CONDO1 = example("Condo1_Appraisal_v1.4.xml")
+CONDO1 = 'test-files/fannie-mae/Appendix D-1 Condo1_Appraisal/Condo1_Appraisal_v1.4-less-InspectorFileIdentifier-value.xml'
 MH1 = example("MH1_Appraisal_v1.4.xml")
 MH2 = example("MH2_Appraisal_v1.4.xml")
 MULTI = example("2- to 4-unit_Appraisal_v1.4.xml")

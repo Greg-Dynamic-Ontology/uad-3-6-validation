@@ -1,7 +1,8 @@
 from datetime import datetime
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
+from app.models.schema_validation import SchemaValidationFinding
 from app.models.common import Provenance, utc_now
 from app.models.enums import Investor, RuleType, Severity
 
@@ -54,7 +55,56 @@ class RdfProjectionArtifact(BaseModel):
     triple_count: int = Field(ge=0)
 
 
+class GovernedSchemaAssessment(BaseModel):
+    """XSD outcome for the same upload; separate from business findings."""
+    schema_name: str
+    schema_version: str
+    sha256: str
+    well_formed: bool
+    schema_valid: bool
+    findings: list[SchemaValidationFinding] = Field(default_factory=list)
+
+
+class ConstraintSetIdentity(BaseModel):
+    version: str
+    source_document: str
+    source_sheet: str
+    sha256: str
+
+
+class UnevaluatedConstraint(BaseModel):
+    rule_id: str
+    reason: str
+
+
+class ValidationCoverage(BaseModel):
+    """Completeness is relative to selected rules, not the whole workbook."""
+    scope: str = "selected-constraints"
+    source_rule_count: int
+    selected_rule_ids: list[str]
+    evaluated_rule_ids: list[str]
+    not_evaluated: list[UnevaluatedConstraint]
+    unselected_rule_ids: list[str]
+    complete: bool
+    constraint_set: ConstraintSetIdentity
+
+
+class ValidationFailure(BaseModel):
+    """Customer-facing explanation of processing failure and recovery action."""
+    message: str
+    suggested_action: str
+
+
 class ValidationRun(BaseModel):
+    model_config = ConfigDict(populate_by_name=True)
+
+    package_name: str | None = None
+    source_sha256: str | None = None
+    schema_assessment: GovernedSchemaAssessment | None = Field(default=None, alias="schema")
+    coverage: ValidationCoverage | None = None
+    failure: ValidationFailure | None = None
+    processing_status: str | None = None
+    passed: bool | None = None
     run_id: str
     uad_version: str = "3.6"
     investor_scope: Investor

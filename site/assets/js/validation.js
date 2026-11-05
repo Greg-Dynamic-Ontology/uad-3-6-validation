@@ -123,6 +123,19 @@ async function loadSchemaComponentProcessingCoverage() {
 }
 
 async function configureExperience() {
+    // IT-64R1S2: the anonymous Demo page keeps its own presentation policy,
+    // even when the server's configuration selects a Developer experience.
+    // This controls presentation only; account authorization remains server-side.
+    if (document.body.dataset.operatingMode === "demo") {
+        applyExperience({
+            shows_overall_progress: true,
+            shows_pipeline_stages: false,
+            shows_technical_artifacts: false,
+            shows_developer_diagnostics: false,
+        });
+        return;
+    }
+
     try {
         const response = await fetch("/configuration/experience");
         if (!response.ok) {
@@ -191,59 +204,125 @@ function showResults(report) {
     }
 }
 
+let reportDownloadUrl = null;
+// IT-46R3S1: a correction continues the kind of validation being reviewed.
+let reviewedIntegratedRunId = null;
+
+// IT-46R2S1: display and export the same saved run without re-evaluation.
 function showRequiredDataResults(report, filename) {
-    const fatalCount = report.summary.fatal;
-    const errorCount = report.summary.error + report.summary.critical;
-    const failed = fatalCount > 0 || errorCount > 0;
+    reviewedIntegratedRunId = report.run_id;
+    const resultUrl = new URL(window.location.href);
+    resultUrl.searchParams.set("run_id", report.run_id);
+    window.history.replaceState(null, "", resultUrl);
+    if (!experienceProfile.shows_pipeline_stages) {
+        validateButton.textContent = "Validate corrected file";
+    }
+    const coverage = report.coverage;
+    const findings = report.findings || [];
+    const schema = report.schema;
+    const incomplete = report.processing_status !== "completed" ||
+        !coverage || !coverage.complete;
+    const state = incomplete ? "INCOMPLETE" : report.passed ? "PASSED" : "FINDINGS DETECTED";
+    const hasSchemaFindings = Boolean(schema && schema.findings && schema.findings.length);
+    const summary = findings.length || hasSchemaFindings
+        ? "Findings detected. Review the schema assessment and business-rule findings below."
+        : "No issues were found within the evaluated coverage.";
+    const failure = report.failure ? `
+        <p role="alert"><strong>Validation incomplete.</strong> ${escapeHtml(report.failure.message)}</p>
+        <p>${escapeHtml(report.failure.suggested_action)}</p>
+    ` : incomplete ? '<p role="alert">Validation incomplete. Some required checks did not finish. Retry validation or contact support.</p>' : "";
+    const findingList = findings.length ? `<ol class="finding-list">${findings.map(finding => `
+        <li data-finding-id="${escapeHtml(finding.finding_id)}">
+            <p><strong>${escapeHtml(String(finding.severity).toUpperCase())}</strong>
+                ${escapeHtml(finding.rule_id || "Schema assessment")}
+                ${finding.row_id ? ` â€” Row ${escapeHtml(finding.row_id)}` : ""}</p>
+            <p>${escapeHtml(finding.finding)}</p>
+            <p><strong>Expected:</strong> ${escapeHtml(finding.expected_condition || "See the governed assessment.")}</p>
+            ${finding.primary_data_element ? `<p>Element: ${escapeHtml(finding.primary_data_element)}</p>` : ""}
+            ${finding.data_location ? `<details><summary>XML context</summary><code>${escapeHtml(finding.data_location)}</code></details>` : ""}
+            ${finding.source ? `<details><summary>Source provenance</summary>
+                <p>${escapeHtml(finding.source.source_document)} ${escapeHtml(finding.source.source_version || "")}</p>
+                <p>${escapeHtml(finding.source.source_section || "")}</p></details>` : ""}
+        </li>`).join("")}</ol>` : "<p>No business-rule findings were detected within the evaluated coverage.</p>";
+    const coverageHtml = coverage ? `
+        <section data-validation-coverage aria-label="Validation coverage">
+            <h4>Selected constraint coverage</h4>
+            <dl class="result-summary">
+                <div><dt>Selected checks</dt><dd data-coverage-count="selected">${coverage.selected_rule_ids.length}</dd></div>
+                <div><dt>Evaluated checks</dt><dd data-coverage-count="evaluated">${coverage.evaluated_rule_ids.length}</dd></div>
+                <div><dt>Not evaluated</dt><dd data-coverage-count="not-evaluated">${coverage.not_evaluated.length}</dd></div>
+                <div><dt>Workbook rules outside selected coverage</dt><dd>${coverage.unselected_rule_ids.length}</dd></div>
+            </dl>
+            <p>This result does not establish complete UAD compliance. Rules outside the selected coverage have not been evaluated by this run.</p>
+            ${coverage.not_evaluated.length ? `<h5>Deferred or failed checks</h5><ul>${coverage.not_evaluated.map(item =>
+                `<li><strong>${escapeHtml(item.rule_id)}</strong>: ${escapeHtml(item.reason)}</li>`
+            ).join("")}</ul>` : "<p>Every selected business-rule check completed its applicability and validation assessment.</p>"}
+            <details><summary>Evaluated rule IDs</summary><p>${escapeHtml(coverage.evaluated_rule_ids.join(", "))}</p></details>
+            <details><summary>Rules outside selected coverage</summary><p>${escapeHtml(coverage.unselected_rule_ids.join(", "))}</p></details>
+            <details><summary>Constraint-set provenance</summary>
+                <p>Version: ${escapeHtml(coverage.constraint_set.version)}</p>
+                <p>Source: ${escapeHtml(coverage.constraint_set.source_document)}</p>
+                <p>Worksheet: ${escapeHtml(coverage.constraint_set.source_sheet)}</p>
+                <p>SHA-256: ${escapeHtml(coverage.constraint_set.sha256)}</p>
+            </details>
+        </section>` : '<section data-validation-coverage><h4>Coverage unavailable</h4><p>Validation is incomplete. No unevaluated check is reported as passing.</p></section>';
+    const schemaHtml = schema ? `
+        <section aria-label="XML Schema assessment"><h4>XML Schema assessment</h4>
+            <p>${schema.well_formed ? schema.schema_valid ? "The upload conforms to the governed XML Schema." : "The upload does not conform to the governed XML Schema." : "The upload is not well-formed XML."}</p>
+            <p>${escapeHtml(schema.schema_version)}</p>
+            <ul>${schema.findings.map(item => `<li>${escapeHtml(item.message)}${item.line != null ? ` â€” Line ${escapeHtml(item.line)}` : ""}</li>`).join("")}</ul>
+        </section>` : '<section aria-label="XML Schema assessment"><h4>XML Schema assessment unavailable</h4><p>No schema-validity conclusion was produced.</p></section>';
 
-    const summary = errorCount > 0
-        ? "The appraisal could not be checked. Review the error below."
-        : fatalCount > 0
-            ? "Required data is missing. Review the findings below."
-            : "No required-data findings in the 53 checked rules.";
-
-    const findings = report.findings.length === 0
-        ? ""
-        : `<ol class="finding-list">${report.findings.map((finding) => `
-            <li>
-                <p>
-                    <strong>${escapeHtml(finding.severity.toUpperCase())}</strong>
-                    ${escapeHtml(finding.rule_id)}
-                    ${finding.row_id ? `— Row ${escapeHtml(finding.row_id)}` : ""}
-                </p>
-                <p>${escapeHtml(finding.finding)}</p>
-                ${finding.data_location ? `
-                    <details>
-                        <summary>XML context</summary>
-                        <code>${escapeHtml(finding.data_location)}</code>
-                    </details>
-                ` : ""}
-            </li>
-        `).join("")}</ol>`;
-
+    resultsContent.dataset.validationRunId = report.run_id;
     resultsContent.innerHTML = `
-        <p class="result-stage">Required Data Validation</p>
-        <p class="result-outcome result-outcome--${failed ? "failed" : "passed"}">
-            ${failed ? "FAILED" : "PASSED"}
-        </p>
-        <p>${escapeHtml(summary)}</p>
-        <p>This check covers 53 required-data rules.
-           It does not establish complete UAD compliance or XML Schema validity.</p>
+        <p class="result-stage">Validation results</p>
+        <p class="result-outcome result-outcome--${incomplete || !report.passed ? "failed" : "passed"}">${state}</p>
+        <p>Processing: ${escapeHtml(report.processing_status || "incomplete")}</p>
+        <p>${summary}</p>${failure}
         <dl class="result-summary">
-            <div><dt>File</dt><dd>${escapeHtml(filename)}</dd></div>
-            <div><dt>Fatal findings</dt><dd>${escapeHtml(fatalCount)}</dd></div>
-            <div><dt>Errors</dt><dd>${escapeHtml(errorCount)}</dd></div>
+            <div><dt>Run</dt><dd>${escapeHtml(report.run_id)}</dd></div>
+            <div><dt>File</dt><dd>${escapeHtml(report.package_name || filename)}</dd></div>
+            <div><dt>Upload SHA-256</dt><dd>${escapeHtml(report.source_sha256)}</dd></div>
         </dl>
-        ${findings}
+        ${schemaHtml}${coverageHtml}
+        <h4>Business-rule findings</h4>${findingList}
+        <p><a data-download-report>Download report (JSON)</a></p>
     `;
+    // Export the exact recorded response, preserving finding order and identity.
+    if (reportDownloadUrl) URL.revokeObjectURL(reportDownloadUrl);
+    reportDownloadUrl = URL.createObjectURL(new Blob(
+        [JSON.stringify(report, null, 2)], {type: "application/json;charset=utf-8"}
+    ));
+    const download = resultsContent.querySelector("[data-download-report]");
+    download.href = reportDownloadUrl;
+    download.download = `validation-report-${String(report.run_id).replace(/[^a-zA-Z0-9_-]/g, "_")}.json`;
     resultsCard.hidden = false;
     setArtifactStatus("log", "Generated", "generated");
-    setStatus(
-        failed ? "failed" : "passed",
-        `Required Data Validation ${failed ? "failed" : "passed"}`,
-        summary
-    );
+    setStatus(incomplete || !report.passed ? "failed" : "passed",
+        incomplete ? "Validation incomplete" : "Validation completed", summary);
 }
+
+async function openSavedValidationResult() {
+    const runId = new URLSearchParams(window.location.search).get("run_id");
+    if (!runId) return;
+    await experienceReady;
+    setStatus("running", "Loading validation results", "Opening the recorded validation run.");
+    try {
+        const response = await fetch(`/validation-runs/${encodeURIComponent(runId)}`, {cache: "no-store"});
+        if (!response.ok) {
+            throw new Error(response.status === 404
+                ? "This validation run is unavailable. Submit the file again or contact support with its run ID."
+                : "The saved result could not be loaded. Please retry or contact support.");
+        }
+        const report = await response.json();
+        if (report.run_id !== runId) throw new Error("The service returned a different validation run. Please retry.");
+        showRequiredDataResults(report, report.package_name);
+    } catch (error) {
+        showRequestError(error instanceof Error ? error.message : "The saved result could not be opened. Please retry.");
+    }
+}
+
+void openSavedValidationResult();
 
 function showUserPipelineResults(report) {
     const completed = report.status === "completed";
@@ -299,6 +378,7 @@ function showPipelineResults(report) {
 }
 
 function showRequestError(message) {
+    delete resultsContent.dataset.validationRunId;
     setStatus("failed", "Validation request failed", message);
     resultsContent.innerHTML = `<p>${escapeHtml(message)}</p>`;
     resultsCard.hidden = false;
@@ -340,7 +420,8 @@ form.addEventListener("submit", async (event) => {
     const file = fileInput.files[0];
     const selectedPipeline = experienceProfile.shows_pipeline_stages
         ? form.querySelector('input[name="pipeline"]:checked').value
-        : "rdf-projection";
+        : (document.body.dataset.validationUpload === "integrated" || reviewedIntegratedRunId)
+            ? "required-data" : "rdf-projection";
     const isRdfProjection = selectedPipeline === "rdf-projection";
     const isRequiredData = selectedPipeline === "required-data";
 
@@ -354,6 +435,7 @@ form.addEventListener("submit", async (event) => {
     }
 
     resetArtifacts();
+    delete resultsContent.dataset.validationRunId;
     resultsCard.hidden = true;
     validateButton.disabled = true;
     setStatus(

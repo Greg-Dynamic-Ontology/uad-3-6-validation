@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import re
 import socket
+from pathlib import Path
 from threading import Thread
 from time import monotonic, sleep
 from typing import Iterator
@@ -17,7 +18,9 @@ from app.main import app
 
 @pytest.fixture(scope="module")
 def validation_server_url() -> Iterator[str]:
-    """Run the FastAPI application on an available local port."""
+    """Run the application with an explicit Developer configuration."""
+    previous_configuration = app.state.configuration_file
+    app.state.configuration_file = Path(__file__).resolve().parents[1] / "config/configuration.developer.ttl"
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     server_socket.bind(("127.0.0.1", 0))
@@ -55,6 +58,7 @@ def validation_server_url() -> Iterator[str]:
         server.should_exit = True
         server_thread.join(timeout=10)
         server_socket.close()
+        app.state.configuration_file = previous_configuration
 
 
 def test_rdf_projection_does_not_request_appraisal_again(
@@ -81,7 +85,7 @@ def test_rdf_projection_does_not_request_appraisal_again(
         else None,
     )
 
-    page.goto(f"{validation_server_url}/validation/")
+    page.goto(f"{validation_server_url}/validation/developer/")
 
     file_input = page.locator("#appraisal-file")
     file_input.set_input_files(

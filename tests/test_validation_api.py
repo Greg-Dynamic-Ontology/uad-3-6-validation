@@ -214,7 +214,7 @@ def test_xml_schema_upload_reports_well_formed_non_uad_xml() -> None:
 
 
 def test_xml_schema_upload_processes_known_vendor_example() -> None:
-    xml_path = VENDOR_XML_DIR / "Condo1_Appraisal_v1.4.xml"
+    xml_path = PROJECT_ROOT / 'test-files/fannie-mae/Appendix D-1 Condo1_Appraisal/Condo1_Appraisal_v1.4-less-InspectorFileIdentifier-value.xml'
 
     response = client.post(
         "/validate/uad36/xml-schema",

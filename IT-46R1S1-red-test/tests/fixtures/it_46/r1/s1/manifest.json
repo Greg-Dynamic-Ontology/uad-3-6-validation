@@ -1,0 +1,52 @@
+{
+  "scenario": "IT-46R1S1",
+  "evaluation_date": "2019-09-20",
+  "clock_basis": "Existing required_data_baseline_clock in tests/conftest.py; preserves historical SF1 XML.",
+  "mutation": "Only schema-error-and-missing-address adds an unexpected namespace-qualified root child to the existing missing-address fixture. Other copies preserve exact source bytes.",
+  "cases": [
+    {
+      "id": "schema-valid-baseline",
+      "file": "SF1_Appraisal_v1.4.xml",
+      "sha256": "47509c23bcf28c3abb9c57e00a3f93cf52ed38fec3862d7cda24bffd6bca5be9",
+      "schema_valid": true,
+      "expected_address_findings": 0,
+      "expected_address_context": "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:ADDRESS/m:AddressLineText",
+      "evaluator_outage": false,
+      "source_path": "C:\\Users\\grego\\projects\\uad-3-6-validation\\data\\uad36-test-suite\\tests\\fixtures\\required_data\\baseline\\SF1_Appraisal_v1.4.xml",
+      "source_sha256": "47509c23bcf28c3abb9c57e00a3f93cf52ed38fec3862d7cda24bffd6bca5be9"
+    },
+    {
+      "id": "missing-address",
+      "file": "0100.0007-UAD1001-missing-AddressLineText.xml",
+      "sha256": "0632004abfec0e1b57cb1632cc5738c8c5713f3e2ae45a82b8747666e77c89b0",
+      "schema_valid": true,
+      "expected_address_findings": 1,
+      "expected_address_context": "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:ADDRESS/m:AddressLineText",
+      "evaluator_outage": false,
+      "source_path": "C:\\Users\\grego\\projects\\uad-3-6-validation\\data\\uad36-test-suite\\tests\\fixtures\\required_data\\tests\\0100.0007-UAD1001-missing-AddressLineText.xml",
+      "source_sha256": "0632004abfec0e1b57cb1632cc5738c8c5713f3e2ae45a82b8747666e77c89b0"
+    },
+    {
+      "id": "schema-error-and-missing-address",
+      "file": "SF1-schema-error-and-missing-address.xml",
+      "sha256": "0d80ed3dba6e23328591c5635595d9bdb7d22de78e054f8a4f571f1b55de9420",
+      "schema_valid": false,
+      "expected_address_findings": 1,
+      "expected_address_context": "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:ADDRESS/m:AddressLineText",
+      "evaluator_outage": false,
+      "source_path": "C:\\Users\\grego\\projects\\uad-3-6-validation\\data\\uad36-test-suite\\tests\\fixtures\\required_data\\tests\\0100.0007-UAD1001-missing-AddressLineText.xml",
+      "source_sha256": "0632004abfec0e1b57cb1632cc5738c8c5713f3e2ae45a82b8747666e77c89b0"
+    },
+    {
+      "id": "unavailable-check-and-missing-address",
+      "file": "0100.0007-UAD1001-missing-AddressLineText.xml",
+      "sha256": "0632004abfec0e1b57cb1632cc5738c8c5713f3e2ae45a82b8747666e77c89b0",
+      "schema_valid": true,
+      "expected_address_findings": 1,
+      "expected_address_context": "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:ADDRESS/m:AddressLineText",
+      "evaluator_outage": true,
+      "source_path": "C:\\Users\\grego\\projects\\uad-3-6-validation\\data\\uad36-test-suite\\tests\\fixtures\\required_data\\tests\\0100.0007-UAD1001-missing-AddressLineText.xml",
+      "source_sha256": "0632004abfec0e1b57cb1632cc5738c8c5713f3e2ae45a82b8747666e77c89b0"
+    }
+  ]
+}

@@ -6,8 +6,8 @@ ex:S-001
     a otdd:Sample ;
     otdd:sampleId "S-001" ;
     otdd:appraisalUseCase "Condo" ;
-    otdd:sourceFile "Condo1_Appraisal_v1.4.xml" ;
-    otdd:sourcePath "specs/samples/Condo1_Appraisal_v1.4.xml" ;
+    otdd:sourceFile "Condo1_Appraisal_v1.4-less-InspectorFileIdentifier-value.xml" ;
+    otdd:sourcePath "specs/samples/Condo1_Appraisal_v1.4-less-InspectorFileIdentifier-value.xml" ;
     otdd:sourceVersion "v1.4" ;
     otdd:validationSchema "GSE_UAD_3.6.0_v1.3.xsd" ;
     otdd:schemaPath "specs/uad/GSE_UAD_3.6.0_v1.3.xsd" ;

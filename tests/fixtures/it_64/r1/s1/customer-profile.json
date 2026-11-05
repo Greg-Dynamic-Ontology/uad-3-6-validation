@@ -1,0 +1,9 @@
+{
+  "user_account_id": "user-4836ddcea29040fea725e1944d5eb2b1",
+  "display_name": "Test User",
+  "customer_account_id": "customer-d72bc78198a4453ea10c5369c14a087e",
+  "customer_account_label": "Test User",
+  "operating_mode": "standard",
+  "hosted_sign_in_hostname": "intelligent-silk-36-sandbox.authkit.app",
+  "preexisting_cycle_ids": []
+}

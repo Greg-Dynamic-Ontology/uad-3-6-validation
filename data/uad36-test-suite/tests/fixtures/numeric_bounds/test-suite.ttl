@@ -136,7 +136,7 @@ case:UAD1197 a t:TestCase ;
     t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/SALES_HISTORIES/SALES_HISTORY/" ;
     t:messageText "The amount related to the transfer of ownership of real property (typically the sale price) must be greater than or equal to $0." ;
     t:sourceRule <urn:uad36:work-tracking:appendix-h-1-v1.5:row:UAD1197> ;
-    t:baselinePath "examples/xml/Condo1_Appraisal_v1.4.xml" ;
+    t:baselinePath "test-files/fannie-mae/Appendix D-1 Condo1_Appraisal/Condo1_Appraisal_v1.4-less-InspectorFileIdentifier-value.xml" ;
     t:mutationMode "replace-text" ;
     t:mutationXPath "//m:PROPERTY[@ValuationUseType='SubjectProperty']//m:SALES_HISTORY/m:OwnershipTransferTransactionAmount" ;
     t:allowedValue "700000" ;

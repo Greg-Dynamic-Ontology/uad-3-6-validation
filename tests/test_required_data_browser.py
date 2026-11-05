@@ -168,7 +168,7 @@ def test_required_data_upload(
     source = FIXTURES / relative_file
     assert source.is_file(), f"Missing fixture: {source}"
 
-    page.goto(f"{required_data_server_url}/validation/")
+    page.goto(f"{required_data_server_url}/validation/developer/")
 
     option = page.get_by_role(
         "radio",
@@ -198,7 +198,7 @@ def test_required_data_upload(
 
     results = page.locator("#validation-results-content")
     expect(results).to_be_visible()
-    expect(results).to_contain_text("Required Data Validation")
+    expect(results).to_contain_text("Business-rule findings")
 
     if expected_fatal_count:
         assert len(report["findings"]) == 1
@@ -216,5 +216,5 @@ def test_required_data_upload(
     else:
         assert report["findings"] == []
         expect(results).to_contain_text(
-            "No required-data findings"
+            "No business-rule findings were detected within the evaluated coverage."
         )

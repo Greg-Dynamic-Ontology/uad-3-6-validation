@@ -32,11 +32,13 @@ import re
 from urllib.parse import urlencode, urlsplit
 
 import pytest
+from tests.it64_live_auth import visible_sign_in_required, session_state, sign_in, wait_for_verified_account, cycle_baseline
+
 from playwright.sync_api import Page, TimeoutError as PlaywrightTimeoutError, expect
 
 
 def _profile() -> dict:
-    location = os.environ.get("UAD_IT64_CUSTOMER_PROFILE")
+    location = os.environ.get("UAD_IT64_CUSTOMER_PROFILE", str(Path(__file__).resolve().parents[1] / "tests/fixtures/it_64/r1/s1/customer-profile.json"))
     if not location:
         pytest.fail(
             "IT-64R1S1 setup: set UAD_IT64_CUSTOMER_PROFILE to the completed "
@@ -65,7 +67,8 @@ def _profile() -> dict:
     return profile
 
 
-def test_it_64_r1_s1_reaches_account_validation_after_successful_sign_in(page: Page) -> None:
+def test_it_64_r1_s1_reaches_account_validation_after_successful_sign_in(page: Page, pytestconfig) -> None:
+    visible_sign_in_required(pytestconfig)
     base_url = os.environ.get("UAD_IT64_BASE_URL", "http://localhost:4000").rstrip("/")
     origin = urlsplit(base_url)
     assert origin.scheme in {"http", "https"} and origin.netloc
@@ -83,6 +86,8 @@ def test_it_64_r1_s1_reaches_account_validation_after_successful_sign_in(page: P
     # Resolve the application entry before checking external test-account setup,
     # so the first RED identifies the currently missing browser integration.
     profile = _profile()
+    # Independent read-only snapshot BEFORE sign-in; prior runs may already exist.
+    profile["preexisting_cycle_ids"] = cycle_baseline(profile)
     hosted_visits = []
     callback_responses = []
     prohibited_validation_requests = []
@@ -109,11 +114,7 @@ def test_it_64_r1_s1_reaches_account_validation_after_successful_sign_in(page: P
     try:
         print("Complete sign-in with the designated WorkOS test account in the visible browser.")
         sign_in.click()
-        page.wait_for_function(
-            "() => document.querySelector('#authenticated-user')?.getAttribute('data-user-account-id') === "
-            + json.dumps(profile["user_account_id"]),
-            timeout=180000,
-        )
+        wait_for_verified_account(page, profile, base_url)
         assert profile["hosted_sign_in_hostname"] in hosted_visits, (
             "The browser must pass through the configured real hosted sign-in service."
         )

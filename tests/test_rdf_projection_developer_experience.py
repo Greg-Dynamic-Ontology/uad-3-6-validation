@@ -93,7 +93,7 @@ def test_developer_experience_shows_rdf_projection_status(
         else None,
     )
 
-    page.goto(f"{developer_experience_server_url}/validation/")
+    page.goto(f"{developer_experience_server_url}/validation/developer/")
 
     pipeline_selection = page.locator("#technical-pipeline-selection")
     technical_artifacts = page.locator("#technical-artifacts-section")
@@ -140,3 +140,21 @@ def test_developer_experience_shows_rdf_projection_status(
     assert pipeline_requests == [
         f"{developer_experience_server_url}/validate/uad36/pipeline"
     ]
+
+
+def test_it_4_r3_s2_developer_entry_preserves_demo_and_respects_profile(
+    page: Page, developer_experience_server_url: str, monkeypatch,
+) -> None:
+    """Developer configuration must not turn the default Demo page technical."""
+    page.goto(f"{developer_experience_server_url}/validation/")
+    expect(page.locator("#technical-pipeline-selection")).to_be_hidden()
+    expect(page.locator("#technical-artifacts-section")).to_be_hidden()
+    expect(page.locator(".demo-mode-indicator")).to_have_text("Demo Mode")
+    page.goto(f"{developer_experience_server_url}/validation/developer/")
+    expect(page.locator("#technical-pipeline-selection")).to_be_visible()
+    expect(page.locator(".demo-mode-indicator")).to_have_text("Developer experience")
+    with monkeypatch.context() as policy:
+        policy.setattr(app.state, "configuration_file", PROJECT_ROOT / "config/configuration.user.ttl")
+        response = page.goto(f"{developer_experience_server_url}/validation/developer/")
+        assert response is not None and response.status == 403
+        expect(page.locator("#technical-pipeline-selection")).to_have_count(0)

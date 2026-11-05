@@ -2495,7 +2495,7 @@ case:UAD1582 a t:TestCase ;
     t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROPERTY_DETAIL/" .
 
 case:UAD1583 a t:TestCase ;
-    t:baselinePath "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 Condo1_Appraisal/Condo1_Appraisal_v1.4.xml" ;
+    t:baselinePath "test-files/fannie-mae/Appendix D-1 Condo1_Appraisal/Condo1_Appraisal_v1.4-less-InspectorFileIdentifier-value.xml" ;
     t:dependentXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_ANALYSIS/m:ProjectAnalysisGroundRentIndicator" ;
     t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_ANALYSIS/m:ProjectAnalysisGroundRentIndicator" ;
     t:messageText "Indicate whether the project is subject to ground rent." ;
@@ -2512,7 +2512,7 @@ case:UAD1583 a t:TestCase ;
     t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROJECT/PROJECT_ANALYSIS/" .
 
 case:UAD1584 a t:TestCase ;
-    t:baselinePath "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 Condo1_Appraisal/Condo1_Appraisal_v1.4.xml" ;
+    t:baselinePath "test-files/fannie-mae/Appendix D-1 Condo1_Appraisal/Condo1_Appraisal_v1.4-less-InspectorFileIdentifier-value.xml" ;
     t:dependentXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_ANALYSIS/m:ProjectConditionAndQualityDescription" ;
     t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_ANALYSIS/m:ProjectConditionAndQualityDescription" ;
     t:messageText "Provide a description of the deficiencies observed in the project." ;
@@ -2529,7 +2529,7 @@ case:UAD1584 a t:TestCase ;
     t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROJECT/PROJECT_ANALYSIS/" .
 
 case:UAD1585 a t:TestCase ;
-    t:baselinePath "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 Condo1_Appraisal/Condo1_Appraisal_v1.4.xml" ;
+    t:baselinePath "test-files/fannie-mae/Appendix D-1 Condo1_Appraisal/Condo1_Appraisal_v1.4-less-InspectorFileIdentifier-value.xml" ;
     t:dependentXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_ANALYSIS/m:ProjectDeficiencyObservedIndicator" ;
     t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_ANALYSIS/m:ProjectDeficiencyObservedIndicator" ;
     t:messageText "Indicate whether any deficiencies that impact value / marketability have been observed in the project." ;
@@ -2580,7 +2580,7 @@ case:UAD1587 a t:TestCase ;
     t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROJECT/PROJECT_BLANKET_FINANCINGS/PROJECT_BLANKET_FINANCING/" .
 
 case:UAD1590 a t:TestCase ;
-    t:baselinePath "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 Condo1_Appraisal/Condo1_Appraisal_v1.4.xml" ;
+    t:baselinePath "test-files/fannie-mae/Appendix D-1 Condo1_Appraisal/Condo1_Appraisal_v1.4-less-InspectorFileIdentifier-value.xml" ;
     t:dependentXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_CONVERSION/m:ProjectConversionIndicator" ;
     t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_CONVERSION/m:ProjectConversionIndicator" ;
     t:messageText "Indicate whether the property has been converted from its prior use." ;
@@ -2614,7 +2614,7 @@ case:UAD1592 a t:TestCase ;
     t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROJECT/PROJECT_CONVERSION/" .
 
 case:UAD1594 a t:TestCase ;
-    t:baselinePath "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 Condo1_Appraisal/Condo1_Appraisal_v1.4.xml" ;
+    t:baselinePath "test-files/fannie-mae/Appendix D-1 Condo1_Appraisal/Condo1_Appraisal_v1.4-less-InspectorFileIdentifier-value.xml" ;
     t:dependentXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_DETAIL/m:ProjectCommercialSpaceIndicator" ;
     t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_DETAIL/m:ProjectCommercialSpaceIndicator" ;
     t:messageText "Indicate whether the project contains commercial space." ;
@@ -2631,7 +2631,7 @@ case:UAD1594 a t:TestCase ;
     t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROJECT/PROJECT_DETAIL/" .
 
 case:UAD1596 a t:TestCase ;
-    t:baselinePath "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 Condo1_Appraisal/Condo1_Appraisal_v1.4.xml" ;
+    t:baselinePath "test-files/fannie-mae/Appendix D-1 Condo1_Appraisal/Condo1_Appraisal_v1.4-less-InspectorFileIdentifier-value.xml" ;
     t:dependentXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_DETAIL/m:ProjectCompletedIndicator" ;
     t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_DETAIL/m:ProjectCompletedIndicator" ;
     t:messageText "Indicate whether the construction of the units, common elements and amenities in the project are complete." ;
@@ -2648,7 +2648,7 @@ case:UAD1596 a t:TestCase ;
     t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROJECT/PROJECT_DETAIL/" .
 
 case:UAD1597 a t:TestCase ;
-    t:baselinePath "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 Condo1_Appraisal/Condo1_Appraisal_v1.4.xml" ;
+    t:baselinePath "test-files/fannie-mae/Appendix D-1 Condo1_Appraisal/Condo1_Appraisal_v1.4-less-InspectorFileIdentifier-value.xml" ;
     t:dependentXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_DETAIL/m:ProjectDwellingUnitCount" ;
     t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_DETAIL/m:ProjectDwellingUnitCount" ;
     t:messageText "Provide the total number of units in the project." ;
@@ -2665,7 +2665,7 @@ case:UAD1597 a t:TestCase ;
     t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROJECT/PROJECT_DETAIL/" .
 
 case:UAD1598 a t:TestCase ;
-    t:baselinePath "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 Condo1_Appraisal/Condo1_Appraisal_v1.4.xml" ;
+    t:baselinePath "test-files/fannie-mae/Appendix D-1 Condo1_Appraisal/Condo1_Appraisal_v1.4-less-InspectorFileIdentifier-value.xml" ;
     t:dependentXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_DETAIL/m:ProjectDwellingUnitsForSaleCount" ;
     t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_DETAIL/m:ProjectDwellingUnitsForSaleCount" ;
     t:messageText "Provide the total number of units in the project that are currently for sale." ;
@@ -2682,7 +2682,7 @@ case:UAD1598 a t:TestCase ;
     t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROJECT/PROJECT_DETAIL/" .
 
 case:UAD1599 a t:TestCase ;
-    t:baselinePath "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 Condo1_Appraisal/Condo1_Appraisal_v1.4.xml" ;
+    t:baselinePath "test-files/fannie-mae/Appendix D-1 Condo1_Appraisal/Condo1_Appraisal_v1.4-less-InspectorFileIdentifier-value.xml" ;
     t:dependentXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_DETAIL/m:ProjectDwellingUnitsRentedCount" ;
     t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_DETAIL/m:ProjectDwellingUnitsRentedCount" ;
     t:messageText "Provide the total number of units in the project that are currently rented." ;
@@ -2699,7 +2699,7 @@ case:UAD1599 a t:TestCase ;
     t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROJECT/PROJECT_DETAIL/" .
 
 case:UAD1600 a t:TestCase ;
-    t:baselinePath "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 Condo1_Appraisal/Condo1_Appraisal_v1.4.xml" ;
+    t:baselinePath "test-files/fannie-mae/Appendix D-1 Condo1_Appraisal/Condo1_Appraisal_v1.4-less-InspectorFileIdentifier-value.xml" ;
     t:dependentXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_DETAIL/m:ProjectDwellingUnitsSoldCount" ;
     t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_DETAIL/m:ProjectDwellingUnitsSoldCount" ;
     t:messageText "Provide the total number of units in the project that have been sold." ;
@@ -2767,7 +2767,7 @@ case:UAD1612 a t:TestCase ;
     t:xpath "../VALUATION_ANALYSIS/PROPERTIES/PROPERTY/PROJECT/PROJECT_BLANKET_FINANCINGS/PROJECT_BLANKET_FINANCING/" .
 
 case:UAD1615 a t:TestCase ;
-    t:baselinePath "chatgpt-sources/sources/samples/UAD/Appendix D-1 URAR Sample Use Cases and XML Files/Appendix D-1 Condo1_Appraisal/Condo1_Appraisal_v1.4.xml" ;
+    t:baselinePath "test-files/fannie-mae/Appendix D-1 Condo1_Appraisal/Condo1_Appraisal_v1.4-less-InspectorFileIdentifier-value.xml" ;
     t:dependentXPath "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_DETAIL/m:ProjectLegalStructureType" ;
     t:expectedDataLocation "//m:VALUATION_ANALYSIS/m:PROPERTIES/m:PROPERTY[@ValuationUseType='SubjectProperty']/m:PROJECT/m:PROJECT_DETAIL/m:ProjectLegalStructureType" ;
     t:messageText "Provide the project legal structure ( i.e., Condominium, Cooperative, Condop)." ;

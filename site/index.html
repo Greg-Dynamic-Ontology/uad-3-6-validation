@@ -7,6 +7,7 @@
     <link rel="icon" href="/assets/icons/favicon.ico">
     <link rel="stylesheet" href="/assets/css/site.css">
     <script src="/assets/js/demo-mode-entry.js" defer></script>
+    <script src="/assets/js/customer-account-entry.js" defer></script>
     <style>
         .service-shell { max-width: 960px; margin: 0 auto; padding: 4rem 1.5rem; }
         .service-hero {
@@ -100,6 +101,7 @@
         open>
     <h2 id="demo-mode-disclosure-title">Continue in Demo Mode?</h2>
     <p>Before continuing, please understand these Demo-mode limitations:</p>
+    <p>Have a customer account? <a href="/login">Sign in</a></p>
     <ul>
         <li>Demo mode does not provide customer-owned validation cycles.</li>
         <li>Demo mode does not retain account validation history.</li>
@@ -122,6 +124,13 @@
 </dialog>
 
 <main class="service-shell">
+    <p id="account-entry-notice" role="alert" hidden></p>
+    <section id="authenticated-account-entry" hidden>
+        <h2>Your customer accounts</h2>
+        <p id="authenticated-user"></p>
+        <p id="operating-mode"></p>
+        <ul id="customer-validation-accounts"></ul>
+    </section>
     <section class="service-hero" aria-labelledby="service-title">
         <div>
             <p class="service-kicker">Appraisal validation service</p>

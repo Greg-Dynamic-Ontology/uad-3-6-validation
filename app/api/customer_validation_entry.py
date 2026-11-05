@@ -115,15 +115,86 @@ def list_account_validation_cycles(request: Request, customer_account_id: str):
     }
 
 
+@router.get("/validation/developer/", response_class=HTMLResponse)
+def developer_validation_page(request: Request):
+    """Expose technical tools only under the configured Developer experience."""
+    from app import main
+    from app.api.routes import active_experience
+
+    profile = active_experience(request)
+    if not (profile.shows_pipeline_stages and profile.shows_technical_artifacts
+            and profile.shows_developer_diagnostics):
+        raise HTTPException(403, "Developer validation tools are not enabled by the active experience configuration.")
+    content = (main.SITE_DIRECTORY / "validation" / "index.html").read_text(encoding="utf-8")
+    content = content.replace("<head>", '<head><base href="/validation/">', 1)
+    content = content.replace('<body data-operating-mode="demo">', '<body data-experience="developer">', 1)
+    content = content.replace('role="status">Demo Mode</p>', 'role="status">Developer experience</p>', 1)
+    content = content.replace('href="index.html" aria-current="page"', 'href="/validation/developer/" aria-current="page"', 1)
+    return HTMLResponse(content, headers={"Cache-Control": "no-store"})
+
+
 @router.get("/validation/", response_class=HTMLResponse)
-def account_validation_page(request: Request, customer_account_id: str | None = None):
+def account_validation_page(request: Request, customer_account_id: str | None = None, validation_cycle_id: str | None = None):
     from app import main
 
-    # The existing anonymous Demo page remains available at its original URL.
+    # IT-46R4S1: signed-in customers use the same integrated upload API
+    # that already enforces their verified identity and local account link.
+    # This presentation marker grants no authorization; POST verifies again.
     if not customer_account_id:
-        return FileResponse(main.SITE_DIRECTORY / "validation" / "index.html")
-    context = _account_context(request)
+        page_path = main.SITE_DIRECTORY / "validation" / "index.html"
+        client_id = os.environ.get("WORKOS_CLIENT_ID")
+        redirect_uri = os.environ.get("WORKOS_REDIRECT_URI")
+        if request.cookies.get(main.SESSION_COOKIE_NAME) and client_id and redirect_uri:
+            workos = main.WorkOSClient(
+                api_key=os.environ.get("WORKOS_API_KEY"), client_id=client_id,
+            )
+            identity = main._authenticated_workos_user(request, workos)
+            links = getattr(request.app.state, "workos_identity_account_links", {})
+            if identity and links.get(str(identity["id"])):
+                content = page_path.read_text(encoding="utf-8")
+                content = content.replace(
+                    '<body data-operating-mode="demo">',
+                    '<body data-operating-mode="demo" data-validation-upload="integrated">',
+                    1,
+                )
+                return HTMLResponse(content, headers={
+                    "Cache-Control": "no-store", "Vary": "Cookie",
+                })
+        # Anonymous Demo visitors retain their existing entry behavior.
+        return FileResponse(page_path, headers={"Vary": "Cookie"})
+    try:
+        context = _account_context(request)
+    except HTTPException as error:
+        if error.status_code != 401:
+            raise
+        # IT-64R1S3: browser entry needs an actionable authentication challenge.
+        # API routes retain their JSON denial; account lookup and cycle creation
+        # do not run for this challenge. Do not echo an unverified account ID.
+        response = HTMLResponse('''<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sign in for account validation</title>
+<link rel="stylesheet" href="/assets/css/site.css"></head>
+<body><main class="content-section">
+<h1>Sign in for account validation</h1>
+<p>Sign in to request a validation cycle for your customer account.</p>
+<p>No validation cycle or report submission has been created.</p>
+<p><a href="/login">Sign in</a></p>
+<p><a href="/">Home</a></p>
+</main></body></html>''', status_code=401, headers={"Cache-Control": "no-store"})
+        if request.cookies.get(main.SESSION_COOKIE_NAME):
+            response.delete_cookie(
+                main.SESSION_COOKIE_NAME, path="/", secure=True,
+                httponly=True, samesite="lax",
+            )
+        return response
     account = _selected_account(context, customer_account_id)
+    if validation_cycle_id:
+        from app.api.account_validation_cycles import result_page
+        return result_page(request, customer_account_id, validation_cycle_id)
+    from app.services.account_cycle_validation import CycleStore
+    available_credits = CycleStore().available_credits(customer_account_id)
+    validation_disabled = '' if available_credits else 'disabled'
     query = urlencode({"customer_account_id": customer_account_id})
     return HTMLResponse(f'''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
@@ -141,7 +212,9 @@ New validation cycle</button>
 <section id="new-cycle-preparation" hidden><h2>Prepare a new validation cycle</h2>
 <p>Choose the report you intend to validate. No cycle is created by opening this page.</p>
 <label for="new-report">Appraisal XML report</label><input id="new-report" type="file" accept=".xml">
-<p role="status">Report submission for a new cycle is not yet available.</p></section>
+<p>Available validation credits: {available_credits}</p>
+<button type="button" id="submit-new-cycle" {validation_disabled}>Validate Appraisal</button>
+<p id="submission-status" role="status"></p></section>
 <p><a href="/validation-cycles?{escape(query)}">View recorded validation cycles</a></p>
 <p><a href="/">Home</a></p>
 </main><script>
@@ -149,4 +222,29 @@ document.getElementById('new-cycle-action').addEventListener('click', (event) =>
   document.getElementById('new-cycle-preparation').hidden = false;
   event.currentTarget.setAttribute('aria-expanded', 'true');
 }});
+document.getElementById('submit-new-cycle').addEventListener('click', async (event) => {{
+  const file = document.getElementById('new-report').files[0];
+  const status = document.getElementById('submission-status');
+  if (!file) {{ status.textContent = 'Choose an appraisal XML report.'; return; }}
+  event.currentTarget.disabled = true;
+  status.textContent = 'Validating the report…';
+  try {{
+    const account = document.getElementById('selected-customer-account').dataset.customerAccountId;
+    const response = await fetch('/validation-cycles?customer_account_id=' + encodeURIComponent(account), {{
+      method: 'POST', headers: {{'Content-Type': 'application/json', 'Idempotency-Key': crypto.randomUUID()}},
+      body: JSON.stringify({{customer_account_id: account, package_name: file.name, xml_text: await file.text()}})
+    }});
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.detail || 'Validation could not complete.');
+    window.location.assign('/validation/?customer_account_id=' + encodeURIComponent(account)
+      + '&validation_cycle_id=' + encodeURIComponent(result.validation_cycle_id));
+  }} catch (error) {{
+    status.textContent = error.message;
+    document.getElementById('submit-new-cycle').disabled = false;
+  }}
+}});
 </script></body></html>''')
+
+
+from app.api.account_validation_cycles import router as account_cycle_router
+router.include_router(account_cycle_router)

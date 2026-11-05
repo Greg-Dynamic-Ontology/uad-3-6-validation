@@ -163,7 +163,7 @@ def test_developer_sees_uad_component_processing_coverage(
         else None,
     )
 
-    page.goto(f"{developer_experience_server_url}/validation/")
+    page.goto(f"{developer_experience_server_url}/validation/developer/")
 
     coverage_section = page.locator(
         "#schema-component-processing-coverage"

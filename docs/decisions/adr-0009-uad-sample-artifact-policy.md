@@ -10,7 +10,7 @@ The UAD 3.6 Validation project incorporates vendor-supplied XML Schemas, XML ins
 spreadsheets, and other reference materials as authoritative inputs.
 
 During implementation of XML Schema validation, the published Fannie Mae example file 
-`Condo1_Appraisal_v1.4.xml` failed XML Schema validation with approximately 460 errors.
+`Condo1_Appraisal_v1.4-less-InspectorFileIdentifier-value.xml` failed XML Schema validation with approximately 460 errors.
 
 Investigation determined that the failures were not caused by the project software.
 

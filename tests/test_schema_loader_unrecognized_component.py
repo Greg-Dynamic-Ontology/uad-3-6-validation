@@ -140,7 +140,7 @@ def test_developer_sees_unrecognized_component_as_np(
         ),
     )
 
-    page.goto(f"{developer_experience_server_url}/validation/")
+    page.goto(f"{developer_experience_server_url}/validation/developer/")
 
     row = page.locator(
         "#schema-component-processing-coverage "
