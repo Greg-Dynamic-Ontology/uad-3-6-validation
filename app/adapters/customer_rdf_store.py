@@ -1,6 +1,9 @@
 """Transactional customer RDF persistence backed by GraphDB."""
 
+import json
 from datetime import datetime, timezone
+from io import BytesIO
+from urllib.error import HTTPError
 from urllib.parse import urlencode, urljoin, urlsplit
 from urllib.request import Request, urlopen
 from uuid import uuid4
@@ -25,6 +28,82 @@ def _iri(value: str) -> URIRef:
         raise ValueError(f"Expected an absolute RDF IRI: {value!r}")
     return URIRef(value)
 
+
+class CustomerValidationError(HTTPError):
+    """A rejected transaction with parsed SHACL diagnostics.
+
+    Remains an HTTPError so existing callers can inspect status and read the
+    original response body. The transaction URL correlates the attempted change.
+    """
+
+    def __init__(self, error, body, report, transaction_url):
+        super().__init__(error.url, error.code, error.msg, error.headers, BytesIO(body))
+        self.validation_report = report
+        self.transaction_url = transaction_url
+
+
+def _validation_report(body: bytes) -> Graph | None:
+    """Extract a nonconforming Turtle report, including JSON-wrapped reports."""
+    text = body.decode("utf-8", errors="replace")
+    candidates = [text]
+
+    def collect_strings(value):
+        if isinstance(value, str):
+            candidates.append(value)
+        elif isinstance(value, dict):
+            for item in value.values():
+                collect_strings(item)
+        elif isinstance(value, list):
+            for item in value:
+                collect_strings(item)
+
+    try:
+        collect_strings(json.loads(text))
+    except (ValueError, RecursionError):
+        pass
+
+    sh = Namespace("http://www.w3.org/ns/shacl#")
+    for candidate in candidates:
+        variants = [candidate]
+        for marker in ("@prefix", "PREFIX "):
+            position = candidate.find(marker)
+            if position > 0:
+                variants.append(candidate[position:])
+        for variant in variants:
+            report = Graph()
+            try:
+                report.parse(data=variant, format="turtle")
+            except Exception:
+                continue
+            for node in report.subjects(RDF.type, sh.ValidationReport):
+                if (node, sh.conforms, Literal(False)) not in report:
+                    continue
+                for result in report.objects(node, sh.result):
+                    if (
+                        any(report.objects(result, sh.focusNode))
+                        and any(report.objects(result, sh.sourceConstraintComponent))
+                    ):
+                        return report
+    return None
+
+
+def _with_validation_details(error: HTTPError, transaction_url: str) -> HTTPError:
+    """Buffer diagnostics so parsing does not consume the caller's response."""
+    try:
+        body = error.read()
+    except Exception:
+        error.add_note("The HTTP error response body could not be read.")
+        return error
+    error.close()
+    report = _validation_report(body)
+    if report is None:
+        # Ordinary HTTP failures must not be classified as SHACL rejections.
+        enriched = HTTPError(error.url, error.code, error.msg, error.headers, BytesIO(body))
+    else:
+        enriched = CustomerValidationError(error, body, report, transaction_url)
+    for note in getattr(error, "__notes__", ()):
+        enriched.add_note(note)
+    return enriched
 
 class CustomerRdfStore:
     """Commit and retrieve a complete customer graph through GraphDB."""
@@ -164,6 +243,10 @@ class CustomerRdfStore:
                     "GraphDB rollback could not be confirmed. "
                     "Inspect repository state before retrying."
                 )
+            if isinstance(error, HTTPError):
+                enriched = _with_validation_details(error, transaction_url)
+                if enriched is not error:
+                    raise enriched from error
             raise
 
     def retrieve(self) -> Graph:
