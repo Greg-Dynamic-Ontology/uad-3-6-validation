@@ -1,0 +1,10 @@
+@prefix ex: <https://example.org/graphdb-utilities/test/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# Application-independent positive test fixture.
+# Matching SHACL constraints will be defined in shapes.ttl.
+
+ex:record-001
+    a ex:TestRecord ;
+    ex:identifier "record-001"^^xsd:string ;
+    ex:label "First test record"^^xsd:string .

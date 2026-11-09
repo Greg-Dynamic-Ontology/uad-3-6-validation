@@ -14,7 +14,7 @@
 # Controlled infrastructure failures may be injected at the tested boundary;
 # successful validation and persistence are not replaced with canned results.
 
-@IT-64
+@IT-66B
 Feature: Integrate the customer report-validation cycle workflow
   As an authenticated UAD customer
   I want the browser and API to manage report validation through durable account-owned cycles
@@ -30,11 +30,11 @@ Feature: Integrate the customer report-validation cycle workflow
     And the production validation engine has an identified governed schema and selected constraint-set coverage
     And required new-cycle authorization is supplied by the existing authorization and credit capabilities
 
-  @IT-64R1
+  @IT-66BR1
   Rule: Browser access reflects verified identity, account membership, and operating-mode policy
 
     # Integrates IT-2R5/R6, IT-25R1, and IT-44R3/R6/R9.
-    @IT-64R1S1
+    @IT-66BR1S1
     Scenario: Reach the account validation page after successful sign-in
       Given a user has a linked UAD identity and an active customer-account membership
       And that membership permits report validation
@@ -47,7 +47,7 @@ Feature: Integrate the customer report-validation cycle workflow
       And a hard-coded Demo indicator does not override the resolved operating mode
       And sign-in alone does not create a validation cycle
 
-    @IT-64R1S2
+    @IT-66BR1S2
     Scenario: Preserve Demo entry behavior for a Demo visitor
       Given the visitor is operating under the Demo-mode policy
       When the visitor opens the landing page and continues into report validation
@@ -55,7 +55,7 @@ Feature: Integrate the customer report-validation cycle workflow
       And continuing in Demo mode does not create an authenticated customer account
       And Demo requests do not create customer-owned cycles or consume account credits
 
-    @IT-64R1S3
+    @IT-66BR1S3
     Scenario: Require sign-in before creating an account-owned cycle
       Given the visitor has no valid authenticated session
       When the visitor requests creation of an account-owned cycle through the browser
@@ -63,7 +63,7 @@ Feature: Integrate the customer report-validation cycle workflow
       And no account-owned cycle or report submission is created by that request
       And no customer validation history is disclosed
 
-    @IT-64R1S4
+    @IT-66BR1S4
     Scenario: Reject a cycle request without account authorization
       Given a signed-in user lacks validation permission in the requested customer account
       When the user submits a new-cycle request directly to the API
@@ -71,11 +71,11 @@ Feature: Integrate the customer report-validation cycle workflow
       And no cycle, submission, validation attempt, or credit debit is created
       And client-supplied user or account identifiers do not replace verified authorization
 
-  @IT-64R2
+  @IT-66BBR2
   Rule: A new report request connects account authorization, lifecycle creation, and actual validation
 
     # Integrates IT-25R2, IT-25R3S1, IT-25R4, IT-25R5S1/S2, and IT-46.
-    @IT-64R2S1
+    @IT-66BR2S1
     Scenario: Submit a report and inspect its first actionable result through the browser
       Given a signed-in customer is authorized to open a new validation cycle
       And a controlled ingestible report produces a known governed validation finding
@@ -91,7 +91,7 @@ Feature: Integrate the customer report-validation cycle workflow
       And the billable-service lifecycle fact is available to credit management
       And the uploaded report remains unchanged
 
-    @IT-64R2S2
+    @IT-66BR2S2
     Scenario: Close a new cycle when the first actionable result passes
       Given a signed-in customer is authorized to open a new validation cycle
       And a controlled report passes the selected governed validation coverage
@@ -103,7 +103,7 @@ Feature: Integrate the customer report-validation cycle workflow
       And the result states the coverage actually evaluated
       And the billable-service lifecycle fact is available to credit management
 
-    @IT-64R2S3
+    @IT-66BR2S3
     Scenario: Reuse a cycle when a new-cycle request is retried
       Given a customer's new-cycle request has been accepted with an idempotency key
       When the customer repeats the same request with the same account-scoped key
@@ -111,11 +111,11 @@ Feature: Integrate the customer report-validation cycle workflow
       And no duplicate cycle, submission, or validation attempt is created
       And new-cycle authorization and billable-service recording are not repeated
 
-  @IT-64R3
+  @IT-66BR3
   Rule: Committed lifecycle knowledge survives restart and remains consistent across failures
 
     # Integrates durable adapters for IT-25 repository contracts.
-    @IT-64R3S1
+    @IT-66BR3S1
     Scenario: Retrieve a cycle and its history after restarting the application
       Given a customer has submitted a report and received a recorded validation result
       And the cycle, submission, attempt, result, and history have been committed to storage
@@ -127,7 +127,7 @@ Feature: Integrate the customer report-validation cycle workflow
       And the recorded findings and history remain retrievable
       And retrieval does not rerun validation or record another billable-service fact
 
-    @IT-64R3S2
+    @IT-66BR3S2
     Scenario: Recover an accepted request after its response is lost
       Given a new-cycle request was durably committed with its idempotency key
       And the client did not receive the response
@@ -136,7 +136,7 @@ Feature: Integrate the customer report-validation cycle workflow
       And recorded submissions, attempts, results, and history are reused
       And a completed validation is not executed again because its response was lost
 
-    @IT-64R3S3
+    @IT-66BR3S3
     Scenario: Roll back an incomplete lifecycle storage operation
       Given an account-authorized lifecycle operation requires related storage changes
       And a controlled storage failure occurs before that operation commits
@@ -146,11 +146,11 @@ Feature: Integrate the customer report-validation cycle workflow
       And no successful lifecycle outcome or billable-service fact is exposed for the failed commit
       And a retry can proceed from the last committed state
 
-  @IT-64R4
+  @IT-66BR4
   Rule: Corrected submissions retain their cycle and preserve earlier results
 
     # Integrates IT-25R2S2, IT-25R3S2/S3, and IT-25R6S1/S2.
-    @IT-64R4S1
+    @IT-66BR4S1
     Scenario: Submit a correction while findings remain
       Given an account-owned open cycle has a recorded result with findings
       And the customer prepares a corrected report that still has a known governed violation
@@ -162,7 +162,7 @@ Feature: Integrate the customer report-validation cycle workflow
       And the browser shows the new result alongside retrievable earlier history
       And the changed artifact content does not change the cycle identity
 
-    @IT-64R4S2
+    @IT-66BR4S2
     Scenario: Close an open cycle after a passing correction
       Given an account-owned open cycle has a recorded result with findings
       And the customer corrects the report so that it passes the selected validation coverage
@@ -173,7 +173,7 @@ Feature: Integrate the customer report-validation cycle workflow
       And the browser tells the customer that the report passed this validation service
       And all earlier submissions, findings, and results remain in history
 
-    @IT-64R4S3
+    @IT-66BR4S3
     Scenario: Reject a correction that omits its cycle identifier
       Given a customer requests validation as a correction to an earlier report
       When the API receives the correction without a cycle identifier
@@ -182,18 +182,18 @@ Feature: Integrate the customer report-validation cycle workflow
       And report content or filenames are not used to guess cycle ownership
       And no submission, attempt, or new cycle is created for the rejected correction
 
-  @IT-64R5
+  @IT-66BR5
   Rule: Closed cycles remain closed and later validation uses a new cycle
 
     # Integrates IT-25R6S3/S4.
-    @IT-64R5S1
+    @IT-66BR5S1
     Scenario: Reject a correction directed to a closed cycle
       Given a customer's cycle is passed and closed
       When the customer submits another version as a correction to that cycle
       Then the API rejects the correction and the browser explains that a new cycle is required
       And the passing result, closed state, and existing history remain unchanged
 
-    @IT-64R5S2
+    @IT-66BR5S2
     Scenario: Start an authorized successor cycle for a later report version
       Given a customer's earlier cycle is passed and closed
       And the customer is authorized to request another cycle
@@ -202,11 +202,11 @@ Feature: Integrate the customer report-validation cycle workflow
       And the new cycle may reference the earlier cycle as its predecessor
       And the previous cycle remains closed with its original passing result
 
-  @IT-64R6
+  @IT-66BR6
   Rule: The integrated workflow distinguishes actionable findings from processing failures
 
     # Integrates IT-25R4S1, IT-25R5S3/S4, and IT-46 failure reporting.
-    @IT-64R6S1
+    @IT-66BR6S1
     Scenario: Return actionable findings for an ingestible structurally invalid report
       Given an authorized pending cycle has an accepted report artifact
       And the artifact is ingestible as a UAD appraisal report
@@ -217,7 +217,7 @@ Feature: Integrate the customer report-validation cycle workflow
       And the browser displays the governed structural findings
       And the artifact is not treated as unprocessable solely because validation found structural errors
 
-    @IT-64R6S2
+    @IT-66BR6S2
     Scenario: Cancel a pending cycle for an unprocessable upload
       Given a pending cycle has an accepted upload
       And the upload cannot be ingested as a UAD appraisal report
@@ -228,7 +228,7 @@ Feature: Integrate the customer report-validation cycle workflow
       And the lifecycle records that no billable validation service was delivered
       And the cancellation is available to credit management
 
-    @IT-64R6S3
+    @IT-66BR6S3
     Scenario: Cancel a pending cycle when validation execution fails
       Given a pending cycle has an accepted submission
       And a controlled execution failure prevents an actionable validation result
@@ -239,11 +239,11 @@ Feature: Integrate the customer report-validation cycle workflow
       And the lifecycle records that no billable validation service was delivered
       And the cancellation is available to credit management
 
-  @IT-64R7
+  @IT-66BR7
   Rule: Concurrent requests and completion events preserve one authoritative lifecycle outcome
 
     # Integrates IT-25R3S4 and IT-25R7; assertions include durable state.
-    @IT-64R7S1
+    @IT-66BR7S1
     Scenario: Prevent concurrent validation attempts for one cycle
       Given a validation attempt is running for an account-owned cycle
       When another submission request reaches the API for that cycle
@@ -251,7 +251,7 @@ Feature: Integrate the customer report-validation cycle workflow
       And two validation attempts do not execute concurrently for that cycle
       And a browser retry cannot bypass the active-attempt guard
 
-    @IT-64R7S2
+    @IT-66BR7S2
     Scenario: Apply a repeated completion event once across application restart
       Given a validation-completion event has already been committed for an attempt
       When the application restarts and receives the same completion event again
@@ -260,7 +260,7 @@ Feature: Integrate the customer report-validation cycle workflow
       And the duplicate event is retained or logged for audit
       And the API and browser continue to show the same authoritative result
 
-    @IT-64R7S3
+    @IT-66BR7S3
     Scenario: Preserve the current result when an older completion arrives late
       Given a newer submission's result is current for a cycle
       When a delayed completion for an earlier submission reaches the application
@@ -268,11 +268,11 @@ Feature: Integrate the customer report-validation cycle workflow
       And the delayed event is retained or logged for audit
       And the browser continues to identify the newer submission's result as current
 
-  @IT-64R8
+  @IT-66BR8
   Rule: Account-scoped retrieval exposes complete append-only history
 
     # Integrates IT-25R2S4 and IT-25R8, with IT-44 permissions.
-    @IT-64R8S1
+    @IT-66BR8S1
     Scenario: Inspect durable lifecycle history through the browser and API
       Given a cycle has multiple accepted submissions, attempts, results, and transitions
       When its customer or an authorized reviewer opens the cycle history
@@ -283,7 +283,7 @@ Feature: Integrate the customer report-validation cycle workflow
       And later submissions append history rather than overwriting earlier events
       And history retrieval follows the authenticated actor's account permissions
 
-    @IT-64R8S2
+    @IT-66BR8S2
     Scenario Outline: Deny another account access to a cycle
       Given a cycle belongs to one customer account
       And a user is authenticated only for another customer account
@@ -300,11 +300,11 @@ Feature: Integrate the customer report-validation cycle workflow
         | retrieve its result   |
         | submit a correction   |
 
-  @IT-64R9
+  @IT-66BR9
   Rule: Lifecycle integration preserves the existing credit policy
 
     # Integrates IT-25 billable-service facts with IT-45; purchasing is outside scope.
-    @IT-64R9S1
+    @IT-66BR9S1
     Scenario: Authorize a retail cycle before creating it
       Given a retail customer has no available validation credit
       When the customer requests a new paid validation cycle
@@ -312,7 +312,7 @@ Feature: Integrate the customer report-validation cycle workflow
       And the API creates no pending cycle or paid validation attempt
       And the browser explains the credit requirement
 
-    @IT-64R9S2
+    @IT-66BR9S2
     Scenario: Record delivery and credit consumption once for a cycle
       Given a retail cycle has the required credit authorization
       When its first actionable validation result is committed and delivered
@@ -321,25 +321,25 @@ Feature: Integrate the customer report-validation cycle workflow
       And completion retries do not cause an additional debit
       And the lifecycle and credit records remain traceable to the same customer account
 
-    @IT-64R9S3
+    @IT-66BR9S3
     Scenario: Revalidate corrections within the same cycle without an additional credit
       Given a retail cycle has already delivered its first actionable result
       When corrected submissions are validated within that open cycle
       Then each correction has its own submission and result history
       And the existing credit capability does not consume another cycle credit
 
-    @IT-64R9S4
+    @IT-66BR9S4
     Scenario: Keep cancellations free of delivered-service debits
       Given a retail cycle has been cancelled before an actionable result was delivered
       When the existing credit capability processes the cancellation
       Then no validation credit is consumed for that cycle
       And the cancellation and resulting credit disposition are durably recorded
 
-  @IT-64R10
+  @IT-66BR10
   Rule: The integrated application preserves the customer and GSE service boundary
 
     # Integrates IT-25R9 and IT-44R13.
-    @IT-64R10S1
+    @IT-66BR10S1
     Scenario: Return a passing result without replacing or submitting the customer's report
       Given a customer report has passed and its cycle is closed
       When the customer retrieves the passing result through the browser or API

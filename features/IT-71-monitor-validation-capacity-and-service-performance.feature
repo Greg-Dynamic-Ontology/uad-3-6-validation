@@ -1,4 +1,4 @@
-@IT-69
+@IT-71
 Feature: Monitor validation capacity and service performance
   As an authorized UAD service operator
   I want measured execution load, waiting time, failures, and capacity alerts
@@ -16,10 +16,10 @@ Feature: Monitor validation capacity and service performance
     And reporting time zone, sampling intervals, retention, and alert policies are explicitly configured
     And operator access to service-wide monitoring is authorized
 
-  @IT-69R1
+  @IT-71R1
   Rule: Concurrent load reflects actual overlapping execution
 
-    @IT-69R1S1
+    @IT-71R1S1
     Scenario: Measure concurrent executions across service workers
       Given execution A runs from "2026-10-20T16:00:00Z" until "2026-10-20T16:00:10Z"
       And execution B runs from "2026-10-20T16:00:05Z" until "2026-10-20T16:00:15Z"
@@ -30,7 +30,7 @@ Feature: Monitor validation capacity and service performance
       And queued requests are not counted as active executions
       And the result identifies the measurement interval and participating workers
 
-    @IT-69R1S2
+    @IT-71R1S2
     Scenario: Preserve evidence of a worker lost during execution
       Given a worker stops reporting while its execution has no terminal lifecycle fact
       When the configured worker-liveness interval expires
@@ -39,10 +39,10 @@ Feature: Monitor validation capacity and service performance
       And confirmed active work and unresolved execution status are shown separately
       And lifecycle recovery determines any later terminal status
 
-  @IT-69R2
+  @IT-71R2
   Rule: Waiting time and execution time remain separately observable
 
-    @IT-69R2S1
+    @IT-71R2S1
     Scenario: Separate queue delay from processing and result delivery
       Given a request is accepted at "2026-10-20T16:00:00Z"
       And its execution starts at "2026-10-20T16:00:03Z"
@@ -55,7 +55,7 @@ Feature: Monitor validation capacity and service performance
       And durations use a clock source suitable for elapsed-time measurement
       And invalid or missing timing evidence is reported rather than converted to zero duration
 
-    @IT-69R2S2
+    @IT-71R2S2
     Scenario: Summarize throughput and latency with their populations
       Given a selected interval contains completed work, failed work, and requests still waiting
       When the operator inspects performance
@@ -66,10 +66,10 @@ Feature: Monitor validation capacity and service performance
       And separate service classes remain selectable
       And appraisal constraint violations are distinguished from service execution failures
 
-  @IT-69R3
+  @IT-71R3
   Rule: Capacity observations use closing-cycle demand and actual retry load
 
-    @IT-69R3S1
+    @IT-71R3S1
     Scenario: Compare expected peak periods with observed service load
       Given IT-68 identifies expected pre-closing weeks and observed usage
       When the operator inspects capacity over several months
@@ -79,7 +79,7 @@ Feature: Monitor validation capacity and service performance
       And the view identifies both the expected peak week and the observed busiest periods
       And a monthly average does not replace measured short-interval peaks
 
-    @IT-69R3S2
+    @IT-71R3S2
     Scenario: Keep capacity forecasts separate from observed measurements
       Given a planning case assumes 15000 paid allowances per year
       And each allowance permits at most ten completed validations under IT-66
@@ -90,10 +90,10 @@ Feature: Monitor validation capacity and service performance
       And assumed peak concentration and requests per second remain explicit planning inputs
       And a 0.5 percent market-share target is not reported as achieved market share without an independently sourced denominator
 
-  @IT-69R4
+  @IT-71R4
   Rule: Capacity alerts identify sustained conditions and recovery
 
-    @IT-69R4S1
+    @IT-71R4S1
     Scenario: Alert on a configured sustained capacity condition
       Given an alert policy defines a metric, threshold, evaluation window, minimum coverage, and notification destination
       And observed queue depth exceeds that threshold for the required window
@@ -103,7 +103,7 @@ Feature: Monitor validation capacity and service performance
       And repeated evaluations update that alert without issuing duplicate opening notifications
       And evaluation and notification remain available on weekends
 
-    @IT-69R4S2
+    @IT-71R4S2
     Scenario: Record recovery and retry failed alert delivery
       Given a capacity alert is active
       When its configured recovery condition is satisfied
@@ -112,7 +112,7 @@ Feature: Monitor validation capacity and service performance
       And a failed notification remains visible and retryable
       And retrying delivery does not create a second alert or alter validation execution
 
-    @IT-69R4S3
+    @IT-71R4S3
     Scenario: Identify missing monitoring coverage
       Given required monitoring observations stop arriving
       When the configured coverage policy detects the gap
@@ -120,10 +120,10 @@ Feature: Monitor validation capacity and service performance
       And it exposes a monitoring-health condition
       And missing observations cannot prove normal load or resolve an active capacity alert
 
-  @IT-69R5
+  @IT-71R5
   Rule: Monitoring survives restarts without changing validation or financial outcomes
 
-    @IT-69R5S1
+    @IT-71R5S1
     Scenario: Reopen retained performance history after a restart
       Given execution measurements and alert history have been durably recorded
       When the application restarts and an authorized operator reopens the retained interval

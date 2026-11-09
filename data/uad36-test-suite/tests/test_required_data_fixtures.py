@@ -9,6 +9,8 @@ import pytest
 from lxml import etree
 
 ROOT = Path(__file__).resolve().parents[1]
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
+SCHEMA_PATH = PROJECT_ROOT / 'specs/gse/Combined/GSE_UAD_3.6.0_v1.3.xsd'
 FIXTURES = ROOT / 'tests/fixtures/required_data'
 CASES = list(csv.DictReader((FIXTURES / 'manifest.csv').open(encoding='utf-8-sig')))
 RULES = json.loads((FIXTURES / 'selected-workbook-rows.json').read_text())
@@ -36,7 +38,8 @@ def baseline():
 
 @pytest.fixture(scope='module')
 def schema():
-    return etree.XMLSchema(etree.parse(str(ROOT / 'specs/UAD/GSE_UAD_3.6.0_v1.3/Combined/GSE_UAD_3.6.0_v1.3.xsd')))
+    assert SCHEMA_PATH.is_file(), f'Canonical UAD schema not found: {SCHEMA_PATH}'
+    return etree.XMLSchema(etree.parse(str(SCHEMA_PATH)))
 
 
 def test_baseline_and_manifest(baseline, schema):
@@ -87,3 +90,4 @@ def test_fixture(case, baseline, schema):
         if not nodes or not any((node.text or '').strip() for node in nodes):
             missing.append(rule['Message ID'])
     assert missing == [case['rule_id']]
+

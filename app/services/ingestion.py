@@ -1,6 +1,8 @@
 from hashlib import sha256
 from uuid import uuid4
 
+from lxml import etree
+
 from app.adapters.graph_store import graph_store
 from app.adapters.iri import IriMintingService
 from app.models.common import GraphResource, Provenance
@@ -42,10 +44,41 @@ class IngestionService:
                 raw_text=request.raw_text,
                 content_sha256=sha256(request.raw_text.encode("utf-8")).hexdigest(),
             )
-            graph_store.put_resource(candidate)
+            # Index declarations present in the submitted document without
+            # resolving imports/includes or claiming schema correctness.
+            # Keep identities scoped to this candidate so later submissions
+            # cannot overwrite its resources or source provenance.
+            parser = etree.XMLParser(
+                recover=False,
+                resolve_entities=False,
+                load_dtd=False,
+                no_network=True,
+            )
+            root = etree.fromstring(request.raw_text.encode("utf-8"), parser=parser)
+            resources = [candidate]
+            elements = root.findall("{http://www.w3.org/2001/XMLSchema}element")
+            for position, element in enumerate(elements, start=1):
+                name = element.get("name")
+                if not name:
+                    continue
+                resources.append(
+                    GraphResource(
+                        resource_id=f"schema-element:{token}:{position}",
+                        iri=self.iri.mint("schema-element", token, str(position)),
+                        resource_type="schema_element",
+                        label=name,
+                        source_xml_location=(
+                            "/{http://www.w3.org/2001/XMLSchema}schema"
+                            f"/{{http://www.w3.org/2001/XMLSchema}}element[{position}]"
+                        ),
+                        provenance=provenance,
+                    )
+                )
+            for resource in resources:
+                graph_store.put_resource(resource)
             return IngestResponse(
-                message="Schema candidate accepted for analysis",
-                resources_created=[candidate],
+                message="Schema candidate accepted for analysis; submitted element declarations indexed",
+                resources_created=resources,
                 provenance=provenance,
                 candidate_id=candidate.resource_id,
                 ingestion_status=candidate.ingestion_status,
@@ -121,3 +154,4 @@ class IngestionService:
 
 
 ingestion_service = IngestionService()
+

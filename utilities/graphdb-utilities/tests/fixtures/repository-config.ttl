@@ -1,0 +1,35 @@
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rep: <http://www.openrdf.org/config/repository#> .
+@prefix sr: <http://www.openrdf.org/config/repository/sail#> .
+@prefix sail: <http://www.openrdf.org/config/sail#> .
+@prefix graphdb: <http://www.ontotext.com/config/graphdb#> .
+@prefix shacl: <http://rdf4j.org/config/sail/shacl#> .
+
+# Application-independent repository configuration for utility tests.
+# The test replaces repositoryID with its unique test repository ID.
+#
+# The reserved SHACL graph holds data-graph-to-shape-graph mappings.
+# The custom shapes graph holds the caller's supplied shapes.
+# Neither graph contains application customer data or credentials.
+
+[] a rep:Repository ;
+    rep:repositoryID "owb-graphdb-test" ;
+    rdfs:label "OWB GraphDB utility test repository" ;
+    rep:repositoryImpl [
+        rep:repositoryType "graphdb:SailRepository" ;
+        sr:sailImpl [
+            sail:sailType "rdf4j:ShaclSail" ;
+
+            shacl:validationEnabled true ;
+            shacl:shapesGraph
+                <http://rdf4j.org/schema/rdf4j#SHACLShapeGraph>,
+                <urn:owb:graphdb:shapes> ;
+
+            sail:delegate [
+                sail:sailType "graphdb:Sail" ;
+                graphdb:repository-type "file-repository" ;
+                graphdb:ruleset "empty" ;
+                graphdb:storage-folder "storage"
+            ]
+        ]
+    ] .

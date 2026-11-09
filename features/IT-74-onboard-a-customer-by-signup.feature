@@ -1,4 +1,4 @@
-@IT-72
+@IT-74
 Feature: Onboard a customer by signup
   As a prospective UAD customer
   I want to sign up without receiving an invitation
@@ -8,10 +8,10 @@ Feature: Onboard a customer by signup
     Given the introductory form-credit grant is configured as N credits
     And N is a positive whole number
 
-  @IT-72R1
+  @IT-74R1
   Rule: A prospective customer can begin signup from the public UAD page
 
-    @IT-72R1S1
+    @IT-74R1S1
     Scenario: Find the signup entry point
       Given a prospective customer is viewing the public UAD landing page
       When the prospective customer chooses to sign up
@@ -20,17 +20,17 @@ Feature: Onboard a customer by signup
       And the page explains how to establish a sign-in identity or use an existing one
       And an invitation activation code is not required
 
-    @IT-72R1S2
+    @IT-74R1S2
     Scenario: View signup without creating an account
       Given a prospective customer is viewing the signup page
       When the prospective customer leaves without completing signup
       Then no customer account, membership, or introductory credits are created
 
 
-  @IT-72R2
+  @IT-74R2
   Rule: Signup requires a verified sign-in identity
 
-    @IT-72R2S1
+    @IT-74R2S1
     Scenario: Establish a sign-in identity for a new customer
       Given a prospective customer has begun signup
       And the prospective customer does not have a sign-in identity
@@ -41,7 +41,7 @@ Feature: Onboard a customer by signup
       And identity registration alone does not create a customer account
       And no introductory form credits are granted yet
 
-    @IT-72R2S2
+    @IT-74R2S2
     Scenario: Use an existing sign-in identity
       Given a prospective customer has begun signup
       And the prospective customer already has a verified sign-in identity
@@ -51,7 +51,7 @@ Feature: Onboard a customer by signup
       And no duplicate sign-in identity is created
       And the customer is directed to complete customer-account signup
 
-    @IT-72R2S3
+    @IT-74R2S3
     Scenario: Require email verification before completing signup
       Given a prospective customer has begun signup
       And the customer's sign-in email address has not been verified
@@ -59,14 +59,14 @@ Feature: Onboard a customer by signup
       Then the customer is directed to complete email verification
       And no customer account, membership, or introductory credits are created
 
-    @IT-72R2S4
+    @IT-74R2S4
     Scenario: Require authentication before completing signup
       Given a prospective customer is not signed in
       When the prospective customer attempts to complete customer-account signup
       Then the customer is directed to sign in
       And no customer account, membership, or introductory credits are created
 
-    @IT-72R2S5
+    @IT-74R2S5
     Scenario: Resume signup after establishing a sign-in identity
       Given a prospective customer has established a verified sign-in identity
       And the customer left before completing customer-account signup
@@ -76,10 +76,10 @@ Feature: Onboard a customer by signup
       And no introductory form credits are granted until signup succeeds
 
 
-  @IT-72R3
+  @IT-74R3
   Rule: Successful signup establishes a customer account
 
-    @IT-72R3S1
+    @IT-74R3S1
     Scenario: Complete signup without an invitation
       Given a prospective customer is signed in with a verified email address
       And the customer has supplied the required customer-account information
@@ -95,7 +95,7 @@ Feature: Onboard a customer by signup
       And the customer can reach the customer-account landing page
       And no invitation activation code is requested
 
-    @IT-72R3S2
+    @IT-74R3S2
     Scenario: Explain missing customer-account information
       Given a prospective customer is signed in with a verified email address
       And required customer-account information is missing
@@ -105,7 +105,7 @@ Feature: Onboard a customer by signup
       And the customer can correct the information and try again
       And no customer account, membership, or introductory credits are created
 
-    @IT-72R3S3
+    @IT-74R3S3
     Scenario: Direct an invited customer to invitation activation
       Given a prospective customer is signed in with a verified email address
       And a pending invitation exists for that email address
@@ -115,10 +115,10 @@ Feature: Onboard a customer by signup
       And no separate signup account or introductory grant is created
 
 
-  @IT-72R4
+  @IT-74R4
   Rule: Signup and its introductory credit grant happen only once
 
-  @IT-72R4S1
+  @IT-74R4S1
   Scenario: Retry a completed signup
       Given a customer has successfully completed signup
       When the same customer submits the signup completion request again
@@ -126,7 +126,7 @@ Feature: Onboard a customer by signup
       And no duplicate user, customer account, or membership is created
       And no additional introductory form credits are granted
 
-    @IT-72R4S2
+    @IT-74R4S2
     Scenario: Sign in after completing signup
       Given a customer has successfully completed signup
       When the customer signs in again
@@ -135,7 +135,7 @@ Feature: Onboard a customer by signup
       And no invitation activation code is requested
       And no additional introductory form credits are granted
 
-    @IT-72R4S3
+    @IT-74R4S3
     Scenario: Prevent a second introductory grant after invitation activation
       Given a customer previously completed onboarding by invitation
       And the customer received introductory form credits
@@ -145,7 +145,7 @@ Feature: Onboard a customer by signup
       And no duplicate user, customer account, or membership is created
       And no additional introductory form credits are granted
 
-    @IT-72R4S4
+    @IT-74R4S4
     Scenario: Handle concurrent signup completion requests
       Given a prospective customer is eligible to complete signup
       When multiple signup completion requests for the same authenticated identity arrive concurrently
@@ -154,7 +154,7 @@ Feature: Onboard a customer by signup
       And exactly one grant of N introductory form credits is recorded
       And the successful responses identify the same customer account
 
-    @IT-72R4S5
+    @IT-74R4S5
     Scenario: Recover from an interrupted signup
       Given an eligible prospective customer is completing signup
       When onboarding fails before completion
@@ -162,7 +162,7 @@ Feature: Onboard a customer by signup
       And signup is not recorded as complete
       And the customer can safely retry signup
 
-    @IT-72R4S6
+    @IT-74R4S6
     Scenario: Preserve signup across a server restart
       Given a customer has successfully completed signup
       When the application server restarts
@@ -171,17 +171,17 @@ Feature: Onboard a customer by signup
       And signup remains recorded as complete
       And the remaining form-credit balance is preserved
 
-  @IT-72R5
+  @IT-74R5
   Rule: Introductory form credits belong to the customer account
 
-    @IT-72R5S1
+    @IT-74R5S1
     Scenario: Display the introductory credit balance
       Given a customer has just completed signup
       And no form credits have been consumed
       When the customer views the customer-account credit balance
       Then the available balance is N form credits
 
-    @IT-72R5S2
+    @IT-74R5S2
     Scenario: Keep another customer's credits inaccessible
       Given two customers have separate customer accounts
       And neither customer has a membership in the other's account
@@ -190,28 +190,28 @@ Feature: Onboard a customer by signup
       Then only that account's credit balance is available
       And the customer cannot spend the other account's credits
 
-  @IT-72R6
+  @IT-74R6
   Rule: Signup onboarding is traceable
 
-  @IT-72R6S1
+  @IT-74R6S1
     Scenario: Trace the customer account to the UAD user
       Given a customer has successfully completed signup
       When the customer account is queried
       Then the linked UAD user is identified
 
-    @IT-72R6S2
+    @IT-74R6S2
     Scenario: Trace the UAD user to the customer account
       Given a customer has successfully completed signup
       When the UAD user is queried
       Then the linked customer account is identified
 
-    @IT-72R6S3
+    @IT-74R6S3
     Scenario: Trace the introductory grant to the customer account
       Given a customer has successfully completed signup
       When the credit ledger is queried for that grant
       Then the resulting customer account is identified
 
-    @IT-72R6S4
+    @IT-74R6S4
     Scenario: Record the origin of an introductory credit grant
       When a customer successfully completes signup
       Then the onboarding record identifies signup as the account's origin

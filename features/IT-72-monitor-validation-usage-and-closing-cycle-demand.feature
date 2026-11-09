@@ -1,4 +1,4 @@
-@IT-70
+@IT-72
 Feature: Monitor validation usage and closing-cycle demand
   As an authorized UAD service operator
   I want traceable usage measurements across all calendar days and monthly closing periods
@@ -18,10 +18,10 @@ Feature: Monitor validation usage and closing-cycle demand
     And monitoring distinguishes production, Demo, and test activity
     And operator access to service-wide monitoring is authorized
 
-  @IT-70R1
+  @IT-72R1
   Rule: Paid allowances and validation work are measured separately
 
-    @IT-70R1S1
+    @IT-72R1S1
     Scenario: Count one paid allowance separately from its included validations
       Given one production account starts one paid allowance using one credit
       And the initial UAD validation and nine included resubmissions complete
@@ -33,7 +33,7 @@ Feature: Monitor validation usage and closing-cycle demand
       And linked cycle identities do not inflate the paid-allowance count
       And the counts remain traceable to the entitlement and attempt identities
 
-    @IT-70R1S2
+    @IT-72R1S2
     Scenario: Distinguish free checks and unsuccessful work from paid completions
       Given the reporting period contains free schema checks, Demo validations, production UAD validations, and service failures
       When usage is summarized
@@ -44,7 +44,7 @@ Feature: Monitor validation usage and closing-cycle demand
       And debits, reversals, and net credit consumption are separate financial measures
       And monitoring does not debit, reverse, or refund credits
 
-    @IT-70R1S3
+    @IT-72R1S3
     Scenario: Count repeated event deliveries once
       Given a lifecycle or credit fact has already been included in monitoring
       When that same fact is delivered again or arrives out of order
@@ -52,10 +52,10 @@ Feature: Monitor validation usage and closing-cycle demand
       And summaries reflect event time rather than delivery order
       And a late fact updates the affected period with a visible refresh time
 
-  @IT-70R2
+  @IT-72R2
   Rule: Usage reporting includes weekends and uses explicit time boundaries
 
-    @IT-70R2S1
+    @IT-72R2S1
     Scenario: Report all seven days of a calendar week
       Given production validations occur on weekdays, Saturday, and Sunday
       When the operator views a complete week's daily usage
@@ -64,7 +64,7 @@ Feature: Monitor validation usage and closing-cycle demand
       And weekend activity contributes to weekly and monthly totals
       And no business-day multiplier substitutes for observed activity
 
-    @IT-70R2S2
+    @IT-72R2S2
     Scenario: Assign events to local dates across daylight-saving changes
       Given the reporting time zone is "America/Denver"
       And events span local midnight and a daylight-saving transition
@@ -74,10 +74,10 @@ Feature: Monitor validation usage and closing-cycle demand
       And a local day may contain 23, 24, or 25 elapsed hours
       And interval boundaries include the start instant and exclude the end instant
 
-  @IT-70R3
+  @IT-72R3
   Rule: The expected pre-closing peak is compared with observed monthly demand
 
-    @IT-70R3S1
+    @IT-72R3S1
     Scenario Outline: Identify the configured week before the last-Friday closing week
       Given the configured expected peak is the Monday-through-Sunday week before the week containing the month's last Friday
       When the calendar is calculated for <month>
@@ -91,7 +91,7 @@ Feature: Monitor validation usage and closing-cycle demand
         | 2026-05 | 2026-05-29  | 2026-05-18 | 2026-05-24 |
         | 2026-02 | 2026-02-27  | 2026-02-16 | 2026-02-22 |
 
-    @IT-70R3S2
+    @IT-72R3S2
     Scenario: Measure the peak week's share of monthly demand
       Given a complete month contains 1250 paid allowances started and 4000 UAD execution starts
       And its expected peak week contains 500 paid allowances started and 1800 UAD execution starts
@@ -101,7 +101,7 @@ Feature: Monitor validation usage and closing-cycle demand
       And the two measures retain their separate denominators
       And each total can be reconciled with the underlying daily records
 
-    @IT-70R3S3
+    @IT-72R3S3
     Scenario: Show when the observed busiest week differs from the expected peak
       Given a complete month has its largest UAD execution-start count in another calendar week
       When the operator inspects monthly demand
@@ -110,7 +110,7 @@ Feature: Monitor validation usage and closing-cycle demand
       And it identifies all tied busiest weeks
       And observations do not silently change the configured calendar convention
 
-    @IT-70R3S4
+    @IT-72R3S4
     Scenario: Distinguish incomplete or unavailable observations from zero demand
       Given the current month is incomplete or monitoring has an identified collection gap
       When the operator views monthly totals and peak-week comparisons
@@ -119,10 +119,10 @@ Feature: Monitor validation usage and closing-cycle demand
       And unavailable observations are not represented as zero activity
       And a zero denominator produces an unavailable percentage rather than a fabricated percentage
 
-  @IT-70R4
+  @IT-72R4
   Rule: Monitoring results are inspectable without exposing customer report content
 
-    @IT-70R4S1
+    @IT-72R4S1
     Scenario: Inspect and export a reproducible usage summary
       Given an authorized operator selects a reporting interval and operating-mode filters
       When the operator views or exports usage

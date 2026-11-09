@@ -1,4 +1,4 @@
-@IT-67
+@IT-69
 Feature: Manage credit refunds, payment disputes, and account financial history
   As an authorized customer-account billing administrator
   I want unused-credit refunds and traceable dispute handling
@@ -15,10 +15,10 @@ Feature: Manage credit refunds, payment disputes, and account financial history
     And only available credits can authorize a new paid validation
     And financial entries have stable identities and durable audit history
 
-  @IT-67R1
+  @IT-69R1
   Rule: Refund only unused purchased credits at their original paid value
 
-    @IT-67R1S1
+    @IT-69R1S1
     Scenario Outline: Calculate an unused-credit refund from the original package
       Given a confirmed purchase issued <package_credits> credits for <price_cents> United States cents
       And <unused_credits> of those credits remain unused and available
@@ -32,7 +32,7 @@ Feature: Manage credit refunds, payment disputes, and account financial history
         | 500             | 210000      | 10             | 4200         |
         | 1000            | 400000      | 10             | 4000         |
 
-    @IT-67R1S2
+    @IT-69R1S2
     Scenario: Hold eligible credits while their refund is pending
       Given an authorized refund request identifies unused available credits from one purchase
       When the service accepts the refund request
@@ -40,7 +40,7 @@ Feature: Manage credit refunds, payment disputes, and account financial history
       And the request records its quantity, amount, original payment, actor, and idempotency key
       And concurrent validation cannot consume credits already held for refund
 
-    @IT-67R1S3
+    @IT-69R1S3
     Scenario: Complete a confirmed refund exactly once
       Given eligible credits are held for a recorded refund request
       When a verified provider outcome confirms the refund was issued
@@ -49,7 +49,7 @@ Feature: Manage credit refunds, payment disputes, and account financial history
       And the customer receives refund confirmation
       And the balance remains nonnegative
 
-    @IT-67R1S4
+    @IT-69R1S4
     Scenario: Restore availability after a definitively failed refund
       Given unused credits are held for a refund
       When reconciliation confirms that the provider did not issue the refund and the request definitively failed
@@ -57,7 +57,7 @@ Feature: Manage credit refunds, payment disputes, and account financial history
       And credits subject to another valid hold remain unavailable
       And an unknown or pending provider outcome does not release credits prematurely
 
-    @IT-67R1S5
+    @IT-69R1S5
     Scenario: Reject a refund request for consumed or unavailable credits
       Given a refund request includes consumed credits, credits already refunded, or credits held for another financial action
       When refund eligibility is evaluated
@@ -65,7 +65,7 @@ Feature: Manage credit refunds, payment disputes, and account financial history
       And consumed validation service is not reclassified as unused credit
       And the service does not create a negative balance or issue an excess refund
 
-    @IT-67R1S6
+    @IT-69R1S6
     Scenario: Preserve package attribution when an account holds several purchases
       Given an account holds unused credits purchased at different package prices
       When the customer requests a refund
@@ -73,10 +73,10 @@ Feature: Manage credit refunds, payment disputes, and account financial history
       And each refunded quantity is valued using its own paid price
       And unrelated purchases and their credits remain unchanged
 
-  @IT-67R2
+  @IT-69R2
   Rule: A payment dispute holds the related unused credits while unresolved
 
-    @IT-67R2S1
+    @IT-69R2S1
     Scenario: Hold unused credits from a disputed payment
       Given a verified provider event opens a dispute against a captured credit purchase
       When the service records the dispute
@@ -85,7 +85,7 @@ Feature: Manage credit refunds, payment disputes, and account financial history
       And credits from unrelated undisputed purchases remain available
       And the account shows the dispute and held quantity
 
-    @IT-67R2S2
+    @IT-69R2S2
     Scenario: Escalate disputed value that has already funded validation
       Given a disputed purchase includes consumed credits
       When the dispute is recorded
@@ -94,7 +94,7 @@ Feature: Manage credit refunds, payment disputes, and account financial history
       And delivered validation results and usage history remain unchanged
       And any further account restriction identifies the applicable account policy
 
-    @IT-67R2S3
+    @IT-69R2S3
     Scenario: Release a dispute hold when the payment is retained
       Given unused credits are held solely because of an unresolved dispute
       When a verified final provider outcome resolves the dispute in the merchant's favor
@@ -102,7 +102,7 @@ Feature: Manage credit refunds, payment disputes, and account financial history
       And the credits become available unless another valid hold applies
       And no new purchased credits are issued
 
-    @IT-67R2S4
+    @IT-69R2S4
     Scenario: Remove held credits when the payment is reversed
       Given unused purchased credits are held for a dispute
       When a verified final provider outcome reverses the payment
@@ -110,7 +110,7 @@ Feature: Manage credit refunds, payment disputes, and account financial history
       And previously consumed value remains recorded for financial review
       And the ledger links the reversal to the original payment and dispute
 
-    @IT-67R2S5
+    @IT-69R2S5
     Scenario: Coordinate duplicate and out-of-order financial events
       Given refund and dispute events concern the same purchase
       When notifications are repeated, concurrent, or arrive out of order
@@ -118,10 +118,10 @@ Feature: Manage credit refunds, payment disputes, and account financial history
       And the same credit is not refunded, restored, or removed twice
       And unresolved discrepancies remain visible for review
 
-  @IT-67R3
+  @IT-69R3
   Rule: Financial state remains durable and auditable
 
-    @IT-67R3S1
+    @IT-69R3S1
     Scenario: Review account purchases, usage, refunds, and balance
       Given an account has purchases and credit activity
       When an authorized billing administrator opens its financial history in the browser or API
@@ -132,7 +132,7 @@ Feature: Manage credit refunds, payment disputes, and account financial history
       And refunds, reversals, holds, and compensating entries identify their originating events
       And the balance can be reconciled from the ledger
 
-    @IT-67R3S2
+    @IT-69R3S2
     Scenario: Deny another account access to financial records
       Given financial records belong to one account
       When a user without that account's billing permission requests its history, receipt, or refund action
@@ -140,7 +140,7 @@ Feature: Manage credit refunds, payment disputes, and account financial history
       And no financial details are disclosed or changed
       And the denied action is auditable
 
-    @IT-67R3S3
+    @IT-69R3S3
     Scenario: Recover a financial operation across restart
       Given a purchase, debit, refund, dispute, or reversal has a committed identity and recorded state
       When the application restarts and receives a retry or provider reconciliation outcome
@@ -148,7 +148,7 @@ Feature: Manage credit refunds, payment disputes, and account financial history
       And it does not duplicate charges, credit issuance, holds, removals, or refunds
       And an interrupted local operation does not expose partially committed balances
 
-    @IT-67R3S4
+    @IT-69R3S4
     Scenario: Preserve original financial records when correcting a mistake
       Given a recorded financial entry requires an authorized correction
       When the correction is committed

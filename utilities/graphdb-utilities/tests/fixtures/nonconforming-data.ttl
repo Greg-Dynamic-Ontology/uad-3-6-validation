@@ -1,0 +1,11 @@
+@prefix ex: <https://example.org/graphdb-utilities/test/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# Application-independent negative test fixture.
+# Deliberately omits ex:identifier.
+# The matching shape must require at least one ex:identifier value.
+# Expected result: SHACL validation rejects this dataset.
+
+ex:record-001
+    a ex:TestRecord ;
+    ex:label "First test record"^^xsd:string .

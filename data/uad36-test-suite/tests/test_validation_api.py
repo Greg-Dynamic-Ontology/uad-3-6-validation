@@ -6,7 +6,8 @@ from fastapi.testclient import TestClient
 from app.main import app
 
 
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
+# This test lives under data/uad36-test-suite/tests; fixtures live at the repository root.
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
 VENDOR_XML_DIR = PROJECT_ROOT / "examples" / "xml"
 
 CLIENT_ID = "client_test_validation_api"
