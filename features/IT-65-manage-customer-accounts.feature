@@ -1,4 +1,4 @@
-@IT-IT-65
+@IT-65
 Feature: Manage customer accounts
   As a prospective customer or authorized customer-account administrator
   I want to create, view, update, and close a customer account
@@ -19,10 +19,10 @@ Feature: Manage customer accounts
     And customer accounts and memberships are durably stored
     And account changes are attributable to the acting user
 
-    @IT-IT-65R1
+    @IT-65R1
   Rule: A customer account has an identity separate from its users
-
-    @IT-IT-65R1S1
+.venv\Scripts\python.exe -m pytest tests\test_it_65_r1_s2_associate_account_owned_resources_with_customer_account.py -q --tb=short
+    @IT-65R1S1
     Scenario: Assign a stable identity to a new customer account
       When UAD creates a customer account
       Then it assigns a unique customer-account ID
@@ -30,7 +30,7 @@ Feature: Manage customer accounts
       And that ID is distinct from the owner's WorkOS user ID
       And subsequent changes to account information preserve that ID
 
-    @IT-IT-65R1S2
+    @IT-65R1S2
     Scenario: Associate account-owned resources with the customer account
       Given an active customer account
       When the account acquires validation credits or creates validation work
@@ -38,10 +38,10 @@ Feature: Manage customer accounts
       And they do not belong personally to the user performing the action
 
   
-  @IT-IT-65R2
+  @IT-65R2
   Rule: An eligible user can create a solo or company customer account
 
-    @IT-IT-65R2S1
+    @IT-65R2S1
     Scenario Outline: Create a customer account
       Given the user is eligible to establish a customer account
       When the user submits the required information for a "<account_type>" account
@@ -57,7 +57,7 @@ Feature: Manage customer accounts
         | company      |
 
 
-    @IT-IT-65R2S2
+    @IT-65R2S2
     Scenario: Record required information for a solo customer account
       When the user creates a solo customer account
       Then the required account information is:
@@ -71,7 +71,7 @@ Feature: Manage customer accounts
         | postal address         |
       And omitted optional information does not prevent creation
 
-    @IT-IT-65R2S3
+    @IT-65R2S3
     Scenario: Record required information for a company customer account
       When the user creates a company customer account
       Then the required account information is:
@@ -87,31 +87,31 @@ Feature: Manage customer accounts
         | company website        |
       And omitted optional information does not prevent creation
 
-    @IT-IT-65R2S4
+    @IT-65R2S4
     Scenario: Reject incomplete or invalid account information
       When the user submits account information with a missing or invalid required field
       Then UAD identifies each field requiring correction
       And UAD preserves the submitted information for correction
       And UAD creates neither a customer account nor an owner membership
 
-    @IT-IT-65R2S5
+    @IT-65R2S5
     Scenario: Avoid duplicate accounts when creation is retried
       Given an account-creation request has succeeded
       When the same request is retried
       Then UAD returns the previously created customer account
       And it creates no additional customer account or membership
 
-    @IT-IT-65R2S6
+    @IT-65R2S6
     Scenario: Roll back incomplete account creation
       When UAD cannot durably save both the account and its owner membership
       Then neither change is committed
       And UAD reports that account creation did not complete
 
-  @IT-IT-65R3
+  @IT-65R3
   Rule: Authorized users can view their customer accounts
 
 
-    @IT-IT-65R3S1
+    @IT-65R3S1
     Scenario: List accounts available to the signed-in user
       Given the user has active memberships in customer accounts
       When the user views their customer accounts
@@ -119,24 +119,24 @@ Feature: Manage customer accounts
       And each entry identifies the account ID, display name, type, and status
       And each entry identifies the user's role in that account
 
-    @IT-IT-65R3S2
+    @IT-65R3S2
     Scenario: View a selected customer account
       Given the user is authorized to view a customer account
       When the user selects that account
       Then UAD displays its stored account information
       And UAD identifies the selected account throughout account-specific work
 
-    @IT-IT-65R3S3
+    @IT-65R3S3
     Scenario: Reject access to an unrelated customer account
       Given the user has no permission to view a customer account
       When the user requests that account using its customer-account ID
       Then UAD denies access
       And it discloses no account details
 
-  @IT-IT-65R4
+  @IT-65R4
   Rule: Authorized administrators can update customer-account information
 
-    @IT-IT-65R4S1
+    @IT-65R4S1
     Scenario: Update account information
       Given the user is authorized to administer an active customer account
       When the user submits valid changes to its editable account information
@@ -146,18 +146,21 @@ Feature: Manage customer accounts
       And account memberships, credits, and validation work remain associated with it
       And UAD records who made the change and when
 
+    @IT-65R4S2
     Scenario: Reject an invalid update
       Given the user is authorized to administer an active customer account
       When the user submits invalid account information
       Then UAD identifies the information requiring correction
       And the previously stored account information remains unchanged
 
+    @IT-65R4S3
     Scenario: Reject an unauthorized update
       Given the user is not authorized to administer a customer account
       When the user attempts to change its information
       Then UAD denies the change
       And the stored account information remains unchanged
 
+    @IT-65R4S4
     Scenario: Detect conflicting updates
       Given two administrators have read the same version of an account
       And one administrator has saved a change
@@ -165,10 +168,10 @@ Feature: Manage customer accounts
       Then UAD reports that the account has changed
       And it does not silently overwrite the first administrator's change
 
-  @IT-IT-65R5
+  @IT-65R5
   Rule: Company users act through explicit account memberships
 
-    @IT-IT-65R5S1
+    @IT-65R5S1
     Scenario: Associate a user with an existing company account
       Given an active company customer account
       And an authenticated UAD user
@@ -178,14 +181,14 @@ Feature: Manage customer accounts
       And it creates no additional customer account
       And the user receives only the permissions granted by that membership
 
-    @IT-IT-65R5S2
+    @IT-65R5S2
     Scenario: Do not infer company membership from an email domain
       Given a user has an email address matching a company's email domain
       But the user has no active membership in that company's customer account
       When the user requests access to that account
       Then UAD denies access
 
-    @IT-IT-65R5S3
+    @IT-65R5S3
     Scenario: Remove a user's company membership
       Given the administrator is authorized to manage account memberships
       And removing the membership will leave an active account owner
@@ -195,17 +198,17 @@ Feature: Manage customer accounts
       And the user's identity remains available
       And the account's credits and validation work remain unchanged
 
-    @IT-IT-65R5S4
+    @IT-65R5S4
     Scenario: Prevent removal of the last active owner
       Given a customer account has only one active owner
       When an administrator attempts to remove or demote that owner
       Then UAD rejects the change
       And explains that another active owner must first be designated
 
-  @IT-IT-65R6
+  @IT-65R6
   Rule: An authorized owner can close a customer account
 
-    @IT-IT-65R6S1
+    @IT-65R6S1
     Scenario: Close an account with no outstanding obligations
       Given the user is an active owner of a customer account
       And the account has no remaining validation credits
@@ -218,7 +221,7 @@ Feature: Manage customer accounts
       And existing account history remains associated with the customer-account ID
       And the users' identities and memberships in other accounts remain unchanged
 
-    @IT-IT-65R6S2
+    @IT-65R6S2
     Scenario: Explain why an account cannot yet be closed
       Given the user is an active owner of a customer account
       And the account has remaining credits, work in progress, or unresolved payment obligations
@@ -226,14 +229,14 @@ Feature: Manage customer accounts
       Then UAD identifies the outstanding conditions
       And the account remains active
 
-    @IT-IT-65R6S3
+    @IT-65R6S3
     Scenario: Reject closure by a user without owner permission
       Given the user is not an active owner of a customer account
       When the user attempts to close that account
       Then UAD denies closure
       And the account remains unchanged
 
-    @IT-IT-65R6S4
+    @IT-65R6S4
     Scenario: Repeat an account-closure request
       Given a customer account has already been closed
       When its authorized owner repeats the closure request

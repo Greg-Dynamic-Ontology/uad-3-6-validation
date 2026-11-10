@@ -1,20 +1,26 @@
+
 """Transactional customer RDF persistence backed by GraphDB."""
 
 import json
 from hashlib import sha256
 from collections.abc import Mapping
 from datetime import datetime, timezone
+from dataclasses import asdict
 from io import BytesIO
 from http.client import HTTPException
 from pathlib import Path
 from urllib.error import HTTPError, URLError
-from urllib.parse import parse_qs, urlencode, urljoin, urlsplit
+from urllib.parse import parse_qs, quote, urlencode, urljoin, urlsplit
 from urllib.request import Request, urlopen
 from uuid import uuid4
 
 from rdflib import BNode, Graph, Literal, Namespace, URIRef
 from rdflib.namespace import RDF, XSD
 from rdflib.compare import to_canonical_graph
+
+from app.services.customer_accounts import (
+    CustomerAccount, CustomerAccountMembership, CustomerAccountRole,
+)
 
 
 PROV = Namespace("http://www.w3.org/ns/prov#")
@@ -155,6 +161,8 @@ def _with_validation_details(error: HTTPError, transaction_url: str) -> HTTPErro
         enriched = HTTPError(error.url, error.code, error.msg, error.headers, BytesIO(body))
     else:
         enriched = CustomerValidationError(error, body, report, transaction_url)
+    if getattr(error, "rollback_confirmed", False) is True:
+        enriched.rollback_confirmed = True
     for note in getattr(error, "__notes__", ()):
         enriched.add_note(note)
     return enriched
@@ -529,7 +537,13 @@ class CustomerRdfStore:
                     self.repository_url, transaction_url, str(activity),
                 ) from error
             try:
-                self._request("DELETE", transaction_url)
+                rollback_status, _, _ = self._request("DELETE", transaction_url)
+                if rollback_status not in {200, 204}:
+                    raise RuntimeError("GraphDB did not confirm transaction rollback.")
+                # Report explicit evidence to higher-level account creation.
+                # Preserve the original exception for existing RDF-store callers.
+                if not commit_requested:
+                    error.rollback_confirmed = True
             except Exception:
                 error.add_note(
                     "GraphDB rollback could not be confirmed. "
@@ -589,8 +603,656 @@ class CustomerRdfStore:
         result.parse(data=body.decode("utf-8"), format="nt")
         return result
 
+class AccountCreationIncompleteError(RuntimeError):
+    """Account persistence failed before commit and rollback was confirmed."""
 
+    code = "account_creation_incomplete"
+    committed = False
+    rollback_confirmed = True
 
+    def __init__(self, customer_account_id: str):
+        self.customer_account_id = customer_account_id
+        super().__init__(
+            "Account creation did not complete. The transaction was rolled back; "
+            "neither the customer account nor its owner membership was committed."
+        )
+
+class GraphDBCustomerAccountRepository:
+    """Create and reload account aggregates in the configured customer graph.
+
+    Authentication and eligibility are service prerequisites. Creation writes
+    the account, initial membership, and durable attribution in one transaction.
+    Each get reads GraphDB; there is no local aggregate cache or fallback file.
+    """
+
+    CUSTOMER = Namespace("urn:uad:customer:")
+    ROLE_IRIS = {
+        CustomerAccountRole.OWNER: CUSTOMER.Owner,
+        CustomerAccountRole.BILLING_ADMINISTRATOR: CUSTOMER.BillingAdministrator,
+        CustomerAccountRole.VALIDATOR: CUSTOMER.Validator,
+        CustomerAccountRole.REVIEWER: CUSTOMER.Reviewer,
+    }
+    TEXT_FIELDS = {
+        "display_name": CUSTOMER.name,
+        "account_type": CUSTOMER.accountType,
+        "status": CUSTOMER.status,
+        "primary_contact_name": CUSTOMER.primaryContactName,
+        "primary_contact_email": CUSTOMER.primaryContactEmail,
+        "company_name": CUSTOMER.companyName,
+        "contact_telephone": CUSTOMER.contactTelephone,
+        "postal_address": CUSTOMER.postalAddress,
+        "company_website": CUSTOMER.companyWebsite,
+    }
+
+    REQUEST_FIELDS = {
+        "creation_request_id": CUSTOMER.creationRequestId,
+        "creation_request_actor_id": CUSTOMER.creationRequestActorId,
+        "creation_request_fingerprint": CUSTOMER.creationRequestFingerprint,
+    }
+
+    def __init__(self, *, repository_url: str, graph_iri: str):
+        self.store = CustomerRdfStore(repository_url, graph_iri)
+
+    @staticmethod
+    def _user_iri(human_user_id: str) -> URIRef:
+        if not isinstance(human_user_id, str) or not human_user_id.strip():
+            raise ValueError("An identified UAD user is required.")
+        if urlsplit(human_user_id).scheme:
+            return _iri(human_user_id)
+        return URIRef("urn:uad:user:" + quote(human_user_id, safe=""))
+
+    def add(self, customer_account: CustomerAccount) -> None:
+        account = _iri(customer_account.customer_account_id)
+        if customer_account.status != "active":
+            raise ValueError("A new customer account must be active.")
+        if customer_account.account_type not in {"solo", "company"}:
+            raise ValueError("A new customer account must be solo or company.")
+        memberships = customer_account.memberships
+        if len(memberships) != 1:
+            raise ValueError("Account creation requires exactly one initial owner membership.")
+        owner = memberships[0]
+        if (
+            not owner.active
+            or owner.role != CustomerAccountRole.OWNER
+            or owner.customer_account_id != str(account)
+        ):
+            raise ValueError("Account creation requires an active owner in the same account.")
+        user = self._user_iri(owner.human_user_id)
+        created_at = customer_account.created_at
+        if not isinstance(created_at, datetime) or created_at.utcoffset() is None:
+            raise ValueError("Account creation time must have a timezone.")
+        # This detects an existing ID, not concurrent request idempotency.
+        existing = self.store.retrieve()
+        if any(existing.triples((account, None, None))):
+            raise ValueError("The customer-account ID already exists.")
+
+        customer = self.CUSTOMER
+        additions = Graph()
+        additions.add((account, RDF.type, customer.CustomerAccount))
+        for field_name, predicate in self.TEXT_FIELDS.items():
+            value = getattr(customer_account, field_name)
+            if not isinstance(value, str):
+                raise ValueError(f"{field_name} must be text.")
+            additions.add((account, predicate, Literal(value, datatype=XSD.string)))
+        request_values = {
+            name: getattr(customer_account, name)
+            for name in self.REQUEST_FIELDS
+        }
+        if any(request_values.values()):
+            if not all(isinstance(value, str) and value.strip() for value in request_values.values()):
+                raise ValueError("Creation request metadata must be complete and nonempty.")
+            if customer_account.creation_request_actor_id != owner.human_user_id:
+                raise ValueError("The creation request actor must match the initial owner.")
+            # The service normally returns this existing account before add().
+            # This guard detects an intervening completed request; it does not
+            # claim to serialize two simultaneous first-time submissions.
+            previous = self.find_by_creation_request(
+                actor_id=customer_account.creation_request_actor_id,
+                request_id=customer_account.creation_request_id,
+            )
+            if previous is not None:
+                raise ValueError("The creation request is already persisted; reload its account.")
+            for name, predicate in self.REQUEST_FIELDS.items():
+                additions.add((account, predicate, Literal(request_values[name], datatype=XSD.string)))
+        additions.add((account, customer.createdAt, Literal(created_at, datatype=XSD.dateTime)))
+        additions.add((account, customer.isOwnershipBoundary, Literal(customer_account.is_ownership_boundary)))
+        additions.add((account, customer.isBillingBoundary, Literal(customer_account.is_billing_boundary)))
+        additions.add((user, RDF.type, customer.User))
+        membership = URIRef(f"urn:uad:customer-membership:{uuid4()}")
+        additions.add((membership, RDF.type, customer.Membership))
+        additions.add((membership, customer.account, account))
+        additions.add((membership, customer.user, user))
+        additions.add((membership, customer.humanUserId, Literal(owner.human_user_id, datatype=XSD.string)))
+        additions.add((membership, customer.role, self.ROLE_IRIS[owner.role]))
+        additions.add((membership, customer.active, Literal(True)))
+        try:
+            self.store.apply_change(additions=additions, removals=Graph(), actor_id=str(user))
+        except Exception as error:
+            # Do not turn a lost commit response or failed rollback into a false
+            # claim that creation did not commit. Only translate confirmed rollback.
+            if getattr(error, "rollback_confirmed", False) is True:
+                raise AccountCreationIncompleteError(str(account)) from error
+            raise
+
+    @staticmethod
+    def _one(graph: Graph, subject, predicate):
+        values = list(graph.objects(subject, predicate))
+        if len(values) != 1:
+            raise RuntimeError(f"Expected one stored value for {predicate} on {subject}.")
+        return values[0]
+
+    @classmethod
+    def _text(cls, graph: Graph, subject, predicate) -> str:
+        value = cls._one(graph, subject, predicate)
+        if not isinstance(value, Literal):
+            raise RuntimeError(f"Expected stored text for {predicate}.")
+        return str(value)
+
+    @classmethod
+    def _boolean(cls, graph: Graph, subject, predicate) -> bool:
+        value = cls._one(graph, subject, predicate)
+        if not isinstance(value, Literal) or value.datatype != XSD.boolean:
+            raise RuntimeError(f"Expected stored boolean for {predicate}.")
+        result = value.toPython()
+        if not isinstance(result, bool):
+            raise RuntimeError(f"Invalid stored boolean for {predicate}.")
+        return result
+
+    @classmethod
+    def _optional_text(cls, graph: Graph, subject, predicate) -> str:
+        """Accounts created before request tracking have no request fields."""
+        if not list(graph.objects(subject, predicate)):
+            return ""
+        return cls._text(graph, subject, predicate)
+
+    @staticmethod
+    def _account_snapshot_version(account: CustomerAccount) -> str:
+        """Opaque diagnostic token for the application account snapshot."""
+        def encode(value):
+            if isinstance(value, datetime):
+                return value.isoformat()
+            raise TypeError(f"Unsupported snapshot value: {type(value).__name__}")
+
+        payload = json.dumps(
+            asdict(account), sort_keys=True, separators=(",", ":"),
+            ensure_ascii=False, default=encode,
+        ).encode("utf-8")
+        return "account-snapshot:" + sha256(payload).hexdigest()
+
+    def save_information(
+        self, customer_account: CustomerAccount, *, actor_id: str,
+        expected_account: CustomerAccount,
+    ) -> None:
+        """Persist editable fields and attribution in one GraphDB transaction.
+
+        Read authorization from stored memberships. Restrict the RDF patch to
+        editable predicates on this account; never replace the customer graph.
+        """
+        actor = self._user_iri(actor_id)
+        account = _iri(customer_account.customer_account_id)
+        graph = self.store.retrieve()
+        persisted = self._account_from_graph(graph, str(account))
+        if persisted.status != "active" or not any(
+            membership.active
+            and membership.role == CustomerAccountRole.OWNER
+            and membership.human_user_id == actor_id
+            and membership.customer_account_id == str(account)
+            for membership in persisted.memberships
+        ):
+            raise PermissionError("An active owner of an active account must update its information.")
+
+        # Compare the caller's original read, not a freshly acquired version.
+        # Otherwise a stale form could overwrite changes already committed by
+        # another administrator before this request reached the adapter.
+        if not isinstance(expected_account, CustomerAccount):
+            raise TypeError("Supply the account snapshot originally read.")
+        if expected_account.customer_account_id != str(account):
+            raise ValueError("The expected snapshot must identify the same account.")
+        if expected_account != persisted:
+            raise StaleResourceVersionError(
+                str(account),
+                self._account_snapshot_version(expected_account),
+                self._account_snapshot_version(persisted),
+            )
+        # This entry point changes information only, never identity, lifecycle,
+        # memberships, original creation details, or ownership boundaries.
+        protected_fields = (
+            "customer_account_id", "account_type", "status", "memberships",
+            "created_at", "is_ownership_boundary", "is_billing_boundary",
+            "creation_request_id", "creation_request_actor_id",
+            "creation_request_fingerprint",
+        )
+        if any(
+            getattr(customer_account, name) != getattr(persisted, name)
+            for name in protected_fields
+        ):
+            raise ValueError("Account information updates must preserve account identity and associations.")
+
+        editable_fields = {
+            "display_name", "primary_contact_name", "primary_contact_email",
+            "contact_telephone", "postal_address",
+        }
+        if persisted.account_type == "company":
+            editable_fields.update({"company_name", "company_website"})
+        elif persisted.account_type != "solo":
+            raise ValueError("Account information updates require a solo or company account.")
+        else:
+            for name in ("company_name", "company_website"):
+                if getattr(customer_account, name) != getattr(persisted, name):
+                    raise ValueError("Company fields cannot be changed on a solo account.")
+
+        additions, removals = Graph(), Graph()
+        for name in sorted(editable_fields):
+            value = getattr(customer_account, name)
+            if not isinstance(value, str):
+                raise ValueError(f"{name} must be text.")
+            if value == getattr(persisted, name):
+                continue
+            predicate = self.TEXT_FIELDS[name]
+            for triple in graph.triples((account, predicate, None)):
+                removals.add(triple)
+            additions.add((account, predicate, Literal(value, datatype=XSD.string)))
+
+        if not additions and not removals:
+            return
+        # apply_change also writes affected-resource, actor, time, operation,
+        # and shape-version provenance in the same validated transaction.
+        # Preserve its validation, unavailable, and uncertain-outcome failures.
+        self.store.apply_change(
+            additions=additions, removals=removals, actor_id=str(actor),
+            expected_versions={str(account): self.store._resource_version(graph, str(account))},
+        )
+
+    def add_membership(
+        self, membership: CustomerAccountMembership, *, actor_id: str,
+    ) -> None:
+        """Add an explicit membership and attribution without replacing data.
+
+        Authentication and admission are application prerequisites. Recheck
+        account status and the acting owner's persisted authorization here.
+        """
+        actor = self._user_iri(actor_id)
+        user = self._user_iri(membership.human_user_id)
+        if not isinstance(membership.customer_account_id, str):
+            raise ValueError("An existing customer-account ID is required.")
+        account = _iri(membership.customer_account_id)
+        if membership.active is not True:
+            raise ValueError("A granted membership must be active.")
+        try:
+            role = CustomerAccountRole(membership.role)
+        except (TypeError, ValueError) as error:
+            raise ValueError("Choose a supported customer-account role.") from error
+
+        graph = self.store.retrieve()
+        persisted = self._account_from_graph(graph, str(account))
+        owners = [
+            member for member in persisted.memberships
+            if member.active
+            and member.role == CustomerAccountRole.OWNER
+            and member.human_user_id == actor_id
+            and member.customer_account_id == str(account)
+        ]
+        if not owners:
+            raise PermissionError("An active owner in the same customer account is required.")
+        if persisted.status != "active" or persisted.account_type != "company":
+            raise ValueError("Membership grants require an active company account.")
+        if any(
+            member.human_user_id == membership.human_user_id
+            and member.customer_account_id == str(account)
+            and member.role == role
+            for member in persisted.memberships
+        ):
+            raise ValueError("This user already has that role; manage the existing membership.")
+
+        customer = self.CUSTOMER
+        node = URIRef(f"urn:uad:customer-membership:{uuid4()}")
+        additions = Graph()
+        additions.add((user, RDF.type, customer.User))
+        additions.add((node, RDF.type, customer.Membership))
+        additions.add((node, customer.account, account))
+        additions.add((node, customer.user, user))
+        additions.add((
+            node, customer.humanUserId,
+            Literal(membership.human_user_id, datatype=XSD.string),
+        ))
+        additions.add((node, customer.role, self.ROLE_IRIS[role]))
+        additions.add((node, customer.active, Literal(True)))
+
+        # Guard the account and the persisted owner membership used above.
+        # These are the existing store's version checks, not a claim that
+        # simultaneous grants or authorization changes are serialized.
+        guarded = {str(account)}
+        for owner_node in graph.subjects(customer.account, account):
+            if (
+                (owner_node, RDF.type, customer.Membership) in graph
+                and (owner_node, customer.user, actor) in graph
+                and (owner_node, customer.role, customer.Owner) in graph
+            ):
+                guarded.add(str(owner_node))
+        expected_versions = {
+            resource: self.store._resource_version(graph, resource)
+            for resource in guarded
+        }
+        # apply_change writes membership RDF and actor/time/shape attribution
+        # atomically. Preserve its rejection and uncertain-outcome exceptions.
+        self.store.apply_change(
+            additions=additions, removals=Graph(), actor_id=str(actor),
+            expected_versions=expected_versions,
+        )
+
+    def deactivate_membership(
+        self, membership: CustomerAccountMembership, *, actor_id: str,
+    ) -> None:
+        """Deactivate one stored role without deleting identity or owned data."""
+        actor = self._user_iri(actor_id)
+        user = self._user_iri(membership.human_user_id)
+        if not isinstance(membership.customer_account_id, str):
+            raise ValueError("An existing customer-account ID is required.")
+        account = _iri(membership.customer_account_id)
+        try:
+            role = CustomerAccountRole(membership.role)
+        except (TypeError, ValueError) as error:
+            raise ValueError("Choose a supported customer-account role.") from error
+        graph = self.store.retrieve()
+        persisted = self._account_from_graph(graph, str(account))
+        if not any(
+            member.active
+            and member.role == CustomerAccountRole.OWNER
+            and member.human_user_id == actor_id
+            and member.customer_account_id == str(account)
+            for member in persisted.memberships
+        ):
+            raise PermissionError("An active owner in the same customer account is required.")
+        if persisted.status != "active" or persisted.account_type != "company":
+            raise ValueError("Membership removal requires an active company account.")
+
+        customer = self.CUSTOMER
+        targets = [
+            node for node in graph.subjects(customer.account, account)
+            if (node, RDF.type, customer.Membership) in graph
+            and (node, customer.user, user) in graph
+            and (node, customer.role, self.ROLE_IRIS[role]) in graph
+            and self._text(graph, node, customer.humanUserId) == membership.human_user_id
+        ]
+        if not targets:
+            raise LookupError("The selected membership does not exist in this account.")
+        if len(targets) != 1:
+            raise RuntimeError("The selected user and role identify multiple memberships.")
+        node = targets[0]
+        if not self._boolean(graph, node, customer.active):
+            return
+        # Preserve the scenario prerequisite: an active owner must remain.
+        remaining_owners = [
+            member for member in persisted.memberships
+            if member.active and member.role == CustomerAccountRole.OWNER
+            and not (
+                role == CustomerAccountRole.OWNER
+                and member.human_user_id == membership.human_user_id
+            )
+        ]
+        if not remaining_owners:
+            raise ValueError("Another active owner must first be designated.")
+
+        removals, additions = Graph(), Graph()
+        for triple in graph.triples((node, customer.active, None)):
+            removals.add(triple)
+        additions.add((node, customer.active, Literal(False)))
+
+        # Keep the existing resource-version checks for the account and its
+        # memberships. These checks do not serialize simultaneous removals.
+        guarded = {str(account)}
+        guarded.update(
+            str(candidate)
+            for candidate in graph.subjects(customer.account, account)
+            if (candidate, RDF.type, customer.Membership) in graph
+        )
+        expected_versions = {
+            resource: self.store._resource_version(graph, resource)
+            for resource in guarded
+        }
+        # The active flag and durable actor/time attribution commit together.
+        # Validation, unavailable, and uncertain-outcome errors propagate.
+        self.store.apply_change(
+            additions=additions, removals=removals, actor_id=str(actor),
+            expected_versions=expected_versions,
+        )
+
+    def change_membership_role(
+        self, membership: CustomerAccountMembership, *,
+        role: CustomerAccountRole, actor_id: str,
+    ) -> None:
+        """Change one persisted role and its attribution in one transaction."""
+        actor = self._user_iri(actor_id)
+        user = self._user_iri(membership.human_user_id)
+        if not isinstance(membership.customer_account_id, str):
+            raise ValueError("An existing customer-account ID is required.")
+        account = _iri(membership.customer_account_id)
+        try:
+            old_role = CustomerAccountRole(membership.role)
+            new_role = CustomerAccountRole(role)
+        except (TypeError, ValueError) as error:
+            raise ValueError("Choose a supported customer-account role.") from error
+
+        graph = self.store.retrieve()
+        persisted = self._account_from_graph(graph, str(account))
+        if not any(
+            member.active and member.role == CustomerAccountRole.OWNER
+            and member.human_user_id == actor_id
+            and member.customer_account_id == str(account)
+            for member in persisted.memberships
+        ):
+            raise PermissionError("An active owner in the same customer account is required.")
+        if persisted.status != "active" or persisted.account_type != "company":
+            raise ValueError("Role changes require an active company account.")
+
+        customer = self.CUSTOMER
+        targets = [
+            node for node in graph.subjects(customer.account, account)
+            if (node, RDF.type, customer.Membership) in graph
+            and (node, customer.user, user) in graph
+            and (node, customer.role, self.ROLE_IRIS[old_role]) in graph
+            and self._text(graph, node, customer.humanUserId) == membership.human_user_id
+        ]
+        if len(targets) != 1:
+            raise ValueError("The selected membership must identify exactly one stored role.")
+        node = targets[0]
+        if not self._boolean(graph, node, customer.active):
+            raise ValueError("Only an active membership can change roles.")
+        if new_role == old_role:
+            return
+        if old_role == CustomerAccountRole.OWNER and not any(
+            member.active and member.role == CustomerAccountRole.OWNER
+            and member.customer_account_id == str(account)
+            and member.human_user_id != membership.human_user_id
+            for member in persisted.memberships
+        ):
+            raise ValueError("Another active owner must first be designated.")
+        if any(
+            member.human_user_id == membership.human_user_id
+            and member.customer_account_id == str(account)
+            and member.role == new_role
+            for member in persisted.memberships
+        ):
+            raise ValueError("This user already has the requested role; manage that membership.")
+
+        removals, additions = Graph(), Graph()
+        for triple in graph.triples((node, customer.role, None)):
+            removals.add(triple)
+        additions.add((node, customer.role, self.ROLE_IRIS[new_role]))
+        guarded = {str(account)}
+        guarded.update(
+            str(candidate)
+            for candidate in graph.subjects(customer.account, account)
+            if (candidate, RDF.type, customer.Membership) in graph
+        )
+        # Retain existing resource-version checks. They do not serialize
+        # simultaneous role changes or owner removals.
+        expected_versions = {
+            resource: self.store._resource_version(graph, resource)
+            for resource in guarded
+        }
+        # Only the role predicate changes. Identity, active status, account
+        # ownership, credits, and validation work are left untouched.
+        self.store.apply_change(
+            additions=additions, removals=removals, actor_id=str(actor),
+            expected_versions=expected_versions,
+        )
+
+    def close_account(
+        self, *, customer_account_id: str, actor_id: str,
+        expected_account: CustomerAccount,
+    ) -> None:
+        """Persist closure and attribution without deleting account history.
+
+        The lifecycle service verifies explicit confirmation and obligations.
+        Recheck stored ownership, lifecycle state and the supplied snapshot.
+        """
+        actor = self._user_iri(actor_id)
+        account = _iri(customer_account_id)
+        graph = self.store.retrieve()
+        persisted = self._account_from_graph(graph, str(account))
+        if not any(
+            member.active and member.role == CustomerAccountRole.OWNER
+            and member.human_user_id == actor_id
+            and member.customer_account_id == str(account)
+            for member in persisted.memberships
+        ):
+            raise PermissionError("An active owner in this customer account must complete closure.")
+        if persisted.status != "active":
+            raise ValueError("Only an active customer account can be closed.")
+        if not isinstance(expected_account, CustomerAccount):
+            raise TypeError("Supply the account snapshot checked for closure.")
+        if expected_account.customer_account_id != str(account):
+            raise ValueError("The expected snapshot must identify the same account.")
+        if expected_account != persisted:
+            raise StaleResourceVersionError(
+                str(account),
+                self._account_snapshot_version(expected_account),
+                self._account_snapshot_version(persisted),
+            )
+
+        customer = self.CUSTOMER
+        removals, additions = Graph(), Graph()
+        for triple in graph.triples((account, customer.status, None)):
+            removals.add(triple)
+        additions.add((account, customer.status, Literal("closed", datatype=XSD.string)))
+        guarded = {str(account)}
+        guarded.update(
+            str(node) for node in graph.subjects(customer.account, account)
+            if (node, RDF.type, customer.Membership) in graph
+        )
+        # Existing version checks detect observed intervening changes; they do
+        # not serialize purchases or validation work against account closure.
+        expected_versions = {
+            resource: self.store._resource_version(graph, resource)
+            for resource in guarded
+        }
+        # apply_change atomically writes the status and actor/time attribution.
+        # Preserve validation, unavailable, and uncertain-commit exceptions.
+        self.store.apply_change(
+            additions=additions, removals=removals, actor_id=str(actor),
+            expected_versions=expected_versions,
+        )
+
+    def find_by_creation_request(self, *, actor_id: str, request_id: str) -> CustomerAccount | None:
+        """Locate a completed request in this customer graph and actor scope."""
+        if not isinstance(actor_id, str) or not actor_id.strip():
+            raise ValueError("An identified request actor is required.")
+        if not isinstance(request_id, str) or not request_id.strip():
+            raise ValueError("A nonempty creation request ID is required.")
+        graph = self.store.retrieve()
+        customer = self.CUSTOMER
+        matches = []
+        for account in set(graph.subjects(RDF.type, customer.CustomerAccount)):
+            stored_request = self._optional_text(graph, account, customer.creationRequestId)
+            if stored_request != request_id:
+                continue
+            stored_actor = self._optional_text(graph, account, customer.creationRequestActorId)
+            if stored_actor == actor_id:
+                matches.append(account)
+        if len(matches) > 1:
+            raise RuntimeError("Multiple accounts are associated with the same actor and creation request.")
+        if not matches:
+            return None
+        return self.get(str(matches[0]))
+
+    def list_for_user(self, human_user_id: str) -> tuple[CustomerAccount, ...]:
+        """Read accounts linked to this user's active, consistent memberships.
+
+        Use one persisted graph snapshot for both authorization filtering and
+        aggregate reconstruction. No account or audit records are written.
+        """
+        user_iri = self._user_iri(human_user_id)
+        graph = self.store.retrieve()
+        customer = self.CUSTOMER
+        account_ids = set()
+        for membership in set(graph.subjects(customer.user, user_iri)):
+            if (membership, RDF.type, customer.Membership) not in graph:
+                continue
+            if self._text(graph, membership, customer.humanUserId) != human_user_id:
+                continue
+            if not self._boolean(graph, membership, customer.active):
+                continue
+            role = self._one(graph, membership, customer.role)
+            if role not in self.ROLE_IRIS.values():
+                raise RuntimeError("Unknown persisted customer-account role.")
+            account = self._one(graph, membership, customer.account)
+            if not isinstance(account, URIRef):
+                raise RuntimeError("A stored membership must reference a customer-account IRI.")
+            if (account, RDF.type, customer.CustomerAccount) not in graph:
+                raise RuntimeError("An active membership references a missing customer account.")
+            account_ids.add(str(account))
+        return tuple(
+            self._account_from_graph(graph, account_id)
+            for account_id in sorted(account_ids)
+        )
+
+    def get(self, customer_account_id: str) -> CustomerAccount:
+        account = _iri(customer_account_id)
+        return self._account_from_graph(self.store.retrieve(), str(account))
+
+    def _account_from_graph(self, graph: Graph, customer_account_id: str) -> CustomerAccount:
+        account = _iri(customer_account_id)
+        customer = self.CUSTOMER
+        if (account, RDF.type, customer.CustomerAccount) not in graph:
+            raise KeyError(customer_account_id)
+        values = {
+            field_name: self._text(graph, account, predicate)
+            for field_name, predicate in self.TEXT_FIELDS.items()
+        }
+        values.update({
+            name: self._optional_text(graph, account, predicate)
+            for name, predicate in self.REQUEST_FIELDS.items()
+        })
+        timestamp = self._one(graph, account, customer.createdAt)
+        created_at = timestamp.toPython() if isinstance(timestamp, Literal) else None
+        if not isinstance(created_at, datetime) or created_at.utcoffset() is None:
+            raise RuntimeError("Invalid persisted customer-account creation time.")
+        roles = {iri: role for role, iri in self.ROLE_IRIS.items()}
+        memberships = []
+        for node in sorted(set(graph.subjects(customer.account, account)), key=str):
+            if (node, RDF.type, customer.Membership) not in graph:
+                continue
+            role_iri = self._one(graph, node, customer.role)
+            if role_iri not in roles:
+                raise RuntimeError("Unknown persisted customer-account role.")
+            human_user_id = self._text(graph, node, customer.humanUserId)
+            if self._one(graph, node, customer.user) != self._user_iri(human_user_id):
+                raise RuntimeError("Stored membership user identity is inconsistent.")
+            memberships.append(CustomerAccountMembership(
+                human_user_id=human_user_id,
+                role=roles[role_iri],
+                active=self._boolean(graph, node, customer.active),
+                customer_account_id=str(account),
+            ))
+        return CustomerAccount(
+            customer_account_id=str(account),
+            is_ownership_boundary=self._boolean(graph, account, customer.isOwnershipBoundary),
+            is_billing_boundary=self._boolean(graph, account, customer.isBillingBoundary),
+            memberships=tuple(memberships),
+            created_at=created_at,
+            **values,
+        )
 
 
 

@@ -7,6 +7,7 @@ from enum import StrEnum
 from typing import Protocol, TypeVar
 
 from app.services.customer_accounts import (
+    CustomerAccount as StoredCustomerAccount,
     CustomerAccountMembership,
     CustomerAccountRole,
 )
@@ -171,3 +172,100 @@ def close_customer_account(
         actor_id=owner_membership.human_user_id,
     )
     return closed_account
+
+
+class AccountClosureObligations(Protocol):
+    remaining_validation_credits: int
+    validation_work_in_progress: int
+    pending_purchases: int
+    unresolved_payment_obligations: int
+
+
+class AccountClosureObligationRepository(Protocol):
+    def get_account_obligations(
+        self, customer_account_id: str,
+    ) -> AccountClosureObligations: ...
+
+
+class DurableAccountClosureRepository(Protocol):
+    def get(self, customer_account_id: str) -> StoredCustomerAccount: ...
+
+    def close_account(
+        self, *, customer_account_id: str, actor_id: str,
+        expected_account: StoredCustomerAccount,
+    ) -> None: ...
+
+
+def request_customer_account_closure(
+    *,
+    actor_id: str,
+    customer_account_id: str,
+    confirmed: bool,
+    account_repository: DurableAccountClosureRepository,
+    obligation_repository: AccountClosureObligationRepository,
+    audit_history: AccountAuditHistory,
+) -> StoredCustomerAccount:
+    """Close an active account after explicit confirmation and zero obligations.
+
+    The application supplies a trusted obligations provider. Missing values
+    must never be interpreted as zero. This boundary does not itself reconcile
+    payments or serialize new purchases against closure.
+    """
+    if confirmed is not True:
+        raise ValueError("Explicit owner confirmation is required to close the account.")
+    if not isinstance(actor_id, str) or not actor_id.strip():
+        raise PermissionError("An identified acting UAD user is required.")
+    if not isinstance(customer_account_id, str) or not customer_account_id.strip():
+        raise ValueError("An existing customer-account ID is required.")
+
+    account = account_repository.get(customer_account_id)
+    if account.customer_account_id != customer_account_id:
+        raise ValueError("The repository returned a different customer account.")
+    if not any(
+        member.active
+        and member.role == CustomerAccountRole.OWNER
+        and member.human_user_id == actor_id
+        and member.customer_account_id == customer_account_id
+        for member in account.memberships
+    ):
+        raise PermissionError("An active owner in this customer account must complete closure.")
+    # Authorization has already been checked. An authorized repeat reports the
+    # persisted state before consulting obligations or requesting another write.
+    if account.status == CustomerAccountStatus.CLOSED:
+        raise ValueError("The customer account is already closed.")
+    if account.status != CustomerAccountStatus.ACTIVE:
+        raise ValueError("Only an active customer account can be closed.")
+
+    obligations = obligation_repository.get_account_obligations(customer_account_id)
+    fields = (
+        "remaining_validation_credits",
+        "validation_work_in_progress",
+        "pending_purchases",
+        "unresolved_payment_obligations",
+    )
+    blocked = []
+    for name in fields:
+        value = getattr(obligations, name, None)
+        # This contract expresses outstanding obligations as nonnegative counts.
+        # Providers must supply an explicit zero only after resolving their data.
+        if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+            raise ValueError(f"Closure requires a verified nonnegative count for {name}.")
+        if value:
+            blocked.append(name)
+    if blocked:
+        raise ValueError("Account closure is blocked by: " + ", ".join(blocked) + ".")
+
+    account_repository.close_account(
+        customer_account_id=customer_account_id,
+        actor_id=actor_id,
+        expected_account=account,
+    )
+    # The adapter commits the status and durable actor/time attribution together.
+    # Report success only after a confirmed persistence result.
+    closed = replace(account, status=CustomerAccountStatus.CLOSED)
+    audit_history.record(
+        event_type="customer_account_closed",
+        customer_account_id=customer_account_id,
+        actor_id=actor_id,
+    )
+    return closed

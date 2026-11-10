@@ -115,6 +115,24 @@ def authorize_customer_activity(
     )
 
 
+# Closed accounts retain history, but cannot initiate purchases or validation
+# work. Combined activities containing a write are blocked as a whole; callers
+# can use the existing history-only activities for retained-record access.
+_CLOSED_ACCOUNT_BLOCKED_ACTIVITIES = frozenset({
+    CustomerAccountActivity.PURCHASE_CREDITS_AND_VIEW_FINANCIAL_HISTORY,
+    CustomerAccountActivity.PURCHASE_VALIDATION_CREDITS,
+    CustomerAccountActivity.SUBMIT_REPORTS_AND_MANAGE_VALIDATION_CYCLES,
+    CustomerAccountActivity.SUBMIT_REPORT_FOR_NEW_VALIDATION_CYCLE,
+    CustomerAccountActivity.CREATE_VALIDATION_CYCLE,
+    CustomerAccountActivity.MANAGE_MEMBERSHIP_AND_ACCOUNT_CLOSURE,
+    CustomerAccountActivity.CLOSE_CUSTOMER_ACCOUNT,
+    CustomerAccountActivity.MODIFY_REPORTS,
+    CustomerAccountActivity.MODIFY_FINDINGS,
+    CustomerAccountActivity.MODIFY_CREDITS,
+    CustomerAccountActivity.MODIFY_BILLING,
+    CustomerAccountActivity.MODIFY_MEMBERSHIP,
+})
+
 def request_customer_account_activity(
     membership: CustomerAccountMembership,
     customer_account: ActiveCustomerAccount,
@@ -128,6 +146,16 @@ def request_customer_account_activity(
         customer_account.customer_account_id,
         activity,
     )
+    # The application must pass the current persisted account. Legacy account
+    # objects without lifecycle status retain their existing role behavior.
+    if (
+        getattr(customer_account, "status", None) == "closed"
+        and activity in _CLOSED_ACCOUNT_BLOCKED_ACTIVITIES
+    ):
+        decision = CustomerAccountAuthorizationDecision(
+            result=AuthorizationResult.DENIED,
+            customer_account_id=customer_account.customer_account_id,
+        )
     if decision.result is AuthorizationResult.DENIED:
         audit_history.record(
             event_type="customer_account_activity_denied",
